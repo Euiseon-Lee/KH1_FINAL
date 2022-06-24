@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-06-24T02:17:57.820Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.124 Safari/537.36 Edg/102.0.1245.44" etag="hSNxFZEeDua9U0QzIS-F" version="20.0.3" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2022-06-24T02:20:48.516Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.124 Safari/537.36 Edg/102.0.1245.44" etag="i3t7yjdfEfWFBkWTp3g2" version="20.0.3" type="github" pages="2">
   <diagram id="h28S9tUxpFHeoZLsGMbE" name="경매 플로우">
-    <mxGraphModel dx="4024" dy="2492" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2635" dy="1717" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1159,7 +1159,7 @@
         <mxCell id="yuZMIsuMAGZwHgwwAGw7-3" value="거래 취소&lt;br&gt;/trade/cancel" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="1485" y="772" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="yuZMIsuMAGZwHgwwAGw7-5" value="상대 평가&lt;br&gt;/trade/estimate" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="yuZMIsuMAGZwHgwwAGw7-5" value="상대 평가?&lt;br&gt;/trade/estimate" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="1630" y="994" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
