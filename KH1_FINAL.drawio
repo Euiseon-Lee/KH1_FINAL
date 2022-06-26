@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2022-06-24T09:39:16.873Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="_Qc77Gy6nwGJ-2Ly3kGP" version="20.0.2" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2022-06-26T04:32:16.796Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="omae4IxDKL5gzuJQ0GzV" version="20.0.3" type="github" pages="2">
   <diagram id="h28S9tUxpFHeoZLsGMbE" name="경매 플로우">
-    <mxGraphModel dx="3778" dy="2126" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2611" dy="1829" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#FCFCFC;fontColor=#333333;strokeColor=#B3B3B3;" parent="1" vertex="1">
-          <mxGeometry x="-1071" y="757" width="1320" height="1673" as="geometry" />
+          <mxGeometry x="-1071" y="757" width="1320" height="1343" as="geometry" />
         </mxCell>
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-68" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;strokeColor=#4D4D4D;fillColor=#EBEDFF;" parent="1" vertex="1">
           <mxGeometry x="-418" y="1383" width="238" height="82" as="geometry" />
@@ -826,7 +826,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="Apxt1gWDg2CnoQeW8S9i-8" value="회원정보 수정 화면&lt;br&gt;/member_info" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+        <mxCell id="Apxt1gWDg2CnoQeW8S9i-8" value="회원정보 수정 화면&lt;br&gt;/info" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="-650" y="970" width="110" height="50" as="geometry" />
         </mxCell>
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" parent="1" source="Apxt1gWDg2CnoQeW8S9i-9" target="Apxt1gWDg2CnoQeW8S9i-56" edge="1">
@@ -914,6 +914,9 @@
         <mxCell id="9eDsI32xgJDYQ9AVQAy8-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Apxt1gWDg2CnoQeW8S9i-26" target="Apxt1gWDg2CnoQeW8S9i-29" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="ZZ0ZvuwX1N0Vcn0AHWzx-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Apxt1gWDg2CnoQeW8S9i-26" target="ZZ0ZvuwX1N0Vcn0AHWzx-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-26" value="과거 경매 이력" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="-830" y="1492" width="120" height="50" as="geometry" />
         </mxCell>
@@ -924,7 +927,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-29" value="포인트/현금화&lt;br&gt;/member_log" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="-645" y="1812" width="110" height="50" as="geometry" />
+          <mxGeometry x="-650" y="1945" width="110" height="50" as="geometry" />
         </mxCell>
         <mxCell id="Qc3vLXFMTX0VV_zwiZc_-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeColor=#0000FF;" parent="1" source="Qc3vLXFMTX0VV_zwiZc_-34" target="Qc3vLXFMTX0VV_zwiZc_-25" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -943,7 +946,7 @@
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-33" value="소셜로그인?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-466" y="825" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Apxt1gWDg2CnoQeW8S9i-35" value="SNS링크&lt;br&gt;/member_sns" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+        <mxCell id="Apxt1gWDg2CnoQeW8S9i-35" value="SNS링크&lt;br&gt;/info_sns" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="-287" y="830" width="110" height="50" as="geometry" />
         </mxCell>
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-37" value="Y" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
@@ -1020,20 +1023,25 @@
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-64" value="결제 예정" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#CCCCCC;" parent="1" vertex="1">
           <mxGeometry x="-362" y="1581" width="70" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="Apxt1gWDg2CnoQeW8S9i-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;" parent="1" source="Apxt1gWDg2CnoQeW8S9i-65" target="Apxt1gWDg2CnoQeW8S9i-76" edge="1">
+        <mxCell id="Apxt1gWDg2CnoQeW8S9i-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" parent="1" source="ZZ0ZvuwX1N0Vcn0AHWzx-1" target="Apxt1gWDg2CnoQeW8S9i-76" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Apxt1gWDg2CnoQeW8S9i-65" value="결제 완료" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#CCCCCC;" parent="1" vertex="1">
-          <mxGeometry x="-270" y="1581" width="70" height="28" as="geometry" />
+        <mxCell id="Apxt1gWDg2CnoQeW8S9i-65" value="결제 완료" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#CCCCCC;" parent="1" vertex="1">
+          <mxGeometry x="-308" y="1791" width="70" height="28" as="geometry" />
         </mxCell>
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-66" value="미결제" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#CCCCCC;" parent="1" vertex="1">
           <mxGeometry x="-180" y="1581" width="70" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="9eDsI32xgJDYQ9AVQAy8-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="Apxt1gWDg2CnoQeW8S9i-76" target="9eDsI32xgJDYQ9AVQAy8-1" edge="1">
+        <mxCell id="9eDsI32xgJDYQ9AVQAy8-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Apxt1gWDg2CnoQeW8S9i-76" target="ZZ0ZvuwX1N0Vcn0AHWzx-5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-308" y="1704" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZZ0ZvuwX1N0Vcn0AHWzx-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Apxt1gWDg2CnoQeW8S9i-76" target="Apxt1gWDg2CnoQeW8S9i-65">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-76" value="거래완료?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-295" y="1651" width="120" height="60" as="geometry" />
+          <mxGeometry x="-495" y="1725" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-81" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" parent="1" source="Apxt1gWDg2CnoQeW8S9i-79" target="Apxt1gWDg2CnoQeW8S9i-80" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -1093,35 +1101,32 @@
         <mxCell id="Apxt1gWDg2CnoQeW8S9i-94" value="Y" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-200" y="1085" width="45" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="9eDsI32xgJDYQ9AVQAy8-1" value="평가" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#4D4D4D;" parent="1" vertex="1">
-          <mxGeometry x="-100" y="1667" width="70" height="28" as="geometry" />
-        </mxCell>
         <mxCell id="9eDsI32xgJDYQ9AVQAy8-3" value="Y" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-175" y="1658" width="45" height="30" as="geometry" />
+          <mxGeometry x="-437" y="1680" width="45" height="30" as="geometry" />
         </mxCell>
         <mxCell id="9eDsI32xgJDYQ9AVQAy8-7" value="현금화 내역" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#4D4D4D;" parent="1" vertex="1">
-          <mxGeometry x="-459" y="1862" width="70" height="28" as="geometry" />
+          <mxGeometry x="-459" y="1995" width="70" height="28" as="geometry" />
         </mxCell>
         <mxCell id="9eDsI32xgJDYQ9AVQAy8-11" value="기간별 조회&lt;br&gt;1개월 / 3개월 / 1년" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-70" y="1755" width="120" height="60" as="geometry" />
+          <mxGeometry x="-70" y="1888" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="9eDsI32xgJDYQ9AVQAy8-17" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;strokeColor=#4D4D4D;fillColor=#EBEDFF;" parent="1" vertex="1">
-          <mxGeometry x="-430" y="1761.5" width="320" height="47" as="geometry" />
+          <mxGeometry x="-430" y="1894.5" width="320" height="47" as="geometry" />
         </mxCell>
         <mxCell id="9eDsI32xgJDYQ9AVQAy8-4" value="포인트 내역" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#4D4D4D;" parent="1" vertex="1">
-          <mxGeometry x="-459" y="1771" width="70" height="28" as="geometry" />
+          <mxGeometry x="-459" y="1904" width="70" height="28" as="geometry" />
         </mxCell>
         <mxCell id="9eDsI32xgJDYQ9AVQAy8-19" value="보유포인트" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#CCCCCC;" parent="1" vertex="1">
-          <mxGeometry x="-362" y="1771" width="70" height="28" as="geometry" />
+          <mxGeometry x="-362" y="1904" width="70" height="28" as="geometry" />
         </mxCell>
         <mxCell id="9eDsI32xgJDYQ9AVQAy8-20" value="충전내역" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#CCCCCC;" parent="1" vertex="1">
-          <mxGeometry x="-279" y="1771" width="70" height="28" as="geometry" />
+          <mxGeometry x="-279" y="1904" width="70" height="28" as="geometry" />
         </mxCell>
         <mxCell id="9eDsI32xgJDYQ9AVQAy8-21" value="사용내역" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#CCCCCC;" parent="1" vertex="1">
-          <mxGeometry x="-196" y="1771" width="70" height="28" as="geometry" />
+          <mxGeometry x="-196" y="1904" width="70" height="28" as="geometry" />
         </mxCell>
         <mxCell id="ZwVItXoNNcntVim01RQZ-1" value="기간별 조회&lt;br&gt;1개월 / 3개월 / 1년" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-370" y="1846" width="120" height="60" as="geometry" />
+          <mxGeometry x="-370" y="1979" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="cxI0ivcJoyQeI_pFTT6q-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="GqDT47UGu-WXVHs3Kjlu-224" target="cxI0ivcJoyQeI_pFTT6q-9" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -1162,11 +1167,20 @@
         <mxCell id="yuZMIsuMAGZwHgwwAGw7-5" value="상대 평가?&lt;br&gt;/trade/estimate" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="1630" y="994" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="_2hNba7Owlat3g8VQBrp-1" value="이메일 인증" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#CCCCCC;" vertex="1" parent="1">
+        <mxCell id="_2hNba7Owlat3g8VQBrp-1" value="이메일 인증" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#CCCCCC;" parent="1" vertex="1">
           <mxGeometry x="-320" y="577" width="70" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="_2hNba7Owlat3g8VQBrp-2" value="이용약관" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#CCCCCC;" vertex="1" parent="1">
+        <mxCell id="_2hNba7Owlat3g8VQBrp-2" value="이용약관" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#CCCCCC;" parent="1" vertex="1">
           <mxGeometry x="-320" y="620" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="ZZ0ZvuwX1N0Vcn0AHWzx-1" value="경매 결제완료 이력&lt;br&gt;/member_history" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="-650" y="1730" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZZ0ZvuwX1N0Vcn0AHWzx-3" value="N" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-439" y="1800" width="52" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="ZZ0ZvuwX1N0Vcn0AHWzx-5" value="거래 확정" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="-308" y="1690" width="70" height="28" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
