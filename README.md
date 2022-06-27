@@ -2,5 +2,8 @@
 ### Start 22-06-27
 
 ### Hi~ I'm Gang-Eun!
-### 한상혁 입니다
+### 한상혁 입니다 (Solo)
 ### Commit Test CJY
+
+### Hi I'm Euiseon Lee.
+### hihihi
