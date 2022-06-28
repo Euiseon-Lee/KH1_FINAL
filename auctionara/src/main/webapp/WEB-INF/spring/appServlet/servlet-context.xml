@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+	servlet-context.xml은 DispatcherServlet의 작업을 위한 설정이다!
+ -->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 
+		View 페이지 탐지 도구 등록 (View Resolver)
+		- 접두사(prefix)와 접미사(suffix)를 설정하여 효율적인 경로 설정이 가능하도록 처리 
+		- org.springframework.web.servlet.view.InternalResourceView
+	-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	<!-- 
+		자동 스캔 설정
+		- 내가 정한 패키지를 기준으로 하여 등록 가능한 요소들을 탐지하여 등록하도록 설정
+		- 탐지하는 패키지는 top-level package로 설정하는 것이 일반적이다
+		- 스프링에서는 경로 관련된 처리는 spring-context 모듈이 수행
+		
+		- mvc:annotation-driven 설정을 하면 특정 annotation들이 활성화됨
+	 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<!-- 복사한 뒤 반드시 고쳐야 하는 부분 -->
+	<context:component-scan base-package="com.an.auctionara" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<!-- 복사한 뒤 반드시 고쳐야 하는 부분 -->
+	
+	
+	
+	<!-- 
+		정적 자원(static resource) 위치 지정
+		- DispatcherServlet을 거치면 안되는 요소들에 대한 설정을 수행
+		- css, js, 이미지, font, ...
+		- 프로그래밍 처리가 필요하지 않은 요소들
+		- mvc 모듈 설정으로 처리
+		- 일반적으로 webapp 안의 resources 에 모든 요소를 저장
+	 -->
+	<mvc:resources location="/resources/css/" mapping="/css/**"></mvc:resources>
+	<mvc:resources location="/resources/js/" mapping="/js/**"></mvc:resources>
+	<mvc:resources location="/resources/font/" mapping="/font/**"></mvc:resources>
+	<mvc:resources location="/resources/image/" mapping="/image/**"></mvc:resources>
+	
+	
+	<!-- 
+		인터셉터 설정
+		- mapping으로 주소 추가
+		- exclude-mapping으로 주소 제거
+		- ** 와 * 를 사용할 수 있으며, 필터와 다르게 중간에 *를 사용하는것이 허용됨
+		- **는 하위 모든 경로를 포함하는 수식
+		- *는 현재 경로를 포함하는 수식
+		- 반드시 mapping -> exclude-mapping -> bean 순서로 작성해야함
+	 -->
+<!-- 	<mvc:interceptors> -->
+<!-- 		<mvc:interceptor> -->
+<!-- 			<mvc:mapping path=""/> -->
+
+<!-- 			<mvc:exclude-mapping path=""/> -->
+
+
+<!-- 			<bean class=""></bean> -->
+<!-- 		</mvc:interceptor> -->
+
+		
+		
+ 		<!-- 테스트용 인터셉터 --> 
+<!-- 		<mvc:interceptor> -->
+<!-- 			<mvc:mapping path="/**"/> -->
+<!-- 			<ref bean="boardTestInterceptor"/> -->
+<!-- 		</mvc:interceptor> -->
+	
+	
+
+<!-- 	</mvc:interceptors> -->
+	
+	
+	
+	<!-- 
+		파일 업로드를 위한 도구 등록
+		- [주의] 등록 시 id 고정!		->		 id = "multipartResolver"
+		- 파일 저장위치, 인코딩방식, 파일크기 등을 지정해줘야한다
+	-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="com.an.auctionara"></property>
+		<property name="maxUploadSize" value="${project.fileupload.max-total-size}"></property>
+		<property name="maxUploadSizePerFile" value="${project.fileupload.max-file-size}"></property>
+	</bean>
+	
+	
+	
+	<!-- 
+		모든 Properties 파일의 정보를 불러오도록 설정
+		불러온 내용들은 ${key} 형태로 사용이 가능
+	 -->
+	<context:property-placeholder location="classpath:/properties/**/*.properties"/>
+	
+	
+	
+	<!-- 
+		Swagger 분석 설정 추가 (문서 제작은 다른 설정이 필요하다)
+		1. swagger에서 제공하는 기본설정을 사용		=> <bean>으로 등록한다
+		2. 직접 만든 커스텀 설정을 사용
+		
+		<주의> id가 반드시 swagger2Config여야 한다
+		
+		설정이 잘 되었다면 /v2/api-docs 주소가 활성화된다
+	 -->
+	
+<!-- 	<bean id="swagger2Config" class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"></bean>   -->
+	<bean id="swagger2Config" class="com.an.auctionara.configuration.SwaggerCustomConfiguration"></bean>
+	
+	
+	<!-- 
+		Swagger에서 제공하는 화면에 대한 정적 자원 위치 지정
+		<참고> Spring-Boot에서는 따로 처리할 필요가 없다
+		
+		이 둘이 허용이 되면 문서가 나타날 수 있다
+		
+		location 설정 시 classpath 사용한다 (라이브러리에 있는 요소도 mapping이 가능하다)
+		
+		cf) filepath로는 찾기가 어렵다 (!들어가는 등 복잡해짐)
+	 -->
+	<mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"></mvc:resources>
+	<mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"></mvc:resources>	
+	
+	
+	
+</beans>
