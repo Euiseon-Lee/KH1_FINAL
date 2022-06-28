@@ -22,7 +22,7 @@
 	 	
 		(2) 특정 패키지의 경로를 생략	 	
 	 	<package name="등록할 패키지"/>
-	 	ex : <package name="com.kh.spring08.entity"/>
+	 	ex : <package name="com.kh.spring08.entity"/> 
 	-->
 	<typeAliases>
 		<package name="com.an.auctionara.entity"/>
