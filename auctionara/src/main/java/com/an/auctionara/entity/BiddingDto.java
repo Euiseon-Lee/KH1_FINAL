@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class BiddingDto {
-	private int bidder_no;
-	private int auction_no;
-	private int bidding_price;
-	private Date bidding_time; 
+	private int bidderNo;
+	private int auctionNo;
+	private int biddingPrice;
+	private Date biddingTime; 
 }

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ChatReportDto {
-	private int chat_report_no;
-	private int chat_no;
-	private int chat_reporter_no;
-	private String chat_report_reason;
-	private Date chat_report_time; 
+	private int chatReportNo;
+	private int chatNo;
+	private int chatReporterNo;
+	private String chatReportReason;
+	private Date chatReportTime; 
 }

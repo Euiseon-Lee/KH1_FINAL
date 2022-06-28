@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class AuctionReportDto {
-	private int auction_report_no;
-	private int auction_no;
-	private int auction_reporter_no;
-	private String auction_report_reason;
-	private Date auction_report_time;
+	private int auctionReportNo;
+	private int auctionNo;
+	private int auctionReporterNo;
+	private String auctionReportReason;
+	private Date auctionReportTime;
 }

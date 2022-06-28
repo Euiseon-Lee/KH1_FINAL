@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MemberDto {
-	private int member_no;
-	private int attachment_no;
-	private String member_email;
-	private String member_pw;
-	private String member_nick;
-	private int member_holding_points;
-	private String member_available_time;
-	private String member_grade;
-	private int member_red_count;
-	private Date member_joindate;
-	private Date member_logintime;
+	private int memberNo;
+	private int attachmentNo;
+	private String memberEmail;
+	private String memberPw;
+	private String memberNick;
+	private int memberHoldingPoints;
+	private String memberAvailableTime;
+	private String memberGrade;
+	private int memberRedCount;
+	private Date memberJoindate;
+	private Date memberLogintime;
 }

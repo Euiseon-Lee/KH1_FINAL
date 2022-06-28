@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class PaymentDto {
-	private int payment_no;
-	private int member_no;
-	private String payment_tid;
-	private int payment_price;
-	private Date payment_time;
-	private String payment_status;
+	private int paymentNo;
+	private int memberNo;
+	private String paymentTid;
+	private int paymentPrice;
+	private Date paymentTime;
+	private String paymentStatus;
 }

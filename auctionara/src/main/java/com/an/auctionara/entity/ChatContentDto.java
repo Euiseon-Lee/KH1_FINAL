@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ChatContentDto {
-	private int chat_no;
-	private int chatroom_no;
-	private int chatter_no;
-	private String chat_content;
-	private Date chat_time;
-	private String chat_reported;
-	private Date chat_read_time;
+	private int chatNo;
+	private int chatroomNo;
+	private int chatterNo;
+	private String chatContent;
+	private Date chatTime;
+	private String chatReported;
+	private Date chatReadTime;
 }

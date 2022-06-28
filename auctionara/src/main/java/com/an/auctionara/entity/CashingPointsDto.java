@@ -10,12 +10,12 @@ import lombok.Data;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class CashingPointsDto {
-	private int member_no;
-	private int cashing_money;
-	private String cashing_bank;
-	private int cashing_account;
-	private String cashing_type;
-	private String cashing_status;
-	private Date cashing_request_time;
-	private Date cashing_success_time; 
+	private int memberNo;
+	private int cashingMoney;
+	private String cashingBank;
+	private int cashingAccount;
+	private String cashingType;
+	private String cashingStatus;
+	private Date cashingRequestTime;
+	private Date cashingSuccessTime; 
 }

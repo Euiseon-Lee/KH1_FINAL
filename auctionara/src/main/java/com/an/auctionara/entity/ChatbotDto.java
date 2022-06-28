@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ChatbotDto {
-	private int chatbot_no;
-	private String chatbot_content;
-	private int chatbot_super_no; 
+	private int chatbotNo;
+	private String chatbotContent;
+	private int chatbotSuperNo; 
 }

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ManagerRestrictionDto {
-	private int restriction_no;
-	private int member_no;
-	private String restriction_reason;
-	private int restriction_type;
-	private Date restriction_time;
+	private int restrictionNo;
+	private int memberNo;
+	private String restrictionReason;
+	private int restrictionType;
+	private Date restrictionTime;
 }
