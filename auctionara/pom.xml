@@ -339,6 +339,14 @@
 		    <version>2.9.2</version>
 		</dependency>			
 				
+				
+				<!-- 웹소켓 의존성 추가. -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
 	</dependencies>
 
 
