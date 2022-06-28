@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1><a href="">회원가입</a></h1>
+<div>
+경매 등록 페이지
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
