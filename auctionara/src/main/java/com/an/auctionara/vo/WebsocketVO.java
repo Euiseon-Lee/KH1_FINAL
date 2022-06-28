@@ -1,5 +1,5 @@
 package com.an.auctionara.vo;
 
-public class websocketVO {
+public class WebsocketVO {
 
 }
