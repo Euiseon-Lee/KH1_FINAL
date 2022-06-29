@@ -24,33 +24,6 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="member">
-
-	<select id="one" parameterType="int" resultType="MemberDto">
-		select * from member where member_no = #{memberNo}
-	</select>
-	
-	<!-- 검색 + 페이징 list -->
-	<select id="list" resultType="MemberDto" parameterType="Map">
-		select * from (
-	 		select rownum rn, TMP.* from (
-	 			select * from member 
-			 	<if test="type != null and keyword != null">
-				 	<![CDATA[
-				 		where instr(${type}, #{keyword}) > 0
-				 	]]>
-			 	</if>
-	 		) TMP
-	 	) where rn between #{begin} and #{end}
-	</select>
-	
-	<insert id="insert">
-		insert into member(
-			member_email, member_pw, member_nick
-		)
-		values(
-			#{memberEmail}, #{memberPw}, #{memberNick}
-		)
-	</insert>
+<mapper namespace="auction">
 	
 </mapper> 

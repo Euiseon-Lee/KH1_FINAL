@@ -8,10 +8,18 @@ import org.springframework.stereotype.Repository;
 
 import com.an.auctionara.entity.MemberDto;
 
+
 @Repository
-public class MemberDaoImpl implements MemberDao{
+public class MemberDaoImpl implements MemberDao {
 
 	@Autowired
-	private SqlSession sqlSession; 
+	private SqlSession sqlSession;
+	
+	
+	@Override
+	public void join(MemberDto memberDto) {
+		sqlSession.insert("member.join", memberDto);
+		
+	}
 
 }

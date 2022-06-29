@@ -22,7 +22,6 @@ CREATE TABLE auction (
 	auction_no	number		NOT NULL,
 	auctioneer_no	number		NOT NULL,
 	category_no	number		NOT NULL,
-	auction_item	varchar2(90)		NOT NULL,
 	auction_title	varchar2(90)		NOT NULL,
 	auction_content	varchar2(300)		NOT NULL,
 	auction_upload_time	Date	DEFAULT sysdate	NOT NULL,
@@ -30,7 +29,6 @@ CREATE TABLE auction (
 	auction_opening_bid	number		NOT NULL,
 	auction_closing_bid	number		NULL,
 	auction_bid_unit	number		NOT NULL,
-	auction_count	number		NOT NULL,
 	auction_status	number		NOT NULL
 );
 
@@ -84,7 +82,7 @@ CREATE TABLE photo (
 
 CREATE TABLE category (
 	category_no	number		NOT NULL,
-	category_name	varchar2(12)		NOT NULL
+	category_name	varchar2(30)		NOT NULL
 );
 
 CREATE TABLE member_rating (
