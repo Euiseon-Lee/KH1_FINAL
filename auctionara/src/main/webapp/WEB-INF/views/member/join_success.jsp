@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
     
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<%@include file="/WEB-INF/views/template/header.jsp" %>
 
 
 <div>
@@ -12,7 +12,7 @@
 	
 	<div>
 		<h3>
-			<a href="">로그인하러가기</a>
+			<a href="{root}/member/login">로그인하러가기</a>
 		</h3>
 	</div>
 </div>
