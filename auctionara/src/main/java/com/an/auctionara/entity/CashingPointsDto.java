@@ -10,6 +10,7 @@ import lombok.Data;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class CashingPointsDto {
+	private int cashingNo;
 	private int memberNo;
 	private int cashingMoney;
 	private String cashingBank;
