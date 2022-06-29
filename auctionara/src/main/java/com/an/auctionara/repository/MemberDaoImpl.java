@@ -15,6 +15,8 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public void join(MemberDto memberDto) {
+		int sequence = sqlSession.selectOne("member.sequence");
+		memberDto.setMemberNo(sequence);
 		sqlSession.insert("member.join", memberDto);
 		
 	}
