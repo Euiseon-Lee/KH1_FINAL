@@ -118,7 +118,7 @@
 	 -->
 	
 <!-- 	<bean id="swagger2Config" class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"></bean>   -->
-<!-- 	<bean id="swagger2Config" class="com.an.auctionara.configuration.SwaggerCustomConfiguration"></bean> -->
+	<bean id="swagger2Config" class="com.an.auctionara.configuration.SwaggerCustomConfiguration"></bean>
 	
 	
 	<!-- 
