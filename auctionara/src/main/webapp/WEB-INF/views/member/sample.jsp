@@ -4,11 +4,13 @@
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
 
-<div>
+<div class="container-fluid">
 
-
-
-
+	<div class="row">
+		<div>
+		
+		</div>
+	</div>
 
 
 
