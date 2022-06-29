@@ -60,9 +60,9 @@ public class CashingController {
 	}
 	
 	@GetMapping("/request_list")
-	public String list(Model model) {
+	public String requestList(Model model) {
 		List<CashingPointsDto> requestList = cashingPointsDao.requestList();
-		model.addAttribute("reqeustList", requestList);
+		model.addAttribute("requestList", requestList);
 		
 		return "admin/cashing/request_list";
 	}

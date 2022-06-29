@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @WebAppConfiguration
 @Slf4j
 public class CashingPointsTest {
-	// TEST 진행 안됨 
 	
 	@Autowired
 	private CashingPointsDao cashingPointsDao;
@@ -33,8 +32,10 @@ public class CashingPointsTest {
 	public void test() {
 		List<CashingPointsDto> requestList = cashingPointsDao.requestList();
 		
-		for(CashingPointsDto cashingPointsDto : requestList) {
-			log.info("cashingPointsDto = {}", cashingPointsDto);
+		System.out.println(requestList);
+		
+		for(CashingPointsDto dto : requestList) {
+			System.out.println(dto);
 		}
 		
 	}

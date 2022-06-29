@@ -25,7 +25,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cashingPoints">
-	
+
 	<!-- 현금화 신청 list -->
 	<select id="requestList" resultType="CashingPointsDto">
 		select * from cashing_points where cashing_success_time is null and cashing_status = '출금신청'
