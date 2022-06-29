@@ -59,6 +59,17 @@
 			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}
 		)
 	</insert>
+	
+	<select id="login" resultType="MemberDto" parameterType="String">
+		select * from member
+			where member_email = #{memberEmail}
+	</select>
+	
+	<update id="updateLogintime" parameterType="int">
+		update member
+			set member_logintime = sysdate
+		where member_no = #{memberNo}
+	</update>
 
 	
 </mapper> 

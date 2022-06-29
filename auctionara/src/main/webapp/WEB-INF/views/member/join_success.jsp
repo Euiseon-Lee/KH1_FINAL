@@ -5,14 +5,14 @@
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
 
-<div>
-	<div>
+<div class="container-fluid">
+	<div class="row">
 		<h1>회원가입 완료</h1>
 	</div>
 	
-	<div>
+	<div class="row">
 		<h3>
-			<a href="{root}/member/login">로그인하러가기</a>
+			<a href="${root}/member/login">로그인하러가기</a>
 		</h3>
 	</div>
 </div>

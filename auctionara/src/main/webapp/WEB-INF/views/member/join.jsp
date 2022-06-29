@@ -5,13 +5,13 @@
 
 <form action="join" method="post">
 	
-	<div>
+	<div class="container-fluid">
 	
-		<div>
+		<div class="row">
 			<h1>점보트론: 회원 가입</h1>
 		</div>
 		
-		<div>
+		<div class="row">
 			<div>
 				<label> 이메일
 					<input type="email" name="memberEmail" autocomplete="off" placeholder="email">
@@ -22,7 +22,7 @@
 			</div>
 		</div>
 		
-		<div>
+		<div class="row">
 			<div>
 				<label> 비밀번호
 					<input type="password" name="memberPw" autocomplete="off" placeholder="password">
@@ -36,25 +36,25 @@
 
 		</div>
 		
-		<div>
+		<div class="row">
 			<label> 닉네임
 				<input type="text" name="memberNick" autocomplete="off" placeholder="nickname">
 			</label>
 		</div>
 		
-		<div>
+		<div class="row">
 	    	<label>프로필
 	    		<input type="file" name="attachmentNo">
 	    	</label>
 	    </div>
 		
-		<div>
+		<div class="row">
 			<label>
 				<input type="checkbox">전체 동의		
 			</label>
 		</div>
 		
-		<div>
+		<div class="row">
 			<button type="submit">회원가입</button>
 		</div>
 	

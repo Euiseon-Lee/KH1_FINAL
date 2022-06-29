@@ -24,4 +24,24 @@ public class MemberDaoImpl implements MemberDao {
 		
 	}
 
+
+	@Override
+	public MemberDto login(String memberEmail, String memberPw) {
+		MemberDto memberDto = sqlSession.selectOne("member.login", memberEmail);
+		
+		if(memberDto == null) {
+			return null;
+		}
+		
+		
+		boolean isPwIdentical = memberDto.getMemberPw().equals(memberPw);
+		if(isPwIdentical) {
+			sqlSession.update("member.updateLogintime", memberDto.getMemberNo());
+			return memberDto;
+		}
+		else {
+			return null;
+		}
+	}
+
 }
