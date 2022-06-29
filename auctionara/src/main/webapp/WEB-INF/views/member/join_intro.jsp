@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+<%@include file="/WEB-INF/views/template/header.jsp" %>
+
 
 <div>
 	<div>
@@ -9,7 +10,7 @@
 	</div>
 	
 	<div>
-		<h3><a href="/auctionara/member/join">일반 회원가입</a></h3>
+		<h3><a href="${root}/member/join">일반 회원가입</a></h3>
 		<h3><a href="">네이버 회원가입</a></h3>
 		<h3><a href="">구글 회원가입</a></h3>
 	</div>
