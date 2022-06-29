@@ -3,14 +3,15 @@
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
-<div>
-	<div>
-		<h1>점보트론:우리 동네에서</h1><br>
-		<h1>간편한 중고 경매</h1>
+<div class="container-fluid">
+	<div class="row">
+		<h1>점보트론:<br>
+			우리 동네에서<br>
+			간편한 중고 경매</h1>
 	</div>
 
 	<form action="login" method="post">
-		<div>
+		<div class="row">
 			<div>
 				<label>이메일
 					<input type="email" name="memberEmail" autocomplete="off" placeholder="email">
@@ -24,7 +25,17 @@
 			</div>
 			
 			<div>
-			
+				<div>
+					<label>
+							<input type="checkbox">	
+					</label> 이메일 기억하기		
+				</div>
+
+				<div>
+					<label>
+							<input type="checkbox">	
+					</label> 자동 로그인 설정
+				</div>
 			</div>
 	
 			<div>
@@ -33,13 +44,13 @@
 		</div>
 	</form>	
 	
-	<div>
+	<div class="row">
 		<div>
-			<a href="">이메일을 잊으셨나요?</a>
+			<a href="${root}/member/find_email">이메일을 잊으셨나요?</a>
 		</div>
 	
 		<div>
-			<a href="">비밀번호를 잊으셨나요?</a>
+			<a href="${root}/member/find_pw">비밀번호를 잊으셨나요?</a>
 		</div>	
 	</div>
 

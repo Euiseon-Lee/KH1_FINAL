@@ -5,25 +5,23 @@
 
 
 <div class="container-fluid">
-	<div class="row">
-		<h1>회원가입 타입 고르기</h1>
-	</div>
-	
+
 	<div class="row">
 		<div>
-			<h3><a href="${root}/member/join">일반 회원가입</a></h3>		
+		
 		</div>
-
-		<div>
-			<h3><a href="">네이버 회원가입</a></h3>		
-		</div>
-
-		<div>
-			<h3><a href="">구글 회원가입</a></h3>
-		</div>
-
 	</div>
-	
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
 
