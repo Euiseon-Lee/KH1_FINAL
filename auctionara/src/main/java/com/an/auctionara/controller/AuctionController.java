@@ -12,7 +12,6 @@ public class AuctionController {
 
 	@GetMapping("/write")
 	public String write() {
-		
 		return "/auction/write";
 	}
 	

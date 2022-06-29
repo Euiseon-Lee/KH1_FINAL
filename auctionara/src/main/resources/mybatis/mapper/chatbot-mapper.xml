@@ -24,38 +24,33 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="member">
+<mapper namespace="chatbot">
+	
+	<select id="list" resultType="ChatbotDto">
+		select * from chatbot
+	</select>
 	
 	<select id="sequence" resultType="int">
-		select member_seq.nextval from dual
+		select chatbot_seq.nextVal from dual 
 	</select>
-		
-
-	<insert id="join" parameterType="MemberDto">
-		insert into member(
-			member_no, member_email, member_pw, member_nick
-		)
-		values(
-			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}
-		)
+	
+	<insert id="insert" parameterType="ChatbotDto">
+		insert into chatbot (chatbot_no, chatbot_content, chatbot_super_no)
+		values (#{chatbotNo}, #{chatbotContent}, #{chatbotSuperNo}) 
 	</insert>
 	
-		<select id="one" parameterType="int" resultType="MemberDto">
-		select * from member where member_no = #{memberNo}
-	</select>
+	<update id="update" parameterType="ChatbotDto">
+		update chatbot set
+			chatbot_content = #{chatbotContent}, chatbot_super_no = #{chatbotSuperNo}
+		where chatbot_no = #{chatbotNo}
+	</update>
 	
-	<!-- 검색 + 페이징 list -->
-	<select id="list" resultType="MemberDto" parameterType="Map">
-		select * from (
-	 		select rownum rn, TMP.* from (
-	 			select * from member 
-			 	<if test="type != null and keyword != null">
-				 	<![CDATA[
-				 		where instr(${type}, #{keyword}) > 0
-				 	]]>
-			 	</if>
-	 		) TMP
-	 	) where rn between #{begin} and #{end}
+	<delete id="delete" parameterType="int">
+		delete chatbot where chatbot_no = #{chatbotNo}
+	</delete>
+	
+	<select id="one" parameterType="int" resultType="ChatbotDto">
+		select * from chatbot where chatbot_no = #{chatbotNo}
 	</select>
 	
 </mapper> 
