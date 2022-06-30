@@ -2,6 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+
+<!-- 세션 정보 추가 -->
+<c:set var="memberNo" value="${whoLogin}"></c:set>
+<c:set var="isLogin" value="${memberNo != null}"></c:set>
+<c:set var="isAdmin" value="${auth == '관리자'}"></c:set>
+<c:set var="isBlackMamba" value="${auth == '블랙회원'}"></c:set>
+
 <!DOCTYPE html>
 <html>
 
