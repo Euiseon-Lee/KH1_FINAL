@@ -21,7 +21,7 @@ import com.an.auctionara.vo.CashingPointsListVO;
 
 @Controller
 @RequestMapping("/admin/cashing")
-public class CashingController {
+public class AdminCashingController {
 	
 	@Autowired
 	private CashingPointsDao cashingPointsDao;
