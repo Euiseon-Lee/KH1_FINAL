@@ -53,10 +53,10 @@
 
 	<insert id="join" parameterType="MemberDto">
 		insert into member(
-			member_no, member_email, member_pw, member_nick
+			member_no, member_email, member_pw, member_nick, member_name, member_sex, member_birth
 		)
 		values(
-			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}
+			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}, #{member_name}, #{member_sex}, #{member_birth}
 		)
 	</insert>
 	
