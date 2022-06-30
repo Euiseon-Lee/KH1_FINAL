@@ -41,8 +41,6 @@ public class CashingController {
 		List<CashingPointsListVO> list = cashingPointsDao.list(type, keyword, p, s);
 		model.addAttribute("list", list);
 		
-		// resultMap 
-		
 		
 		boolean search = type != null && keyword != null;
 		model.addAttribute("search", search);
