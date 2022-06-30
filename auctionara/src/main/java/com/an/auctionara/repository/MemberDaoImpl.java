@@ -44,4 +44,11 @@ public class MemberDaoImpl implements MemberDao {
 		}
 	}
 
+
+	@Override
+	public MemberDto memberSearch(int memberNo) {
+		MemberDto memberDto = sqlSession.selectOne("member.one", memberNo);
+		return memberDto;
+	}
+
 }
