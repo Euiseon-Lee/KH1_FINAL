@@ -93,4 +93,60 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("whoLogin");
+		session.removeAttribute("auth");
+		return "redirect:/";
+	}
+	
+	@GetMapping("/check_email")
+	public String checkEmail() {
+		return "member/check_email";
+	}
+	
+	
+	
+	@PostMapping("/check_email")
+	public String checkEmail(
+					String memberEmail,
+					Model model
+			) {
+		int result = memberDao.checkEmail(memberEmail);
+		
+		if(result != 1) {
+			return "redirect:find_email?error";
+		}
+		else {
+			
+			//모달창으로 열리도록 하기!
+			model.addAttribute(memberEmail);
+			return "member/check_email_result";
+		}
+		
+	}
+	
+	@GetMapping("/change_pw")
+	public String changePw() {
+		return "member/change_pw";
+	}
+	
+	
+	@PostMapping("/change_pw")
+	public String changePw(
+			String memberEmail,
+			Model model
+			) {
+		int result = memberDao.checkEmail(memberEmail);
+		
+		if(result != 1) {
+			return "redirect:find_email?error";			
+		}
+		else {
+			//result가 1이면 이메일로 변경링크 발송되어야함
+			//모달창으로 열리도록 하기!
+			return "member/change_pw_result";
+		}
+	}
+	
 }

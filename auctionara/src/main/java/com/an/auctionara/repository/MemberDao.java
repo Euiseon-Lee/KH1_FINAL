@@ -11,6 +11,8 @@ public interface MemberDao {
 	MemberDto login(String memberEmail, String memberPw);
 	
 	MemberDto memberSearch(int memberNo);
+
+	int checkEmail(String memberEmail);
 	
 
 	

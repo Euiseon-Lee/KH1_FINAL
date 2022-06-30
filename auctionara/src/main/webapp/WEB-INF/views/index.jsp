@@ -19,17 +19,24 @@
 		<h5>블랙회원 여부: ${isBlackMamba}</h5>
 	</div>
 	
-	<div class="row">
-		<h1><a href="${root}/member/join_intro">회원가입</a></h1>
-	</div>
-	
-	<div class="row">
-		<h1><a href="${root}/member/login">로그인</a></h1>
-	</div>
-	
-	<div class="row">
-		<h1><a href="${root}/member/logout">로그아웃</a></h1>
-	</div>
+	<c:choose>
+		<c:when test="${!isLogin}">
+			<div class="row">
+				<h1><a href="${root}/member/join_intro">회원가입</a></h1>
+			</div>
+			
+			<div class="row">
+				<h1><a href="${root}/member/login">로그인</a></h1>
+			</div>		
+		</c:when>
+		
+		<c:otherwise>
+			<div class="row">
+				<h1><a href="${root}/member/logout">로그아웃</a></h1>
+			</div>
+		</c:otherwise>
+	</c:choose>
+
 </div>
 
 
