@@ -7,11 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.an.auctionara.entity.CashingPointsDto;
+import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.CashingPointsDao;
+import com.an.auctionara.repository.MemberDao;
+import com.an.auctionara.vo.CashingPointsListVO;
 
 
 @Controller
@@ -21,7 +26,10 @@ public class CashingController {
 	@Autowired
 	private CashingPointsDao cashingPointsDao;
 	private CashingPointsDto cashingPointsDto;
+	private MemberDto memberDto; 
+	private MemberDao memberDao; 
 	
+	// 현금화 관련 전체 목록 
 	@GetMapping("/list")
 	public String list(
 			@RequestParam(required = false) String type,
@@ -30,8 +38,10 @@ public class CashingController {
 			@RequestParam(required = false, defaultValue = "10") int s,
 			Model model) {
 		
-		List<CashingPointsDto> list = cashingPointsDao.list(type, keyword, p, s);
+		List<CashingPointsListVO> list = cashingPointsDao.list(type, keyword, p, s);
 		model.addAttribute("list", list);
+		
+		// resultMap 
 		
 		
 		boolean search = type != null && keyword != null;
@@ -59,11 +69,28 @@ public class CashingController {
 		return "admin/cashing/list"; 
 	}
 	
+	// 현금화 신청 목록 
 	@GetMapping("/request_list")
 	public String requestList(Model model) {
-		List<CashingPointsDto> requestList = cashingPointsDao.requestList();
+		List<CashingPointsListVO> requestList = cashingPointsDao.requestList();
 		model.addAttribute("requestList", requestList);
 		
 		return "admin/cashing/request_list";
+	}
+	
+	// 현금화 승인
+	@GetMapping("/approve/{cashingNo}")
+	public String approveCashing(@PathVariable int cashingNo) {
+		cashingPointsDto = cashingPointsDao.approveCashing(cashingNo);
+		
+		return "redirect: /auctionara/admin/cashing/request_list";
+	}
+	
+	// 현금화 거절 
+	@GetMapping("/refuse/{cashingNo}")
+	public String refuseCashing(@PathVariable int cashingNo) {
+		cashingPointsDto = cashingPointsDao.refuseCashing(cashingNo);
+		
+		return "redirect: /auctionara/admin/cashing/request_list"; 
 	}
 }

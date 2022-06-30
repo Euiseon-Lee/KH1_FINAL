@@ -1,3 +1,4 @@
+<%@page import="com.an.auctionara.repository.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -7,7 +8,7 @@
 		<thead>
 			<tr>
 				<th>신청 번호</th>
-				<th>회원 번호</th>
+				<th>회원 이름</th>
 				<th>신청 금액</th>
 				<th>신청 은행</th>
 				<th>신청 계좌번호</th>
@@ -18,17 +19,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="cashingPointsDto" items="${list}">
+			<c:forEach var="cashingPointsListVO" items="${list}">
 				<tr>
-					<td>${cashingPointsDto.cashingNo}</td>
-					<td>${cashingPointsDto.memberNo}</td>
-					<td>${cashingPointsDto.cashingMoney}</td>
-					<td>${cashingPointsDto.cashingBank}</td>
-					<td>${cashingPointsDto.cashingAccount}</td>
-					<td>${cashingPointsDto.cashingType}</td>
-					<td>${cashingPointsDto.cashingStatus}</td>
-					<td>${cashingPointsDto.cashingRequestTime}</td>
-					<td>${cashingPointsDto.cashingSuccessTime}</td>
+					<td>${cashingPointsListVO.cashingNo}</td>
+					<td>${cashingPointsListVO.memberName}</td>
+					<td>${cashingPointsListVO.cashingMoney}</td>
+					<td>${cashingPointsListVO.cashingBank}</td>
+					<td>${cashingPointsListVO.cashingAccount}</td>
+					<td>${cashingPointsListVO.cashingType}</td>
+					<td>${cashingPointsListVO.cashingStatus}</td>
+					<td>${cashingPointsListVO.cashingRequestTime}</td>
+					<td>${cashingPointsListVO.cashingSuccessTime}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -113,8 +114,8 @@
 		<!-- 검색창 -->
 		<form action="list" method="get">
 			<select name="type" class="form-input input-round">
-				<option value="member_no" <c:if test="${type == 'member_no'}">selected</c:if>>제목</option>
-				<option value="cashing_bank" <c:if test="${type == 'cashing_bank'}">selected</c:if>>내용</option>
+				<option value="member_name" <c:if test="${type == 'member_name'}">selected</c:if>>회원 이름</option>
+				<option value="cashing_account" <c:if test="${type == 'cashing_account'}">selected</c:if>>계좌번호</option>
 			</select>
 			
 			<input type="search" name="keyword" placeholder="검색어 입력" required class="form-input input-round" value="${keyword}">

@@ -18,9 +18,9 @@ public class CashingPointsRestController {
 	@Autowired
 	private CashingPointsDao cashingPointsDao;
 	
-	@GetMapping("/")
-	public List<CashingPointsDto> requestList() {
-		return cashingPointsDao.requestList();
-	}
+//	@GetMapping("/")
+//	public List<CashingPointsDto> requestList() {
+//		return cashingPointsDao.requestList();
+//	}
 	
 }
