@@ -56,7 +56,7 @@
 			member_no, member_email, member_pw, member_nick, member_name, member_sex, member_birth
 		)
 		values(
-			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}, #{member_name}, #{member_sex}, #{member_birth}
+			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}, #{memberName}, #{memberSex}, to_date(#{memberBirth},'YY/MM/DD')
 		)
 	</insert>
 	

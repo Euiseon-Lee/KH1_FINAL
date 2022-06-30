@@ -1,11 +1,8 @@
 package com.an.auctionara.repository;
 
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.an.auctionara.entity.MemberDto;
 
 
@@ -18,8 +15,11 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public void join(MemberDto memberDto) {
+		
+		
 		int sequence = sqlSession.selectOne("member.sequence");
 		memberDto.setMemberNo(sequence);
+
 		sqlSession.insert("member.join", memberDto);
 		
 	}
