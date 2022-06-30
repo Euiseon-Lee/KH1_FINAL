@@ -40,7 +40,7 @@ CREATE TABLE attachment (
 	attachment_no	number		NOT NULL,
 	attachment_uploadname	varchar2(60)		NOT NULL,
 	attachment_savename	varchar2(60)		NOT NULL,
-	attachment_type	varchar2(4)		NOT NULL,
+	attachment_type	varchar2(10)		NOT NULL,
 	attachment_size	number		NOT NULL
 );
 

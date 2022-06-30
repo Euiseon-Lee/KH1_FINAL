@@ -1,5 +1,7 @@
 package com.an.auctionara.service;
 
-public interface AuctionService {
+import com.an.auctionara.entity.AuctionDto;
 
+public interface AuctionService {
+	/* void insert(AuctionDto auctionDto); */
 }
