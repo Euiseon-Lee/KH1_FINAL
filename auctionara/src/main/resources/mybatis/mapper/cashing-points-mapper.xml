@@ -26,7 +26,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cashingPoints">
 
-	<!-- 현금화 신청 list -->
+	<!-- 현금화 관련 list를 위한 수동 mapping -->
 	<resultMap type="CashingPointsListVO" id="cashingPointsMap">
 		<collection property="cashingPointsList" javaType="List" ofType="CashingPointsListVO" select="requestList" column="cashing_no">
 			<result column="cashing_no" property="cashingNo"/>
@@ -42,6 +42,7 @@
 		</collection>
 	</resultMap>
 	
+	<!-- 현금화 신청 list -->
 	<select id="requestList" resultType="CashingPointsListVO">
 		select CP.*, M.member_name from cashing_points CP 
 			inner join member M on CP.member_no = M.member_no 
@@ -49,7 +50,7 @@
 		order by cashing_no desc
 	</select>
 	
-	<!-- 페이징이 포함된 list -->	
+	<!-- 검색 + 페이징이 포함된 현금화 list -->	
 	<select id="list" parameterType="Map" resultType="CashingPointsListVO">
 	 	
 	 	select * from (
@@ -78,11 +79,13 @@
 		 	</if>
 	 </select>
 	
+	<!-- 현금화 승인  -->
 	<update id="approveCashing" parameterType="int">
 		update cashing_points set cashing_success_time = sysdate, cashing_status = '출금완료'
 		where cashing_no = #{cashingNo} and cashing_success_time is null and cashing_status = '출금신청'
 	</update>
 	
+	<!-- 현금화 거절 -->
 	<update id="refuseCashing" parameterType="int">
 		update cashing_points set cashing_status = '출금보류' where cashing_no = #{cashingNo} and cashing_success_time is null and cashing_status = '출금신청' 
 	</update>
