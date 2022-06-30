@@ -24,30 +24,14 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="auction">
-
+<mapper namespace="category">
+	
 	<select id="sequence" resultType="int">
-		select auction_seq.nextval from dual
+		select category_seq.nextval from dual
 	</select>
 	
-	<insert id="insert" parameterType="AuctionDto">
-		insert into auction(
-			auction_no, auctioneer_no, category_no, 
-			auction_title, auction_content,
-			auction_closed_time, auction_opening_bid, auction_closing_bid,
-			auction_bid_unit, auction_status
-		)
-		values(
-			#{auctionNo}, #{auctioneerNo}, #{categoryNo},
-			#{auctionTitle}, #{auctionContent},
-			to_date(#{auctionClosedTime}, 'YYYY-MM-DD HH24:MI'), #{auctionOpeningBid}, #{auctionClosingBid},
-			#{auctionBidUnit}, #{auctionStatus}
-		)
-	</insert>
-	
-	<!-- 회원이 가장 최근 등록한 경매 조회 -->
-	<select id="recent" resultType="AuctionDto" parameterType="int">
-		select * from auction where auctioneer_no = #{auctioneerNo} and auction_no = (select max(auction_no) from auction)
+	<select id="list" resultType="categoryDto">
+		select * from category
 	</select>
-	
+		
 </mapper> 

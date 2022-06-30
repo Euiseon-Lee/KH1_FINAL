@@ -11,5 +11,5 @@ public class AttachmentDto {
 	private String attachmentUploadname;
 	private String attachmentSavename;
 	private String attachmentType;
-	private int attachmentSize; 
+	private long attachmentSize; 
 }
