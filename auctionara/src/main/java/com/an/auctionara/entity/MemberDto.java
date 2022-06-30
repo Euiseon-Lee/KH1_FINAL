@@ -1,7 +1,5 @@
 package com.an.auctionara.entity;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,12 +16,12 @@ public class MemberDto {
 	private String memberAvailableTime;
 	private String memberGrade;
 	private int memberRedCount;
-	private Date memberJoindate;
-	private Date memberLogintime;
+	private String memberJoindate;
+	private String memberLogintime;
 	
 	
 	//아이디 조회용으로 쓸 개인정보 추가
 	private String memberName;
 	private String memberSex;
-	private Date memberBirth;
+	private String memberBirth;
 }
