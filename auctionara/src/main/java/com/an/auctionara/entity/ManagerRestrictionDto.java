@@ -12,6 +12,6 @@ public class ManagerRestrictionDto {
 	private int restrictionNo;
 	private int memberNo;
 	private String restrictionReason;
-	private int restrictionType;
+	private String restrictionType;
 	private Date restrictionTime;
 }

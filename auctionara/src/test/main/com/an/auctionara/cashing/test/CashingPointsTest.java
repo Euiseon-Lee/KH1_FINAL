@@ -13,6 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.an.auctionara.entity.CashingPointsDto;
 import com.an.auctionara.repository.CashingPointsDao;
+import com.an.auctionara.vo.CashingPointsListVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,12 +31,12 @@ public class CashingPointsTest {
 	
 	@Test
 	public void test() {
-		List<CashingPointsDto> requestList = cashingPointsDao.requestList();
+		List<CashingPointsListVO> requestList = cashingPointsDao.requestList();
 		
 		System.out.println(requestList);
 		
-		for(CashingPointsDto dto : requestList) {
-			System.out.println(dto);
+		for(CashingPointsListVO vo : requestList) {
+			System.out.println(vo);
 		}
 		
 	}
