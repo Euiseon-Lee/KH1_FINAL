@@ -37,6 +37,6 @@ public class AuctionReportDaoImpl implements AuctionReportDao{
 		param.put("type", type);
 		param.put("keyword", keyword);
 		
-		return sqlSession.selectOne("auctionReport.count", param);
+		return sqlSession.selectOne("auctionReport.count", param);	
 	}
 }
