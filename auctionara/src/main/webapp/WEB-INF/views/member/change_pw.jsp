@@ -17,7 +17,7 @@
 	</div>
 	
 	<div class="row">
-		<div class="half"><a href="${root}/member/find_email">아이디 찾기</a></div>
+		<div class="half"><a href="${root}/member/check_email">아이디 찾기</a></div>
 		<div class="half"><a href="${root}/member/change_pw">비밀번호 찾기</a></div>
 	</div>
 	
@@ -35,7 +35,7 @@
 		</div>
 		
 		<div class="row">
-			<button type="submit" onkeydown="hitEnterkey(event);">링크 발송</button>
+			<button type="submit">링크 발송</button>
 		</div>	
 	</form>	
 
