@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
+
 <style>
 	.half{
 		position:relative;
@@ -17,11 +18,11 @@
 	</div>
 	
 	<div class="row">
-		<div class="half"><a href="${root}/member/find_email">아이디 찾기</a></div>
+		<div class="half"><a href="${root}/member/check_email">아이디 찾기</a></div>
 		<div class="half"><a href="${root}/member/change_pw">비밀번호 찾기</a></div>
 	</div>
 	
-	<form action="find_email" method="post">
+	<form action="check_email" method="post">
 		<div class="row">
 			<p>
 				경매나라는 이메일을 아이디로 사용하고 있습니다
@@ -37,8 +38,9 @@
 		</div>
 		
 		<div class="row">
-			<button type="submit" onkeydown="hitEnterkey(event);">확인</button>
-		</div>	
+			<button type="submit">확인</button>
+		</div>
+			
 	</form>	
 
 
@@ -46,3 +48,8 @@
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
+
+
+
+

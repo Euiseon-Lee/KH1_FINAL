@@ -110,7 +110,7 @@
 		</div>
 		
 		<div class="row">
-			<button type="submit">회원가입</button>
+			<button type="submit" onkeydown="hitEnterkey(event);">회원가입</button>
 		</div>
 	
 	</div>
