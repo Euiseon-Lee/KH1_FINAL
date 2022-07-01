@@ -43,8 +43,11 @@ public class AdminRestrictController {
 	
 	// 회원 제재 입력 
 	@PostMapping("/restrict_member/{memberNo}/{auctionReportNo}")
-	public String restrictMember(@ModelAttribute ManagerRestrictionDto managerRestrictionDto, @PathVariable int auctionReportNo) {		
-		adminRestrictService.restrictMember(managerRestrictionDto, auctionReportNo);
+	public String restrictMember(
+			@ModelAttribute ManagerRestrictionDto managerRestrictionDto, 
+			@PathVariable int auctionReportNo, 
+			@PathVariable int memberNo) {		
+		adminRestrictService.restrictMember(managerRestrictionDto, auctionReportNo, memberNo);
 		
 		return "redirect: /auctionara/admin/restriction/list";
 	}
