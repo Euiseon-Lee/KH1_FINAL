@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
     <form action="${root}/auction/submit" method="post" class="needs-validation" enctype="multipart/form-data" @submit="beforeSubmit" id="form">
         <div class="row pt-5 pb-3 border-bottom border-dark">
             <div class="col-sm">
-                <h2>경매 등록</h2>
+                <h2 class="fw-bold">경매 등록</h2>
             </div>
         </div>
         <div class="row py-4 border-bottom">
