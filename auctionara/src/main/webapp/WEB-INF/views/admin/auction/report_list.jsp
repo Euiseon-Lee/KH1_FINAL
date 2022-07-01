@@ -26,7 +26,7 @@
 					<td>${auctionReportListVO.reporterName}</td>
 					<td>${auctionReportListVO.auctionReportReason}</td>
 					<td>${auctionReportListVO.auctionReportTime}</td>
-					<td><a href="${pageContext.request.contextPath}/admin/restriction/restrict_member/${auctionReportListVO.auctioneerNo}">제재하기</a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/restriction/restrict_member/${auctionReportListVO.auctioneerNo}/${auctionReportListVO.auctionReportNo}">제재하기</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

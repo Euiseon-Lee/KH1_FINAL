@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.an.auctionara.entity.AuctionReportDto;
 import com.an.auctionara.entity.ManagerRestrictionDto;
+import com.an.auctionara.repository.AuctionReportDao;
 import com.an.auctionara.repository.ManagerRestrictionDao;
+import com.an.auctionara.service.AdminRestrictService;
 import com.an.auctionara.vo.CashingPointsListVO;
 import com.an.auctionara.vo.ManagerRestrictionListVO;
 import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
@@ -24,20 +27,24 @@ import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
 public class AdminRestrictController {
 
 	@Autowired
-	private ManagerRestrictionDao managerRestrictionDao; 
+	private ManagerRestrictionDao managerRestrictionDao;
+	
+	@Autowired
+	private AdminRestrictService adminRestrictService;
 	
 	// 회원 제재 입력 페이지 
-	@GetMapping("/restrict_member/{memberNo}")
-	public String restrictMember(@PathVariable int memberNo, Model model) {
+	@GetMapping("/restrict_member/{memberNo}/{auctionReportNo}")
+	public String restrictMember(@PathVariable int memberNo, @PathVariable int auctionReportNo, Model model) {
 		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("auctionReportNo", auctionReportNo);
 		
 		return "admin/restriction/restrict_member";
 	}
 	
 	// 회원 제재 입력 
-	@PostMapping("/restrict_member/{memberNo}")
-	public String restrictMember(@ModelAttribute ManagerRestrictionDto managerRestrictionDto) {
-		managerRestrictionDao.restrictMember(managerRestrictionDto);
+	@PostMapping("/restrict_member/{memberNo}/{auctionReportNo}")
+	public String restrictMember(@ModelAttribute ManagerRestrictionDto managerRestrictionDto, @PathVariable int auctionReportNo) {		
+		adminRestrictService.restrictMember(managerRestrictionDto, auctionReportNo);
 		
 		return "redirect: /auctionara/admin/restriction/list";
 	}

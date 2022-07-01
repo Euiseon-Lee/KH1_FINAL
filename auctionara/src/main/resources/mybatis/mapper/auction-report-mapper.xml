@@ -72,5 +72,15 @@
 		 		]]>
 		 	</if>
 	 </select>
+	 
+	 <!-- 관리자 제재가 진행되면 제재 여부 컬럼 update -->
+	 <update id="setRestrict" parameterType="int">
+	 	update auction_report set auction_report_restriction = 1 where auction_report_no = #{auctionReportNo}	
+	 </update>
+	 
+	 <!-- 상세 조회 -->
+	 <select id="one" resultType="AuctionReportDto" parameterType="int">
+	 	select * from auction_report where auction_report_no = #{auctionReportNo}
+	 </select>
 
 </mapper> 

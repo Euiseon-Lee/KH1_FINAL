@@ -4,6 +4,7 @@
 
 <form method="post">
 	<input type="hidden" name="memberNo" value="${memberNo }">
+	<input type="hidden" name="auctionReportNo" value="${auctionReportNo}">
 	
 	<div>
 		<label>제재 유형</label>

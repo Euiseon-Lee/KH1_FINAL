@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.an.auctionara.entity.AuctionReportDto;
 import com.an.auctionara.vo.AuctionReportListVO;
 
 @Repository
@@ -38,5 +39,14 @@ public class AuctionReportDaoImpl implements AuctionReportDao{
 		param.put("keyword", keyword);
 		
 		return sqlSession.selectOne("auctionReport.count", param);	
+	}
+	
+	@Override
+	public AuctionReportDto setRestrict(int auctionReportNo) {
+		// 관리자 제재 입력 후 신고 테이블의 제재 여부 컬럼 update 메소드 
+		int count = sqlSession.update("auctionReport.setRestrict", auctionReportNo);
+//		if(count == 0) throw new CannotFindException();
+		
+		return sqlSession.selectOne("auctionReport.one", auctionReportNo);
 	}
 }
