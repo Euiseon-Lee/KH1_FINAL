@@ -64,7 +64,7 @@
 	</select>
 	
 	<!-- 경매 상세 조회 -->
-	<select id="list" resultType="AuctionDetailVO" parameterType="Map">
+	<select id="detail" resultType="AuctionDetailVO" parameterType="Map">
 		select * from (
 		    select rownum rn, TMP.* from (
 				select max(B.bidding_price) max_bidding_price, C.my_bidding_price, 
@@ -82,5 +82,5 @@
 		    )TMP
 		) where rn = 1
 	</select>
-	
+
 </mapper> 
