@@ -74,16 +74,12 @@ public class AuctionController {
 	}
 
 	@PostMapping("/write")
-	public void write2(@ModelAttribute WriteAuctionVO writeAuctionVO, HttpSession session, RedirectAttributes attr) throws IllegalStateException, IOException {
-		/*
-		 * int memberNo = (int) session.getAttribute("login");
-		 * auctionDto.setAuctioneerNo(memberNo);
-		 */
-
+	public void write2(@ModelAttribute WriteAuctionVO writeAuctionVO, HttpSession session, RedirectAttributes attr) throws IllegalStateException, IOException {	
+		int memberNo = (int) session.getAttribute("memberNo");
 		writeAuctionVO.setAuctionClosedTime(writeAuctionVO.getAuctionClosedTime().replace("T", " "));
 	
 		AuctionDto auctionDto = AuctionDto.builder()
-									.auctioneerNo(9) // 임시 회원번호 (추후 수정)
+									.auctioneerNo(memberNo)
 									.categoryNo(writeAuctionVO.getCategoryNo())
 									.auctionTitle(writeAuctionVO.getAuctionTitle())
 									.auctionContent(writeAuctionVO.getAuctionContent())
@@ -110,6 +106,6 @@ public class AuctionController {
 	
 	@PostMapping("/submit")
 	public String submit() {
-		return "redirect:/auction/write_success"; // 추후 마이페이지 내 경매 목록 리다이렉트 하도록 변경 예정
+		return "redirect:/"; // 추후 마이페이지 내 경매 목록 리다이렉트 하도록 변경 예정
 	}
 }
