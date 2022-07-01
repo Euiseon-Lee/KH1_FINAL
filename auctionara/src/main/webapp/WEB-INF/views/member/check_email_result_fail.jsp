@@ -25,11 +25,11 @@
 
 
 	<div class="row">
-		<h3>"${memberEmailResult}"는 경매나라에 등록된 계정입니다</h3>
+		<h3>"${memberEmailResult}"는 경매나라에 등록된 계정이 아닙니다</h3>
 	</div>
 	
 	<div class="row">
-		<a href="${root}/member/login">바로 로그인하러 가기</a>
+		<a href="${root}/member/join">바로 로그인하러 가기</a>
 	</div>
 
 	<div class="row">
