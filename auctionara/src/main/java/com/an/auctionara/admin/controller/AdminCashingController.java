@@ -25,9 +25,9 @@ public class AdminCashingController {
 	
 	@Autowired
 	private CashingPointsDao cashingPointsDao;
+	
+	@Autowired
 	private CashingPointsDto cashingPointsDto;
-	private MemberDto memberDto; 
-	private MemberDao memberDao; 
 	
 	// 현금화 관련 전체 목록 
 	@GetMapping("/list")
