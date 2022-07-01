@@ -41,7 +41,7 @@
 	</resultMap>
 	
 	<!-- 경매 게시글 신고 페이징 list -->
-	<select id="list" parameterType="int" resultType="AuctionReportListVO">
+	<select id="list" parameterType="Map" resultType="AuctionReportListVO">
 	 	
 	 	select * from (
 	 		select rownum rn, TMP.* from (
@@ -49,6 +49,11 @@
 	 				inner join auction A on AR.auction_no = A.auction_no 
 	 				inner join member M on A.auctioneer_no = M.member_no 
 	 				inner join member M2 on AR.auction_reporter_no = M2.member_no 
+	 				<if test="type != null and keyword != null">
+					 	<![CDATA[
+					 		where instr(${type}, #{keyword}) > 0
+					 	]]>
+				 	</if>
 			 	order by auction_report_no desc
 	 		) TMP
 	 	) where rn between #{begin} and #{end}
@@ -56,8 +61,16 @@
 	 </select>
 	 
 	 <!-- list 페이징을 위한 count	-->
-	 <select id="count" resultType="int">
-	 	select count(*) from auction_report
+	 <select id="count"  parameterType="Map" resultType="int">
+	 	select count(*) from auction_report AR 
+	 		inner join auction A on AR.auction_no = A.auction_no 
+	 		inner join member M on A.auctioneer_no = M.member_no 
+	 		inner join member M2 on AR.auction_reporter_no = M2.member_no 
+	 		<if test="type != null and keyword != null">
+		 		<![CDATA[
+				 	where instr(${type}, #{keyword}) > 0
+		 		]]>
+		 	</if>
 	 </select>
 
 </mapper> 

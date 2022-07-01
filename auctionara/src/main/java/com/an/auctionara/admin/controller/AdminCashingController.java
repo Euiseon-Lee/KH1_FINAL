@@ -34,7 +34,7 @@ public class AdminCashingController {
 	public String list(
 			@RequestParam(required = false) String type,
 			@RequestParam(required = false) String keyword,
-			@RequestParam(required = false, defaultValue = "1") int p, // 통신은 문자열 
+			@RequestParam(required = false, defaultValue = "1") int p,
 			@RequestParam(required = false, defaultValue = "10") int s,
 			Model model) {
 		

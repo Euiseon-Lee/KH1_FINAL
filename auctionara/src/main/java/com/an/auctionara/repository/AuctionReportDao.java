@@ -8,6 +8,6 @@ public interface AuctionReportDao {
 
 	List<AuctionReportListVO> reportList(int p, int s);
 
-	int count();
+	int count(String type, String keyword);
 
 }
