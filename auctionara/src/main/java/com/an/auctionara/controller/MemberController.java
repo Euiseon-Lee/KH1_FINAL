@@ -109,20 +109,18 @@ public class MemberController {
 	
 	@PostMapping("/check_email")
 	public String checkEmail(
-					String memberEmail,
+					@RequestParam String memberEmail,
 					Model model
 			) {
 		int result = memberDao.checkEmail(memberEmail);
+		model.addAttribute("memberEmailResult", memberEmail);
 		
 		if(result != 1) {
-			return "redirect:find_email?error";
+			return "member/check_email_result_fail";
 		}
 		else {
-			
-			//모달창으로 열리도록 하기!
-			model.addAttribute(memberEmail);
 			return "member/check_email_result";
-		}
+		}		
 		
 	}
 	
@@ -140,7 +138,7 @@ public class MemberController {
 		int result = memberDao.checkEmail(memberEmail);
 		
 		if(result != 1) {
-			return "redirect:find_email?error";			
+			return "redirect:change_pw?error";			
 		}
 		else {
 			//result가 1이면 이메일로 변경링크 발송되어야함
@@ -148,5 +146,12 @@ public class MemberController {
 			return "member/change_pw_result";
 		}
 	}
+	
+	
+//	@GetMapping("/check_email_result")
+//	public String checkEmailResult() {
+//		return "member/check_email_result";
+//	}
+	
 	
 }
