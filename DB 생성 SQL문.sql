@@ -444,3 +444,10 @@ REFERENCES auction (
 	auction_no
 );
 
+
+create table cert (
+member_no number primary key,
+cert_target varchar2(100) not null,
+cert_no char(6) not null,
+cert_time Date default sysdate not null 
+);
