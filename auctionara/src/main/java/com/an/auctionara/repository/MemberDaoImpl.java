@@ -60,6 +60,11 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 
-
-
+	
+	@Override
+	public void plusRedCount(int memberNo) {
+		// member_red_count 컬럼 증가용 메소드 
+		int count = sqlSession.update("member.plusRedCount", memberNo);
+//		if(count == 0) throw new CannotFindException();
+	}
 }

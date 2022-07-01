@@ -13,7 +13,7 @@ public interface MemberDao {
 	MemberDto memberSearch(int memberNo);
 
 	int checkEmail(String memberEmail);
-	
 
+	void plusRedCount(int memberNo);
 	
 }

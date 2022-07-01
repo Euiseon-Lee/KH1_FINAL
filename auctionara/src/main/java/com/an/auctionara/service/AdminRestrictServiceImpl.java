@@ -32,7 +32,7 @@ public class AdminRestrictServiceImpl implements AdminRestrictService{
 		AuctionReportDto auctionReportDto = auctionReportDao.setRestrict(auctionReportNo);
 		
 		// member에 red_count column update
-//		memberDao.plusRedCount(memberNo);
+		memberDao.plusRedCount(memberNo);
 	}
 }
 
