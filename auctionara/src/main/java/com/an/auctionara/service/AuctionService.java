@@ -1,7 +1,9 @@
 package com.an.auctionara.service;
 
-import com.an.auctionara.entity.AuctionDto;
+import java.util.List;
+
+import com.an.auctionara.vo.AuctionListVO;
 
 public interface AuctionService {
-	/* void insert(AuctionDto auctionDto); */
+	List<AuctionListVO> list(int memberNo);
 }

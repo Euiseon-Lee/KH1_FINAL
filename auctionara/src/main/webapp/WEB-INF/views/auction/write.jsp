@@ -15,7 +15,7 @@ pageEncoding="UTF-8"%>
         </div>
         <div class="row py-4 border-bottom">
             <div class="col-sm-3">
-                <label for="attachment" class="form-label">경매 물품 이미지 (<span class="text-primary">{{ attachmentCount }}</span>/4)</label>
+                <label class="form-label">경매 물품 이미지 (<span class="text-primary">{{ attachmentCount }}</span>/4)</label>
             </div>
             <div class="col-sm d-flex">
                 <div v-for="(no, index) in attachmentUrl" v-bind:key="index" class="position-relative preview mr-2">
@@ -145,10 +145,12 @@ pageEncoding="UTF-8"%>
 <script src="https://unpkg.com/vue@next"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    // 현재 시간 이전 날짜 + 1일 전은 경매 마감일로 설정하지 못하도록 하는 작업
+    // 현재 시간 +1일 전 / +31일 후는 경매 마감일로 설정하지 못하도록 설정
     let today = new Date();
-    let limit = new Date(today.setDate(today.getDate() + 2)).toISOString().slice(0, 16);
-    document.getElementById("auctionClosedTime").min = limit;
+    let min = new Date(today.setDate(today.getDate() + 2)).toISOString().slice(0, 16);
+    let max = new Date(today.setDate(today.getDate() + 32)).toISOString().slice(0, 16);
+    document.getElementById("auctionClosedTime").min = min;
+    document.getElementById("auctionClosedTime").max = max;
 
     const app = Vue.createApp({
         data() {
@@ -179,20 +181,6 @@ pageEncoding="UTF-8"%>
             },
         },
         methods: {
-            // attachmentSave() {
-            //         const formData = new FormData();
-            //         const attachment = document.getElementById("attachment");
-            //         for(var i = 0; i < this.attachmentCount; i++) {
-            //             formData.append("attachment", this.attachment[i]);
-            //         }
-            //         axios.post("http://localhost:8080/auctionara/attachment/save", formData, {
-            //                 headers: {
-            //                     'Content-Type': 'multipart/form-data'
-            //                 }
-            //         })
-            //         .then(resp => {})
-            //         .catch(resp => {});
-            // },
             attachmentPreview() {
                 const attachment = document.getElementById("attachment");
                 this.attachment.push(attachment.files[0]);
