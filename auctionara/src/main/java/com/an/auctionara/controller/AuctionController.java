@@ -60,15 +60,8 @@ public class AuctionController {
 		return "/auction/type";
 	}
 
-	@GetMapping("/detail")
-	public String detail(
-			@RequestParam int auctionNo) {
-		return "/auction/detail";
-	}
-	
-	
 	@GetMapping("/detail/{auctionNo}")
-	public String detail2(@PathVariable int auctionNo) {
+	public String detail(@PathVariable int auctionNo) {
 		return "/auction/detail";
 	}
 
@@ -104,9 +97,8 @@ public class AuctionController {
 	}
 	
 	@PostMapping("/submit")
-	public String submit(HttpSession session, RedirectAttributes attr) {
+	public String submit(HttpSession session) {
 //		int memberNo = (int) session.getAttribute("whoLogin");
-		attr.addAttribute("auctionNo", auctionDao.recent(13)); // 임시	
-		return "redirect:/auction/detail";
+		return "redirect:/auction/detail/" + auctionDao.recent(13); // 임시
 	}
 }

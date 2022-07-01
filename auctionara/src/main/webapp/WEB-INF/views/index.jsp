@@ -92,7 +92,7 @@
                                 </p>
                                 <p class="card-text">남은 <span class="text-primary">${auctionListVO.auctionRemainTime}</span></p>
                             </div>
-                            <a href="${root}/auction/detail?auctionNo=${auctionListVO.auctionNo}" class="stretched-link"></a>
+                            <a href="${root}/auction/detail/${auctionListVO.auctionNo}" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>

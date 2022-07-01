@@ -15,7 +15,7 @@ pageEncoding="UTF-8"%>
         </div>
         <div class="row py-4 border-bottom">
             <div class="col-sm-3">
-                <label for="attachment" class="form-label">경매 물품 이미지 (<span class="text-primary">{{ attachmentCount }}</span>/4)</label>
+                <label class="form-label">경매 물품 이미지 (<span class="text-primary">{{ attachmentCount }}</span>/4)</label>
             </div>
             <div class="col-sm d-flex">
                 <div v-for="(no, index) in attachmentUrl" v-bind:key="index" class="position-relative preview mr-2">
