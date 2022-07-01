@@ -14,7 +14,11 @@ public class AdminRestrictServiceImpl implements AdminRestrictService{
 
 	@Autowired
 	private ManagerRestrictionDao managerRestrictionDao;
+	
+	@Autowired
 	private AuctionReportDto auctionReportDto;
+	
+	@Autowired
 	private AuctionReportDao auctionReportDao; 
 	
 	@Override
