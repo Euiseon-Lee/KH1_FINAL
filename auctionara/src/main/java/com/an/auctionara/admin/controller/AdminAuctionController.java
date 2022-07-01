@@ -21,13 +21,18 @@ public class AdminAuctionController {
 	
 	@GetMapping("/report_list")
 	public String reportList(
+			@RequestParam(required = false) String type,
+			@RequestParam(required = false) String keyword,
 			@RequestParam(required = false, defaultValue = "1") int p,  
 			@RequestParam(required = false, defaultValue = "10") int s,
 			Model model) {
 		List<AuctionReportListVO> list = auctionReportDao.reportList(p, s); 
 		model.addAttribute("list", list);
 		
-		int count = auctionReportDao.count();
+		boolean search = type != null && keyword != null;
+		model.addAttribute("search", search);
+		
+		int count = auctionReportDao.count(type, keyword);
 		
 		int lastPage = (count + s -1) / s; 
 		int blockSize = 10; 
@@ -40,6 +45,8 @@ public class AdminAuctionController {
 		
 		model.addAttribute("p", p);
 		model.addAttribute("s", s);
+		model.addAttribute("type", type);
+		model.addAttribute("keyword",keyword);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("lastPage", lastPage);

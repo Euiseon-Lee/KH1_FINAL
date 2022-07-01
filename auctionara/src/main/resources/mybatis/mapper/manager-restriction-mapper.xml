@@ -35,5 +35,30 @@
 		insert into manager_restriction (RESTRICTION_NO, MEMBER_NO, RESTRICTION_REASON, RESTRICTION_TYPE, RESTRICTION_TIME) 
 		values (#{restrictionNo}, #{memberNo}, #{restrictionReason}, #{restrictionType}, sysdate) 
 	</insert>
+	
+	<!-- 검색 + 페이징 리스트 -->
+	<select id="list" parameterType="Map" resultType="ManagerRestrictionListVO">
+		select * from (
+	 		select rownum rn, TMP.* from (
+	 			select MR.*, M.member_name from manager_restriction MR inner join member M on MR.member_no = M.member_no
+				 	<if test="type != null and keyword != null">
+					 	<![CDATA[
+					 		where instr(${type}, #{keyword}) > 0
+					 	]]>
+				 	</if>
+			 	order by restriction_no desc
+	 		) TMP
+	 	) where rn between #{begin} and #{end}
+	</select>
+	
+	<!-- 페이징을 위한 count -->
+	<select id="count" parameterType="Map" resultType="int">
+		select count(*) from manager_restriction MR inner join member M on MR.member_no = M.member_no
+		 	<if test="type != null and keyword != null">
+		 		<![CDATA[
+				 	where instr(${type}, #{keyword}) > 0
+		 		]]>
+		 	</if>
+	</select>
 
 </mapper> 

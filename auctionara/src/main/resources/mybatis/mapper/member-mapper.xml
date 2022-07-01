@@ -75,6 +75,10 @@
 		select count(*) from
 				 (select * from member where member_email = #{memberEmail})
 	</select>
-
+	
+	<!-- member_red_count 컬럼 Update	 -->
+	<update id="plusRedCount" parameterType="int">
+		update member set member_red_count = member_red_count + 1 where member_no = #{memberNo}
+	</update>
 	
 </mapper> 

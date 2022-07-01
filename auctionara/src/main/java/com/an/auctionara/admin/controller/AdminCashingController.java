@@ -25,16 +25,14 @@ public class AdminCashingController {
 	
 	@Autowired
 	private CashingPointsDao cashingPointsDao;
-	private CashingPointsDto cashingPointsDto;
-	private MemberDto memberDto; 
-	private MemberDao memberDao; 
+	
 	
 	// 현금화 관련 전체 목록 
 	@GetMapping("/list")
 	public String list(
 			@RequestParam(required = false) String type,
 			@RequestParam(required = false) String keyword,
-			@RequestParam(required = false, defaultValue = "1") int p, // 통신은 문자열 
+			@RequestParam(required = false, defaultValue = "1") int p,
 			@RequestParam(required = false, defaultValue = "10") int s,
 			Model model) {
 		
@@ -79,7 +77,7 @@ public class AdminCashingController {
 	// 현금화 승인
 	@GetMapping("/approve/{cashingNo}")
 	public String approveCashing(@PathVariable int cashingNo) {
-		cashingPointsDto = cashingPointsDao.approveCashing(cashingNo);
+		CashingPointsDto cashingPointsDto = cashingPointsDao.approveCashing(cashingNo);
 		
 		return "redirect: /auctionara/admin/cashing/request_list";
 	}
@@ -87,7 +85,7 @@ public class AdminCashingController {
 	// 현금화 거절 
 	@GetMapping("/refuse/{cashingNo}")
 	public String refuseCashing(@PathVariable int cashingNo) {
-		cashingPointsDto = cashingPointsDao.refuseCashing(cashingNo);
+		CashingPointsDto cashingPointsDto = cashingPointsDao.refuseCashing(cashingNo);
 		
 		return "redirect: /auctionara/admin/cashing/request_list"; 
 	}

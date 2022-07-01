@@ -23,7 +23,6 @@ public class RatingRestController {
 	
 	@Autowired
 	private RatingDao ratingDao;
-	private RatingDto ratingDto; 
 	
 	// 등록 
 	@PostMapping("/")

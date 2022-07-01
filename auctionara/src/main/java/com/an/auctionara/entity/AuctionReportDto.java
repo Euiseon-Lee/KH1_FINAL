@@ -14,4 +14,7 @@ public class AuctionReportDto {
 	private int auctionReporterNo;
 	private String auctionReportReason;
 	private Date auctionReportTime;
+	
+	// 컬럼 추가
+	private int auctionReportRestriction;
 }
