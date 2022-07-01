@@ -69,17 +69,16 @@ public class AuctionController {
 	
 	@GetMapping("/detail/{auctionNo}")
 	public String detail2(@PathVariable int auctionNo) {
-		
 		return "/auction/detail";
 	}
 
 	@PostMapping("/write")
-	public void write2(@ModelAttribute WriteAuctionVO writeAuctionVO, HttpSession session, RedirectAttributes attr) throws IllegalStateException, IOException {	
-		int memberNo = (int) session.getAttribute("memberNo");
+	public void write2(@ModelAttribute WriteAuctionVO writeAuctionVO, HttpSession session) throws IllegalStateException, IOException {	
+//		int memberNo = (int) session.getAttribute("whoLogin");
 		writeAuctionVO.setAuctionClosedTime(writeAuctionVO.getAuctionClosedTime().replace("T", " "));
 	
 		AuctionDto auctionDto = AuctionDto.builder()
-									.auctioneerNo(memberNo)
+									.auctioneerNo(13) // 임시
 									.categoryNo(writeAuctionVO.getCategoryNo())
 									.auctionTitle(writeAuctionVO.getAuctionTitle())
 									.auctionContent(writeAuctionVO.getAuctionContent())
@@ -101,11 +100,13 @@ public class AuctionController {
 					.build();
 			photoDao.insert(photoDto);
 		}	
-		attr.addAttribute("auctionNo", auctionNo);
+
 	}
 	
 	@PostMapping("/submit")
-	public String submit() {
-		return "redirect:/"; // 추후 마이페이지 내 경매 목록 리다이렉트 하도록 변경 예정
+	public String submit(HttpSession session, RedirectAttributes attr) {
+//		int memberNo = (int) session.getAttribute("whoLogin");
+		attr.addAttribute("auctionNo", auctionDao.recent(13)); // 임시	
+		return "redirect:/auction/detail";
 	}
 }

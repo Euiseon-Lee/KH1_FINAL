@@ -1,8 +1,12 @@
 package com.an.auctionara.repository;
 
+import java.util.List;
+
 import com.an.auctionara.entity.AuctionDto;
+import com.an.auctionara.vo.AuctionListVO;
 
 public interface AuctionDao {
 	int write(AuctionDto auctionDto);
-	int recent(int memberNo);
+	int recent(int auctioneerNo);
+	List<AuctionListVO> list(int memberNo);
 }
