@@ -7,7 +7,7 @@
 		<thead>
 			<tr>
 				<th>신청 번호</th>
-				<th>회원 번호</th>
+				<th>회원 이름</th>
 				<th>신청 금액</th>
 				<th>신청 은행</th>
 				<th>신청 계좌번호</th>
@@ -15,20 +15,24 @@
 				<th>현금화 상태</th>
 				<th>현금화 신청시간</th>
 				<th>현금화 완료시간</th>
+				<th>기타</th>
+				<th>기타</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="cashingPointsDto" items="${requestList}">
+			<c:forEach var="cashingPointsVO" items="${requestList}">
 				<tr>
-					<td>${cashingPointsDto.cashingNo}</td>
-					<td>${cashingPointsDto.memberNo}</td>
-					<td>${cashingPointsDto.cashingMoney}</td>
-					<td>${cashingPointsDto.cashingBank}</td>
-					<td>${cashingPointsDto.cashingAccount}</td>
-					<td>${cashingPointsDto.cashingType}</td>
-					<td>${cashingPointsDto.cashingStatus}</td>
-					<td>${cashingPointsDto.cashingRequestTime}</td>
-					<td>${cashingPointsDto.cashingSuccessTime}</td>
+					<td>${cashingPointsVO.cashingNo}</td>
+					<td>${cashingPointsVO.memberName}</td>
+					<td>${cashingPointsVO.cashingMoney}</td>
+					<td>${cashingPointsVO.cashingBank}</td>
+					<td>${cashingPointsVO.cashingAccount}</td>
+					<td>${cashingPointsVO.cashingType}</td>
+					<td>${cashingPointsVO.cashingStatus}</td>
+					<td>${cashingPointsVO.cashingRequestTime}</td>
+					<td>${cashingPointsVO.cashingSuccessTime}</td>
+					<td><a href="approve/${cashingPointsVO.cashingNo}">승인</a></td>
+					<td><a href="refuse/${cashingPointsVO.cashingNo}">거절</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

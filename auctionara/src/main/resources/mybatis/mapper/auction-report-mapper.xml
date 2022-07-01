@@ -24,57 +24,40 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="member">
-
-
-	<select id="one" parameterType="int" resultType="MemberDto">
-		select * from member where member_no = #{memberNo}
-	</select>
+<mapper namespace="auctionReport">
 	
-	<!-- 검색 + 페이징 list -->
-	<select id="list" resultType="MemberDto" parameterType="Map">
-		select * from (
+	<!-- 경매 게시글 신고 list를 위한 수동 mapping -->
+	<resultMap type="AuctionReportListVO" id="auctionReportMap">
+		<collection property="auctionReportList" javaType="List" ofType="AuctionReportListVO" select="list" column="auction_report_no">
+			<result column="auction_report_no" property="auctionReportNo"/>
+			<result column="auction_no" property="auctionNo"/>
+			<result column="auction_reporter_no" property="auctionReporterNo"/>
+			<result column="auction_report_reason" property="auctionReportReason"/>
+			<result column="auction_report_time" property="auctionReportTime"/>
+			<result column="auctioneer_name" property="auctioneerName"/>
+			<result column="reporter_name" property="reporterName"/>
+			<result column="auctioneer_no" property="auctioneerNo"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 경매 게시글 신고 페이징 list -->
+	<select id="list" parameterType="int" resultType="AuctionReportListVO">
+	 	
+	 	select * from (
 	 		select rownum rn, TMP.* from (
-	 			select * from member 
-			 	<if test="type != null and keyword != null">
-				 	<![CDATA[
-				 		where instr(${type}, #{keyword}) > 0
-				 	]]>
-			 	</if>
+	 			select AR.*, M.member_name "auctioneer_name", A.auctioneer_no, M2.member_name "reporter_name" from auction_report AR 
+	 				inner join auction A on AR.auction_no = A.auction_no 
+	 				inner join member M on A.auctioneer_no = M.member_no 
+	 				inner join member M2 on AR.auction_reporter_no = M2.member_no 
+			 	order by auction_report_no desc
 	 		) TMP
 	 	) where rn between #{begin} and #{end}
-	</select>
-	
-	
-	<select id="sequence" resultType="int">
-		select member_seq.nextval from dual
-	</select>
-		
+	 	
+	 </select>
+	 
+	 <!-- list 페이징을 위한 count	-->
+	 <select id="count" resultType="int">
+	 	select count(*) from auction_report
+	 </select>
 
-	<insert id="join" parameterType="MemberDto">
-		insert into member(
-			member_no, member_email, member_pw, member_nick, member_name, member_sex, member_birth
-		)
-		values(
-			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}, #{memberName}, #{memberSex}, to_date(#{memberBirth},'YY/MM/DD')
-		)
-	</insert>
-	
-	<select id="login" resultType="MemberDto" parameterType="String">
-		select * from member
-			where member_email = #{memberEmail}
-	</select>
-	
-	<update id="updateLogintime" parameterType="int">
-		update member
-			set member_logintime = sysdate
-		where member_no = #{memberNo}
-	</update>
-	
-	<select id="checkEmail" resultType="int">
-		select count(*) from
-				 (select * from member where member_email = #{memberEmail})
-	</select>
-
-	
 </mapper> 

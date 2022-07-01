@@ -15,15 +15,11 @@
 		<input type="hidden" name="referer" value=${referer}>
 	
 		<div class="row">
-			<label>이메일
-				<input type="email" name="memberEmail" autocomplete="off" placeholder="email">
-			</label>
+			<input type="email" name="memberEmail" autocomplete="off" placeholder="email as id">
 		</div>
 		
 		<div class="row">
-			<label>비밀번호
-				<input type="password" name="memberPw" autocomplete="off" placeholder="password">
-			</label>
+			<input type="password" name="memberPw" autocomplete="off" placeholder="password">
 		</div>
 
 		
@@ -31,7 +27,7 @@
 		<div class="row">
 			<label>
 				<input type="checkbox" >	
-			</label> 이메일 기억하기		
+			</label> 아이디 저장하기		
 		</div>
 
 		<div class="row">
@@ -41,7 +37,7 @@
 		</div>
 
 		<div class="row">
-			<button type="submit">로그인</button>
+			<button type="submit" onkeydown="hitEnterkey(event);">로그인</button>
 		</div>	
 
 	</form>	
@@ -49,11 +45,16 @@
 	
 	
 	<div class="row">
-		<a href="${root}/member/find_email">이메일을 잊으셨나요?</a>
+		<a href="${root}/member/check_email">이메일을 잊으셨나요?</a>
 	</div>
 
 	<div class="row">
-		<a href="${root}/member/find_pw">비밀번호를 잊으셨나요?</a>
+		<a href="${root}/member/change_pw">비밀번호를 잊으셨나요?</a>
+	</div>
+	
+	<div class="row">
+		<span><strong>아직 경매나라 계정이 없나요? </strong></span> &nbsp;&nbsp;
+		<a href="${root}/member/join_intro">회원가입</a>		
 	</div>	
 
 

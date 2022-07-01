@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.an.auctionara.entity.CashingPointsDto;
+import com.an.auctionara.vo.CashingPointsListVO;
 
 @Repository
 public class CashingPointsDaoImpl implements CashingPointsDao {
@@ -17,7 +18,7 @@ public class CashingPointsDaoImpl implements CashingPointsDao {
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<CashingPointsDto> list(String type, String keyword, int p, int s) {
+	public List<CashingPointsListVO> list(String type, String keyword, int p, int s) {
 		// 검색 + 페이징 메소드 
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("type", type);
@@ -45,8 +46,26 @@ public class CashingPointsDaoImpl implements CashingPointsDao {
 	}
 	
 	@Override
-	public List<CashingPointsDto> requestList() {
+	public List<CashingPointsListVO> requestList() {
 		// 현금화 신청 list 
 		return sqlSession.selectList("cashingPoints.requestList");
+	}
+	
+	@Override
+	public CashingPointsDto approveCashing(int cashingNo) {
+		// 현금화 승인  
+		int count = sqlSession.update("cashingPoints.approveCashing", cashingNo);
+//		if(count == 0) throw new CannotFindException();
+		
+		return sqlSession.selectOne("cashingPoints.one", cashingNo);
+	}
+	
+	@Override
+	public CashingPointsDto refuseCashing(int cashingNo) {
+		// 현금화 거절 
+		int count = sqlSession.update("cashingPoints.refuseCashing", cashingNo);
+//		if(count == 0) throw new CannotFindException();
+		
+		return sqlSession.selectOne("cashingPoints.one", cashingNo);
 	}
 }

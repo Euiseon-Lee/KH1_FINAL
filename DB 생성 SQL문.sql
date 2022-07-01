@@ -18,6 +18,16 @@ COMMENT ON COLUMN member.member_grade IS '블랙회원
 
 COMMENT ON COLUMN member.member_logintime IS '처음 로그인 할 땐 null이니까 가능';
 
+
+alter table member add (member_name varchar2(51));
+alter table member add (member_sex char(1));
+alter table member add (member_birth Date);
+
+alter table member modify member_name not null;
+alter table member modify member_sex not null;
+alter table member modify member_birth not null;
+
+
 CREATE TABLE auction (
 	auction_no	number		NOT NULL,
 	auctioneer_no	number		NOT NULL,
