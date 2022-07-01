@@ -16,22 +16,16 @@ public class AdminRestrictServiceImpl implements AdminRestrictService{
 	private ManagerRestrictionDao managerRestrictionDao;
 	
 	@Autowired
-	private AuctionReportDto auctionReportDto;
-	
-	@Autowired
 	private AuctionReportDao auctionReportDao; 
 	
 	@Override
 	@Transactional
 	public void restrictMember(ManagerRestrictionDto managerRestrictionDto, int auctionReportNo) {
-		
-		System.out.println(managerRestrictionDto.getMemberNo());
-		System.out.println(auctionReportNo);
-		
 		// 관리자의 회원 제재 service 
 		managerRestrictionDao.restrictMember(managerRestrictionDto);
 		
 		// auction_report 테이블의 제재 여부 컬럼 update 
-		auctionReportDto = auctionReportDao.setRestrict(auctionReportNo);
+		AuctionReportDto auctionReportDto = auctionReportDao.setRestrict(auctionReportNo);
 	}
 }
+

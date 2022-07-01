@@ -26,8 +26,6 @@ public class AdminCashingController {
 	@Autowired
 	private CashingPointsDao cashingPointsDao;
 	
-	@Autowired
-	private CashingPointsDto cashingPointsDto;
 	
 	// 현금화 관련 전체 목록 
 	@GetMapping("/list")
@@ -79,7 +77,7 @@ public class AdminCashingController {
 	// 현금화 승인
 	@GetMapping("/approve/{cashingNo}")
 	public String approveCashing(@PathVariable int cashingNo) {
-		cashingPointsDto = cashingPointsDao.approveCashing(cashingNo);
+		CashingPointsDto cashingPointsDto = cashingPointsDao.approveCashing(cashingNo);
 		
 		return "redirect: /auctionara/admin/cashing/request_list";
 	}
@@ -87,7 +85,7 @@ public class AdminCashingController {
 	// 현금화 거절 
 	@GetMapping("/refuse/{cashingNo}")
 	public String refuseCashing(@PathVariable int cashingNo) {
-		cashingPointsDto = cashingPointsDao.refuseCashing(cashingNo);
+		CashingPointsDto cashingPointsDto = cashingPointsDao.refuseCashing(cashingNo);
 		
 		return "redirect: /auctionara/admin/cashing/request_list"; 
 	}
