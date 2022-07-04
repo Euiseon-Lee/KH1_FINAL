@@ -33,5 +33,19 @@
 	<select id="list" resultType="categoryDto">
 		select * from category
 	</select>
+	
+	<insert id="insert" parameterType="CategoryDto">
+		insert into category (category_no, category_name)
+		values (#{categoryNo}, #{categoryName})
+	</insert>
+	
+	<update id="update" parameterType="CategoryDto">
+		update category set category_name = #{categoryName}
+		where category_no = #{categoryNo} 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete category where category_no = #{categoryNo} 
+	</delete>
 		
 </mapper> 
