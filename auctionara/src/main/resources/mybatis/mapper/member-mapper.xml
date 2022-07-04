@@ -81,4 +81,14 @@
 		update member set member_red_count = member_red_count + 1 where member_no = #{memberNo}
 	</update>
 	
+	<!-- 관리자 페이지 - 회원 목록 페이징을 위한 count -->
+	<select id="count" parameterType="Map" resultType="int">
+		select count(*) from member
+		 	<if test="type != null and keyword != null">
+		 		<![CDATA[
+				 	where instr(${type}, #{keyword}) > 0
+		 		]]>
+		 	</if>
+	</select>
+	
 </mapper> 

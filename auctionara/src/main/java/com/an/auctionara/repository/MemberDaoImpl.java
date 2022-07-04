@@ -1,5 +1,9 @@
 package com.an.auctionara.repository;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -60,11 +64,37 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 
-	
 	@Override
 	public void plusRedCount(int memberNo) {
 		// member_red_count 컬럼 증가용 메소드 
 		int count = sqlSession.update("member.plusRedCount", memberNo);
 //		if(count == 0) throw new CannotFindException();
+	}
+	
+	
+	@Override
+	public List<MemberDto> list(String type, String keyword, int p, int s) {
+		// 관리자 페이지 - 회원 목록 조회 메소드 
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		int end = p * s;
+		int begin = end - (s - 1);
+		
+		param.put("begin", begin);
+		param.put("end", end);
+		
+		return sqlSession.selectList("member.list", param);
+	}
+	
+	
+	@Override
+	public int count(String type, String keyword) {
+		// 관리자 페이지 - 회원 목록 페이징을 위한 count 메소드 
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("type", type);
+		param.put("keyword", keyword);
+		
+		return sqlSession.selectOne("member.count", param);	
 	}
 }
