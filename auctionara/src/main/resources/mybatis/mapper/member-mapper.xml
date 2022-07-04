@@ -91,4 +91,13 @@
 		 	</if>
 	</select>
 	
+	<!-- 관리자 페이지 - 일반회원 / 블랙회원 update -->
+	<update id="setGeneral" parameterType="int">
+		update member set member_grade = '일반회원' where member_no = #{memberNo} and member_grade = '블랙회원' 
+	</update>
+	
+	<update id="setBlock" parameterType="int">
+		update member set member_grade = '블랙회원' where member_no = #{memberNo} and member_grade = '일반회원' 
+	</update>
+	
 </mapper> 

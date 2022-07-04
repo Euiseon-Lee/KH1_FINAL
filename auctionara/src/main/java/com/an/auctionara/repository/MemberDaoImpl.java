@@ -97,4 +97,24 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return sqlSession.selectOne("member.count", param);	
 	}
+	
+	
+	@Override
+	public MemberDto setGeneral(int memberNo) {
+		// 관리자 페이지 - 일반회원 등록 메소드
+		int count = sqlSession.update("member.setGeneral", memberNo);
+//		if(count == 0) throw new CannotFindException();
+		
+		return sqlSession.selectOne("member.one", memberNo);
+	}
+	
+	
+	@Override
+	public MemberDto setBlock(int memberNo) {
+		// 관리자 페이지 - 블랙회원 등록 메소드 
+		int count = sqlSession.update("member.setBlock", memberNo);
+//		if(count == 0) throw new CannotFindException();
+		
+		return sqlSession.selectOne("member.one", memberNo); 
+	}
 }

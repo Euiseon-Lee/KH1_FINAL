@@ -18,10 +18,10 @@
 
 <c:choose>
 	<c:when test="${memberDto.memberGrade == '블랙회원' }">
-		<a href="">일반회원 등록</a>
+		<a href="${pageContext.request.contextPath}/admin/member/setGeneral/${memberDto.memberNo}">일반회원 등록</a>
 	</c:when>
 	<c:when test="${memberDto.memberGrade == '일반회원' }">
-		<a href="">블랙회원 등록</a>
+		<a href="${pageContext.request.contextPath}/admin/member/setBlock/${memberDto.memberNo}">블랙회원 등록</a>
 	</c:when>
 	<c:otherwise>
 		<span></span>

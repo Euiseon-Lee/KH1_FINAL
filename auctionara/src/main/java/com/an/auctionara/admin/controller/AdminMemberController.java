@@ -63,4 +63,18 @@ public class AdminMemberController {
 		
 		return "/admin/member/detail";
 	}
+	
+	@GetMapping("setGeneral/{memberNo}")
+	public String setGeneral(@PathVariable int memberNo) {
+		MemberDto memberDto = memberDao.setGeneral(memberNo);
+		
+		return "redirect: /auctionara/admin/member/detail/"+memberNo;
+	}
+	
+	@GetMapping("setBlock/{memberNo}")
+	public String setBlock(@PathVariable int memberNo) {
+		MemberDto memberDto = memberDao.setBlock(memberNo);
+		
+		return "redirect: /auctionara/admin/member/detail/"+memberNo; 
+	}
 }

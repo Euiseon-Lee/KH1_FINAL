@@ -21,5 +21,11 @@ public interface MemberDao {
 
 	// 관리자 - 회원 목록 페이징을 위한 count 메소드 
 	int count(String type, String keyword);
+
+	// 관리자 - 일반회원 등록 메소드 
+	MemberDto setGeneral(int memberNo);
+
+	// 관리자 - 블랙회원 등록 메소드 
+	MemberDto setBlock(int memberNo);
 	
 }
