@@ -11,7 +11,7 @@ CREATE TABLE member (
 	member_joindate	Date		NOT NULL,
 	member_logintime	Date		NULL
 );
-
+    
 COMMENT ON COLUMN member.member_grade IS '블랙회원
 일반회원
 관리자';
