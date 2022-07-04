@@ -27,26 +27,26 @@
 <mapper namespace="cert">
 
 	<insert id="makeCert" parameterType="CertDto">
-		insert into cert(member_no, cert_target, cert_no, cert_time)
-			values(#{memberNo}, #{certTarget}, #{certNo}, sysdate)
+		insert into cert(cert_target, cert_no, cert_time)
+			values(#{certTarget}, #{certNo}, sysdate)
 	</insert>
 	
-	<select id="certExist">
-		select * from cert
-			where where cert_target = #{certTarget}
+	<select id="certExist" resultType="int">
+		select count(*) from (select * from cert
+			where cert_target = #{certTarget})
 	</select>
 	
 	<update id="remakeCert" parameterType="CertDto">
 		update cert
 			set cert_no = #{certNo}, cert_time = sysdate
-			where member_no = #{memberNo}
+			where cert_target = #{certTarget}
 	</update>
 	
 	<select id="certifyCert" parameterType="CertDto" resultType="int">
 		select count(*) from cert
 		where cert_target = #{certTarget}
 			and cert_no = #{certNo}
-			and <![CDATA[ sysdate - cert_time <= 10 / 24 / 60 ]]>	
+<!-- 			and <![CDATA[ sysdate - cert_time <= 10 / 24 / 60 ]]>	 -->
 	</select>
 	
 	<delete id="deleteUsedCert">
