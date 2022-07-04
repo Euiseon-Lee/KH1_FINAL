@@ -17,4 +17,7 @@ public class AuctionListVO {
 	private Date auctionClosedTime;
 	private String auctionRemainTime;
 	private boolean deadlineClosing;
+	
+	// 컬럼 추가
+	private int auctionPrivate; 
 }

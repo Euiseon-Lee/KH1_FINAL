@@ -19,5 +19,8 @@ public class AuctionDto {
 	private int auctionOpeningBid;
 	private int auctionClosingBid;
 	private int auctionBidUnit;
-	private int auctionStatus; 
+	private int auctionStatus;
+	
+	// 컬럼 추가
+	private int auctionPrivate;
 }
