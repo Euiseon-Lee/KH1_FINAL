@@ -42,6 +42,7 @@ public class CertServiceImpl implements CertService {
 		int certNumber = r.nextInt(1000000);
 		String certString = f.format(certNumber);
 		
+		
 		//전송할 이메일 제목 및 내용
 		String title = "경매나라";
 		String content = "인증번호 : "+certString;
@@ -57,7 +58,6 @@ public class CertServiceImpl implements CertService {
 		
 		//인증번호를 DB에 저장
 		certDao.makeCert(CertDto.builder()
-									.memberNo(memberDao.checkEmail(memberEmail))
 									.certTarget(memberEmail)
 									.certNo(certString)
 									.build());
@@ -81,7 +81,7 @@ public class CertServiceImpl implements CertService {
 								.fromCurrentContextPath()
 								.path("/member/reset")
 								.queryParam("memberNo", targetDto.getMemberNo())
-								.queryParam("cert", certString)
+								.queryParam("certNo", certString)
 								.toUriString();
 		
 		String content = 
@@ -95,7 +95,7 @@ public class CertServiceImpl implements CertService {
 		mailSender.send(message);
 		
 		
-		//DB에 ??????
+		//DB에 넣기
 		certDao.makeCert(CertDto.builder()
 									.certTarget(targetDto.getMemberEmail())
 									.certNo(certString)

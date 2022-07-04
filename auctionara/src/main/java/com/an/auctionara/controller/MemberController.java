@@ -112,7 +112,7 @@ public class MemberController {
 					@RequestParam String memberEmail,
 					Model model
 			) {
-		int result = memberDao.checkEmail(memberEmail);
+		int result = memberDao.checkEmailNum(memberEmail);
 		model.addAttribute("memberEmailResult", memberEmail);
 		
 		if(result != 1) {
@@ -132,10 +132,10 @@ public class MemberController {
 	
 	@PostMapping("/change_pw")
 	public String changePw(
-			String memberEmail,
+			@RequestParam String memberEmail,
 			Model model
 			) {
-		int result = memberDao.checkEmail(memberEmail);
+		int result = memberDao.checkEmailNum(memberEmail);
 		
 		if(result != 1) {
 			return "redirect:change_pw?error";			

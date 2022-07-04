@@ -12,7 +12,9 @@ public interface MemberDao {
 	
 	MemberDto memberSearch(int memberNo);
 
-	int checkEmail(String memberEmail);
+	int checkEmailNum(String memberEmail);
+	
+	int checkMemberNo(String memberEmail);
 
 	void plusRedCount(int memberNo);
 

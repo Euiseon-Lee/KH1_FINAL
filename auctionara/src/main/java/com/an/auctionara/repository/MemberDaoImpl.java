@@ -57,8 +57,8 @@ public class MemberDaoImpl implements MemberDao {
 
 
 	@Override
-	public int checkEmail(String memberEmail) {
-		int result = sqlSession.selectOne("member.checkEmail", memberEmail);
+	public int checkEmailNum(String memberEmail) {
+		int result = sqlSession.selectOne("member.checkEmailNum", memberEmail);
 		
 		return result;
 	}
@@ -69,6 +69,13 @@ public class MemberDaoImpl implements MemberDao {
 		// member_red_count 컬럼 증가용 메소드 
 		int count = sqlSession.update("member.plusRedCount", memberNo);
 //		if(count == 0) throw new CannotFindException();
+	}
+
+
+	@Override
+	public int checkMemberNo(String memberEmail) {
+		int memberNo = sqlSession.selectOne("member.checkMemberNo", memberEmail);
+		return memberNo;
 	}
 	
 	
@@ -115,6 +122,6 @@ public class MemberDaoImpl implements MemberDao {
 		int count = sqlSession.update("member.setBlock", memberNo);
 //		if(count == 0) throw new CannotFindException();
 		
-		return sqlSession.selectOne("member.one", memberNo); 
+		return sqlSession.selectOne("member.one", memberNo);
 	}
 }

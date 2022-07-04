@@ -29,7 +29,8 @@
 	</div>
 	
 	<div class="row">
-		<a href="${root}/member/join">바로 로그인하러 가기</a>
+		<span><strong>아직 경매나라 계정이 없나요? </strong></span> &nbsp;&nbsp;
+		<a href="${root}/member/join">바로 회원가입하러 가기</a>
 	</div>
 
 	<div class="row">

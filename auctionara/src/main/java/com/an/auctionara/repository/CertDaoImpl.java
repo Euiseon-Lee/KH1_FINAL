@@ -14,13 +14,13 @@ public class CertDaoImpl implements CertDao {
 	
 	@Override
 	public void makeCert(CertDto certDto) {
-		CertDto checkDto = sqlSession.selectOne("cert.certExist");
+		int count = sqlSession.selectOne("cert.certExist", certDto.getCertTarget());
 		
-		if(checkDto == null) {
-			sqlSession.insert("cert.makeCert");
+		if(count == 0) {
+			sqlSession.insert("cert.makeCert", certDto);
 		}
 		else {
-			sqlSession.update("cert.remakeCert");
+			sqlSession.update("cert.remakeCert", certDto);
 		}
 		
 	}

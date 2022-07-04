@@ -71,9 +71,13 @@
 		where member_no = #{memberNo}
 	</update>
 	
-	<select id="checkEmail" resultType="int">
+	<select id="checkEmailNum" resultType="int">
 		select count(*) from
 				 (select * from member where member_email = #{memberEmail})
+	</select>
+	
+	<select id="checkMemberNo" resultType="int">
+		select member_no from member where member_email = #{memberEmail}
 	</select>
 	
 	<!-- member_red_count 컬럼 Update	 -->

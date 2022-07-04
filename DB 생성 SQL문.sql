@@ -11,7 +11,7 @@ CREATE TABLE member (
 	member_joindate	Date		NOT NULL,
 	member_logintime	Date		NULL
 );
-
+    
 COMMENT ON COLUMN member.member_grade IS '블랙회원
 일반회원
 관리자';
@@ -446,8 +446,7 @@ REFERENCES auction (
 
 
 create table cert (
-member_no number primary key,
-cert_target varchar2(100) not null,
+cert_target varchar2(100) primary key,
 cert_no char(6) not null,
 cert_time Date default sysdate not null 
 );

@@ -2,8 +2,6 @@ package com.an.auctionara.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -22,10 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.AttachmentDto;
-import com.an.auctionara.entity.PhotoDto;
 import com.an.auctionara.repository.AttachmentDao;
-import com.an.auctionara.repository.AuctionDao;
-import com.an.auctionara.repository.PhotoDao;
 
 @RestController
 @RequestMapping("/attachment")

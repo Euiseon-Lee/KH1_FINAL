@@ -10,120 +10,140 @@
 /* 커스텀 스타일 */
 
 .navbar-brand img {
-	height: 40px;
+    height: 40px;
 }
 
 nav form {
-	width: 400px;
+    width: 400px;
 }
 
 nav .fa-magnifying-glass {
-	top: 12px;
+    top: 12px;
     right: 25px;
 }
 
 footer p {
-	font-size: 0.8em;
+    font-size: 0.8em;
 }
 
 footer li {
-	font-size: 0.9em;
+    font-size: 0.9em;
 }
 
 .gps {
-	border-radius: 50px;
+    border-radius: 50px;
 }
 
 .gps .col {
-	border-radius: 0 50px 50px 0;
+    border-radius: 0 50px 50px 0;
 }
 
 .gps span {
-	color: #F9FFB4;
+    color: #F9FFB4;
 }
 
 .gps .btn {
-	bottom: 20%;
+    bottom: 20%;
     right: 10%;
+}
+
+.card-img-top {
+    height: 14rem;
+    object-fit: cover;
+}
+
+.card-img-custom {
+    border-radius: 1rem;
 }
 
 /* 부트스트랩 스타일 변경 */
 
 .fw-bold {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 input::-ms-clear,
-input::-ms-reveal{
-	display:none;width:0;height:0;
+input::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
 }
+
 input::-webkit-search-decoration,
 input::-webkit-search-cancel-button,
 input::-webkit-search-results-button,
-input::-webkit-search-results-decoration{
-	display:none;
+input::-webkit-search-results-decoration {
+    display: none;
 }
 
 .form-check {
-  display: block;
-  min-height: 1.5rem;
-  padding-left: 1.5em;
-  margin-bottom: 0.125rem;
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5em;
+    margin-bottom: 0.125rem;
 }
 
 .form-check .form-check-input {
-  float: left;
-  margin-left: -1.5em;
-  margin-top: 0.3em;
+    float: left;
+    margin-left: -1.5em;
+    margin-top: 0.3em;
 }
 
 .form-check-input {
-  width: 1em;
-  height: 1em;
-  margin-top: 0.25em;
-  vertical-align: top;
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  -webkit-print-color-adjust: exact;
-  color-adjust: exact;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.25em;
+    vertical-align: top;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
 }
+
 .form-check-input[type=checkbox] {
-  border-radius: 0.25em;
+    border-radius: 0.25em;
 }
+
 .form-check-input[type=radio] {
-  border-radius: 50%;
+    border-radius: 50%;
 }
+
 .form-check-input:active {
-  filter: brightness(90%);
+    filter: brightness(90%);
 }
+
 .form-check-input:focus {
-  border-color: rgba(245, 48, 62, 1);
-  outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(245, 48, 62, 0.25);
+    border-color: rgba(245, 48, 62, 1);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(245, 48, 62, 0.25);
 }
+
 .form-check-input:checked {
-  background-color: #f5303e;
-  border-color: #f5303e;
+    background-color: #f5303e;
+    border-color: #f5303e;
 }
+
 .form-check-input:checked[type=checkbox] {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
 }
+
 .form-check-input:checked[type=radio] {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
 }
+
 .form-check-input[type=checkbox]:indeterminate {
-  background-color: #f5303e;
-  border-color: #f5303e;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
+    background-color: #f5303e;
+    border-color: #f5303e;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
 }
 
 .form-check-inline {
-  display: inline-block;
-  margin-right: 1rem;
+    display: inline-block;
+    margin-right: 1rem;
 }
