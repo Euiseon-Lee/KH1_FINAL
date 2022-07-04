@@ -22,7 +22,7 @@
 					<td>${memberDto.memberNick}</td>
 					<td>${memberDto.memberEmail}</td>
 					<td>${memberDto.memberGrade}</td>
-					<td><a href="detail/${memberDto.memberNo}">상세보기</a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/member/detail/${memberDto.memberNo}">상세보기</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

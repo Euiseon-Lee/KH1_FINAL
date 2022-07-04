@@ -58,7 +58,9 @@ public class AdminMemberController {
 	
 	@GetMapping("detail/{memberNo}")
 	public String detail(@PathVariable int memberNo, Model model) {
+		MemberDto memberDto = memberDao.memberSearch(memberNo);
+		model.addAttribute("memberDto", memberDto);
 		
-		return "/admin/member/detail/{memberNo}";
+		return "/admin/member/detail";
 	}
 }
