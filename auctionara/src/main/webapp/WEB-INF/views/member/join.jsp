@@ -3,7 +3,171 @@
     
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+
+
+<form action="join" method="post">
+	
+	<div class="container-fluid">
+	
+		<div class="row">
+			<h1>점보트론: 회원 가입</h1>
+		</div>
+		
+		<div class="row">
+			<div>
+				<label> 이메일
+					<input type="email" name="memberEmail" autocomplete="off" placeholder="email" class="email-input" required>
+				</label>
+				<span></span>
+			</div>
+			<div>
+				<input type="button" value="인증메일 발송"class="btn-send-email">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div>
+				<label> 인증번호
+					<input type="text" name="certNo" placeholder="certNumber" class="cert-no" required>
+				</label>
+			</div>
+			<div>
+				<input type="button" value="인증하기" class="btn-cert-check" disabled>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div>
+				<label> 비밀번호
+					<input type="password" name="memberPw" autocomplete="off" placeholder="password" required>
+				</label>
+			</div>
+			<div>
+				<label> 비밀번호 확인
+					<input type="password" name="memberPwCheck" autocomplete="off" placeholder="pwCheck" required>
+				</label>
+			</div>
+
+		</div>
+		
+		<div class="row">
+			<label> 이름
+				<input type="text" name="memberName" autocomplete="off" placeholder="name" required>
+			</label>
+		</div>		
+
+		<div class="row">
+			<label> 성별
+				<select name="memberSex" required>
+					<option selected>==선택==</option>
+					<option value="f">여자</option>
+					<option value="m">남자</option>
+				</select>
+			</label>
+		</div>	
+
+		<div class="row">
+			<label> 생년월일
+				<select name="yy" id="year" required></select>
+				<select name="mm" id="month" required></select>
+				<select name="dd" id="day" required></select>
+			</label>
+		</div>
+		
+		<div class="row">
+			<label> 닉네임
+				<input type="text" name="memberNick" autocomplete="off" placeholder="nickname" required>
+			</label>
+		</div>
+		
+		<div class="row">
+	    	<label>프로필
+	    		<input type="file" name="attachmentNo">
+	    	</label>
+	    </div>
+		
+		<div class="row">
+			<label>
+				<input type="checkbox">전체 동의		
+			</label>
+		</div>
+		
+		<div class="row">
+			<button type="submit" onkeydown="hitEnterkey(event);" class="btn-submit">회원가입</button>
+		</div>
+	
+	</div>
+
+</form>
+
+
+
+
+<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+	$(function(){
+		
+		$(".btn-send-email").click(function(){
+			var certTarget = $(".email-input").val();
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/asyncSend",
+				type: "post",
+				data:{
+					certTarget: certTarget
+				},
+				
+				success:function(resp){
+					$(".btn-send-email").attr("disabled", true);
+					$(".email-input").prop('readonly', true);
+					$(".btn-cert-check").attr("disabled", false);
+					window.alert("인증 메일이 발송되었습니다. 메일함을 확인해주세요.");
+				},
+				
+				error:function(){
+					window.alert("인증 메일 전송에 실패하였습니다.");
+				},
+				
+			});
+			
+			
+		});
+		
+		
+		$(".btn-cert-check").click(function(){
+			var certTarget = $(".email-input").val();
+			var certNo = $(".cert-no").val();
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/asyncCheck",
+				type: "post",
+				data:{
+					certTarget: certTarget,
+					certNo: certNo
+				},
+				
+				success: function(resp){
+					$(".btn-cert-check").attr("disabled", true);
+					$(".cert-no").prop('readonly', true);
+					window.alert("메일 인증이 정상적으로 완료되었습니다.");
+				},
+				
+				error: function(){
+					window.alert("인증 번호가 일치하지 않습니다.");
+				}
+				
+			});
+			
+		});
+		
+		
+	});
+	
+
+</script>
+
 
 <script>
 	$(document).ready(function(){            
@@ -33,89 +197,5 @@
 	  
 	})
 </script>
-
-<form action="join" method="post">
-	
-	<div class="container-fluid">
-	
-		<div class="row">
-			<h1>점보트론: 회원 가입</h1>
-		</div>
-		
-		<div class="row">
-			<div>
-				<label> 이메일
-					<input type="email" name="memberEmail" autocomplete="off" placeholder="email">
-				</label>
-			</div>
-			<div>
-				<button>인증하기</button>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div>
-				<label> 비밀번호
-					<input type="password" name="memberPw" autocomplete="off" placeholder="password">
-				</label>
-			</div>
-			<div>
-				<label> 비밀번호 확인
-					<input type="password" name="memberPwCheck" autocomplete="off" placeholder="pwCheck">
-				</label>
-			</div>
-
-		</div>
-		
-		<div class="row">
-			<label> 이름
-				<input type="text" name="memberName" autocomplete="off" placeholder="name">
-			</label>
-		</div>		
-
-		<div class="row">
-			<label> 성별
-				<select name="memberSex">
-					<option selected>==선택==</option>
-					<option value="f">여자</option>
-					<option value="m">남자</option>
-				</select>
-			</label>
-		</div>	
-
-		<div class="row">
-			<label> 생년월일
-				<select name="yy" id="year"></select>
-				<select name="mm" id="month"></select>
-				<select name="dd" id="day"></select>
-			</label>
-		</div>
-		
-		<div class="row">
-			<label> 닉네임
-				<input type="text" name="memberNick" autocomplete="off" placeholder="nickname">
-			</label>
-		</div>
-		
-		<div class="row">
-	    	<label>프로필
-	    		<input type="file" name="attachmentNo">
-	    	</label>
-	    </div>
-		
-		<div class="row">
-			<label>
-				<input type="checkbox">전체 동의		
-			</label>
-		</div>
-		
-		<div class="row">
-			<button type="submit" onkeydown="hitEnterkey(event);">회원가입</button>
-		</div>
-	
-	</div>
-
-</form>
-
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
