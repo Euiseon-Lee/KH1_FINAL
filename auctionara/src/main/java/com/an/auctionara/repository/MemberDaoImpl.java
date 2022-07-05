@@ -73,9 +73,12 @@ public class MemberDaoImpl implements MemberDao {
 
 
 	@Override
-	public int checkMemberNo(String memberEmail) {
-		int memberNo = sqlSession.selectOne("member.checkMemberNo", memberEmail);
-		return memberNo;
+	public boolean checkMemberNo(String memberEmail) {
+		Integer memberNo = sqlSession.selectOne("member.checkMemberNo", memberEmail);
+		
+		if(memberNo==null) return false;
+		else return true;
+		
 	}
 	
 	

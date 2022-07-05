@@ -129,9 +129,10 @@ CREATE TABLE net_sales (
 CREATE TABLE gps_address (
 	gps_no	number		NOT NULL,
 	member_no	number		NOT NULL,
-	gps_latitude	number		NOT NULL,
-	gps_longitude	number		NOT NULL,
-	gps_regist_time	Date	DEFAULT sysdate	NOT NULL
+	gps_latitude	number(9,7)		NOT NULL,
+	gps_longitude	number(10,7)		NOT NULL,
+	gps_regist_time	Date	DEFAULT sysdate	NOT NULL,
+    gps_circle number(2) not nul
 );
 
 CREATE TABLE chat_report (

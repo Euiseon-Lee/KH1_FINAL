@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gps_address">
+	
+	<!-- 시퀸스 생성 -->
+	<select id="sequence" resultType="int">
+		select gps_address_seq.nextval from dual
+	</select>
+	
+	<!-- 주소 저장 -->
+	<insert id="insert" parameterType="GpsAddressDto">
+		insert into gps_address(
+			gps_no, member_no, gps_latitude, gps_longitude, gps_circle
+		)
+		values(
+			#{gpsNo}, #{memberNo}, #{gpsLatitude}, #{gpsLongitude}, #{gpsCircle}
+		)
+	</insert>
+	
+	<!-- 주소 수정 -->
+	<update id="update" parameterType="GpsAddressDto">
+		update gps_address 
+		set gps_latitude = #{gpsLatitude}, gps_longitude = #{gpsLongitude}, gps_circle = #{gpsCircle}
+		where gps_no = #{gpsNo}
+	</update>
+	
+	<!-- 회원의 주소 목록 조회 -->
+	<select id="list" resultType="GpsAddressDto" parameterType="int">
+		select * from gps_address where member_no = #{memberNo} order by gps_no
+	</select>
+
+	<!-- 회원의 주소1 조회 -->
+	<select id="one1" resultType="GpsAddressDto" parameterType="int">
+		select * from gps_address where gps_no = (select min(gps_no) from gps_address where member_no = #{memberNo})
+	</select>
+
+	<!-- 회원의 주소2 조회 -->
+	<select id="one2" resultType="GpsAddressDto" parameterType="int">
+		select * from gps_address where gps_no = (select max(gps_no) from gps_address where member_no = #{memberNo})
+	</select>
+		
+</mapper> 
