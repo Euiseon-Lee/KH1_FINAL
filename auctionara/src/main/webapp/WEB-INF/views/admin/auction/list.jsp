@@ -1,34 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h1>(전체)경매 신고 목록 테스트</h1>
+
+<h2>Auction List Sample Page</h2>
 
 <div>
 	<table>
 		<thead>
 			<tr>
-				<th>신고 번호</th>
-				<th>신고 게시글 번호</th>
-				<th>신고대상 이름</th>
-				<th>신고자</th>
-				<th>신고 내용</th>
-				<th>신고 시각</th>
-				<th>제재</th>
+				<th>경매 번호</th>
+				<th>판매인</th>
+				<th>카테고리</th>
+				<th>경매제목</th>
+				<th>등록일</th>
+				<th>신고횟수</th>
+				<th>상세</th>
+				<th>관리</th>
+				<th>관리</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="auctionReportListVO" items="${list}">
+			<c:forEach var="adminAuctionListVO" items="${list}">
 				<tr>
-					<td>${auctionReportListVO.auctionReportNo}</td>
-					<td>${auctionReportListVO.auctionNo}</td>
-					<td>${auctionReportListVO.auctioneerName}</td>
-					<td>${auctionReportListVO.reporterName}</td>
-					<td>${auctionReportListVO.auctionReportReason}</td>
-					<td>${auctionReportListVO.auctionReportTime}</td>
+					<td>${adminAuctionListVO.auctionNo}</td>
+					<td>${adminAuctionListVO.memberName}(${adminAuctionListVO.memberNick})</td>
+					<td>${adminAuctionListVO.categoryName}</td>
+					<td>${adminAuctionListVO.auctionTitle}</td>
+					<td>${adminAuctionListVO.auctionUploadTime}</td>
+					<td>${adminAuctionListVO.reportCount}</td>
+					<td><a href="${pageContext.request.contextPath}/admin/auction/detail/${adminAuctionListVO.auctionNo}">상세보기</a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/auction/report_detail?auctionNo=${adminAuctionListVO.auctionNo}">신고목록</a></td>
+					
 					<td>
-						<c:if test="${auctionReportListVO.auctionReportRestriction == 0}">
-							<a href="${pageContext.request.contextPath}/admin/restriction/restrict_member/${auctionReportListVO.auctioneerNo}/${auctionReportListVO.auctionReportNo}">제재하기</a>
-						</c:if>
+						<c:choose>
+							<c:when test="${adminAuctionListVO.auctionPrivate == 0}">
+								<a href="${pageContext.request.contextPath}/admin/auction/private/${adminAuctionListVO.auctionNo}">비공개 처리</a>
+							</c:when>
+							<c:otherwise>
+								<a href="${pageContext.request.contextPath}/admin/auction/open/${adminAuctionListVO.auctionNo}">공개 처리</a>
+							</c:otherwise>
+						</c:choose>
 					</td>
 				</tr>
 			</c:forEach>
@@ -112,10 +123,11 @@
 	
 	<div class="row center">
 		<!-- 검색창 -->
-		<form action="report_list" method="get">
+		<form action="list" method="get">
 			<select name="type" class="form-input input-round">
-				<option value="auction_report_reason" <c:if test="${type == 'auction_report_reason'}">selected</c:if>>신고 내용</option>
-				<option value="m2.member_name" <c:if test="${type == 'm2.member_name'}">selected</c:if>>신고자명</option>
+				<option value="member_name" <c:if test="${type == 'member_name'}">selected</c:if>>회원명</option>
+				<option value="member_nick" <c:if test="${type == 'member_nick'}">selected</c:if>>닉네임</option>
+				<option value="auction_title" <c:if test="${type == 'auction_title'}">selected</c:if>>경매 제목</option>
 			</select>
 			
 			<input type="search" name="keyword" placeholder="검색어 입력" required class="form-input input-round" value="${keyword}">

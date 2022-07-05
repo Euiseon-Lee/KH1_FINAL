@@ -15,8 +15,7 @@
 				<th>현금화 상태</th>
 				<th>현금화 신청시간</th>
 				<th>현금화 완료시간</th>
-				<th>기타</th>
-				<th>기타</th>
+				<th>관리</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,8 +30,7 @@
 					<td>${cashingPointsVO.cashingStatus}</td>
 					<td>${cashingPointsVO.cashingRequestTime}</td>
 					<td>${cashingPointsVO.cashingSuccessTime}</td>
-					<td><a href="approve/${cashingPointsVO.cashingNo}">승인</a></td>
-					<td><a href="refuse/${cashingPointsVO.cashingNo}">거절</a></td>
+					<td><a href="approve/${cashingPointsVO.cashingNo}">승인</a>|<a href="refuse/${cashingPointsVO.cashingNo}">거절</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
