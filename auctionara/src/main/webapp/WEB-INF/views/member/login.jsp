@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="saveIdExists" value="${cookie.saveId != null}"></c:set>
+
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
 <div class="container-fluid">
@@ -12,10 +15,10 @@
 	</div>
 
 	<form action="login" method="post">
-		<input type="hidden" name="referer" value=${referer}>
+		<input type="hidden" name="referer" value="${referer}">
 	
 		<div class="row">
-			<input type="email" name="memberEmail" autocomplete="off" placeholder="email as id">
+			<input type="email" name="memberEmail" autocomplete="off" placeholder="email as id" value="${cookie.saveId.value}">
 		</div>
 		
 		<div class="row">
@@ -26,7 +29,14 @@
 
 		<div class="row">
 			<label>
-				<input type="checkbox" >	
+				<c:choose>
+					<c:when test="${saveIdExists}">
+						<input type="checkbox" name="remember" checked>
+					</c:when>
+					<c:otherwise>
+						<input type="checkbox" name="remember">
+					</c:otherwise>
+				</c:choose>
 			</label> 아이디 저장하기		
 		</div>
 
@@ -43,6 +53,12 @@
 	</form>	
 	
 	
+	<c:if test="${param.error != null}">
+		<div class="row">
+				<h3 style="color:red;">로그인 정보가 일치하지 않습니다</h3>
+		</div>
+	</c:if>
+	
 	
 	<div class="row">
 		<a href="${root}/member/check_email">이메일을 잊으셨나요?</a>
@@ -56,12 +72,6 @@
 		<span><strong>아직 경매나라 계정이 없나요? </strong></span> &nbsp;&nbsp;
 		<a href="${root}/member/join_intro">회원가입</a>		
 	</div>	
-
-
-
-
-
-
 
 
 

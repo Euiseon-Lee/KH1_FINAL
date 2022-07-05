@@ -17,12 +17,16 @@
 		<div class="row">
 			<div>
 				<label> 이메일
-					<input type="email" name="memberEmail" autocomplete="off" placeholder="email" class="email-input" required>
+					<input type="email" name="memberEmail" autocomplete="off" placeholder="email" class="email-input">
 				</label>
-				<span></span>
+				<div>
+					<span id="valid-email">인증 가능한 이메일입니다</span>
+					<span id="email-exists" style="color:blue;">이미 가입된 계정입니다</span>
+					<span id="invalid-email" style="color:red;">잘못된 이메일 양식입니다</span>
+				</div>
 			</div>
 			<div>
-				<input type="button" value="인증메일 발송"class="btn-send-email">
+				<input type="button" value="인증메일 발송"class="btn-send-email" disabled>
 			</div>
 		</div>
 		
@@ -107,9 +111,75 @@
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
-	$(function(){
+	$(function(){		
+		
+		$("#valid-email").hide();
+		$("#invalid-email").hide();
+		$("#email-exists").hide();
+		
+		
+		$(".email-input").on("blur", function(){
+			
+			var certTarget = $(".email-input").val();
+			
+			function isValid(certTarget){
+				var regex = /^[\w\.]+@([\w]+\.)+[\w]{2,4}$/;
+				return regex.test(certTarget);
+			};
+			
+			console.log(certTarget);
+			var confirm = isValid(certTarget);
+			console.log(confirm);
+			
+			
+			if(confirm){
+				
+				$.ajax({
+					url: "${pageContext.request.contextPath}/emailExists",
+					type: "get",
+					
+					data:{
+						certTarget: certTarget
+					},
+					
+					success: function(resp){
+						if(resp==false){
+							$(".btn-send-email").attr("disabled", false);
+							$("#valid-email").show();
+						}
+						
+						else{
+							$("#email-exists").show();
+// 							window.alert("이미 있는 계정입니다");
+						}
+					},
+					
+// 					error: function(){}
+					
+				});
+				
+			}
+			
+			else{
+				$("#invalid-email").show();
+				window.alert("이메일 양식을 지켜서 입력해주세요");
+			}
+
+
+		});
+		
+		$(".email-input").on("click", function(){
+			$(".btn-send-email").attr("disabled", true);
+			$("#valid-email").hide();
+			$("#invalid-email").hide();
+			$("#email-exists").hide();
+			
+			$(".email-input").val("");
+		});
+		
 		
 		$(".btn-send-email").click(function(){
+		
 			var certTarget = $(".email-input").val();
 			
 			$.ajax({
@@ -134,6 +204,8 @@
 			
 			
 		});
+		
+		
 		
 		
 		$(".btn-cert-check").click(function(){
