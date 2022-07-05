@@ -69,8 +69,6 @@ public class AdminRestrictController {
 		
 		int count = managerRestrictionDao.count(type, keyword);
 		
-		System.out.println(count);
-		
 		int lastPage = (count + s -1) / s; 
 		int blockSize = 10; 
 		int endBlock = (p + blockSize -1) / blockSize * blockSize;

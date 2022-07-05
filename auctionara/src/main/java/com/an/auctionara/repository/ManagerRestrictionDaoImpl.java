@@ -30,6 +30,8 @@ public class ManagerRestrictionDaoImpl implements ManagerRestrictionDao{
 	public List<ManagerRestrictionListVO> list(String type, String keyword, int p, int s) {
 		// 회원 제재 내역 메소드 
 		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("type", type);
+		param.put("keyword", keyword);
 		
 		int end = p * s;
 		int begin = end - (s - 1);

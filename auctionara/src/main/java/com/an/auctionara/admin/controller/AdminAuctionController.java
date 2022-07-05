@@ -31,6 +31,9 @@ public class AdminAuctionController {
 	@Autowired
 	private AuctionDao auctionDao; 
 	
+	@Autowired
+	private AttachmentDao attachmentDao; 
+	
 	
 	@GetMapping("/report_list")
 	public String reportList(

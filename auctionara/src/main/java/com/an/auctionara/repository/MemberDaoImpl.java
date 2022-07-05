@@ -83,6 +83,8 @@ public class MemberDaoImpl implements MemberDao {
 	public List<MemberDto> list(String type, String keyword, int p, int s) {
 		// 관리자 페이지 - 회원 목록 조회 메소드 
 		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("type", type);
+		param.put("keyword", keyword);
 		
 		int end = p * s;
 		int begin = end - (s - 1);
