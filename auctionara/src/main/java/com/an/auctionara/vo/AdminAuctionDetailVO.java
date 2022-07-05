@@ -1,6 +1,4 @@
-package com.an.auctionara.entity;
-
-import java.sql.Date;
+package com.an.auctionara.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,19 +6,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class AuctionDto {
+public class AdminAuctionDetailVO {
 	private int auctionNo;
 	private int auctioneerNo;
-	private int categoryNo;
+	private String categoryName; 
 	private String auctionTitle;
-	private String auctionContent;
-	private Date auctionUploadTime;
-	private String auctionClosedTime;	
+	private String auctionContent; 
+	private String auctionUploadTime; 
 	private int auctionOpeningBid;
 	private int auctionClosingBid;
-	private int auctionBidUnit;
+	private int auctionBidUnit; 
 	private int auctionStatus;
-	
-	// 컬럼 추가
 	private int auctionPrivate;
+	private String memberName;
+	private String memberNick;
+	private int maxBiddingPrice;
+	private int photoAttachmentNo; 
 }
