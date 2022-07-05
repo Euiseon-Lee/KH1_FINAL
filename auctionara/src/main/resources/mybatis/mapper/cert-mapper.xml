@@ -26,7 +26,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cert">
 
-	<insert id="makeCert" parameterType="CertDto">
+ 	<insert id="makeCert" parameterType="CertDto">
 		insert into cert(member_no, cert_target, cert_no, cert_time)
 			values(#{memberNo}, #{certTarget}, #{certNo}, sysdate)
 	</insert>

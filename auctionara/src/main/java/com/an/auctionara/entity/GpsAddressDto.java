@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 public class GpsAddressDto {
 	private int gpsNo;
 	private int memberNo;
-	private int gpsLatitude;
-	private int gpsLongitude;
+	private double gpsLatitude;
+	private double gpsLongitude;
 	private Date gpsRegistTime;
+	private int gpsCircle;
 }

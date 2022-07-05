@@ -94,31 +94,10 @@ pageEncoding="UTF-8"%>
         </div>
         <div class="row py-4 border-bottom">
             <div class="col-sm-3">
-                <label for="auctionOpeningBid" class="form-label">최소 입찰 가격</label>
-            </div>
-            <div class="col-sm">
-                <input type="text" class="form-control" id="auctionOpeningBid" name="auctionOpeningBid" v-bind:class="{'is-invalid': (!auctionOpeningBidVaild() && auctionOpeningBid != '')}" v-model="auctionOpeningBid" placeholder="100" autocomplete="off" maxlength="9" />
-                <div class="invalid-feedback">최소 100원 단위로 설정 가능합니다.</div>
-            </div>
-            <div class="col-sm align-self-center">원</div>
-        </div>
-        <div class="row py-4 border-bottom">
-            <div class="col-sm-3">
-                <label for="auctionClosingBid" class="form-label">즉시 낙찰 가격</label>
-            </div>
-            <div class="col-sm">
-                <input type="text" class="form-control" id="auctionClosingBid" name="auctionClosingBid" v-bind:class="{'is-invalid': (!auctionClosingBidValid() && auctionClosingBid != '')}" v-model="auctionClosingBid" placeholder="100" autocomplete="off" maxlength="9" />
-                <div class="invalid-feedback">최소 입찰 가격보다 높거나 같게 설정해주세요.</div>
-            </div>
-            <div class="col-sm align-self-center">원</div>
-        </div>
-        <div class="row py-4 border-bottom">
-            <div class="col-sm-3">
                 <label for="auctionBidUnit" class="form-label">입찰 단위</label>
             </div>
             <div class="col-sm">
                 <select class="form-control" id="auctionBidUnit" name="auctionBidUnit" v-model="auctionBidUnit">
-                    <option value="">선택</option>
                     <option value="100">100원 (1백원)</option>
                     <option value="1000">1,000원 (1천원)</option>
                     <option value="10000">10,000원 (1만원)</option>
@@ -127,6 +106,26 @@ pageEncoding="UTF-8"%>
                 </select>
             </div>
         </div>
+        <div class="row py-4 border-bottom">
+            <div class="col-sm-3">
+                <label for="auctionOpeningBid" class="form-label">최소 입찰 가격</label>
+            </div>
+            <div class="col-sm">
+                <input type="text" class="form-control" id="auctionOpeningBid" name="auctionOpeningBid" v-bind:class="{'is-invalid': (!auctionOpeningBidVaild() && auctionOpeningBid != '')}" v-model="auctionOpeningBid" placeholder="100" autocomplete="off" maxlength="9" />
+                <div class="invalid-feedback">입찰 단위에 맞는 금액만 가능합니다.</div>
+            </div>
+            <div class="col-sm align-self-center">원</div>
+        </div>   
+        <div class="row py-4 border-bottom">
+            <div class="col-sm-3">
+                <label for="auctionClosingBid" class="form-label">즉시 낙찰 가격</label>
+            </div>
+            <div class="col-sm">
+                <input type="text" class="form-control" id="auctionClosingBid" name="auctionClosingBid" v-bind:class="{'is-invalid': (!auctionClosingBidValid() && auctionClosingBid != '')}" v-model="auctionClosingBid" placeholder="100" autocomplete="off" maxlength="9" />
+                <div class="invalid-feedback">최소 입찰 가격보다 높거나 같고, 입찰 단위에 맞는 금액만 가능합니다.</div>
+            </div>
+            <div class="col-sm align-self-center">원</div>
+        </div>             
         <div class="row py-4 border-bottom">
             <div class="col-sm-3">
                 <label for="auctionClosedTime" class="form-label">경매 마감 기한</label>
@@ -143,7 +142,6 @@ pageEncoding="UTF-8"%>
 </div>
 
 <script src="https://unpkg.com/vue@next"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     // 현재 시간 +1일 전 / +31일 후는 경매 마감일로 설정하지 못하도록 설정
     let today = new Date();
@@ -163,7 +161,7 @@ pageEncoding="UTF-8"%>
                 auctionContent: "",
                 auctionOpeningBid: "",
                 auctionClosingBid: "",
-                auctionBidUnit: "",
+                auctionBidUnit: "100",
                 auctionClosedTime: "",
                 openingBidVaild: false,
                 closingBidValid: false,
@@ -177,7 +175,7 @@ pageEncoding="UTF-8"%>
                 return this.auctionContent.length;
             },
             formPass() {
-                return this.attachmentCount > 0 && this.auctionTitle != "" && this.categoryNo != "" && this.openingBidVaild && this.closingBidValid && this.auctionOpeningBid != "" && this.auctionClosingBid != "" && this.auctionContent != "" && this.auctionBidUnit != "" && this.auctionClosedTime != "";
+                return this.attachmentCount > 0 && this.auctionTitle != "" && this.categoryNo != "" && this.openingBidVaild && this.closingBidValid && this.auctionOpeningBid != "" && this.auctionClosingBid != "" && this.auctionContent != "" && this.auctionClosedTime != "";
             },
         },
         methods: {
@@ -193,13 +191,11 @@ pageEncoding="UTF-8"%>
                 this.attachmentCount--;
             },
             auctionOpeningBidVaild() {
-                const regex = /^[1-9][0-9]{0,6}00$/;
-                this.openingBidVaild = regex.test(this.auctionOpeningBid);
+				this.openingBidVaild = parseInt(this.auctionOpeningBid % this.auctionBidUnit) == 0
                 return this.openingBidVaild;
             },
             auctionClosingBidValid() {
-                const regex = /^[1-9][0-9]{0,6}00$/;
-                this.closingBidValid = regex.test(this.auctionClosingBid) && parseInt(this.auctionClosingBid) >= parseInt(this.auctionOpeningBid);
+				this.closingBidValid = parseInt(this.auctionClosingBid % this.auctionBidUnit) == 0 && parseInt(this.auctionClosingBid) >= parseInt(this.auctionOpeningBid);
                 return this.closingBidValid;
             },
             beforeSubmit(e) {
@@ -217,7 +213,7 @@ pageEncoding="UTF-8"%>
     app.mount("#app");
 
 </script>
-<style>
+<style scoped>
     #add_btn {
         width: 150px;
         height: 150px;

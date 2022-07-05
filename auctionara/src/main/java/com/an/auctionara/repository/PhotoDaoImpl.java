@@ -1,5 +1,7 @@
 package com.an.auctionara.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,5 +22,11 @@ public class PhotoDaoImpl implements PhotoDao {
 										.photoAuctionNo(photoDto.getPhotoAuctionNo())
 										.photoAttachmentNo(photoDto.getPhotoAttachmentNo()) 
 										.build());
+	}
+
+	@Override
+	public List<PhotoDto> list(int photoAuctionNo) {
+		List<PhotoDto> list = sqlSession.selectList("photo.list", photoAuctionNo);
+		return list;
 	}
 }
