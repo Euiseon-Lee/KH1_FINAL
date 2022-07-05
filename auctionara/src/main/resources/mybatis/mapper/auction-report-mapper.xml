@@ -27,7 +27,7 @@
 <mapper namespace="auctionReport">
 	
 	<!-- 경매 게시글 신고 list를 위한 수동 mapping -->
-	<resultMap type="AuctionReportListVO" id="auctionReportMap">
+<!-- 	<resultMap type="AuctionReportListVO" id="auctionReportMap">
 		<collection property="auctionReportList" javaType="List" ofType="AuctionReportListVO" select="list" column="auction_report_no">
 			<result column="auction_report_no" property="auctionReportNo"/>
 			<result column="auction_no" property="auctionNo"/>
@@ -38,7 +38,7 @@
 			<result column="reporter_name" property="reporterName"/>
 			<result column="auctioneer_no" property="auctioneerNo"/>
 		</collection>
-	</resultMap>
+	</resultMap> -->
 	
 	<!-- 경매 게시글 신고 페이징 list -->
 	<select id="list" parameterType="Map" resultType="AuctionReportListVO">
@@ -84,20 +84,12 @@
 	 </select>
 	 
 	 <!-- 특정 경매에 대한 report list -->
-	 <select id="detailList" parameterType="Map" resultType="AdminAuctionDetailReportVO">
-		 select * from (
-		 		select rownum rn, TMP.* from (
-		 			select AR.*, M.member_name, M.member_nick from auction_report AR
-    					inner join member M on AR.auction_reporter_no = M.member_no
-    					where auction_no = #{auctionNo}
-		 				<if test="type != null and keyword != null">
-						 	<![CDATA[
-						 		and instr(${type}, #{keyword}) > 0
-						 	]]>
-					 	</if>
-				 	order by auction_report_no desc
-		 		) TMP
-		 	) where rn between #{begin} and #{end}
+	 <select id="detailList" parameterType="int" resultType="AdminAuctionDetailReportVO">
+	 	select AR.*, M.member_name, M.member_nick, A.auctioneer_no from auction_report AR
+			inner join member M on AR.auction_reporter_no = M.member_no
+			inner join auction A on AR.auction_no = A.auction_no
+		where AR.auction_no = #{auctionNo} 
+		order by auction_report_no desc
 	 </select>
 
 </mapper> 

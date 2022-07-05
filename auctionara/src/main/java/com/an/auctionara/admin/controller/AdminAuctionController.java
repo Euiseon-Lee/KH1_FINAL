@@ -15,6 +15,7 @@ import com.an.auctionara.entity.AuctionDto;
 import com.an.auctionara.repository.AttachmentDao;
 import com.an.auctionara.repository.AuctionDao;
 import com.an.auctionara.repository.AuctionReportDao;
+import com.an.auctionara.vo.AdminAuctionDetailReportVO;
 import com.an.auctionara.vo.AdminAuctionDetailVO;
 import com.an.auctionara.vo.AdminAuctionListVO;
 import com.an.auctionara.vo.AuctionReportListVO;
@@ -28,10 +29,8 @@ public class AdminAuctionController {
 	private AuctionReportDao auctionReportDao;
 	
 	@Autowired
-	private AttachmentDao attachmentDao;
-	
-	@Autowired
 	private AuctionDao auctionDao; 
+	
 	
 	@GetMapping("/report_list")
 	public String reportList(
@@ -40,7 +39,7 @@ public class AdminAuctionController {
 			@RequestParam(required = false, defaultValue = "1") int p,  
 			@RequestParam(required = false, defaultValue = "10") int s,
 			Model model) {
-		List<AuctionReportListVO> list = auctionReportDao.reportList(p, s); 
+		List<AuctionReportListVO> list = auctionReportDao.reportList(type, keyword, p, s); 
 		model.addAttribute("list", list);
 		
 		boolean search = type != null && keyword != null;
@@ -107,15 +106,21 @@ public class AdminAuctionController {
 	@GetMapping("/detail/{auctionNo}")
 	public String detail(
 			@PathVariable int auctionNo,
-			@RequestParam(required = false) String type,
-			@RequestParam(required = false) String keyword,
-			@RequestParam(required = false, defaultValue = "1") int p,  
-			@RequestParam(required = false, defaultValue = "10") int s,
 			Model model) {
 		AdminAuctionDetailVO adminAuctionDetailVO = auctionDao.adminAuctionDetail(auctionNo);
 		model.addAttribute("adminAuctionDetailVO", adminAuctionDetailVO);
 		model.addAttribute("profileUrl", "/attachment/download?attachmentNo=" + adminAuctionDetailVO.getPhotoAttachmentNo());
 		
 		return "admin/auction/detail";
+	}
+	
+	@GetMapping("/report_detail")
+	public String reportDetail(
+			@RequestParam int auctionNo,
+			Model model) {
+		List<AdminAuctionDetailReportVO> list = auctionReportDao.detailReportList(auctionNo);
+		model.addAttribute("detailReportList", list);
+		
+		return "admin/auction/report_detail"; 
 	}
 }

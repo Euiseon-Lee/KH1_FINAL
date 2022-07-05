@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class AdminAuctionDetailReportVO {
 	private int auctionReportNo;
 	private int auctionNo;
+	private int auctioneerNo;
 	private int auctionReporterNo;
 	private String auctionReportReason;
 	private String auctionReportTime; 

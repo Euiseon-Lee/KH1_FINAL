@@ -30,7 +30,7 @@
 					<td>${adminAuctionListVO.reportCount}</td>
 					<td>${adminAuctionListVO.auctionPrivate}</td>
 					<td><a href="${pageContext.request.contextPath}/admin/auction/detail/${adminAuctionListVO.auctionNo}">상세보기</a></td>
-					<td><a href="${pageContext.request.contextPath}/admin/auction/report_detail/${adminAuctionListVO.auctionNo}">신고목록</a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/auction/report_detail?auctionNo=${adminAuctionListVO.auctionNo}">신고목록</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
