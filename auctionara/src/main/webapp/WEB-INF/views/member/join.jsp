@@ -127,9 +127,9 @@
 				return regex.test(certTarget);
 			};
 			
-			console.log(certTarget);
+// 			console.log(certTarget);
 			var confirm = isValid(certTarget);
-			console.log(confirm);
+// 			console.log(confirm);
 			
 			
 			if(confirm){
