@@ -14,7 +14,7 @@ public interface MemberDao {
 
 	int checkEmailNum(String memberEmail);
 	
-	int checkMemberNo(String memberEmail);
+	boolean checkMemberNo(String memberEmail);
 
 	void plusRedCount(int memberNo);
 
