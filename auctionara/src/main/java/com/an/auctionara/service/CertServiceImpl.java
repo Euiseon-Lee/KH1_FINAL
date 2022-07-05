@@ -80,7 +80,7 @@ public class CertServiceImpl implements CertService {
 		String returnUri = ServletUriComponentsBuilder
 								.fromCurrentContextPath()
 								.path("/member/reset")
-								.queryParam("memberNo", targetDto.getMemberNo())
+								.queryParam("memberEmail", targetDto.getMemberEmail())
 								.queryParam("certNo", certString)
 								.toUriString();
 		
