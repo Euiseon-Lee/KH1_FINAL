@@ -29,5 +29,7 @@ public interface MemberDao {
 
 	// 관리자 - 블랙회원 등록 메소드 
 	MemberDto setBlock(int memberNo);
+
+	boolean resetPw(MemberDto memberDto);
 	
 }
