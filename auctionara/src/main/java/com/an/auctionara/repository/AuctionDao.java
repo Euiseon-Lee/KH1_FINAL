@@ -17,4 +17,8 @@ public interface AuctionDao {
 	int adminListCount(String type, String keyword);
 	// 관리자 페이지 - 경매 detail 
 	AdminAuctionDetailVO adminAuctionDetail(int auctionNo);
+	// 관리자 페이지 - 경매 게시글 공개 처리 
+	AuctionDto setOpen(int auctionNo);
+	// 관리자 페이지 - 경매 게시글 비공개 처리 
+	AuctionDto setPrivate(int auctionNo);
 }

@@ -131,5 +131,20 @@
 		    inner join category C on A.category_no = C.category_no
 		where auction_no = #{auctionNo}
 	</select>
+	
+	<!-- 관리자 페이지 - 경매 게시글 공개 처리 -->
+	<update id="setOpen" parameterType="int">
+		update auction set auction_private = 0 where auction_no = #{auctionNo} and auction_private = 1
+	</update>
+	
+	<!-- 관리자 페이지 - 경매 게시글 비공개 처리 -->
+	<update id="setPrivate" parameterType="int">
+		update auction set auction_private = 1 where auction_no = #{auctionNo} and auction_private = 0 
+	</update>
+	
+	<!-- 관리자 페이지 - update 후 사용할 selectOne -->
+	<select id="one" parameterType="int" resultType="AuctionDto">
+		select * from auction where auction_no = #{auctionNo}
+	</select>
 
 </mapper> 

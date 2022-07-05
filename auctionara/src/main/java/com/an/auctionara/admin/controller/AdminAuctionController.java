@@ -126,4 +126,18 @@ public class AdminAuctionController {
 		
 		return "admin/auction/report_detail"; 
 	}
+	
+	@GetMapping("/open/{auctionNo}")
+	public String openAuction(@PathVariable int auctionNo) {
+		AuctionDto auctionDto = auctionDao.setOpen(auctionNo);
+		
+		return "redirect: /auctionara/admin/auction/list";
+	}
+	
+	@GetMapping("/private/{auctionNo}")
+	public String privateAuction(@PathVariable int auctionNo) {
+		AuctionDto auctionDto = auctionDao.setPrivate(auctionNo);
+		
+		return "redirect: /auctionara/admin/auction/list"; 
+	}
 }

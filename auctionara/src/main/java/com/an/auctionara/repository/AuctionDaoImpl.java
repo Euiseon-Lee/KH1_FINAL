@@ -71,4 +71,22 @@ public class AuctionDaoImpl implements AuctionDao {
 		// 관리자 페이지 - 경매 detail 메소드 
 		return sqlSession.selectOne("auction.adminAuctionDetail", auctionNo);
 	}
+	
+	@Override
+	public AuctionDto setOpen(int auctionNo) {
+		// 관리자 페이지 - 경매 게시글 공개 처리 
+		int count = sqlSession.update("auction.setOpen", auctionNo);
+//		if(count == 0) throw new CannotFindException();
+		
+		return sqlSession.selectOne("auction.one", auctionNo);
+	}
+	
+	@Override
+	public AuctionDto setPrivate(int auctionNo) {
+		// 관리자 페이지 - 경매 게시글 비공개 처리 
+		int count = sqlSession.update("auction.setPrivate", auctionNo);
+//		if(count == 0) throw new CannotFindException();
+		
+		return sqlSession.selectOne("auction.one", auctionNo);
+	}
 }

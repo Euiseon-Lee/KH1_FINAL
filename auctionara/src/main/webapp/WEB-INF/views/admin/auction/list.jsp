@@ -14,8 +14,8 @@
 				<th>경매제목</th>
 				<th>등록일</th>
 				<th>신고횟수</th>
-				<th>공개여부</th>
 				<th>상세</th>
+				<th>관리</th>
 				<th>관리</th>
 			</tr>
 		</thead>
@@ -28,9 +28,19 @@
 					<td>${adminAuctionListVO.auctionTitle}</td>
 					<td>${adminAuctionListVO.auctionUploadTime}</td>
 					<td>${adminAuctionListVO.reportCount}</td>
-					<td>${adminAuctionListVO.auctionPrivate}</td>
 					<td><a href="${pageContext.request.contextPath}/admin/auction/detail/${adminAuctionListVO.auctionNo}">상세보기</a></td>
 					<td><a href="${pageContext.request.contextPath}/admin/auction/report_detail?auctionNo=${adminAuctionListVO.auctionNo}">신고목록</a></td>
+					
+					<td>
+						<c:choose>
+							<c:when test="${adminAuctionListVO.auctionPrivate == 0}">
+								<a href="${pageContext.request.contextPath}/admin/auction/private/${adminAuctionListVO.auctionNo}">비공개 처리</a>
+							</c:when>
+							<c:otherwise>
+								<a href="${pageContext.request.contextPath}/admin/auction/open/${adminAuctionListVO.auctionNo}">공개 처리</a>
+							</c:otherwise>
+						</c:choose>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
