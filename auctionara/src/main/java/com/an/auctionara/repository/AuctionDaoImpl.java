@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.an.auctionara.entity.AuctionDto;
+import com.an.auctionara.vo.AdminAuctionDetailVO;
 import com.an.auctionara.vo.AdminAuctionListVO;
 import com.an.auctionara.vo.AuctionListVO;
 
@@ -63,5 +64,11 @@ public class AuctionDaoImpl implements AuctionDao {
 		param.put("keyword", keyword);
 		
 		return sqlSession.selectOne("auction.adminListCount", param);
+	}
+	
+	@Override
+	public AdminAuctionDetailVO adminAuctionDetail(int auctionNo) {
+		// 관리자 페이지 - 경매 detail 메소드 
+		return sqlSession.selectOne("auction.adminAuctionDetail", auctionNo);
 	}
 }
