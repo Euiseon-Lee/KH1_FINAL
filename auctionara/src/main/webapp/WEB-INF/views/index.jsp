@@ -41,14 +41,14 @@
 
 <div id="app">
     <div class="container-fluid bg-info gps mb-5">
-        <div class="row">
+        <div class="row position-relative">
             <div class="col-8 py-4 px-5">
-                <h5 class="text-white mt-1">지금 내 동네는</h5>
-                <h5 class="text-white"><span class="h4">임시 주소</span> 입니다</h5>
+                <h5 class="text-white mt-1">지금 내 대표 동네는</h5>
+                <h5 class="text-white"><span class="h4 text-truncate" id="address1"></span> 입니다</h5>
             </div>
-            <div class="col py-4 px-3 bg-light position-relative">
-                <a href="#" class="btn btn-info rounded-pill position-absolute" role="button">내 동내 변경 <i class="fa-solid fa-angle-right"></i></a>
+            <div class="col py-4 px-3 bg-light" id="map">
             </div>
+            <a href="${root}/address" class="btn btn-info rounded-pill position-absolute" role="button">내 동내 변경 <i class="fa-solid fa-angle-right"></i></a>
         </div>
     </div>
 
@@ -103,9 +103,11 @@
 
 <script src="https://unpkg.com/vue@next"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=714d787408b068ef9f0ff6126a1c0b99&libraries=services"></script>
 <script>
 	// 천 단위 콤마 찍기
-	var comma = document.getElementsByClassName("comma");
+	const comma = document.getElementsByClassName("comma");
 	for(i=0; i < comma.length; i++)
 	{
 		comma[i].innerHTML = comma[i].innerHTML.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -120,6 +122,33 @@
         },
     });
     app.mount("#app");
-
+	
+    const mapContainer = document.getElementById("map"); // 지도를 표시할 div
+    const mapOption = {
+        center: new daum.maps.LatLng(${address1.gpsLatitude}, ${address1.gpsLongitude}), // 지도의 중심 좌표
+        level: 6, // 지도의 확대 레벨
+        draggable: false, // 확대 축소 막기
+    };
+    const map = new kakao.maps.Map(mapContainer, mapOption); // 지도 미리 생성
+    const marker = new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(${address1.gpsLatitude}, ${address1.gpsLongitude}),
+        map: map
+    }); // 마커 미리 생성
+    
+    map.relayout(); // 지도 생성
+    
+ 	// 좌표 > 주소 변환
+    const geocoder = new kakao.maps.services.Geocoder();
+    const callback = function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            if (!result[0].road_address) { // 도로명 주소가 없으면
+            	$("#address1").text(result[0].address.address_name);
+            } else {
+            	$("#address1").text(result[0].road_address.address_name);
+            }        	 
+        }
+    };
+    geocoder.coord2Address(${address1.gpsLongitude}, ${address1.gpsLatitude}, callback);
+    
 </script>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -1,5 +1,7 @@
 package com.an.auctionara.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +11,11 @@ import lombok.NoArgsConstructor;
 public class AuctionDetailVO {
 	private int auctionNo;
 	private int auctioneerNo;
+	private String categoryName;
 	private int categoryNo;
 	private String auctionTitle;
 	private String auctionContent;
-	private String auctionClosedTime;	
+	private Date auctionClosedTime;	
 	private int auctionOpeningBid;
 	private int auctionClosingBid;
 	private int auctionBidUnit;
@@ -20,4 +23,5 @@ public class AuctionDetailVO {
 	private String auctionRemainTime;
 	private int maxBiddingPrice;
 	private int myBiddingPrice;
+	private int biddingCount;
 }

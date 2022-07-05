@@ -9,6 +9,11 @@
 
 /* 커스텀 스타일 */
 
+pre {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 1rem;
+}
+
 .navbar-brand img {
     height: 40px;
 }
@@ -43,8 +48,9 @@ footer li {
 }
 
 .gps .btn {
-    bottom: 20%;
-    right: 10%;
+    bottom: 12%;
+    right: 2%;
+    z-index: 2;
 }
 
 .card-img-top {
