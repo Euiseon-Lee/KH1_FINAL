@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class CertDto {
-	int memberNo;
 	String certTarget;
 	String certNo;
 	String certTime;

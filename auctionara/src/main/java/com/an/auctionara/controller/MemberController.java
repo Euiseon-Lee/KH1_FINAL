@@ -1,8 +1,8 @@
 package com.an.auctionara.controller;
 
-import java.sql.Date;
-
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.MemberDao;
@@ -76,7 +74,9 @@ public class MemberController {
 				@RequestParam String memberEmail,
 				@RequestParam String memberPw,
 				@RequestParam String referer,
-				HttpSession session
+				@RequestParam(required=false) String remember,
+				HttpSession session,
+				HttpServletResponse response
 			) {
 		MemberDto memberDto = memberDao.login(memberEmail, memberPw);
 		
@@ -84,6 +84,17 @@ public class MemberController {
 			session.setAttribute("whoLogin", memberDto.getMemberNo());
 			session.setAttribute("auth", memberDto.getMemberGrade());
 			
+			if(remember != null) {
+				Cookie ck = new Cookie("saveId", memberDto.getMemberEmail());
+				ck.setMaxAge(4*7*24*60*60);
+				response.addCookie(ck);				
+			}
+			
+			else {
+				Cookie ck = new Cookie("saveId", memberDto.getMemberEmail());
+				ck.setMaxAge(0);
+				response.addCookie(ck);
+			}			
 			
 			return "redirect:"+referer;
 		}
@@ -112,7 +123,7 @@ public class MemberController {
 					@RequestParam String memberEmail,
 					Model model
 			) {
-		int result = memberDao.checkEmail(memberEmail);
+		int result = memberDao.checkEmailNum(memberEmail);
 		model.addAttribute("memberEmailResult", memberEmail);
 		
 		if(result != 1) {
@@ -132,10 +143,10 @@ public class MemberController {
 	
 	@PostMapping("/change_pw")
 	public String changePw(
-			String memberEmail,
+			@RequestParam String memberEmail,
 			Model model
 			) {
-		int result = memberDao.checkEmail(memberEmail);
+		int result = memberDao.checkEmailNum(memberEmail);
 		
 		if(result != 1) {
 			return "redirect:change_pw?error";			
