@@ -129,4 +129,21 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return sqlSession.selectOne("member.one", memberNo);
 	}
+
+
+	
+	//암호화 전 코드 => 암호화 이후 수정 필요
+	@Override
+	public boolean resetPw(MemberDto memberDto) {
+		
+		if(memberDto == null) return false;
+		
+		int count = sqlSession.update("member.changePw", 
+						MemberDto.builder()
+							.memberEmail(memberDto.getMemberEmail())
+							.memberPw(memberDto.getMemberPw())
+							.build());
+		
+		return count > 0;
+	}
 }

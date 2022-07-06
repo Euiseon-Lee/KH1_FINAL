@@ -1,5 +1,10 @@
 package com.an.auctionara.controller;
 
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.util.Random;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.an.auctionara.entity.CertDto;
 import com.an.auctionara.entity.MemberDto;
+import com.an.auctionara.repository.CertDao;
 import com.an.auctionara.repository.MemberDao;
+import com.an.auctionara.service.CertService;
 
 @Controller
 @RequestMapping("/member")
@@ -24,6 +32,12 @@ public class MemberController {
 	
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private CertDao certDao;
+	
+	@Autowired
+	private CertService certService;
 	
 	@GetMapping("/join_intro")
 	public String intro() {
@@ -140,29 +154,88 @@ public class MemberController {
 		return "member/change_pw";
 	}
 	
-	
 	@PostMapping("/change_pw")
-	public String changePw(
-			@RequestParam String memberEmail,
-			Model model
-			) {
-		int result = memberDao.checkEmailNum(memberEmail);
+	public String changePw(@ModelAttribute MemberDto targetDto) throws MessagingException {
+		boolean isMember = memberDao.checkMemberNo(targetDto.getMemberEmail());
 		
-		if(result != 1) {
-			return "redirect:change_pw?error";			
+		if(!isMember) {
+			return "redirect:change_pw?fail";
 		}
+		
 		else {
-			//result가 1이면 이메일로 변경링크 발송되어야함
-			//모달창으로 열리도록 하기!
-			return "member/change_pw_result";
+			certService.sendPwResetMail(targetDto);
+			return "redirect:change_pw?success";
 		}
 	}
 	
 	
-//	@GetMapping("/check_email_result")
-//	public String checkEmailResult() {
-//		return "member/check_email_result";
-//	}
+	private Random r = new Random();
+	private Format f = new DecimalFormat("000000");	
+	
+	@GetMapping("/reset")
+	public String resetPw(
+				@RequestParam String memberEmail,
+				@RequestParam String certNo,
+				Model model) {
+		
+		CertDto certDto = CertDto.builder()
+							.certTarget(memberEmail)
+							.certNo(certNo)
+							.build();
+		
+		boolean isIdentical = certDao.certifyCert(certDto);
+		
+		if(isIdentical) {
+			
+			String newCertNo = f.format(r.nextInt(1000000));
+			certDao.makeCert(CertDto.builder()
+								.certTarget(memberEmail)
+								.certNo(newCertNo)
+							.build()
+					);
+			
+			model.addAttribute("certNo", newCertNo);
+			
+			return "member/reset";
+			
+		}
+		
+		else {
+			return "member/check_email_result?error";		//추가 수정이 필요 (에러 처리)
+		}
+		
+		
+	}
+	
+	
+	@PostMapping("/reset")
+	public String reset(
+					@ModelAttribute MemberDto memberDto,
+					@RequestParam String certNo) {
+		boolean isIdentical = certDao.certifyCert(CertDto.builder()
+								.certTarget(memberDto.getMemberEmail())
+								.certNo(certNo)
+							.build());
+		
+
+		
+		if(isIdentical == false) {
+			
+			boolean result = memberDao.resetPw(memberDto);
+			if(result) {
+				return "redirect:reset_success";
+			}			
+		}
+		
+		return "redirect:reset_fail";
+	}
+	
+	
+	
+	@GetMapping("/reset_success")
+	public String resetSuccess() {
+		return "member/reset_success";
+	}
 	
 	
 }
