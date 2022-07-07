@@ -85,9 +85,10 @@ public class CertServiceImpl implements CertService {
 								.toUriString();
 		
 		String content = 
-				"<a href='"+returnUri+"'>"
-					+ "비밀번호를 재설정하시려면 여기를 누르세요"
-			+ "</a>";
+			"<a href='"+returnUri+"'>"
+				+ "비밀번호를 재설정하시려면 여기를 누르세요"
+			+ "</a><br><br>"
+				+"위의 링크는 한 번만 사용가능합니다.";
 		helper.setText(content, true);
 		
 		

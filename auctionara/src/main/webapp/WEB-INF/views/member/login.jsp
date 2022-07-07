@@ -70,7 +70,7 @@
 	
 	<div class="row">
 		<span><strong>아직 경매나라 계정이 없나요? </strong></span> &nbsp;&nbsp;
-		<a href="${root}/member/join_intro">회원가입</a>		
+		<a href="${root}/member/join">회원가입</a>		
 	</div>	
 
 

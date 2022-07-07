@@ -138,11 +138,11 @@ public class MemberDaoImpl implements MemberDao {
 		
 		if(memberDto == null) return false;
 		
-		int count = sqlSession.update("member.changePw", 
-						MemberDto.builder()
-							.memberEmail(memberDto.getMemberEmail())
-							.memberPw(memberDto.getMemberPw())
-							.build());
+		int count = sqlSession.update("member.changePw", memberDto);
+//						MemberDto.builder()
+//							.memberEmail(memberDto.getMemberEmail())
+//							.memberPw(memberDto.getMemberPw())
+//							.build());
 		
 		return count > 0;
 	}
