@@ -22,6 +22,7 @@ public class MonthlyChargedPointsServiceImpl implements MonthlyChargedPointsServ
 	
 	@Scheduled(cron = "0 0 0 1 * *")
 	@Transactional
+	@Override
 	public void insertMonthlyChargedPoints() {
 		 int totalPoints = paymentDao.getMonthlyTotalChargedPoints();
 		 
