@@ -1,9 +1,11 @@
 package com.an.auctionara.repository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
 import com.an.auctionara.entity.AuctionDto;
+import com.an.auctionara.entity.SuccessfulBidDto;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
 
@@ -12,4 +14,5 @@ public interface AuctionDao {
 	int recent(int auctioneerNo);
 	List<AuctionListVO> list(int memberNo);
 	AuctionDetailVO detail(Map<String, Integer> info);
+	List<SuccessfulBidDto> finish(Date now);
 }

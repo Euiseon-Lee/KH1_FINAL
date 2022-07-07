@@ -24,6 +24,7 @@ public class GpsAddressController {
 	@Autowired
 	private GpsAddressDao gpsAddressDao;
 	
+	// 주소 설정 페이지
 	@GetMapping
 	public String gps(HttpSession session, Model model) {
 //		int memberNo = (int) session.getAttribute("whoLogin");
@@ -32,18 +33,21 @@ public class GpsAddressController {
 		return "/address/gps";
 	}
 	
+	// 새 주소 등록
 	@ResponseBody
 	@PostMapping
 	public void postAddress(@RequestBody GpsAddressDto gpsAddressDto) {
 		gpsAddressDao.insert(gpsAddressDto);
 	}
 	
+	// 주소1 변경
 	@ResponseBody
 	@PutMapping("/change1")
 	public void putAddress1(@RequestBody GpsAddressDto gpsAddressDto) {
 		gpsAddressDao.change1(gpsAddressDto);
 	}
 	
+	// 주소2 변경
 	@ResponseBody
 	@PutMapping("/change2")
 	public void putAddress2(@RequestBody GpsAddressDto gpsAddressDto) {

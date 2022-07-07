@@ -225,6 +225,15 @@ pageEncoding="UTF-8"%>
             	$("#postcode").addClass("d-none"); // 우편 번호 검색창 닫기
                 const addr = data.address; // 선택한 주소값
                 $("#address").val(addr); // <input>에 주소 넣기
+                
+                // 반경 범위 변경
+                if($("#address").val().substring(0,5) == "서울특별시" || $("#address").val().substring(0,2) == "서울") {
+                	$("#circle").val("6").trigger("change"); 
+                	$("#circle").attr("max", 6);
+                } else {
+                	$("#circle").val("12").trigger("change");
+                	$("#circle").attr("max", 12);
+                };
 
                 (async () => { 
                 	try {
@@ -270,7 +279,6 @@ pageEncoding="UTF-8"%>
                 lon = position.coords.longitude;
 
                 showMap(); // 지도 & 원 표시
-
                 
                 (async () => { 
                 	try {
@@ -290,6 +298,15 @@ pageEncoding="UTF-8"%>
                         if (!$(".address-put2").hasClass("d-none")) {
                         	$(".address-put2").attr("disabled", false); // 주소2 수정 버튼 클릭 가능하게 전환 
                         };
+                        
+                        // 반경 범위 변경
+                        if($("#address").val().substring(0,5) == "서울특별시" || $("#address").val().substring(0,2) == "서울") {
+                        	$("#circle").val("6").trigger("change"); 
+                        	$("#circle").attr("max", 6);
+                        } else {
+                        	$("#circle").val("12").trigger("change");
+                        	$("#circle").attr("max", 12);
+                        };                   
                 	} catch (e) {
                 		console.log(e);
                 	}

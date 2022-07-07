@@ -1,5 +1,6 @@
 package com.an.auctionara.repository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.an.auctionara.entity.AuctionDto;
+import com.an.auctionara.entity.SuccessfulBidDto;
+import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
 
@@ -43,5 +46,11 @@ public class AuctionDaoImpl implements AuctionDao {
 	public AuctionDetailVO detail(Map<String, Integer> info) {
 		AuctionDetailVO auctionDetail = sqlSession.selectOne("auction.detail", info);
 		return auctionDetail;
+	}
+
+	@Override
+	public List<SuccessfulBidDto> finish(Date now) {
+		List<SuccessfulBidDto> list = sqlSession.selectList("auction.finish", now);
+		return list;
 	}
 }
