@@ -39,10 +39,6 @@ public class MemberController {
 	@Autowired
 	private CertService certService;
 	
-	@GetMapping("/join_intro")
-	public String intro() {
-		return "member/join_intro";
-	}
 	
 	@GetMapping("/join")
 	public String join() {
@@ -138,13 +134,13 @@ public class MemberController {
 					Model model
 			) {
 		int result = memberDao.checkEmailNum(memberEmail);
-		model.addAttribute("memberEmailResult", memberEmail);
+		model.addAttribute("checkedEmail", memberEmail);
 		
 		if(result != 1) {
-			return "member/check_email_result_fail";
+			return "redirect:check_email?fail";
 		}
 		else {
-			return "member/check_email_result";
+			return "redirect:check_email?success";
 		}		
 		
 	}
@@ -155,8 +151,10 @@ public class MemberController {
 	}
 	
 	@PostMapping("/change_pw")
-	public String changePw(@ModelAttribute MemberDto targetDto) throws MessagingException {
-		boolean isMember = memberDao.checkMemberNo(targetDto.getMemberEmail());
+	public String changePw(
+			@ModelAttribute MemberDto targetDto
+			) throws MessagingException {
+		boolean isMember = memberDao.checkMemberNo(targetDto.getMemberEmail());	
 		
 		if(!isMember) {
 			return "redirect:change_pw?fail";
@@ -193,15 +191,15 @@ public class MemberController {
 								.certNo(newCertNo)
 							.build()
 					);
-			
-			model.addAttribute("certNo", newCertNo);
+
+			model.addAttribute("newCertNo", newCertNo);
 			
 			return "member/reset";
 			
 		}
 		
 		else {
-			return "member/check_email_result?error";		//추가 수정이 필요 (에러 처리)
+			return "error/404";
 		}
 		
 		
@@ -211,23 +209,25 @@ public class MemberController {
 	@PostMapping("/reset")
 	public String reset(
 					@ModelAttribute MemberDto memberDto,
-					@RequestParam String certNo) {
+					@RequestParam String newCertNo
+					) {
+		
 		boolean isIdentical = certDao.certifyCert(CertDto.builder()
 								.certTarget(memberDto.getMemberEmail())
-								.certNo(certNo)
+								.certNo(newCertNo)
 							.build());
 		
 
 		
-		if(isIdentical == false) {
+		if(isIdentical) {			
 			
 			boolean result = memberDao.resetPw(memberDto);
 			if(result) {
-				return "redirect:reset_success";
+				return "member/reset_success";
 			}			
 		}
 		
-		return "redirect:reset_fail";
+		return "error/404";
 	}
 	
 	
