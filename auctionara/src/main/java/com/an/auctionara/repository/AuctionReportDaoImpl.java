@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.an.auctionara.entity.AuctionReportDto;
+import com.an.auctionara.vo.AdminAuctionDetailReportVO;
 import com.an.auctionara.vo.AuctionReportListVO;
 
 @Repository
@@ -18,9 +19,11 @@ public class AuctionReportDaoImpl implements AuctionReportDao{
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<AuctionReportListVO> reportList(int p, int s) {
+	public List<AuctionReportListVO> reportList(String type, String keyword, int p, int s) {
 		// 경매 신고 목록 리스트 
 		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("type", type);
+		param.put("keyword", keyword);
 		
 		int end = p * s;
 		int begin = end - (s - 1);
@@ -48,5 +51,11 @@ public class AuctionReportDaoImpl implements AuctionReportDao{
 //		if(count == 0) throw new CannotFindException();
 		
 		return sqlSession.selectOne("auctionReport.one", auctionReportNo);
+	}
+	
+	@Override
+	public List<AdminAuctionDetailReportVO> detailReportList(int auctionNo) {
+		// 특정 경매에 대한 report list를 출력하는 메소드
+		return sqlSession.selectList("auctionReport.detailList", auctionNo);
 	}
 }
