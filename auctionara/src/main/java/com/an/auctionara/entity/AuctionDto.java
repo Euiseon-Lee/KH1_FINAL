@@ -14,7 +14,7 @@ public class AuctionDto {
 	private int categoryNo;
 	private String auctionTitle;
 	private String auctionContent;
-	private Date auctionUploadTime;
+	private String auctionUploadTime;
 	private String auctionClosedTime;	
 	private int auctionOpeningBid;
 	private int auctionClosingBid;
