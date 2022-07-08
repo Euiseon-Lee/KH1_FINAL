@@ -145,8 +145,8 @@ pageEncoding="UTF-8"%>
 <script>
     // 현재 시간 +1일 전 / +31일 후는 경매 마감일로 설정하지 못하도록 설정
     let today = new Date();
-    let min = new Date(today.setDate(today.getDate() + 2)).toISOString().slice(0, 16);
-    let max = new Date(today.setDate(today.getDate() + 32)).toISOString().slice(0, 16);
+    let min = new Date(today.setDate(today.getDate() + 1)).toISOString().slice(0, 16);
+    let max = new Date(today.setDate(today.getDate() + 31)).toISOString().slice(0, 16);
     document.getElementById("auctionClosedTime").min = min;
     document.getElementById("auctionClosedTime").max = max;
 

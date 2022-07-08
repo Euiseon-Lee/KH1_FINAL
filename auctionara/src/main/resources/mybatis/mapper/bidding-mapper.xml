@@ -4,11 +4,56 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bidding">
-
+	
+	<!-- 시퀸스 생성 -->
+	<select id="sequence" resultType="int">
+		select bidding_seq.nextval from dual
+	</select>
+	
+	<!-- 입찰 -->	
+	<insert id="insert" parameterType="BiddingDto">
+		insert into bidding(
+			bidding_no, bidder_no, auction_no, bidding_price
+		)
+		values(
+			#{biddingNo}, #{bidderNo}, #{auctionNo}, #{biddingPrice}
+		)
+	</insert>
+		
 	<!-- 입찰 참여 여부 조회 -->	
 	<select id="exist" resultType="AuctionListVO" parameterType="map">
 		select * from bidding 
 		where auction_no = #{auctionNo} and bidder_no = #{bidderNo}
+	</select>
+	
+	<!-- 경매 상세 새로고침 -->	
+	<select id="refresh" resultType="AuctionDetailRefreshVO" parameterType="map">
+		select A.bidding_count, A.max_bidding_price
+		<if test="bidderNo != null">
+			<![CDATA[
+	        ,B.my_bidding_price
+	        ,case when A.max_bidding_price = B.my_bidding_price and A.min_bidding_no = B.my_bidding_no then '1'
+	            else '0'
+	            end as top_bidder
+			]]>
+		</if>		
+        from (select auction_no, count(*) bidding_count, max(bidding_price) max_bidding_price, 
+        	min(bidding_no) keep(dense_rank first order by bidding_price desc) min_bidding_no from bidding 
+        	where auction_no = #{auctionNo} group by auction_no) A
+		<if test="bidderNo != null">
+			<![CDATA[
+	        join (select auction_no, max(bidding_price) my_bidding_price, 
+	        	min(bidding_no) keep(dense_rank first order by bidding_price desc) my_bidding_no from bidding 
+	        	where bidder_no = #{bidderNo} group by auction_no) B
+				on A.auction_no = B.auction_no
+			]]>
+		</if>	        	
+        group by A.bidding_count, A.max_bidding_price, A.min_bidding_no
+		<if test="bidderNo != null">
+			<![CDATA[
+	        , B.my_bidding_price, B.my_bidding_no
+			]]>
+		</if>        
 	</select>
 
 </mapper> 

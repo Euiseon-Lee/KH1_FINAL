@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="row mb-5">
             <div class="col-10">
-                <h4 class="fw-bold">우리 동네 경매</h4>
+                <h4 class="fw-bold">우리 동내 경매</h4>
             </div>
             <div class="col">
                 <select class="form-select form-select-sm border-0 text-muted">

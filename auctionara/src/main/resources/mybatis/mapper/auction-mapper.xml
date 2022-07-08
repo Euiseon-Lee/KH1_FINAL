@@ -44,35 +44,52 @@
 	
 	<!-- 경매 상세 조회 -->
 	<select id="detail" resultType="AuctionDetailVO" parameterType="map">
-		select B.bidding_count, B.max_bidding_price, D.category_name, D.category_no,
-			A.auction_no, A.auctioneer_no, A.auction_title, A.auction_content, A.auction_closed_time, 
-			A.auction_opening_bid, A.auction_closing_bid, A.auction_bid_unit, A.auction_status
+ 		select A.bidding_count, A.max_bidding_price, D.category_name, D.category_no,
+        	C.auction_no, C.auctioneer_no, C.auction_title, C.auction_content, C.auction_closed_time, 
+			C.auction_opening_bid, C.auction_closing_bid, C.auction_bid_unit, C.auction_status
 		<if test="bidderNo != null">
 			<![CDATA[
-			,C.my_bidding_price 
+			,B.my_bidding_price 	        
+	        ,case when A.max_bidding_price = B.my_bidding_price and A.min_bidding_no = B.my_bidding_no then '1'
+	            else '0'
+	            end as top_bidder
+	    	]]>
+		</if>        
+        from (select auction_no, count(*) bidding_count, max(bidding_price) max_bidding_price, 
+        	min(bidding_no) keep(dense_rank first order by bidding_price desc) min_bidding_no from bidding 
+        	where auction_no = #{auctionNo} group by auction_no) A
+		<if test="bidderNo != null">
+			<![CDATA[        	
+	        join (select auction_no, max(bidding_price) my_bidding_price, 
+	        	min(bidding_no) keep(dense_rank first order by bidding_price desc) my_bidding_no from bidding 
+	        	where bidder_no = #{bidderNo} group by auction_no) B
+				on A.auction_no = B.auction_no
 			]]>
-		</if>
-		from auction A
-		left join (select auction_no, count(*) bidding_count, max(bidding_price) max_bidding_price from bidding group by auction_no) B
-			on A.auction_no = B.auction_no  
+		</if>								
+            join auction C on A.auction_no = C.auction_no
+            join category D on C.category_no = D.category_no
+        group by A.bidding_count, A.max_bidding_price, A.min_bidding_no, D.category_name, D.category_no,
+            C.auction_no, C.auctioneer_no, C.auction_title, C.auction_content, C.auction_closed_time, 
+			C.auction_opening_bid, C.auction_closing_bid, C.auction_bid_unit, C.auction_status
 		<if test="bidderNo != null">
-			<![CDATA[
-		join (select auction_no, max(bidding_price) my_bidding_price from bidding where bidder_no = #{bidderNo} group by auction_no) C 
-			on A.auction_no = C.auction_no
-			]]>
-		</if>
-        join category D on A.category_no = D.category_no       
-		where A.auction_no = #{auctionNo}
-		group by B.bidding_count, B.max_bidding_price, D.category_name, D.category_no, 
-			A.auction_no, A.auctioneer_no, A.auction_title, A.auction_content, A.auction_closed_time, 
-			A.auction_opening_bid, A.auction_closing_bid, A.auction_bid_unit, A.auction_status
-		<if test="bidderNo != null">
-			<![CDATA[
-			,C.my_bidding_price	
+			<![CDATA[			
+	        ,B.my_bidding_price, B.my_bidding_no
 			]]>
 		</if>
 	</select>
 	
+
+	<!-- 마감 시간이 되어서 낙찰처리가 필요한 경매 리스트 조회 -->
+	<select id="finish" resultType="SuccessfulBidDto" parameterType="Date">
+		select A.auction_no, B.succ_bidder_no, B.succ_final_bid, B.succ_auction_count from auction A 
+		join (select auction_no, count(*) succ_auction_count, max(bidding_price) succ_final_bid, 
+			min(bidding_no) keep(dense_rank first order by bidding_price desc), 
+			min(bidder_no) keep(dense_rank first order by bidding_price desc) succ_bidder_no from bidding group by auction_no) B 
+			on A.auction_no = B.auction_no
+		left join successful_bid C on A.auction_no = C.auction_no
+		where A.auction_closed_time <![CDATA[ <= ]]> #{auctionClosedTime} and C.auction_no is null
+	</select>  
+
 	<!-- 관리자 페이지 - 경매 리스트 -->
 	<select id="adminList" resultType="AdminAuctionListVO" parameterType="Map">
 		select * from (
