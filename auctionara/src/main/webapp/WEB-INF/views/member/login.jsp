@@ -3,6 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="saveIdExists" value="${cookie.saveId != null}"></c:set>
+<c:set var="autologinExists" value="${cookie.autologin != null}"></c:set>
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
@@ -18,7 +19,7 @@
 		<input type="hidden" name="referer" value="${referer}">
 	
 		<div class="row">
-			<input type="email" name="memberEmail" autocomplete="off" placeholder="email as id" value="${cookie.saveId.value}">
+			<input type="email" name="memberEmail" autocomplete="off" placeholder="email as id" id="memberEmail" value="${cookie.saveId.value}">
 		</div>
 		
 		<div class="row">
@@ -47,12 +48,19 @@
 
 		<div class="row">
 			<label>
-				<input type="checkbox">	
+				<c:choose>
+					<c:when test="${autologinExists}">
+						<input type="checkbox" name="autologin" checked>
+					</c:when>
+					<c:otherwise>
+						<input type="checkbox" name="autologin">
+					</c:otherwise>
+				</c:choose>		
 			</label> 자동 로그인 설정
 		</div>
 
 		<div class="row">
-			<button type="submit" onkeydown="hitEnterkey(event);">로그인</button>
+			<button type="submit" onkeydown="hitEnterkey(event);" id="submit">로그인</button>
 		</div>	
 
 	</form>	
@@ -74,9 +82,29 @@
 	</div>	
 
 
-
-
 </div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+// 	$(function(){
+		
+// 		$("#submit").on("click", function(){
+				
+// 			localStorage.setItem('autoLogincheck', $("#auto").is(":checked"));
+// 			localStorage.setItem('autoLoginEmail', $("#memberEmail").val());
+// 			localStorage.setItem('autoLoginToken', $("#autoToken").val());
+
+// 		})
+
+// 	});
+
+</script>
+
+
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
