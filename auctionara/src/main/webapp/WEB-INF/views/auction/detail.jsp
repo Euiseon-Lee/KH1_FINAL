@@ -108,9 +108,12 @@
             <div class="col p-0">
                 <c:choose>
                     <c:when test="${whoLogin == auctionDetail.auctioneerNo}">
-		                <button type="button" class="btn btn-info btn-lg btn-block py-3">
+		                <button type="button" class="btn btn-info btn-lg btn-block py-3" v-if="(auctionClose && biddingCount == 0) || !auctionClose">
 		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 1:1 채팅 관리
 		                </button>
+		                <button type="button" class="btn btn-info btn-lg btn-block py-3" v-if="auctionClose && biddingCount != 0">
+		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 구매자와 1:1 채팅
+		                </button>		                
                     </c:when>
                     <c:otherwise>
 		                <button type="button" class="btn btn-info btn-lg btn-block py-3">
@@ -122,11 +125,14 @@
             <div class="col">
                 <c:choose>
                     <c:when test="${whoLogin == auctionDetail.auctioneerNo}">
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-show="biddingCount == 0">
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="biddingCount == 0 && !auctionClose" data-bs-toggle="modal" data-bs-target="#cancleAuctionModal">
 		                    <i class="fa-solid fa-ban pr-2"></i> 경매 취소
 		                </button>
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-show="biddingCount != 0">
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="biddingCount != 0 && !auctionClose" data-bs-toggle="modal" data-bs-target="#stopAuctionModal">
 		                    <i class="fa-solid fa-ban pr-2"></i> 경매 중지
+		                </button>
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="auctionClose">
+		                    종료되었습니다
 		                </button>
                     </c:when>                    
                     <c:otherwise>
@@ -252,6 +258,48 @@ ${auctionDetail.auctionContent}
     	</div>
   	</div>
 </div>
+<c:if test="${whoLogin == auctionDetail.auctioneerNo}">
+<div class="modal fade" id="stopAuctionModal" aria-hidden="true" aria-labelledby="stopAuctionModalLable" tabindex="-1" v-if="biddingCount != 0 && !auctionClose">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="stopAuctionModalLable"><i class="fa-solid fa-ban pr-2 text-primary"></i> 경매 중지</h5>
+				<button type="button" class="btn-close close" data-bs-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+        		입찰자가 있는 경매를 중지하면 <span class="fw-bold text-primary">사이트 이용에 관한 불이익</span>을 받게 됩니다.
+        		<br><br>
+        		정말 경매를 중지하시겠습니까?
+      		</div>
+      		<div class="modal-footer">
+      			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+      			<a class="btn btn-primary" href="${root}/auction/detail/stop/${auctionDetail.auctionNo}" role="button">예</a>
+      		</div>
+    	</div>
+  	</div>
+</div>
+<div class="modal fade" id="cancleAuctionModal" aria-hidden="true" aria-labelledby="cancleAuctionModalLable" tabindex="-1" v-if="biddingCount == 0 && !auctionClose">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="cancleAuctionModalLable"><i class="fa-solid fa-ban pr-2 text-primary"></i> 경매 취소</h5>
+				<button type="button" class="btn-close close" data-bs-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+        		정말 경매를 취소하시겠습니까?
+      		</div>
+      		<div class="modal-footer">
+      			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                <a class="btn btn-primary" href="${root}/auction/detail/cancle/${auctionDetail.auctionNo}" role="button">예</a>
+      		</div>
+    	</div>
+  	</div>
+</div>
+</c:if>
 </div>
 
 <script src="https://unpkg.com/vue@next"></script>
@@ -492,8 +540,10 @@ ${auctionDetail.auctionContent}
             		document.getElementById("maxBidLabel").innerText = "최종 낙찰가";
                 	document.getElementById("blind").innerHTML = '<span id="maxBid" class="comma"></span> 원'; // 최종 낙찰가 표시
                 	document.getElementById("timer").innerText = "종료되었습니다"; // 타이머 종료
-                	document.getElementById("startBidding").remove(); // 입찰 버튼 제거
                 	document.getElementById("refresh").remove(); // 새로고침 버튼 제거
+                	if(document.getElementById("startBidding")) {
+                		document.getElementById("startBidding").remove(); // 입찰 버튼 제거
+                	}
                 	
                 	if(document.getElementById("topBidder")) {
 	                	document.getElementById("topBidder").classList.remove("d-none"); // 최고 입찰자 배지 표시
@@ -508,7 +558,7 @@ ${auctionDetail.auctionContent}
                 	
                 	this.auctionClose = true;            		
             	}
-            }
+            },
         },
         mounted() {
             document.getElementById("biddingModal").addEventListener("hidden.bs.modal", this.closeBidModal);

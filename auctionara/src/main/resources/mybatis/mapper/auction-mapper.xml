@@ -87,7 +87,7 @@
 			min(bidder_no) keep(dense_rank first order by bidding_price desc) succ_bidder_no from bidding group by auction_no) B 
 			on A.auction_no = B.auction_no
 		left join successful_bid C on A.auction_no = C.auction_no
-		where A.auction_closed_time <![CDATA[ <= ]]> #{auctionClosedTime} and C.auction_no is null
+		where A.auction_closed_time <![CDATA[ <= ]]> #{auctionClosedTime} and C.auction_no is null and A.auction_private = 0
 	</select>
 	
 	<!-- 즉시 낙찰 경매 정보 조회 -->

@@ -1,6 +1,7 @@
 package com.an.auctionara.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,7 @@ import com.an.auctionara.entity.PhotoDto;
 import com.an.auctionara.repository.AuctionDao;
 import com.an.auctionara.repository.BiddingDao;
 import com.an.auctionara.repository.CategoryDao;
+import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.repository.PhotoDao;
 import com.an.auctionara.repository.SuccessfulBidDao;
 import com.an.auctionara.service.AuctionService;
@@ -47,6 +49,9 @@ public class AuctionController {
 	
 	@Autowired
 	private BiddingDao biddingDao;
+	
+	@Autowired
+	private MemberDao memberDao;
 	
 	@Autowired
 	private SuccessfulBidDao successfulBidDao;
@@ -74,6 +79,19 @@ public class AuctionController {
 		return "/auction/category";
 	}
 	
+	// 경매 등록
+	@PostMapping("/write")
+	public void write2(@ModelAttribute WriteAuctionVO writeAuctionVO, HttpSession session) throws IllegalStateException, IOException {	
+//		int memberNo = (int) session.getAttribute("whoLogin");
+		auctionService.write(13, writeAuctionVO); // 임시
+	}
+	
+	@PostMapping("/submit")
+	public String submit(HttpSession session) {
+//		int memberNo = (int) session.getAttribute("whoLogin");
+		return "redirect:/auction/detail/" + auctionDao.recent(13); // 임시
+	}
+	
 	// 경매 물품 상세
 	@GetMapping("/detail/{auctionNo}")
 	public String detail(@PathVariable int auctionNo, HttpSession session, Model model) {
@@ -97,20 +115,7 @@ public class AuctionController {
 		// 새로고침할 정보 조회
 		AuctionDetailRefreshVO refresh = biddingDao.refresh(bidderNo, auctionNo);
 		return refresh;
-	}
-	
-	// 경매 등록
-	@PostMapping("/write")
-	public void write2(@ModelAttribute WriteAuctionVO writeAuctionVO, HttpSession session) throws IllegalStateException, IOException {	
-//		int memberNo = (int) session.getAttribute("whoLogin");
-		auctionService.write(13, writeAuctionVO); // 임시
-	}
-	
-	@PostMapping("/submit")
-	public String submit(HttpSession session) {
-//		int memberNo = (int) session.getAttribute("whoLogin");
-		return "redirect:/auction/detail/" + auctionDao.recent(13); // 임시
-	}
+	}	
 	
 	// 입찰
 	@ResponseBody
@@ -128,4 +133,20 @@ public class AuctionController {
 		successfulBidDao.insert(auctionDao.close(biddingDto.getAuctionNo())); 
 		return refresh;
 	}
+	
+	// 경매 취소
+	@GetMapping("/detail/cancle/{auctionNo}")
+	public String cancle(@PathVariable int auctionNo)  {
+		auctionDao.setPrivate(auctionNo); // 경매 비공개
+		return "redirect:/"; // 임시 // 추후 마이페이로 이동
+	}
+	
+	// 경매 정지
+	@GetMapping("/detail/stop/{auctionNo}")
+	public String stop(@PathVariable int auctionNo, HttpSession session)  {
+//		int memberNo = (int) session.getAttribute("whoLogin");
+		memberDao.plusRedCount(13); // 회원 경고 횟수 +1 // 임시
+		auctionDao.setPrivate(auctionNo); // 경매 비공개
+		return "redirect:/"; // 임시 // 추후 마이페이로 이동
+	}	
 }
