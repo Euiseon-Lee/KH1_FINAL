@@ -42,7 +42,7 @@
         	where auction_no = #{auctionNo} group by auction_no) A
 		<if test="bidderNo != null">
 			<![CDATA[
-	        join (select auction_no, max(bidding_price) my_bidding_price, 
+	        left join (select auction_no, max(bidding_price) my_bidding_price, 
 	        	min(bidding_no) keep(dense_rank first order by bidding_price desc) my_bidding_no from bidding 
 	        	where bidder_no = #{bidderNo} group by auction_no) B
 				on A.auction_no = B.auction_no

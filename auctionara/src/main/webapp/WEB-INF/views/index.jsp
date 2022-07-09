@@ -5,7 +5,7 @@
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
-<div id="app">
+<div id="app" class="mt-4">
     <div class="container-fluid bg-info gps mb-5">
         <div class="row position-relative">
             <div class="col-8 py-4 px-5">
@@ -14,14 +14,14 @@
             </div>
             <div class="col py-4 px-3 bg-light" id="map">
             </div>
-            <a href="${root}/address" class="btn btn-info rounded-pill position-absolute" role="button">내 동내 변경 <i class="fa-solid fa-angle-right"></i></a>
+            <a href="${root}/address" class="btn btn-info rounded-pill position-absolute" role="button">내 동네 변경 <i class="fa-solid fa-angle-right"></i></a>
         </div>
     </div>
 
     <div class="container-fluid">
-        <div class="row mb-5">
+        <div class="row mb-4">
             <div class="col-10">
-                <h4 class="fw-bold">우리 동내 경매</h4>
+                <h4 class="fw-bold">우리 동네 경매</h4>
             </div>
             <div class="col">
                 <select class="form-select form-select-sm border-0 text-muted">
@@ -41,7 +41,7 @@
         <div class="row row-cols-4">
             <c:forEach var="auctionListVO" items="${auctionList}">
                 <div class="col">
-                    <div class="card rounded border-0 mb-5 px-2">
+                    <div class="card rounded border-0 mb-4 px-2">
                         <img src="${root}/attachment/download?attachmentNo=${auctionListVO.photoAttachmentNo}" class="card-img-top card-img-custom">
                         <div class="card-body p-0 pt-4">
                             <h6 class="card-title text-truncate">${auctionListVO.auctionTitle}</h6>

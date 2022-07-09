@@ -8,5 +8,5 @@ import com.an.auctionara.vo.AuctionDetailRefreshVO;
 public interface BiddingDao {
 	Boolean biddingExist(Map<String, Integer> info);
 	AuctionDetailRefreshVO refresh(int bidderNo, int auctionNo);
-	AuctionDetailRefreshVO insert(BiddingDto biddingDto);
+	void insert(BiddingDto biddingDto);
 }

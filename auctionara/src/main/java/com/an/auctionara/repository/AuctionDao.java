@@ -17,6 +17,7 @@ public interface AuctionDao {
 	List<AuctionListVO> list(int memberNo);
 	AuctionDetailVO detail(Map<String, Integer> info);
 	List<SuccessfulBidDto> finish(Date now);
+	SuccessfulBidDto close(int auctionNo);
 	
 	// 관리자 페이지 - 경매 list, count 메소드 
 	List<AdminAuctionListVO> adminList(String type, String keyword, int p, int s);

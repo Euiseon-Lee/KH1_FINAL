@@ -55,7 +55,13 @@ public class AuctionDaoImpl implements AuctionDao {
 	public List<SuccessfulBidDto> finish(Date now) {
 		List<SuccessfulBidDto> list = sqlSession.selectList("auction.finish", now);
 		return list;
-  }  
+   }
+	
+	@Override
+	public SuccessfulBidDto close(int auctionNo) {
+		SuccessfulBidDto successfulBidDto = sqlSession.selectOne("auction.close", auctionNo);
+		return successfulBidDto;
+   } 
 	
 	@Override
 	public List<AdminAuctionListVO> adminList(String type, String keyword, int p, int s) {

@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.an.auctionara.entity.AuctionDto;
+import com.an.auctionara.entity.BiddingDto;
 import com.an.auctionara.entity.PhotoDto;
 import com.an.auctionara.entity.SuccessfulBidDto;
 import com.an.auctionara.repository.AttachmentDao;
@@ -24,6 +25,7 @@ import com.an.auctionara.repository.AuctionDao;
 import com.an.auctionara.repository.BiddingDao;
 import com.an.auctionara.repository.PhotoDao;
 import com.an.auctionara.repository.SuccessfulBidDao;
+import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
 import com.an.auctionara.vo.WriteAuctionVO;
@@ -134,6 +136,13 @@ public class AuctionServiceImpl implements AuctionService {
 		}	
 		
 		return detail;
+	}
+	
+	@Override
+	public AuctionDetailRefreshVO bidding(BiddingDto biddingDto) {
+		biddingDao.insert(biddingDto);
+		AuctionDetailRefreshVO auctionDetailRefresh = biddingDao.refresh(biddingDto.getBidderNo(), biddingDto.getAuctionNo());
+		return auctionDetailRefresh;
 	}
 	
 	@Scheduled(cron = "0 * * * * *") // 1분마다 낙찰 테이블에 낙찰 데이터 추가

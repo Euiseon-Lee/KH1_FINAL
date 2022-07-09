@@ -26,6 +26,7 @@ import com.an.auctionara.repository.AuctionDao;
 import com.an.auctionara.repository.BiddingDao;
 import com.an.auctionara.repository.CategoryDao;
 import com.an.auctionara.repository.PhotoDao;
+import com.an.auctionara.repository.SuccessfulBidDao;
 import com.an.auctionara.service.AuctionService;
 import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AuctionDetailVO;
@@ -46,6 +47,9 @@ public class AuctionController {
 	
 	@Autowired
 	private BiddingDao biddingDao;
+	
+	@Autowired
+	private SuccessfulBidDao successfulBidDao;
 	
 	@Autowired
 	private AuctionService auctionService;
@@ -112,7 +116,16 @@ public class AuctionController {
 	@ResponseBody
 	@PostMapping("/detail/bidding")
 	public AuctionDetailRefreshVO bidding(@RequestBody BiddingDto biddingDto)  {
-		AuctionDetailRefreshVO refresh = biddingDao.insert(biddingDto);
+		AuctionDetailRefreshVO refresh = auctionService.bidding(biddingDto);
 		return refresh;
-	} 
+	}
+	
+	// 즉시 낙찰
+	@ResponseBody
+	@PostMapping("/detail/bidding/close")
+	public AuctionDetailRefreshVO closeBidding(@RequestBody BiddingDto biddingDto)  {
+		AuctionDetailRefreshVO refresh = auctionService.bidding(biddingDto);
+		successfulBidDao.insert(auctionDao.close(biddingDto.getAuctionNo())); 
+		return refresh;
+	}
 }
