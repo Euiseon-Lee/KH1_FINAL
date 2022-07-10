@@ -37,7 +37,23 @@
 			select rownum rn, TMP.* from (
 			    select C.auction_no, C.auction_title, C.auction_opening_bid, C.auction_closed_time, 
 			    	min(D.photo_attachment_no) photo_attachment_no, max(E.bidding_price) bidding_price
-			    from (select * from gps_address where member_no = ${memberNo}) A, gps_address B
+			    from (select * from gps_address where 
+				<if test="filter == 0">
+					<![CDATA[
+			    	member_no = ${memberNo}
+			    	]]>
+				</if>
+				<if test="filter == 1">
+					<![CDATA[
+			    	gps_no = (select min(gps_no) from gps_address where member_no = #{memberNo})
+			    	]]>
+				</if>
+				<if test="filter == 2">
+					<![CDATA[				
+			    	gps_no = (select max(gps_no) from gps_address where member_no = #{memberNo})
+			    	]]>
+				</if>
+			    	) A, gps_address B
 			    join auction C on B.member_no = C.auctioneer_no
 			    join photo D on C.auction_no = D.photo_auction_no
 			    left join bidding E on C.auction_no = E.auction_no
@@ -48,17 +64,17 @@
 			    order by
 				<if test="sort == 1">
 					<![CDATA[		    
-			    nvl(bidding_price, C.auction_opening_bid) desc,
+			    	nvl(bidding_price, C.auction_opening_bid) desc,
 			    	]]>
 				</if>
 				<if test="sort == 2">
 					<![CDATA[
-			    nvl(bidding_price, C.auction_opening_bid) asc, 
+			    	nvl(bidding_price, C.auction_opening_bid) asc, 
 			    	]]>
 				</if>
 				<if test="sort == 3">
 					<![CDATA[				
-				C.auction_closed_time asc,
+					C.auction_closed_time asc,
 			    	]]>
 				</if>				
 			    C.auction_no desc

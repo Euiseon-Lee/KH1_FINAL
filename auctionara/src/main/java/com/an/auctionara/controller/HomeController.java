@@ -43,7 +43,7 @@ public class HomeController {
 //		int memberNo = (int) session.getAttribute("login");
 		
 		// 우리 동네 경매
-		List<AuctionListVO> auctionList = auctionService.list(13, page, filter, sort); // 임시
+		List<AuctionListVO> auctionList = auctionService.list(6, page, filter, sort); // 임시
 		return auctionList;
 	}
 }
