@@ -48,10 +48,10 @@
                     	<h6 class="card-title text-truncate">{{ list[index].auctionTitle }}</h6>
                         <div class="d-flex">
 	                        <p class="card-text flex-grow-1" v-if="list[index].biddingPrice == 0">현재
-	                        	<span class="text-primary comma">{{ list[index].auctionOpeningBid }}</span>원
+	                        	<span class="text-primary">{{ comma(list[index].auctionOpeningBid) }}</span>원
 	                        </p>
 	                        <p class="card-text flex-grow-1" v-if="list[index].biddingPrice != 0">현재
-	                            <span class="text-primary comma">{{ list[index].biddingPrice }}</span>원
+	                            <span class="text-primary">{{ comma(list[index].biddingPrice) }}</span>원
 	                        </p>
 	                        <p class="card-text">남은 <span class="text-primary">{{ list[index].auctionRemainTime }}</span></p>
 						</div>
@@ -80,12 +80,9 @@
         computed: {
         },
         methods: {
-            comma() { // 금액 콤마 찍기
-                const comma = document.getElementsByClassName("comma");
-                for (i = 0; i < comma.length; i++) {
-                    comma[i].innerHTML = comma[i].innerHTML.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                };
-            },
+        	comma(money) {
+        	  	return String(money).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        	},
             listScroll(e) { // 스크롤 바닥 감지
                 const bottom = document.body.offsetHeight === window.innerHeight + window.scrollY;
                 if(bottom) this.loadMore();
@@ -102,7 +99,6 @@
             		if(resp.data.length != 0) {
     					this.list = this.list.concat(resp.data);
     					this.page++;
-    					this.comma();
             		} else { // 불러올 리스트가 더 없으면 스크롤 이벤트 삭제  
             			window.removeEventListener("scroll", this.listScroll);
             		}
