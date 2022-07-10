@@ -40,8 +40,8 @@ public class AuctionDaoImpl implements AuctionDao {
 	}
 
 	@Override
-	public List<AuctionListVO> list(int memberNo) {
-		List<AuctionListVO> list = sqlSession.selectList("auction.list");
+	public List<AuctionListVO> list(Map<String, Integer> info) {
+		List<AuctionListVO> list = sqlSession.selectList("auction.list", info);
 		return list;
 	}
 	

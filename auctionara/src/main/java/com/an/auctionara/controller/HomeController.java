@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.an.auctionara.entity.GpsAddressDto;
 import com.an.auctionara.repository.GpsAddressDao;
@@ -30,11 +33,17 @@ public class HomeController {
 		// 내 대표 동네
 		GpsAddressDto address1 = gpsAddressDao.one1(13); // 임시
 		model.addAttribute("address1", address1);	
+				
+		return "index";
+	}
+	
+	@ResponseBody
+	@GetMapping("/list")
+	public List<AuctionListVO> auctionList(@RequestParam int page, @RequestParam int filter, @RequestParam int sort, HttpSession session) {
+//		int memberNo = (int) session.getAttribute("login");
 		
 		// 우리 동네 경매
-		List<AuctionListVO> auctionList = auctionService.list(13); // 임시
-		model.addAttribute("auctionList", auctionList);		
-		
-		return "index";
+		List<AuctionListVO> auctionList = auctionService.list(13, page, filter, sort); // 임시
+		return auctionList;
 	}
 }

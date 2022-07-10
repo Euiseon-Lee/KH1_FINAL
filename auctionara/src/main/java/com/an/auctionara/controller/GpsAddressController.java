@@ -30,7 +30,7 @@ public class GpsAddressController {
 	@GetMapping
 	public String gps(HttpSession session, Model model) {
 //		int memberNo = (int) session.getAttribute("whoLogin");
-		List<GpsAddressDto> gpsAddressList =  gpsAddressDao.list(13); // 임시
+		List<GpsAddressDto> gpsAddressList =  gpsAddressDao.list(6); // 임시
 		model.addAttribute("gpsAddressList", gpsAddressList);
 		return "/address/gps";
 	}

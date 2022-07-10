@@ -259,7 +259,7 @@ ${auctionDetail.auctionContent}
   	</div>
 </div>
 <c:if test="${whoLogin == auctionDetail.auctioneerNo}">
-<div class="modal fade" id="stopAuctionModal" aria-hidden="true" aria-labelledby="stopAuctionModalLable" tabindex="-1" v-if="biddingCount != 0 && !auctionClose">
+<div class="modal fade" id="stopAuctionModal" aria-hidden="true" aria-labelledby="stopAuctionModalLable" tabindex="-1" v-show="biddingCount != 0 && !auctionClose">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -275,7 +275,7 @@ ${auctionDetail.auctionContent}
       		</div>
       		<div class="modal-footer">
       			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
-      			<a class="btn btn-primary" href="${root}/auction/detail/stop/${auctionDetail.auctionNo}" role="button">예</a>
+      			<button type="button" class="btn btn-primary" @click="checkAuction2" data-bs-dismiss="modal">예</button>
       		</div>
     	</div>
   	</div>
@@ -294,7 +294,22 @@ ${auctionDetail.auctionContent}
       		</div>
       		<div class="modal-footer">
       			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
-                <a class="btn btn-primary" href="${root}/auction/detail/cancle/${auctionDetail.auctionNo}" role="button">예</a>
+                <button type="button" class="btn btn-primary" @click="checkAuction1" data-bs-dismiss="modal">예</button>
+      		</div>
+    	</div>
+  	</div>
+</div>
+<div class="modal fade" id="failCancleModal" aria-hidden="true" aria-labelledby="failCancleModalLable" tabindex="-1" v-show="biddingCount == 0 && !auctionClose">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="failCancleModalLable">&#129402; 경매 취소/중지 실패</h5>
+				<button type="button" class="btn-close close" data-bs-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+        		이미 낙찰된 경매이므로 경매를 취소하거나 중지할 수 없습니다.
       		</div>
     	</div>
   	</div>
@@ -558,6 +573,44 @@ ${auctionDetail.auctionContent}
                 	
                 	this.auctionClose = true;            		
             	}
+            },
+            checkAuction1() {
+            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            		params: {
+                		bidderNo : 9, // 임시
+                		auctionNo : this.auctionNo,
+            	      }
+            	}).then(resp=>{
+            		if(this.closingBid <= resp.data.maxBiddingPrice) { // 누군가 이미 낙찰하여 경매 취소 실패
+            			this.closeAuction();
+            			this.refresh();
+            			const modal = new bootstrap.Modal(document.getElementById("failCancleModal"));
+                    	modal.show();
+            		} else if(resp.data.biddingCount > 0) { // 경매 중지로 전환
+            			this.refresh();
+            			const modal = new bootstrap.Modal(document.getElementById("stopAuctionModal"));
+                    	modal.show();
+            		} else {
+            			location.href = "${root}/auction/detail/cancle/${auctionDetail.auctionNo}";
+            		}
+            	})            	
+            },
+            checkAuction2() {
+            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            		params: {
+                		bidderNo : 9, // 임시
+                		auctionNo : this.auctionNo,
+            	      }
+            	}).then(resp=>{
+            		if(this.closingBid <= resp.data.maxBiddingPrice) { // 누군가 이미 낙찰하여 경매 중지 실패
+            			this.closeAuction();
+            			this.refresh();
+            			const modal = new bootstrap.Modal(document.getElementById("failCancleModal"));
+                    	modal.show();
+            		} else {
+            			location.href = "${root}/auction/detail/stop/${auctionDetail.auctionNo}"
+            		}
+            	})            	
             },
         },
         mounted() {
