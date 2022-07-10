@@ -59,7 +59,17 @@ footer li {
 }
 
 .card-img-custom {
-    border-radius: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+.card-img-overlay {
+	text-align: right;
+}
+	
+#deadline {
+	font-size: 0.8em;
+	border-radius: 0 0.5rem 0 0.5em;
 }
 
 /* 부트스트랩 스타일 변경 */

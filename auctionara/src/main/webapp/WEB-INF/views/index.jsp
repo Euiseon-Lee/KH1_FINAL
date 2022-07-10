@@ -44,8 +44,11 @@
             <div class="col" v-for="(auction, index) in list" v-bind:key="index">
             	<div class="card rounded border-0 mb-4 px-2">
                 	<img :src="'${root}/attachment/download?attachmentNo=' + list[index].photoAttachmentNo" class="card-img-top card-img-custom">
+                	<div class="card-img-overlay p-0 pr-2" v-if="list[index].deadlineClosing">
+                		<span id="deadline" class="card-title bg-primary text-white px-2 py-1 fw-bold">마감임박</span>
+                	</div>
                     <div class="card-body p-0 pt-4">
-                    	<h6 class="card-title text-truncate">{{ list[index].auctionTitle }}</h6>
+                    	<h6 class="card-title text-truncate fw-bold">{{ list[index].auctionTitle }}</h6>
                         <div class="d-flex">
 	                        <p class="card-text flex-grow-1" v-if="list[index].biddingPrice == 0">현재
 	                        	<span class="text-primary">{{ comma(list[index].auctionOpeningBid) }}</span>원
