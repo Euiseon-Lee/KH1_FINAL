@@ -77,4 +77,10 @@ public class AdminMemberController {
 		
 		return "redirect: /auctionara/admin/member/detail/"+memberNo; 
 	}
+	
+	@GetMapping("/rating")
+	public String rating() {
+		
+		return "admin/member/rating";
+	}
 }

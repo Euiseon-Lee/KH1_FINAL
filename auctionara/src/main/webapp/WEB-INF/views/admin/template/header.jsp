@@ -34,6 +34,9 @@
 			$('li.sidebar-item a').filter(function() {
 				 return this.href == url;
 			}).parent().addClass('active');
+			
+			$('.fold-navbar').click(function(){
+			}).removeTag(nav);
 		});
 	</script>
 </head>
@@ -68,7 +71,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="${root}/admin/member/rating">
 			              <span class="align-middle">평가 항목 관리</span>
 			            </a>
 					</li>
@@ -106,12 +109,6 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
-			              <span class="align-middle">카테고리 관리</span>
-			            </a>
-					</li>
-
-					<li class="sidebar-item">
 						<a class="sidebar-link" href="${root}/admin/auction/report_list">
 			              <span class="align-middle">경매 신고 내역</span>
 			            </a>
@@ -138,6 +135,8 @@
 
 		<div class="main">
 			<nav class="row navbar navbar-expand navbar-light navbar-bg">
+				<a class="fold-navbar"><i class="hamburger align-self-center"></i></a>
+			
 				<div class="col-11"></div>
 				<div class="col-1">
 					<i class="fa-regular fa-user"></i>
