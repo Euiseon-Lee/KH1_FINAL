@@ -62,27 +62,19 @@
 		- *는 현재 경로를 포함하는 수식
 		- 반드시 mapping -> exclude-mapping -> bean 순서로 작성해야함
 	 -->
-<!-- 	<mvc:interceptors> -->
-<!-- 		<mvc:interceptor> -->
-<!-- 			<mvc:mapping path=""/> -->
-
-<!-- 			<mvc:exclude-mapping path=""/> -->
-
-
-<!-- 			<bean class=""></bean> -->
-<!-- 		</mvc:interceptor> -->
-
-		
-		
- 		<!-- 테스트용 인터셉터 --> 
-<!-- 		<mvc:interceptor> -->
-<!-- 			<mvc:mapping path="/**"/> -->
-<!-- 			<ref bean="boardTestInterceptor"/> -->
-<!-- 		</mvc:interceptor> -->
+	<mvc:interceptors>
 	
-	
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
 
-<!-- 	</mvc:interceptors> -->
+			<mvc:exclude-mapping path="/member/login"/>
+			<mvc:exclude-mapping path="/member/join*"/>
+			<mvc:exclude-mapping path="/"/>
+
+			<bean class="com.an.auctionara.interceptor.AutologinInterceptor"></bean>
+		</mvc:interceptor>
+
+	</mvc:interceptors>
 	
 	
 	

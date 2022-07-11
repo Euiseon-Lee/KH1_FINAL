@@ -1,6 +1,10 @@
 package com.an.auctionara.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +21,7 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao memberDao;
 	
 	
-	//첨부파일(프로필) 없이 구현 후 사용할 것
+	//첨부파일(프로필) 없이 구현함 이후 추가 구현 필요
 	@Override
 	@Transactional
 	public void join(MemberDto memberDto, MultipartFile attachmentNo) throws IllegalStateException, IOException {
@@ -28,7 +32,9 @@ public class MemberServiceImpl implements MemberService {
 			
 		}
 		
-		
 	}
+
+
+
 
 }
