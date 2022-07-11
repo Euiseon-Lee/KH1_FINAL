@@ -67,11 +67,20 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 
-			<mvc:exclude-mapping path="/member/login"/>
 			<mvc:exclude-mapping path="/member/join*"/>
-			<mvc:exclude-mapping path="/"/>
 
 			<bean class="com.an.auctionara.interceptor.AutologinInterceptor"></bean>
+		</mvc:interceptor>
+		
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			
+			<mvc:exclude-mapping path="/"/>
+			<mvc:exclude-mapping path="/member/login"/>
+			<mvc:exclude-mapping path="/member/join*"/>
+
+			<bean class="com.an.auctionara.interceptor.IsLoginInterceptor"></bean>
 		</mvc:interceptor>
 
 	</mvc:interceptors>
