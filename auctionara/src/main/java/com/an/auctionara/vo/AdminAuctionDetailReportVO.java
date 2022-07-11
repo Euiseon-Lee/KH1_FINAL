@@ -17,4 +17,5 @@ public class AdminAuctionDetailReportVO {
 	private String memberName;
 	private String memberNick; 
 	private int auctionPrivate; 
+	private String auctionTitle; 
 }

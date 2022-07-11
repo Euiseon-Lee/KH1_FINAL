@@ -22,4 +22,5 @@ public class AuctionReportListVO {
 	
 	// 컬럼 추가
 	private int auctionReportRestriction;
+	private String auctionTitle; 
 }
