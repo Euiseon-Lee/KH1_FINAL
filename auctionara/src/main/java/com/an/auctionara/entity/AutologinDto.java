@@ -11,6 +11,6 @@ public class AutologinDto {
 	private int memberNo;
 	private String autoToken;
 	private String autoIssuetime;
-	private String autoDeviceSerial;
+	private String autoIp;
 
 }

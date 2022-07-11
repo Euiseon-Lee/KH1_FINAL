@@ -18,15 +18,23 @@ public class AutologinServiceImpl implements AutologinService {
 	
 	
 	@Override
-	public void issueToken(int memberNo, String autoDeviceSerial) {
+	public void issueToken(int memberNo, String autoIp) {
 		
 		//토큰 만들기
 		String autoToken = tokenDao.makeToken();
 		
+		//DTO로 변환
+		AutologinDto autologinDto = AutologinDto.builder()
+										.memberNo(memberNo)
+										.autoToken(autoToken)
+										.autoIp(autoIp)
+									.build();
+		
 		//DB에 토큰 저장
-		autologinDao.insertToken(memberNo, autoToken, autoDeviceSerial);
+		autologinDao.insertToken(autologinDto);
 		
 	}
+
 
 	
 	

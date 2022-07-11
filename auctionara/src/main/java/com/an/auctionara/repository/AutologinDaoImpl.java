@@ -13,16 +13,9 @@ public class AutologinDaoImpl implements AutologinDao {
 	private SqlSession sqlSession;
 
 	@Override
-	public void insertToken(int memberNo, String autoToken, String autoDeviceSerial) {
-		AutologinDto checkAutologinDto = sqlSession.selectOne("autologin.tokenExists", memberNo);		
-		
-		new AutologinDto();
-		AutologinDto autologinDto = AutologinDto.builder()
-										.memberNo(memberNo)
-										.autoToken(autoToken)
-										.autoDeviceSerial(autoDeviceSerial)
-										.build();
-		
+	public void insertToken(AutologinDto autologinDto) {
+		AutologinDto checkAutologinDto = sqlSession.selectOne("autologin.tokenExists", autologinDto.getMemberNo());		
+				
 		if(checkAutologinDto == null) {
 
 			sqlSession.insert("autologin.insertToken", autologinDto);
@@ -36,6 +29,14 @@ public class AutologinDaoImpl implements AutologinDao {
 	public AutologinDto returnToken(int memberNo) {
 		return sqlSession.selectOne("autologin.tokenExists", memberNo);
 	}
+
+	@Override
+	public void deleteToken(AutologinDto autologinDto) {
+		sqlSession.delete("autologin.deleteToken", autologinDto);
+		
+	}
+
+
 	
 	
 	

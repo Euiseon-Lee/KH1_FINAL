@@ -31,21 +31,26 @@
 	</select>
 	
 	<insert id="insertToken" parameterType="AutologinDto">
-		insert into autologin(member_no, auto_token, auto_issuetime, auto_device_serial)
-    		values(#{memberNo}, #{autoToken}, sysdate, #{autoDeviceSerial})
+		insert into autologin(member_no, auto_token, auto_issuetime, auto_ip)
+    		values(#{memberNo}, #{autoToken}, sysdate, #{autoIp})
 	</insert>
 	
 	<update id="updateToken" parameterType="AutologinDto">
 		update autologin 
 			set auto_token = #{autoToken}, auto_issuetime = sysdate
-				where member_no = #{memberNo} and auto_device_serial = #{autoDeviceSerial}
+				where member_no = #{memberNo} and auto_ip = #{autoIp}
 	</update>
 	
 	<select id="validateToken" parameterType="AutologinDto" resultType="int">
 		select count(*) from autologin
-    		where auto_token= #{autoToken} 
-    			and member_no = #{memberNo} 
-    				and auto_device_serial = #{autoDeviceSerial}
+    		where auto_token= #{autoToken} and member_no = #{memberNo} 
+    				and auto_ip = #{autoIp}
 	</select>
+	
+	<delete id="deleteToken" parameterType="AutologinDto">
+		delete autologin 
+			where auto_token= #{autoToken} and member_no = #{memberNo} 
+    				and auto_ip = #{autoIp}
+	</delete>
 	
 </mapper> 
