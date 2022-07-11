@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +22,18 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.an.auctionara.entity.AutologinDto;
 import com.an.auctionara.entity.CertDto;
 import com.an.auctionara.entity.MemberDto;
+import com.an.auctionara.repository.AutologinDao;
 import com.an.auctionara.repository.CertDao;
 import com.an.auctionara.repository.MemberDao;
+import com.an.auctionara.service.AutologinService;
 import com.an.auctionara.service.CertService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/member")
 public class MemberController {
@@ -37,7 +45,13 @@ public class MemberController {
 	private CertDao certDao;
 	
 	@Autowired
+	private AutologinDao autologinDao;
+	
+	@Autowired
 	private CertService certService;
+	
+	@Autowired
+	private AutologinService autologinService;
 	
 	
 	@GetMapping("/join")
@@ -70,12 +84,8 @@ public class MemberController {
 	}
 	
 	@GetMapping("/login")
-	public String login(
-				@RequestHeader(value="Referer", defaultValue="/") String referer,
-				Model model
-			) {
+	public String login() {
 		
-		model.addAttribute("referer", referer);
 		return "member/login";
 	}
 	
@@ -83,43 +93,194 @@ public class MemberController {
 	public String login(
 				@RequestParam String memberEmail,
 				@RequestParam String memberPw,
-				@RequestParam String referer,
 				@RequestParam(required=false) String remember,
+				@RequestParam(required=false) String autologin,
 				HttpSession session,
+				HttpServletRequest request,
 				HttpServletResponse response
 			) {
+
+		
 		MemberDto memberDto = memberDao.login(memberEmail, memberPw);
 		
-		if(memberDto != null) {
-			session.setAttribute("whoLogin", memberDto.getMemberNo());
-			session.setAttribute("auth", memberDto.getMemberGrade());
+		if(memberDto == null) {
 			
-			if(remember != null) {
-				Cookie ck = new Cookie("saveId", memberDto.getMemberEmail());
-				ck.setMaxAge(4*7*24*60*60);
-				response.addCookie(ck);				
-			}
-			
-			else {
-				Cookie ck = new Cookie("saveId", memberDto.getMemberEmail());
-				ck.setMaxAge(0);
-				response.addCookie(ck);
-			}			
-			
-			return "redirect:"+referer;
-		}
-		else {
 			return "redirect:login?fail";
-		}	
+		}
+		
+		else {
+			int memberNo = memberDto.getMemberNo();
+
+			if(memberDto != null) {
+				//세션에 로그인 정보 추가
+				session.setAttribute("whoLogin", memberNo);
+				session.setAttribute("auth", memberDto.getMemberGrade());
+				
+				
+				
+				//로그인한 사용자의 정보 추출			
+				//String userAgent = request.getHeader("user-agent");
+				//log.debug("userAgent={}", userAgent);
+				
+
+				//사용자의 IP 추출
+				String ip = (String)request.getHeader("X-Forwarded-For");
+					if(ip == null || ip.length() == 0 || ip.toLowerCase().equals("unknown"))
+						ip = (String)request.getRemoteAddr();
+
+				//log.debug("ip = {}", ip);
+
+				
+				//자동로그인 처리
+				if(autologin != null) {
+				    
+				    //토큰 발행			    
+				    autologinService.issueToken(memberNo, ip);
+				    
+				    //토큰 확인 후 가져오기
+				    AutologinDto autologinDto = autologinDao.returnToken(memberNo);
+				    
+				    
+				    //DB에서 가져온 회원 번호를 암호화처리
+				    String targetNo = autologinDao.memberNoforCookie(memberNo);
+				    
+				    //DB에 들어있는 ip를 암호화처리
+				    String autoIp = autologinDao.autoIpforCookie(autologinDto.getAutoIp());
+				    
+				    
+				    //토큰관련 정보를 쿠키에 넣기
+				    Cookie tn = new Cookie("tn", targetNo);
+				    Cookie it = new Cookie("it", autologinDto.getAutoToken());
+				    Cookie tp = new Cookie("tp", autoIp);
+				    
+				    tn.setMaxAge(4*7*24*60*60);
+				    it.setMaxAge(4*7*24*60*60);
+				    tp.setMaxAge(4*7*24*60*60);
+				    
+				    tn.setPath("/");
+				    it.setPath("/");
+				    tp.setPath("/");
+				    
+				    response.addCookie(tn);
+				    response.addCookie(it);
+				    response.addCookie(tp);
+				    
+				    
+				    
+				    //쿠키에 자동로그인 체크 넣어두기
+				    Cookie ck = new Cookie("autologin", "true");
+				    ck.setMaxAge(4*7*24*60*60);
+				    ck.setPath("/");
+				    response.addCookie(ck);
+				     
+				}
+				
+				
+				
+				else {		//자동로그인 해제하고 로그인 시
+					
+				    //토큰관련 정보를 쿠키에 넣기 (제거)
+				    Cookie tn = new Cookie("tn", "");
+				    Cookie it = new Cookie("it", "");
+				    Cookie tp = new Cookie("tp", "");
+				    
+				    tn.setMaxAge(0);
+				    it.setMaxAge(0);
+				    tp.setMaxAge(0);
+				    
+				    tn.setPath("/");
+				    it.setPath("/");
+				    tp.setPath("/");
+				    
+				    response.addCookie(tn);
+				    response.addCookie(it);
+				    response.addCookie(tp);
+				    
+					
+					//쿠키에 자동로그인 체크 빼기
+					Cookie ck = new Cookie("autologin", "");
+				    ck.setMaxAge(0);
+				    ck.setPath("/");
+				    response.addCookie(ck);
+				}
+				
+				
+				
+				
+				
+				
+				//아이디 저장
+				if(remember != null) {
+					Cookie ck = new Cookie("saveId", memberDto.getMemberEmail());
+					ck.setMaxAge(4*7*24*60*60);
+					response.addCookie(ck);				
+				}
+				
+				else {
+					Cookie ck = new Cookie("saveId", memberDto.getMemberEmail());
+					ck.setMaxAge(0);
+					response.addCookie(ck);
+				}
+				
+			}
+				return "redirect:/";		
+		}
 		
 	}
 	
+	
+	
+	
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(
+			HttpSession session,
+			HttpServletRequest request,
+			HttpServletResponse response
+		) {
+	    
+	    //자동로그인 관련 정보 제거 
+	    Cookie tn = new Cookie("tn", "");
+	    Cookie it = new Cookie("it", "");
+	    Cookie tp = new Cookie("tp", "");
+	    
+	    tn.setMaxAge(0);
+	    it.setMaxAge(0);
+	    tp.setMaxAge(0);
+	    
+	    tn.setPath("/");
+	    it.setPath("/");
+	    tp.setPath("/");
+	    
+	    response.addCookie(tn);
+	    response.addCookie(it);
+	    response.addCookie(tp);
+	    
+		
+		//쿠키에 자동로그인 체크 빼기
+		Cookie ck = new Cookie("autologin", "");
+	    ck.setMaxAge(0);
+	    ck.setPath("/");
+	    response.addCookie(ck);
+		
+	    //세션에 있는 회원 번호 가져오기
+  		int memberNo = (int) session.getAttribute("whoLogin");
+
+  		
+  		//자동로그인 토큰을 DB에서 제거	    
+  		autologinDao.deleteToken(memberNo);	
+	    
+  		
+		//세션정보 제거
 		session.removeAttribute("whoLogin");
 		session.removeAttribute("auth");
+		
 		return "redirect:/";
 	}
+	
+	
+	
+	
+	
 	
 	@GetMapping("/check_email")
 	public String checkEmail() {
