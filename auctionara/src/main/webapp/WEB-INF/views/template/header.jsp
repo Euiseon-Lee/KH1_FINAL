@@ -49,7 +49,7 @@
                     <ul class="dropdown-menu ml-4">
                     
                     	<c:choose>
-                    		<c:when test="${isLogin}||${memberNo != null}">
+                    		<c:when test="${isLogin}">
 								<li><a class="dropdown-item" href="${root}/">마이 페이지</a></li>
 								<li><a class="dropdown-item" href="${root}/member/logout">로그아웃</a></li>
                     		</c:when>
