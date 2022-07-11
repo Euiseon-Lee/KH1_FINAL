@@ -24,26 +24,11 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="successful_bid">
+<mapper namespace="monthlyNetSales">
 	
-	<!-- 시퀸스 생성 -->
-	<select id="sequence" resultType="int">
-		select successful_bid_seq.nextval from dual
-	</select>
-	
-	<!-- 낙찰 -->	
-	<insert id="insert" parameterType="SuccessfulBidDto">
-		insert into successful_bid(
-			succ_bid_no, auction_no, succ_bidder_no, succ_final_bid, succ_auction_count
-		)
-		values(
-			#{succBidNo}, #{auctionNo}, #{succBidderNo}, #{succFinalBid}, #{succAuctionCount}
-		)
+	<insert id="insert" parameterType="int">
+		insert into monthly_netSales (renewal_date, total_net_sales) 
+		values (to_date(add_months(sysdate,-1),'YYYY-MM-DD'), #{totalNetSales})
 	</insert>
 	
-	<!-- 해당 월 총 낙찰액 -->
-	<select id="monthlyTotalSuccBid" resultType="int">
-		select sum(succ_final_bid) "succ_final_bid" from successful_bid where succ_bid_status = 1 and to_char(succ_date, 'MM') = (select to_char(sysdate,'MM')-1 from DUAL)
-	</select>
-
 </mapper> 
