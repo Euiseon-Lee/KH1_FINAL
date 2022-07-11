@@ -1,5 +1,6 @@
 package com.an.auctionara.repository;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.an.auctionara.entity.AuctionDto;
+import com.an.auctionara.entity.SuccessfulBidDto;
+import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AdminAuctionDetailVO;
 import com.an.auctionara.vo.AdminAuctionListVO;
 import com.an.auctionara.vo.AuctionDetailVO;
@@ -37,8 +40,8 @@ public class AuctionDaoImpl implements AuctionDao {
 	}
 
 	@Override
-	public List<AuctionListVO> list(int memberNo) {
-		List<AuctionListVO> list = sqlSession.selectList("auction.list");
+	public List<AuctionListVO> list(Map<String, Integer> info) {
+		List<AuctionListVO> list = sqlSession.selectList("auction.list", info);
 		return list;
 	}
 	
@@ -47,6 +50,18 @@ public class AuctionDaoImpl implements AuctionDao {
 		AuctionDetailVO auctionDetail = sqlSession.selectOne("auction.detail", info);
 		return auctionDetail;
 	}
+
+	@Override
+	public List<SuccessfulBidDto> finish(Date now) {
+		List<SuccessfulBidDto> list = sqlSession.selectList("auction.finish", now);
+		return list;
+   }
+	
+	@Override
+	public SuccessfulBidDto close(int auctionNo) {
+		SuccessfulBidDto successfulBidDto = sqlSession.selectOne("auction.close", auctionNo);
+		return successfulBidDto;
+   } 
 	
 	@Override
 	public List<AdminAuctionListVO> adminList(String type, String keyword, int p, int s) {

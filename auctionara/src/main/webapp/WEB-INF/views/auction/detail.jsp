@@ -8,7 +8,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div class="container-fluid" id="app">
+<div class="container-fluid" id="app" v-cloak>
     <div class="row pt-5">
         <span class="text-muted mr-3">카테고리</span>
         <span class="text-muted mr-3">></span>
@@ -43,7 +43,7 @@
                         <div class="carousel-caption d-none d-md-block" v-if="show">
                             <button type="button" class="btn btn-primary btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#modal${photoDto.photoAttachmentNo}">
                                 <i class="fa-solid fa-magnifying-glass"></i>
-                                확대
+                                전체보기
                             </button>
                         </div>
                 </div>
@@ -63,33 +63,21 @@
         </div>
         <div class="row mb-3 mr-5">
             <div class="col-3 p-0 text-muted">
-                <i class="fa-solid fa-gavel pr-2"></i> ${auctionDetail.biddingCount} 건
+                <i class="fa-solid fa-gavel pr-2"></i><span id="count">${auctionDetail.biddingCount}</span> 건
             </div>
             <div class="col text-muted p-0">
                 <i class="fa-solid fa-clock pr-2"></i>
-                <fmt:formatDate value="${auctionDetail.auctionClosedTime}" pattern="M월 d일 HH:mm" /> 마감 ( 남은 ${auctionDetail.auctionRemainTime} )
+                <fmt:formatDate value="${auctionDetail.auctionClosedTime}" pattern="M월 d일 HH:mm" /> 마감 (<span id="timer"></span>)
             </div>
         </div>
         <div class="row mb-2 mr-5">
             <div class="col-3 p-0 d-flex align-items-end">
-                <c:choose>
-                    <c:when test="${auctionDetail.maxBiddingPrice == 0}">
-                        <h5 class="fw-bold">최초 입찰가</h5>
-                    </c:when>
-                    <c:otherwise>
-                        <h5 class="fw-bold">현재 최고가</h5>
-                    </c:otherwise>
-                </c:choose>
+            	<h5 class="fw-bold" v-show="maxBid == 0">최초 입찰가</h5>
+            	<h5 id="maxBidLabel" class="fw-bold" v-show="maxBid != 0">현재 최고가</h5>
             </div>
             <div class="col p-0">
-                <c:choose>
-                    <c:when test="${auctionDetail.maxBiddingPrice == 0}">
-                        <h3 class="text-primary fw-bold comma" id="maxBid">${auctionDetail.auctionOpeningBid} 원</h3>
-                    </c:when>
-                    <c:otherwise>
-                        <h3 class="text-primary fw-bold comma" id="maxBid">${auctionDetail.maxBiddingPrice} 원</h3>
-                    </c:otherwise>
-                </c:choose>
+            	<h3 class="text-primary fw-bold" v-show="maxBid == 0"><span id="openingBid" class="comma">${auctionDetail.auctionOpeningBid}</span> 원</h3>
+            	<h3 class="text-primary fw-bold" v-show="maxBid != 0" id="blind"><span id="maxBid" class="comma">${auctionDetail.maxBiddingPrice}</span> 원</h3>
             </div>
         </div>
         <div class="row mr-5">
@@ -97,31 +85,35 @@
                 <h5 class="fw-bold">즉시 낙찰가</h5>
             </div>
             <div class="col p-0">
-                <h3 class="text-info fw-bold comma">${auctionDetail.auctionClosingBid} 원</h3>
+                <h3 class="text-info fw-bold"><span id="closingBid" class="comma">${auctionDetail.auctionClosingBid}</span> 원</h3>
             </div>
         </div>
-        <c:if test="${auctionDetail.myBiddingPrice != 0}">
-            <div class="row mt-3 mr-5 mb-auto pt-3 border-top">
-                <div class="col-3 p-0 d-flex align-items-end">
-                    <h5 class="fw-bold">내 입찰가</h5>
-                </div>
-                <div class="col p-0">
-                    <h3 class="text-secondary fw-bold comma">${auctionDetail.myBiddingPrice} 원</h3>
-                </div>
+        <div class="row mt-3 mr-5 mb-auto pt-3 border-top" v-show="maxBid != 0 && myBidding">
+        	<div class="col-3 p-0 d-flex align-items-end">
+        		<h5 class="fw-bold">내 입찰가</h5>
+        	</div>
+        	<div class="col p-0">
+        		<h3 class="text-secondary fw-bold"><span id="myBid" class="comma">${auctionDetail.myBiddingPrice}</span> 원 <span class="text-warning pl-2 align-self-center" id="topBidder" v-show="topBidder == 1"><i class="fa-solid fa-crown"></i> 최고 입찰자</span></h3>
             </div>
-        </c:if>
-        <div class="row mt-auto mb-3 d-flex justify-content-end">
-            <div class="col-3 p-0 pl-5 mr-2 text-muted">
-                <i class="fa-solid fa-land-mine-on pr-2"></i> 신고하기
+        </div>
+        <div class="row mt-auto mb-3 pl-5 d-flex justify-content-end">
+            <div id="refresh" class="col-3 text-muted p-0 pointer" @click="throttleRefresh(this)">
+           		<span class="pl-5"><i id="rotate" class="fa-solid fa-arrow-rotate-left"></i> 새로고침</span>
+            </div>
+            <div class="col-3 p-0 pl-2 mr-2 text-muted pointer">
+                <i class="fa-solid fa-land-mine-on pl-3 pr-2"></i> 신고하기
             </div>
         </div>
         <div class="row">
             <div class="col p-0">
                 <c:choose>
                     <c:when test="${whoLogin == auctionDetail.auctioneerNo}">
-		                <button type="button" class="btn btn-info btn-lg btn-block py-3">
+		                <button type="button" class="btn btn-info btn-lg btn-block py-3" v-if="(auctionClose && biddingCount == 0) || !auctionClose">
 		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 1:1 채팅 관리
 		                </button>
+		                <button type="button" class="btn btn-info btn-lg btn-block py-3" v-if="auctionClose && biddingCount != 0">
+		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 구매자와 1:1 채팅
+		                </button>		                
                     </c:when>
                     <c:otherwise>
 		                <button type="button" class="btn btn-info btn-lg btn-block py-3">
@@ -132,20 +124,27 @@
             </div>
             <div class="col">
                 <c:choose>
-                    <c:when test="${whoLogin == auctionDetail.auctioneerNo && auctionDetail.biddingCount == 0}">
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3">
+                    <c:when test="${whoLogin == auctionDetail.auctioneerNo}">
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="biddingCount == 0 && !auctionClose" data-bs-toggle="modal" data-bs-target="#cancleAuctionModal">
 		                    <i class="fa-solid fa-ban pr-2"></i> 경매 취소
 		                </button>
-                    </c:when>
-                    <c:when test="${whoLogin == auctionDetail.auctioneerNo && auctionDetail.biddingCount != 0}">
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3">
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="biddingCount != 0 && !auctionClose" data-bs-toggle="modal" data-bs-target="#stopAuctionModal">
 		                    <i class="fa-solid fa-ban pr-2"></i> 경매 중지
+		                </button>
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="auctionClose">
+		                    종료되었습니다
 		                </button>
                     </c:when>                    
                     <c:otherwise>
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" data-bs-toggle="modal" data-bs-target="#biddingModal">
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" id="startBidding" data-bs-toggle="modal" data-bs-target="#biddingModal" @click="refresh">
 		                    <i class="fa-solid fa-gavel pr-2"></i> 입찰하기
 		                </button>
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="auctionClose && (topBidder == 0 || topBidder == null)">
+		                    종료되었습니다
+		                </button>
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="auctionClose && topBidder == 1">
+		                    <i class="fa-solid fa-coins pr-2"></i> 결제하기
+		                </button>             	                
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -183,7 +182,7 @@
             </nav>
         </div>
         <div class="row">
-            <pre class="text-muted">
+            <pre class="text-muted text-wrap pr-4">
 ${auctionDetail.auctionContent}
 </pre>
         </div>
@@ -195,29 +194,22 @@ ${auctionDetail.auctionContent}
         <div class="row ml-3">
             <h6>
                 추후 회원 정보 표시 예정
-                ${auctionDetail.auctionNo}
             </h6>
         </div>
     </div>
 </div>
 <c:forEach var="photoDto" items="${photoList}">
-    <div class="modal fade" id="modal${photoDto.photoAttachmentNo}" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-truncate flex-grow-1 text-center pl-5">${auctionDetail.auctionTitle}</h5>
-                    <button type="button" class="btn-close close" data-bs-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="${root}/attachment/download?attachmentNo=${photoDto.photoAttachmentNo}" class="img-fluid img-thumbnail">
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="modal fade" id="modal${photoDto.photoAttachmentNo}" tabindex="-1" aria-hidden="true">
+		<div class="photo-modal-wrap">
+			<div class="modal-dialog modal-dialog-centered border-0 photo-modal">
+				<div class="modal-content">
+					<img src="${root}/attachment/download?attachmentNo=${photoDto.photoAttachmentNo}" class="img-fluid img-thumbnail">
+				</div> 
+			</div>
+		</div> 
+	</div>
 </c:forEach>
-<div class="modal fade" id="biddingModal" tabindex="-1" aria-labelledby="biddingModalLabel" aria-hidden="true" @hidden.bs.modal="inputBid = ${auctionDetail.maxBiddingPrice}">
+<div class="modal fade" id="biddingModal" tabindex="-1" aria-labelledby="biddingModalLabel" aria-hidden="true" @hidden.bs.modal="inputBid = maxBid">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -229,10 +221,10 @@ ${auctionDetail.auctionContent}
             <div class="modal-body">
                 <div class="row">
                     <div class="col-10">
-                        <div class="form-group">
-                            <label for="inputBid">입찰 가격을 입력해주세요 ( 입찰 단위 : <span class="comma text-primary">${auctionDetail.auctionBidUnit}</span> 원 )</label>
-                            <input type="number" class="form-control" id="inputBid" autocomplete="off" v-model="inputBid" @input="bidReplace()" v-bind:class="{'is-invalid': !bidVaild}">
-                            <small class="form-text text-info">{{ inputBidReplace }}</small>
+                        <div class="form-group pl-2">
+                            <label for="inputBid"> 입찰 가격을 입력해주세요 ( 입찰 단위 : <span class="comma text-primary">${auctionDetail.auctionBidUnit}</span> 원 )</label>
+                            <input type="number" class="form-control" id="inputBid" autocomplete="off" v-model="inputBid" @input="bidReplace()" v-bind:class="{'is-invalid': !bidVaild}" max="999999900">
+                            <small class="form-text text-info pl-1">{{ inputBidReplace }}</small>
                             <div class="invalid-feedback">최고 입찰가보다 높고, 입찰 단위에 부합하는 금액만 가능합니다.</div>
                         </div>
                     </div>
@@ -241,41 +233,138 @@ ${auctionDetail.auctionContent}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" @click="inputBid = inputBid + ${auctionDetail.auctionBidUnit}; bidReplace()">입찰 단위만큼 올리기</button>
-                <button type="button" class="btn btn-info" data-bs-dismiss="modal">즉시 낙찰하기</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" :disabled="!bidVaild">입찰하기</button>
+                <button type="button" class="btn btn-info" data-bs-dismiss="modal" @click="closeBidding">즉시 낙찰하기</button>
+                <button type="button" class="btn btn-primary" id="insertBid" data-bs-dismiss="modal" :disabled="!bidVaild" @click="bidding">입찰하기</button>
+                <button type="button" class="btn btn-primary d-none" id="blindBid" data-bs-dismiss="modal" @click="blindBidding">입찰하기</button>
             </div>
-        </div>
+	        <div class="alert alert-danger d-flex align-items-center" role="alert" v-if="alert == 1">
+	    		<i class="fa-solid fa-circle-exclamation pr-2"></i>누군가 이미 입찰한 가격입니다! 더 높은 가격으로 입찰해보세요
+			</div>  
+        </div>      
     </div>
 </div>
+<div class="modal fade" id="failBiddingModal" aria-hidden="true" aria-labelledby="failBiddingModalLable" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="failBiddingModalLable">&#128546; 입찰 실패</h5>
+				<button type="button" class="btn-close close" data-bs-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+        		누군가 이미 낙찰하여 경매가 종료되었습니다
+      		</div>
+    	</div>
+  	</div>
+</div>
+<c:if test="${whoLogin == auctionDetail.auctioneerNo}">
+<div class="modal fade" id="stopAuctionModal" aria-hidden="true" aria-labelledby="stopAuctionModalLable" tabindex="-1" v-show="biddingCount != 0 && !auctionClose">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="stopAuctionModalLable"><i class="fa-solid fa-ban pr-2 text-primary"></i> 경매 중지</h5>
+				<button type="button" class="btn-close close" data-bs-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+        		입찰자가 있는 경매를 중지하면 <span class="fw-bold text-primary">사이트 이용에 관한 불이익</span>을 받게 됩니다.
+        		<br><br>
+        		정말 경매를 중지하시겠습니까?
+      		</div>
+      		<div class="modal-footer">
+      			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+      			<button type="button" class="btn btn-primary" @click="checkAuction2" data-bs-dismiss="modal">예</button>
+      		</div>
+    	</div>
+  	</div>
+</div>
+<div class="modal fade" id="cancleAuctionModal" aria-hidden="true" aria-labelledby="cancleAuctionModalLable" tabindex="-1" v-if="biddingCount == 0 && !auctionClose">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="cancleAuctionModalLable"><i class="fa-solid fa-ban pr-2 text-primary"></i> 경매 취소</h5>
+				<button type="button" class="btn-close close" data-bs-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+        		정말 경매를 취소하시겠습니까?
+      		</div>
+      		<div class="modal-footer">
+      			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                <button type="button" class="btn btn-primary" @click="checkAuction1" data-bs-dismiss="modal">예</button>
+      		</div>
+    	</div>
+  	</div>
+</div>
+<div class="modal fade" id="failCancleModal" aria-hidden="true" aria-labelledby="failCancleModalLable" tabindex="-1" v-show="biddingCount == 0 && !auctionClose">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="failCancleModalLable">&#129402; 경매 취소/중지 실패</h5>
+				<button type="button" class="btn-close close" data-bs-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+        		이미 낙찰된 경매이므로 경매를 취소하거나 중지할 수 없습니다.
+      		</div>
+    	</div>
+  	</div>
+</div>
+</c:if>
 </div>
 
 <script src="https://unpkg.com/vue@next"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 <script>
-    // 천 단위 콤마 찍기
-    const comma = document.getElementsByClassName("comma");
-    for (i = 0; i < comma.length; i++) {
-        comma[i].innerHTML = comma[i].innerHTML.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    };
     const app = Vue.createApp({
         data() {
             return {
                 show: false,
                 inputBid: 0,
                 inputBidReplace: "",
+                auctionNo: ${auctionDetail.auctionNo},
+                bidUnit: ${auctionDetail.auctionBidUnit},
+                openingBid: ${auctionDetail.auctionOpeningBid},
+                closingBid: ${auctionDetail.auctionClosingBid},
+                maxBid: ${auctionDetail.maxBiddingPrice},
+                biddingCount: ${auctionDetail.biddingCount},
+                myBidding: false,
+                topBidder: 0,
+                closedTime: '<fmt:formatDate value="${auctionDetail.auctionClosedTime}" pattern="YYYY-MM-dd HH:mm:00" />',
+                alert: 0,
+                interval: "",
+                auctionClose: false,
             };
         },
         computed: {
-            bidVaild() {
-                if (${auctionDetail.maxBiddingPrice} == 0) {
-                	return this.inputBid >= ${auctionDetail.auctionOpeningBid} && (this.inputBid % ${auctionDetail.auctionBidUnit}) == 0;
+            bidVaild() { // 입찰 금액 유효성 검사
+                if (this.maxBid == 0) {
+                	return this.inputBid >= this.openingBid && (this.inputBid % this.bidUnit) == 0;
                 } else {
-                	return this.inputBid > ${auctionDetail.maxBiddingPrice} && (this.inputBid % ${auctionDetail.auctionBidUnit}) == 0;
+                	return this.inputBid > this.maxBid && (this.inputBid % this.bidUnit) == 0;
                 }
             },
         },        
         methods: {
+            comma() {
+                // 금액 콤마 찍기
+                const comma = document.getElementsByClassName("comma");
+                for (i = 0; i < comma.length; i++) {
+                    comma[i].innerHTML = comma[i].innerHTML.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                };
+            },
             bidReplace() {
+            	// 금액이 10억 이상이면 마지막 자리 지우기
+            	if(this.inputBid > 1000000000) {
+            		this.inputBid = parseInt(this.inputBid / 10);
+            	}
+            	
+            	// 한글 금액 표기
                 const numKor = new Array("", "일", "이", "삼", "사", "오", "육", "칠", "팔", "구", "십"); // 숫자 문자
                 const danKor = new Array("", "십", "백", "천", "", "십", "백", "천", "", "십", "백", "천", "", "십", "백", "천"); // 만위 문자
                 const input = String(this.inputBid);
@@ -297,26 +386,300 @@ ${auctionDetail.auctionContent}
                 result = result + "원";
                 return this.inputBidReplace = result;
             },
-            closeBidModal() {
-                if (${auctionDetail.maxBiddingPrice} == 0) {
-                    this.inputBid = ${auctionDetail.auctionOpeningBid};
+            closeBidModal() { // 현재 최소 입찰 가능 금액을 모달창에 갱신
+                if (this.maxBid == 0) {
+                    this.inputBid = this.openingBid;
                 } else {
-                    this.inputBid = ${auctionDetail.maxBiddingPrice} + ${auctionDetail.auctionBidUnit};
+                    this.inputBid = this.maxBid + this.bidUnit;
                 }
                 
-                this.inputBid = parseInt(this.inputBid / ${auctionDetail.auctionBidUnit}) * ${auctionDetail.auctionBidUnit};
+                this.inputBid = parseInt(this.inputBid / this.bidUnit) * this.bidUnit;
                 this.bidReplace();
+            },
+            refresh() {
+            	this.alert = 0; // 입찰 경고창 닫기
+            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            		params: {
+                		bidderNo : 9, // 임시
+                		auctionNo : this.auctionNo,
+            	      }
+            	}).then(resp=>{
+            		if(resp.data){
+            			// 즉시 낙찰 여부 확인
+            			if(this.closingBid <= resp.data.maxBiddingPrice) { // 이미 낙찰됨
+            				this.closeAuction(); // 경매 종료
+            			} 
+            			
+            			// 입찰 횟수 갱신
+        				document.getElementById("count").innerText = resp.data.biddingCount;
+                		this.biddingCount = resp.data.biddingCount;  
+                		
+                		// 내 입찰가 갱신
+                		document.getElementById("myBid").innerText = resp.data.myBiddingPrice;
+                		
+                        if(document.getElementById("blind").innerText == "블라인드") { // 블라인드 모드일 때
+                        	this.maxBid = resp.data.myBiddingPrice;
+                        	this.topBidder = 0;
+                        } else { // 일반 모드일 때
+                			// 최고 입찰가 갱신
+                    		document.getElementById("maxBid").innerText = resp.data.maxBiddingPrice;
+                    		this.maxBid = resp.data.maxBiddingPrice;
+                    		
+                    		// 최고 입찰자 갱신
+                    		this.topBidder = parseInt(resp.data.topBidder);
+                        }	
+                		this.comma();
+                		this.closeBidModal();
+            		};
+	            });
+            },
+            throttleRefresh: _.throttle((app) => { // 0.5초에 한 번씩 새로고침 가능
+            	app.refresh();
+            	
+            	// 새로고침 아이콘 회전
+            	document.getElementById("rotate").classList.remove("rotate");
+            	document.getElementById("rotate").offsetWidth = document.getElementById("rotate").offsetWidth;
+            	document.getElementById("rotate").classList.add("rotate");
+            }, 500), 
+            bidding() {
+            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            		params: {
+                		bidderNo : 9, // 임시
+                		auctionNo : this.auctionNo,
+            	      }
+            	}).then(resp=>{	
+            		if(this.closingBid <= resp.data.maxBiddingPrice) { // 누군가 이미 낙찰하여 경매 종료
+            			// 낙찰 알림 모달
+            			const modal = new bootstrap.Modal(document.getElementById("failBiddingModal"));
+                    	modal.show();
+                    	
+            			this.closeAuction(); // 경매 종료
+            			this.refresh();
+            		} else {
+                        if(this.inputBid <= resp.data.maxBiddingPrice) { // 누군가 이미 같거나 높은 가격을 입찰했을 때 입찰 실패 & 경고 표시 (일반 입찰 때만)
+                        	const modal = new bootstrap.Modal(document.getElementById("biddingModal"));
+                        	modal.show();
+                        	this.refresh();
+                        	this.alert = 1;
+                        } else { // 입찰 성공
+                        	if(this.inputBid >= this.closingBid) { // 즉시 낙찰
+                            	axios.post("http://localhost:8080/auctionara/auction/detail/bidding/close", {
+                                    bidderNo : 9, // 임시
+                                    auctionNo : this.auctionNo,
+                                    biddingPrice : this.inputBid,
+                                }).then(resp=>{
+                                	this.refresh();
+                                	this.myBidding = true;
+                                })
+                        	} else { // 일반 입찰
+                            	axios.post("http://localhost:8080/auctionara/auction/detail/bidding", {
+                                    bidderNo : 9, // 임시
+                                    auctionNo : this.auctionNo,
+                                    biddingPrice : this.inputBid,
+                                }).then(resp=>{
+                                	this.refresh();
+                                	this.myBidding = true;
+                                })
+                        	}
+                        }
+            		}
+            	})
+            },
+            blindBidding() {
+            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            		params: {
+                		bidderNo : 9, // 임시
+                		auctionNo : this.auctionNo,
+            	      }
+            	}).then(resp=>{	
+            		if(this.closingBid <= resp.data.maxBiddingPrice) { // 누군가 이미 낙찰하여 경매 종료
+            			// 낙찰 알림 모달
+            			const modal = new bootstrap.Modal(document.getElementById("failBiddingModal"));
+                    	modal.show();
+                    	
+            			this.closeAuction(); // 경매 종료
+            			this.refresh();
+            		} else {
+                    	if(this.inputBid >= this.closingBid) { // 즉시 낙찰
+                        	axios.post("http://localhost:8080/auctionara/auction/detail/bidding/close", {
+                                bidderNo : 9, // 임시
+                                auctionNo : this.auctionNo,
+                                biddingPrice : this.inputBid,
+                            }).then(resp=>{
+                            	this.refresh();
+                            	this.myBidding = true;
+                            })
+                    	} else { // 일반 입찰
+                        	axios.post("http://localhost:8080/auctionara/auction/detail/bidding", {
+                                bidderNo : 9, // 임시
+                                auctionNo : this.auctionNo,
+                                biddingPrice : this.inputBid,
+                            }).then(resp=>{
+                            	this.refresh();
+                            	this.myBidding = true;
+                            })
+                    	}       	
+            		}
+            	})
+            },
+            closeBidding() {
+            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            		params: {
+                		bidderNo : 9, // 임시
+                		auctionNo : this.auctionNo,
+            	      }
+            	}).then(resp=>{	
+            		if(this.closingBid <= resp.data.maxBiddingPrice) { // 누군가 이미 낙찰
+            			// 낙찰 알림 모달
+            			const modal = new bootstrap.Modal(document.getElementById("failBiddingModal"));
+                    	modal.show();
+                    	
+	        			this.closeAuction(); // 경매 종료
+	        			this.refresh();					
+            		} else {  // 내가 즉시 낙찰
+                    	axios.post("http://localhost:8080/auctionara/auction/detail/bidding/close", {
+                        	bidderNo : 9, // 임시
+                            auctionNo : this.auctionNo,
+                            biddingPrice : this.closingBid,
+                        }).then(resp=>{
+                        	this.refresh();
+                        	this.myBidding = true;
+                    	})  
+            		}
+            	})
+            },
+            closeAuction() {
+            	if(this.auctionClose == false) {
+            		this.closedTime = new Date(); // 현재 시간을 넣어 타이머 종료
+
+            		document.getElementById("maxBidLabel").innerText = "최종 낙찰가";
+                	document.getElementById("blind").innerHTML = '<span id="maxBid" class="comma"></span> 원'; // 최종 낙찰가 표시
+                	document.getElementById("timer").innerText = "종료되었습니다"; // 타이머 종료
+                	document.getElementById("refresh").remove(); // 새로고침 버튼 제거
+                	if(document.getElementById("startBidding")) {
+                		document.getElementById("startBidding").remove(); // 입찰 버튼 제거
+                	}
+                	
+                	if(document.getElementById("topBidder")) {
+	                	document.getElementById("topBidder").classList.remove("d-none"); // 최고 입찰자 배지 표시
+	                	document.getElementById("topBidder").innerHTML = '<i class="fa-solid fa-crown"></i> 낙찰</span>'; // 최고 입찰자 -> 낙찰로 변경
+	                }
+					
+                	// 입찰 모달 제거
+                	if(document.getElementsByClassName("modal-backdrop").length > 0) {
+                		document.getElementsByClassName("modal-backdrop")[0].remove();
+                	}
+                	document.getElementById("biddingModal").remove();
+                	
+                	this.auctionClose = true;            		
+            	}
+            },
+            checkAuction1() {
+            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            		params: {
+                		bidderNo : 9, // 임시
+                		auctionNo : this.auctionNo,
+            	      }
+            	}).then(resp=>{
+            		if(this.closingBid <= resp.data.maxBiddingPrice) { // 누군가 이미 낙찰하여 경매 취소 실패
+            			this.closeAuction();
+            			this.refresh();
+            			const modal = new bootstrap.Modal(document.getElementById("failCancleModal"));
+                    	modal.show();
+            		} else if(resp.data.biddingCount > 0) { // 경매 중지로 전환
+            			this.refresh();
+            			const modal = new bootstrap.Modal(document.getElementById("stopAuctionModal"));
+                    	modal.show();
+            		} else {
+            			location.href = "${root}/auction/detail/cancle/${auctionDetail.auctionNo}";
+            		}
+            	})            	
+            },
+            checkAuction2() {
+            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            		params: {
+                		bidderNo : 9, // 임시
+                		auctionNo : this.auctionNo,
+            	      }
+            	}).then(resp=>{
+            		if(this.closingBid <= resp.data.maxBiddingPrice) { // 누군가 이미 낙찰하여 경매 중지 실패
+            			this.closeAuction();
+            			this.refresh();
+            			const modal = new bootstrap.Modal(document.getElementById("failCancleModal"));
+                    	modal.show();
+            		} else {
+            			location.href = "${root}/auction/detail/stop/${auctionDetail.auctionNo}"
+            		}
+            	})            	
             },
         },
         mounted() {
-            const biddingModal = document.getElementById("biddingModal");
-            biddingModal.addEventListener("hidden.bs.modal", this.closeBidModal);
+            document.getElementById("biddingModal").addEventListener("hidden.bs.modal", this.closeBidModal);
             
+            const refresh = this.refresh;
+            const closeAuction = this.closeAuction;
+			
+         	// 마감 타이머 함수
+            function timer(dday) {
+            	let timerText;
+                const today = new Date();
+                const gap = dday - today; 
+                const d = Math.floor(gap / (1000 * 60 * 60 * 24)); // 일
+                const h = Math.floor((gap / (1000 * 60 * 60)) % 24); // 시
+                const m = Math.floor((gap / (1000 * 60)) % 60); // 분
+                const s = Math.ceil((gap / 1000) % 60); // 초 (초는 1~60초 후로 표기)
+                if (gap <= 0) { // 마감 시간이 되어 경매 종료 시
+                	closeAuction(); // 마감 처리
+                	refresh(); // 최종 정보 불러오기
+                	clearInterval(interval); // 반복 종료
+                } else {
+                	if(d == 0 && h == 0 && m == 0) {
+                		timerText = s + "초 후";
+                	} else if(d == 0 && h == 0) {
+                		timerText = m + "분 " + s + "초 후";
+                	} else if(d == 0 && m == 0) {
+                		timerText = h + "시간 " + s + "초 후";
+                	} else if(d == 0) {
+                		timerText = h + "시간 " + m + "분 " + s + "초 후";
+                	} else if(h == 0) {
+                		timerText = d + "일 " + m + "분 " + s + "초 후";
+                	} else if(m == 0) {
+                		timerText = d + "일 " + h + "시간 " + s + "초 후";
+                	} else {
+                		timerText = d + "일 " + h + "시간 " + m + "분 " + s + "초 후";
+                	}
+                	document.getElementById("timer").innerText = timerText;
+    				if (gap <= 600000) { // 10분 이하부터 최고가 블라인드 
+    					document.getElementById("blind").innerText = "블라인드";
+    					document.getElementById("blindBid").classList.remove("d-none");
+    					document.getElementById("topBidder").classList.add("d-none");
+    					if(document.getElementById("insertBid")) {
+        					document.getElementById("insertBid").remove();    						
+    					}
+    				}
+				}
+            }
+
+          	if(this.closingBid <= this.maxBid) { // 페이지 접속 시점에 이미 낙찰되었을 경우
+          		closeAuction();
+          		refresh();
+          	}
+			
+          	// 타이머 실행
+          	this.closedTime = new Date(this.closedTime);
+            const interval = setInterval(() => timer(this.closedTime), 250);
+            timer(this.closedTime);
+          	
             this.closeBidModal();
+            this.comma();
+            
+            <c:if test="${auctionDetail.topBidder != null}">
+	            this.topBidder = ${auctionDetail.topBidder};
+	            this.myBidding = true;
+            </c:if>
         },
         beforeDestroy() {
-            const biddingModal = document.getElementById("biddingModal");
-            biddingModal.removeEventListener("hidden.bs.modal", this.closeBidModal);
+            document.getElementById("biddingModal").removeEventListener("hidden.bs.modal", this.closeBidModal);
         },
     });
     app.mount("#app");
@@ -337,6 +700,44 @@ ${auctionDetail.auctionContent}
         bottom: 0;
         text-align: right;
     }
+    
+    .pointer {
+    	cursor: pointer;
+    }
+    
+    .text-warning {
+    	font-size: 0.5em;
+    	vertical-align: middle;
+    }
+    
+    @keyframes rotate {
+	  from {
+	    transform: rotate(0deg);
+	  }
+	  to {
+	    transform: rotate(360deg);
+	  }
+	}
+	
+	.rotate {
+		animation: rotate 0.5s ease-out;
+	}
+	
+	.modal.fade .modal-dialog {
+		transition: transform .1s ease-out;
+	}
+	
+	.photo-modal-wrap {
+ 		width: fit-content;
+ 		height: 100%;
+    	margin: 0 auto;
+    	max-width: 70%; 
+	}
+	
+	.photo-modal {
+ 		width: 100%; 
+ 		max-width: 100%;
+	}	
 </style>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

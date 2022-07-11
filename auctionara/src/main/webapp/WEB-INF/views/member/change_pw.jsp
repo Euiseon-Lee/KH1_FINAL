@@ -26,7 +26,9 @@
 			<p>
 				가입하셨던 이메일 계정을 입력하시면,
 				<br>
-				비밀번호를 새로 설정할 수 있는 링크를 이메일로 발송해드립니다
+				비밀번호를 새로 설정할 수 있는 링크를 
+				<br>
+				이메일로 발송해드립니다
 			</p>
 		</div>
 		
@@ -38,6 +40,19 @@
 			<button type="submit">링크 발송</button>
 		</div>	
 	</form>	
+
+	
+	<c:if test="${param.fail != null}">
+		<div class="row">
+			<h4 style="color:red;">이메일 정보가 일치하지 않습니다</h4>
+		</div>
+	</c:if>
+	
+	<c:if test="${param.success != null}">
+		<div class="row">
+			<h4 style="color:blue;">비밀번호 재설정 링크가 성공적으로 발송되었습니다</h4>
+		</div>
+	</c:if>
 
 
 </div>

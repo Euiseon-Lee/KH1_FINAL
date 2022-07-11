@@ -25,7 +25,12 @@
 			<input type="password" name="memberPw" autocomplete="off" placeholder="password">
 		</div>
 
-		
+	
+		<c:if test="${param.fail != null}">
+			<div class="row">
+					<h4 style="color:red;">로그인 정보가 일치하지 않습니다</h4>
+			</div>
+		</c:if>		
 
 		<div class="row">
 			<label>
@@ -52,12 +57,7 @@
 
 	</form>	
 	
-	
-	<c:if test="${param.error != null}">
-		<div class="row">
-				<h3 style="color:red;">로그인 정보가 일치하지 않습니다</h3>
-		</div>
-	</c:if>
+
 	
 	
 	<div class="row">
@@ -70,7 +70,7 @@
 	
 	<div class="row">
 		<span><strong>아직 경매나라 계정이 없나요? </strong></span> &nbsp;&nbsp;
-		<a href="${root}/member/join_intro">회원가입</a>		
+		<a href="${root}/member/join">회원가입</a>		
 	</div>	
 
 

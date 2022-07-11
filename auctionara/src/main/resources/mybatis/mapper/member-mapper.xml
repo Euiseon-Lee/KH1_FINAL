@@ -105,4 +105,12 @@
 		update member set member_grade = '블랙회원' where member_no = #{memberNo} and member_grade = '일반회원' 
 	</update>
 	
+	
+	<update id="changePw" parameterType="MemberDto">
+		update member 
+				set member_pw = #{memberPw}
+			where member_email = #{memberEmail}
+	</update>
+	
+	
 </mapper> 

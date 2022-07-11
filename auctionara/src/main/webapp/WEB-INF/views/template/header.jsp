@@ -47,8 +47,19 @@
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">임시 메뉴</a>
                     <ul class="dropdown-menu ml-4">
-                        <li><a class="dropdown-item" href="${root}/">마이 페이지</a></li>
-                        <li><a class="dropdown-item" href="${root}/">로그아웃</a></li>
+                    
+                    	<c:choose>
+                    		<c:when test="${isLogin}">
+								<li><a class="dropdown-item" href="${root}/">마이 페이지</a></li>
+								<li><a class="dropdown-item" href="${root}/member/logout">로그아웃</a></li>
+                    		</c:when>
+                    		<c:otherwise>
+                    			<li><a class="dropdown-item" href="${root}/member/login">로그인</a></li>
+								<li><a class="dropdown-item" href="${root}/member/join">회원가입</a></li>
+                    		</c:otherwise>
+                    	</c:choose>
+                    	
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>

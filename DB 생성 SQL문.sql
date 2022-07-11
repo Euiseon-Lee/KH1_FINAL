@@ -61,6 +61,7 @@ CREATE TABLE chatroom (
 );
 
 CREATE TABLE bidding (
+    bidding_no	number		NOT NULL,
 	bidder_no	number		NOT NULL,
 	auction_no	number		NOT NULL,
 	bidding_price	number		NOT NULL,
@@ -221,6 +222,10 @@ ALTER TABLE auction ADD CONSTRAINT PK_AUCTION PRIMARY KEY (
 
 ALTER TABLE attachment ADD CONSTRAINT PK_ATTACHMENT PRIMARY KEY (
 	attachment_no
+);
+
+ALTER TABLE bidding ADD CONSTRAINT PK_BIDDING PRIMARY KEY (
+	bidding_no
 );
 
 ALTER TABLE chatroom ADD CONSTRAINT PK_CHATROOM PRIMARY KEY (
@@ -450,4 +455,12 @@ create table cert (
 cert_target varchar2(100) primary key,
 cert_no char(6) not null,
 cert_time Date default sysdate not null 
+);
+
+drop table autologin;
+create table autologin(
+member_no references member(member_no),
+auto_token char(16) not null,
+auto_issuetime date default sysdate not null,
+auto_ip varchar2(32)
 );

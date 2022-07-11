@@ -20,8 +20,8 @@ public class AuctionDetailVO {
 	private int auctionClosingBid;
 	private int auctionBidUnit;
 	private int auctionStatus;
-	private String auctionRemainTime;
 	private int maxBiddingPrice;
 	private int myBiddingPrice;
 	private int biddingCount;
+	private String topBidder;
 }

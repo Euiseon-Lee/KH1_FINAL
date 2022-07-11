@@ -1,6 +1,7 @@
 package com.an.auctionara.service;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -9,15 +10,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.an.auctionara.entity.AuctionDto;
+import com.an.auctionara.entity.BiddingDto;
 import com.an.auctionara.entity.PhotoDto;
+import com.an.auctionara.entity.SuccessfulBidDto;
 import com.an.auctionara.repository.AttachmentDao;
 import com.an.auctionara.repository.AuctionDao;
 import com.an.auctionara.repository.BiddingDao;
 import com.an.auctionara.repository.PhotoDao;
+import com.an.auctionara.repository.SuccessfulBidDao;
+import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
 import com.an.auctionara.vo.WriteAuctionVO;
@@ -35,7 +43,10 @@ public class AuctionServiceImpl implements AuctionService {
 	private PhotoDao photoDao;
 	
 	@Autowired
-	private AttachmentDao attachmentDao;	
+	private AttachmentDao attachmentDao;
+	
+	@Autowired
+	private SuccessfulBidDao successfulBidDao;
 
 	@Override
 	public void write(int auctioneerNo, WriteAuctionVO writeAuctionVO) throws IllegalStateException, IOException {
@@ -70,8 +81,14 @@ public class AuctionServiceImpl implements AuctionService {
 	}		
 	
 	@Override
-	public List<AuctionListVO> list(int memberNo) {
-		List<AuctionListVO> list = auctionDao.list(memberNo);
+	public List<AuctionListVO> list(int memberNo, int page, int filter, int sort) {
+		Map<String, Integer> info = new HashMap<>();
+		info.put("memberNo", memberNo);
+		info.put("begin", (page * 12) - (12 - 1)); // 12개씩 불러오기
+		info.put("end", page * 12);
+		info.put("filter", filter);
+		info.put("sort", sort);
+		List<AuctionListVO> list = auctionDao.list(info);
 		
 		// 마감 시간을 토대로 남은 시간 계산
 		for(AuctionListVO auctionListVO : list) {
@@ -83,9 +100,13 @@ public class AuctionServiceImpl implements AuctionService {
 				long hours = ChronoUnit.HOURS.between(now, limit);
 				if(hours == 0) {
 					long minutes = ChronoUnit.MINUTES.between(now, limit);
-					auctionListVO.setAuctionRemainTime(minutes + "분");
 					if(minutes < 10) {
 						auctionListVO.setDeadlineClosing(true); // 10분 이하로 남으면 마감임박 true	
+					}
+					if(minutes == 0) {
+						auctionListVO.setAuctionRemainTime("1분 이하");
+					} else {
+						auctionListVO.setAuctionRemainTime(minutes + "분");
 					}
 				} else {
 					auctionListVO.setAuctionRemainTime(hours + "시간");
@@ -109,25 +130,37 @@ public class AuctionServiceImpl implements AuctionService {
 			info.remove("bidderNo");
 		}
 		
-		AuctionDetailVO auctionDetail = auctionDao.detail(info);
+		AuctionDetailVO detail = auctionDao.detail(info);
 		
-		// 마감 시간을 토대로 남은 시간 계산
-		LocalDateTime limit = Instant.ofEpochMilli(auctionDetail.getAuctionClosedTime().getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
-		LocalDateTime now = LocalDateTime.now();
+		// 마감 10분 이하 ~ 마감 전까지 블라인드
+		LocalDateTime limit = LocalDateTime.of(2021, 1, 1, 1, 0, 0);
+		LocalDateTime now = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
+		long millis = ChronoUnit.MILLIS.between(now, limit);
+		if(millis > 0 && millis <= 600000) { 
+			detail.setMaxBiddingPrice(detail.getMyBiddingPrice()); // 최고 입찰가를 내 입찰가로 보내기
+			detail.setTopBidder("0"); // 최고 입찰자 숨기기
+		}	
 		
-		long days = ChronoUnit.DAYS.between(now, limit);
-		if(days == 0) {
-			long hours = ChronoUnit.HOURS.between(now, limit);
-			if(hours == 0) {
-				long minutes = ChronoUnit.MINUTES.between(now, limit);
-				auctionDetail.setAuctionRemainTime(minutes + "분");
-			} else {
-				auctionDetail.setAuctionRemainTime(hours + "시간");
-			}
-		} else {
-			auctionDetail.setAuctionRemainTime(days + "일");
-		}
-		
-		return auctionDetail;
+		return detail;
 	}
+	
+	@Override
+	public AuctionDetailRefreshVO bidding(BiddingDto biddingDto) {
+		biddingDao.insert(biddingDto);
+		AuctionDetailRefreshVO auctionDetailRefresh = biddingDao.refresh(biddingDto.getBidderNo(), biddingDto.getAuctionNo());
+		return auctionDetailRefresh;
+	}
+	
+	@Scheduled(cron = "0 * * * * *") // 1분마다 낙찰 테이블에 낙찰 데이터 추가
+	@Override
+	public void successfulBid() {
+		Date now = new java.sql.Date(System.currentTimeMillis());
+		List<SuccessfulBidDto> finishList = auctionDao.finish(now);
+		
+		if(!finishList.isEmpty()) {
+			 for(SuccessfulBidDto finish : finishList) {
+					successfulBidDao.insert(finish); 
+			}			
+		}
+	}	
 }

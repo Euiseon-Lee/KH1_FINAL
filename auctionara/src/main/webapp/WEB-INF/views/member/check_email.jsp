@@ -42,7 +42,29 @@
 		</div>
 			
 	</form>	
+	
+	<c:if test="${param.success != null}">
+		<div class="row">
+			<h4 style="color:blue;">${param.checkedEmail}은 경매나라에 가입된 계정입니다</h4>
+		</div>
+		<div class="row">
+			<span><strong>로그인하러 가시겠습니까? </strong></span> &nbsp;&nbsp;
+			<a href="${root}/member/login">바로 로그인</a>
+		</div>
+	</c:if>
 
+
+
+	<c:if test="${param.fail != null}">
+		<div class="row">
+			<h4 style="color:red;">${param.checkedEmail}은 존재하지 않는 계정입니다</h4>
+		</div>
+		
+		<div class="row">
+			<span><strong>아직 경매나라 계정이 없나요? </strong></span> &nbsp;&nbsp;
+			<a href="${root}/member/join">회원가입</a>	
+		</div>
+	</c:if>
 
 </div>
 

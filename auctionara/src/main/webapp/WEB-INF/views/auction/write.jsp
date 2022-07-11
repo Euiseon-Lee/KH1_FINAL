@@ -6,7 +6,7 @@ pageEncoding="UTF-8"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div class="container-fluid" id="app">
+<div class="container-fluid" id="app" v-cloak>
     <form action="${root}/auction/submit" method="post" class="needs-validation" enctype="multipart/form-data" @submit="beforeSubmit" id="form">
         <div class="row pt-5 pb-3 border-bottom border-dark">
             <div class="col-sm">
@@ -145,8 +145,8 @@ pageEncoding="UTF-8"%>
 <script>
     // 현재 시간 +1일 전 / +31일 후는 경매 마감일로 설정하지 못하도록 설정
     let today = new Date();
-    let min = new Date(today.setDate(today.getDate() + 2)).toISOString().slice(0, 16);
-    let max = new Date(today.setDate(today.getDate() + 32)).toISOString().slice(0, 16);
+    let min = new Date(today.setDate(today.getDate() + 1)).toISOString().slice(0, 16);
+    let max = new Date(today.setDate(today.getDate() + 31)).toISOString().slice(0, 16);
     document.getElementById("auctionClosedTime").min = min;
     document.getElementById("auctionClosedTime").max = max;
 
