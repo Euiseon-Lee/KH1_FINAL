@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" v-cloak>
         <div class="row mb-4">
             <div class="col-9 mr-5">
                 <h4 class="fw-bold">우리 동네 경매</h4>
@@ -41,27 +41,29 @@
             </div>
         </div>
         <div class="row row-cols-4">
-            <div class="col" v-for="(auction, index) in list" v-bind:key="index">
+        <transition-group name="list">
+            <div class="col" v-for="(auction, index) in list" :key="auction.auctionNo">
             	<div class="card rounded border-0 mb-4 px-2">
-                	<img :src="'${root}/attachment/download?attachmentNo=' + list[index].photoAttachmentNo" class="card-img-top card-img-custom">
-                	<div class="card-img-overlay p-0 pr-2" v-if="list[index].deadlineClosing">
+                	<img :src="'${root}/attachment/download?attachmentNo=' + auction.photoAttachmentNo" class="card-img-top card-img-custom">
+                	<div class="card-img-overlay p-0 pr-2" v-if="auction.deadlineClosing">
                 		<span id="deadline" class="card-title bg-primary text-white px-2 py-1 fw-bold">마감임박</span>
                 	</div>
                     <div class="card-body p-0 pt-4">
-                    	<h6 class="card-title text-truncate fw-bold">{{ list[index].auctionTitle }}</h6>
+                    	<h6 class="card-title text-truncate fw-bold">{{ auction.auctionTitle }}</h6>
                         <div class="d-flex">
-	                        <p class="card-text flex-grow-1" v-if="list[index].biddingPrice == 0">현재
-	                        	<span class="text-primary">{{ comma(list[index].auctionOpeningBid) }}</span>원
+	                        <p class="card-text flex-grow-1" v-if="auction.biddingPrice == 0">현재
+	                        	<span class="text-primary">{{ comma(auction.auctionOpeningBid) }}</span>원
 	                        </p>
-	                        <p class="card-text flex-grow-1" v-if="list[index].biddingPrice != 0">현재
-	                            <span class="text-primary">{{ comma(list[index].biddingPrice) }}</span>원
+	                        <p class="card-text flex-grow-1" v-if="auction.biddingPrice != 0">현재
+	                            <span class="text-primary">{{ comma(auction.biddingPrice) }}</span>원
 	                        </p>
-	                        <p class="card-text">남은 <span class="text-primary">{{ list[index].auctionRemainTime }}</span></p>
+	                        <p class="card-text">남은 <span class="text-primary">{{ auction.auctionRemainTime }}</span></p>
 						</div>
-					<a :href="'${root}/auction/detail/' + list[index].auctionNo" class="stretched-link"></a>
+					<a :href="'${root}/auction/detail/' + auction.auctionNo" class="stretched-link"></a>
 					</div>
 				</div>
-        	</div>           
+        	</div>
+        </transition-group>	          
         </div>
     </div>
 </div>
@@ -78,6 +80,7 @@
             	list: [],
             	filter: 0,
             	sort: 0,
+            	test: "테스트",
             };
         },
         computed: {
@@ -154,6 +157,14 @@
 <style scoped>
 	select:focus {
 		outline: none;
+	}
+	
+ 	.list-enter-active, .list-leave-active {
+	  transition: all 0.3s;
+	}
+	
+	.list-enter, .list-leave-to {
+	  opacity: 0;
 	}
 </style>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -8,7 +8,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div class="container-fluid" id="app">
+<div class="container-fluid" id="app" v-cloak>
     <div class="row pt-5">
         <span class="text-muted mr-3">카테고리</span>
         <span class="text-muted mr-3">></span>

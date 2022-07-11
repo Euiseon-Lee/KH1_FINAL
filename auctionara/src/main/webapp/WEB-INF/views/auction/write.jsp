@@ -6,7 +6,7 @@ pageEncoding="UTF-8"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div class="container-fluid" id="app">
+<div class="container-fluid" id="app" v-cloak>
     <form action="${root}/auction/submit" method="post" class="needs-validation" enctype="multipart/form-data" @submit="beforeSubmit" id="form">
         <div class="row pt-5 pb-3 border-bottom border-dark">
             <div class="col-sm">

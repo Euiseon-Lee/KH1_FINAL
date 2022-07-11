@@ -163,3 +163,7 @@ input::-webkit-search-results-decoration {
     display: inline-block;
     margin-right: 1rem;
 }
+
+[v-cloak] {
+	display: none !important;
+}
