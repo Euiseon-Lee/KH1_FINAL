@@ -47,10 +47,15 @@
     				and auto_ip = #{autoIp}
 	</select>
 	
-	<delete id="deleteToken" parameterType="AutologinDto">
+	<delete id="deleteToken" parameterType="int">
 		delete autologin 
-			where auto_token= #{autoToken} and member_no = #{memberNo} 
-    				and auto_ip = #{autoIp}
+			where member_no = #{memberNo}
 	</delete>
+	
+	<select id="returnTokenforCookie" parameterType="String" resultType="AutologinDto">
+		 select member_no, auto_ip from autologin
+			where auto_token= #{autoToken} 
+                and auto_issuetime + 30 >= sysdate
+	</select>
 	
 </mapper> 
