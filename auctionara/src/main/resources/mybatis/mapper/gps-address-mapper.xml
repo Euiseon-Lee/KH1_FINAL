@@ -27,6 +27,11 @@
 		where gps_no = #{gpsNo}
 	</update>
 	
+	<!-- 주소2 삭제 -->
+	<select id="delete2" resultType="GpsAddressDto" parameterType="int">
+		delete from gps_address where gps_no = (select max(gps_no) from gps_address where member_no = #{memberNo})
+	</select>
+	
 	<!-- 회원의 주소 목록 조회 -->
 	<select id="list" resultType="GpsAddressDto" parameterType="int">
 		select * from gps_address where member_no = #{memberNo} order by gps_no
