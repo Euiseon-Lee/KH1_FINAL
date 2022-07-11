@@ -460,7 +460,7 @@ cert_time Date default sysdate not null
 drop table autologin;
 create table autologin(
 member_no references member(member_no),
-auto_token char(16) not null,
+auto_token char(60) not null,
 auto_issuetime date default sysdate not null,
-auto_ip varchar2(32)
+auto_ip varchar2(60)
 );
