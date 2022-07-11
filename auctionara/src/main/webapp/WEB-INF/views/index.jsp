@@ -19,6 +19,14 @@
     </div>
 
     <div class="container-fluid" v-cloak>
+    	<div class="row mb-4 category-wrap overflow-hidden">
+    	<c:forEach var="categoryDto" items="${categoryList}">
+    		<a class="col" href="${root}/auction/category/${categoryDto.categoryNo}">
+    			<img class="row justify-content-center" src="${root}/image/category${categoryDto.categoryNo}.png"></img>
+    			<span class="row fw-bold text-dark category-name justify-content-center">${categoryDto.categoryName}</span>
+    		</a>
+    	</c:forEach>
+    	</div>
         <div class="row mb-4">
             <div class="col-9 mr-5">
                 <h4 class="fw-bold">우리 동네 경매</h4>
@@ -152,6 +160,14 @@
 <style scoped>
 	select:focus {
 		outline: none;
+	}
+	
+	.category-name {
+		font-size: 0.8em;
+	}
+	
+	.category-wrap {
+		width: 1500px;
 	}
 </style>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

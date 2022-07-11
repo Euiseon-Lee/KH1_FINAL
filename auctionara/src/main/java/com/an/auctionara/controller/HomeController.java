@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.an.auctionara.entity.CategoryDto;
 import com.an.auctionara.entity.GpsAddressDto;
+import com.an.auctionara.repository.CategoryDao;
 import com.an.auctionara.repository.GpsAddressDao;
 import com.an.auctionara.service.AuctionService;
 import com.an.auctionara.vo.AuctionListVO;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private CategoryDao categoryDao;
 	
 	@Autowired
 	private GpsAddressDao gpsAddressDao;
@@ -29,6 +34,10 @@ public class HomeController {
 	@GetMapping("/")
 	public String home(Model model, HttpSession session) {
 //		int memberNo = (int) session.getAttribute("login");
+		
+		// 카테고리
+		List<CategoryDto> categoryList = categoryDao.list();
+		model.addAttribute("categoryList", categoryList);
 		
 		// 내 대표 동네
 		GpsAddressDto address1 = gpsAddressDao.one1(13); // 임시
