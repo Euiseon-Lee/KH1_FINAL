@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
-<%@include file="/WEB-INF/views/template/header.jsp" %>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <div id="app" class="mt-4">
     <div class="container-fluid bg-info gps mb-5">
@@ -41,6 +41,7 @@
             </div>
         </div>
         <div class="row row-cols-4">
+        <transition-group name="list">
             <div class="col" v-for="(auction, index) in list" :key="auction.auctionNo">
             	<div class="card rounded border-0 mb-4 px-2">
                 	<img :src="'${root}/attachment/download?attachmentNo=' + auction.photoAttachmentNo" class="card-img-top card-img-custom">
@@ -61,7 +62,8 @@
 					<a :href="'${root}/auction/detail/' + auction.auctionNo" class="stretched-link"></a>
 					</div>
 				</div>
-        	</div>         
+        	</div>
+        </transition-group>	          
         </div>
     </div>
 </div>
@@ -78,7 +80,10 @@
             	list: [],
             	filter: 0,
             	sort: 0,
+            	test: "테스트",
             };
+        },
+        computed: {
         },
         methods: {
         	comma(money) {
@@ -152,6 +157,14 @@
 <style scoped>
 	select:focus {
 		outline: none;
+	}
+	
+ 	.list-enter-active, .list-leave-active {
+	  transition: all 0.3s;
+	}
+	
+	.list-enter, .list-leave-to {
+	  opacity: 0;
 	}
 </style>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

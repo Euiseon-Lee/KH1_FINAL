@@ -39,11 +39,17 @@ public class HomeController {
 	
 	@ResponseBody
 	@GetMapping("/list")
-	public List<AuctionListVO> auctionList(@RequestParam int page, @RequestParam int filter, @RequestParam int sort, HttpSession session) {
+	public List<AuctionListVO> auctionList(@RequestParam int page, 
+											@RequestParam int filter, 
+											@RequestParam int sort,
+											@RequestParam(required = false) Integer categoryNo,
+											@RequestParam(required = false) String keyword,
+											@RequestParam(required = false) Integer search,
+											HttpSession session) {
 //		int memberNo = (int) session.getAttribute("login");
 		
 		// 우리 동네 경매
-		List<AuctionListVO> auctionList = auctionService.list(6, page, filter, sort); // 임시
+		List<AuctionListVO> auctionList = auctionService.list(6, page, filter, sort, categoryNo, keyword, search); // 임시
 		return auctionList;
 	}
 }

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
-<%@include file="/WEB-INF/views/template/header.jsp" %>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <div id="app" class="mt-4">
     <div class="container-fluid bg-info gps mb-5">
@@ -20,17 +20,17 @@
 
     <div class="container-fluid" v-cloak>
         <div class="row mb-4">
-            <div class="col-9 mr-5">
-                <h4 class="fw-bold">우리 동네 경매</h4>
+            <div class="col-8 mr-5">
+                <h4 class="fw-bold"><span class="text-primary">{{ keywordReplace(keyword) }}</span>의 검색 결과 {{ comma(auctionCount) }}개</h4>
             </div>
-            <div class="col-1 pr-0 ml-3">
+            <div class="col ml-2 pr-2">
                 <select class="form-select form-select-sm border-0 text-muted" v-model.number="filter" @change="updateList">
                     <option value="0">전체</option>
                     <option value="1">주소1</option>
                     <option value="2">주소2</option>
                 </select>
             </div>
-            <div class="col pl-0">
+            <div class="col pl-0 mr-5">
                 <select class="form-select form-select-sm border-0 text-muted" v-model.number="sort" @change="updateList">
                     <option value="0">최신 등록순</option>
                     <option value="1">입찰가&#8593;순</option>
@@ -39,6 +39,13 @@
                     <option value="4">우수 판매자순</option>
                 </select>
             </div>
+            <div class="col pl-0 mr-3">
+                <select class="form-select form-select-sm border-0 text-muted" v-model.number="search" @change="updateList">
+                    <option value="0">제목/내용</option>
+                    <option value="1">제목만</option>
+                    <option value="2">내용만</option>
+                </select>
+            </div>            
         </div>
         <div class="row row-cols-4">
             <div class="col" v-for="(auction, index) in list" :key="auction.auctionNo">
@@ -63,6 +70,25 @@
 				</div>
         	</div>         
         </div>
+        <div class="row justify-content-center mt-4">
+	        <nav>
+			  <ul class="pagination">
+			    <li class="page-item" :class="{'disabled': pageList == 0}">
+			      <a class="page-link" href="#" @click="prev">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>			    
+			    <li class="page-item" v-for="pageItem in totalPage" :key="pageItem" :class="{'active': pageItem == page}" v-show="parseInt((pageItem - 1) / 10) == pageList">
+			    	<a class="page-link" href="#" @click="pagination(pageItem)">{{ pageItem }}</a>
+			    </li>
+			    <li class="page-item" :class="{'disabled': parseInt((totalPage - 1) / 10) == pageList}">
+			      <a class="page-link" href="#" @click="next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>			    
+			  </ul>
+			</nav>
+        </div>
     </div>
 </div>
 
@@ -78,43 +104,62 @@
             	list: [],
             	filter: 0,
             	sort: 0,
+				keyword: "",
+				search: 0,
+				auctionCount: 0,
+				totalPage: 1,
+				pageList: 0,
             };
         },
         methods: {
-        	comma(money) {
+        	comma(money) { // 금액 콤마 찍기
         	  	return String(money).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         	},
-            listScroll(e) { // 스크롤 바닥 감지
-                const bottom = document.body.offsetHeight === window.innerHeight + window.scrollY;
-                if(bottom) this.loadMore();
-            },
-            loadMore() { // 우리 동네 경매 불러오기
+            loadMore() { // 검색 결과 불러오기
             	axios.get("http://localhost:8080/auctionara/list", {
             		params: {
             			page: this.page,
             			filter: this.filter,
             			sort: this.sort,
+            			keyword: this.keyword,
+            			search: this.search,
             	      }
             	})
             	.then(resp => {
-            		if(resp.data.length != 0) {
-    					this.list = this.list.concat(resp.data);
-    					this.page++;
-            		} else { // 불러올 리스트가 더 없으면 스크롤 이벤트 삭제  
-            			window.removeEventListener("scroll", this.listScroll);
-            		}
+    				this.list = resp.data;
+    				this.auctionCount = resp.data[0].auctionCount;
+    				this.totalPage = parseInt(resp.data[0].auctionCount / 12) + 1;
             	})
             },
             updateList() { // 필터 or 정렬 변경 시 리스트 갱신
-            	this.list = [];
             	this.page = 1;
-            	window.addEventListener("scroll", this.listScroll);
+            	this.pageList = 0;
             	this.loadMore();
-            }
+            },
+            getKeyword() { // 키워드 추출
+            	this.keyword = decodeURI(location.search).replace("?keyword=", "");
+            },
+            keywordReplace(keyword) { // 키워드 띄어쓰기 '+' 삭제
+             	return keyword.replace("+", " "); 
+            },
+            pagination(pageItem) { // 페이지 교체
+            	this.page = pageItem;
+            	this.loadMore();
+            },
+            prev() { // 이전 페이지 리스트
+            	this.pageList--;
+            	this.page = (this.pageList * 10) + 1;
+            	this.loadMore();
+            },
+            next() { // 다음 페이지 리스트
+            	this.pageList++;
+            	this.page = (this.pageList * 10) + 1;
+            	this.loadMore();
+            },
         },
         mounted() {
-        	this.loadMore(); // 우리 동네 경매 1페이지
-        	window.addEventListener("scroll", this.listScroll);
+        	this.getKeyword(); 
+        	this.loadMore(); // 검색 결과 1페이지
         	
             const mapContainer = document.getElementById("map"); // 지도를 표시할 div
             const mapOption = {
@@ -143,15 +188,16 @@
             };
             geocoder.coord2Address(${address1.gpsLongitude}, ${address1.gpsLatitude}, callback);
         },
-        beforeDestroy() {
-        	window.removeEventListener("scroll", this.listScroll);
-        },
     });
     app.mount("#app");
 </script>
 <style scoped>
 	select:focus {
 		outline: none;
+	}
+	
+	.page-link {
+		cursor: pointer;
 	}
 </style>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

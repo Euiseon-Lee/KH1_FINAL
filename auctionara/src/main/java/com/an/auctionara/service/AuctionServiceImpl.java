@@ -81,13 +81,16 @@ public class AuctionServiceImpl implements AuctionService {
 	}		
 	
 	@Override
-	public List<AuctionListVO> list(int memberNo, int page, int filter, int sort) {
-		Map<String, Integer> info = new HashMap<>();
+	public List<AuctionListVO> list(int memberNo, int page, int filter, int sort, Integer categoryNo, String keyword, Integer search) {
+		Map<String, Object> info = new HashMap<>();
 		info.put("memberNo", memberNo);
 		info.put("begin", (page * 12) - (12 - 1)); // 12개씩 불러오기
 		info.put("end", page * 12);
 		info.put("filter", filter);
 		info.put("sort", sort);
+		info.put("categoryNo", categoryNo);
+		info.put("keyword", keyword);
+		info.put("search", search);
 		List<AuctionListVO> list = auctionDao.list(info);
 		
 		// 마감 시간을 토대로 남은 시간 계산
