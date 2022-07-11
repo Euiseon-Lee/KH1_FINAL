@@ -33,9 +33,9 @@ public class CertController {
 			
 	@GetMapping("/emailExists")
 	public boolean emailExists(@RequestParam String certTarget) {
-		boolean memberNo = memberDao.checkMemberNo(certTarget);
+		boolean isMember = memberDao.checkEmail(certTarget);
 		
-		if (memberNo) {
+		if (isMember) {
 			return true;
 		}
 		else {

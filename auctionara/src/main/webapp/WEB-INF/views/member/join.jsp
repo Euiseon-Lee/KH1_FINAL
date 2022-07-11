@@ -143,7 +143,7 @@
 					},
 					
 					success: function(resp){
-						if(resp==false){
+						if(resp==true){
 							$(".btn-send-email").attr("disabled", false);
 							$("#valid-email").show();
 						}
