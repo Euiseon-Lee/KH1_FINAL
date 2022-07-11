@@ -19,7 +19,7 @@ public class TokenTest {
 		
 
 		
-		for(int i = 0; i < 16; i++) {
+		for(int i = 0; i < 60; i++) {
 			int randomitem = r.nextInt(items.size());
 			String element = items.get(randomitem);
 			makeToken.append(element);
