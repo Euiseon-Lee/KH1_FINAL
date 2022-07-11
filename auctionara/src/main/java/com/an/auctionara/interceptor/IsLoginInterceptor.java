@@ -20,7 +20,7 @@ public class IsLoginInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		
-		response.sendRedirect(request.getContextPath() + "/");
+		response.sendRedirect(request.getContextPath() + "/member/login");
 		return false;
 	}
 
