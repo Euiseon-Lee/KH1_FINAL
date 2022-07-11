@@ -124,6 +124,11 @@ public class AdminAuctionController {
 		List<AdminAuctionDetailReportVO> list = auctionReportDao.detailReportList(auctionNo);
 		model.addAttribute("detailReportList", list);
 		
+		AdminAuctionDetailVO vo = auctionDao.adminAuctionDetail(auctionNo);
+		model.addAttribute("auctionTitle", vo.getAuctionTitle());
+		model.addAttribute("auctionPrivate", vo.getAuctionPrivate());
+		model.addAttribute("auctionNo", auctionNo);
+		
 		return "admin/auction/report_detail"; 
 	}
 	
@@ -131,13 +136,13 @@ public class AdminAuctionController {
 	public String openAuction(@PathVariable int auctionNo) {
 		AuctionDto auctionDto = auctionDao.setOpen(auctionNo);
 		
-		return "redirect: /auctionara/admin/auction/list";
+		return "redirect: /auctionara/admin/auction/report_detail?auctionNo=" + auctionNo;
 	}
 	
 	@GetMapping("/private/{auctionNo}")
 	public String privateAuction(@PathVariable int auctionNo) {
 		AuctionDto auctionDto = auctionDao.setPrivate(auctionNo);
 		
-		return "redirect: /auctionara/admin/auction/list"; 
+		return "redirect: /auctionara/admin/auction/report_detail?auctionNo=" + auctionNo; 
 	}
 }

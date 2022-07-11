@@ -2,28 +2,132 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h1>회원 상세정보</h1>
+<%@include file="/WEB-INF/views/admin/template/header.jsp" %>
 
-<h2>${memberDto.memberName }</h2>
-<h2>${memberDto.memberSex }</h2>
-<h2>${memberDto.memberBirth }</h2>
-<h2>${memberDto.memberNick }</h2>
-<h2>${memberDto.memberEmail }</h2>
-<h2>${memberDto.memberHoldingPoints }</h2>
-<h2>${memberDto.memberAvailableTime }</h2>
-<h2>${memberDto.memberRedCount }</h2>
-<h2>${memberDto.memberJoindate }</h2>
-<h2>${memberDto.memberLogintime }</h2>
-<h2>${memberDto.memberGrade }</h2>
+<script>
+	$(function(){
+		$(".set-general").click(function(e){
+			var result = confirm("해당 회원을 일반회원으로 설정하시겠습니까?");
+			
+			if(!result) {
+				e.preventDefault();				
+			} 
+		});	
+		$(".set-block").click(function(e){
+			var result = confirm("해당 회원을 블랙회원으로 설정하시겠습니까?");
+			
+			if(!result) {
+				e.preventDefault();				
+			} 
+		});
+		$("#history-back").click(function(){
+			window.history.back(); 			
+		});
+	});
+</script>
 
-<c:choose>
-	<c:when test="${memberDto.memberGrade == '블랙회원' }">
-		<a href="${pageContext.request.contextPath}/admin/member/setGeneral/${memberDto.memberNo}">일반회원 등록</a>
-	</c:when>
-	<c:when test="${memberDto.memberGrade == '일반회원' }">
-		<a href="${pageContext.request.contextPath}/admin/member/setBlock/${memberDto.memberNo}">블랙회원 등록</a>
-	</c:when>
-	<c:otherwise>
-		<span></span>
-	</c:otherwise>
-</c:choose>
+<div class="container">
+	
+	<div class="card">
+		<div class="card-body">
+			<div class="row p-2 mt-2">
+				<div class="col-1">
+					<i id="history-back" class="fa-solid fa-arrow-left fa-2x" style="cursor:pointer;"></i>
+				</div>
+				<div class="col-11">
+					<h1>회원 상세정보</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="card">
+		<div class="card-body">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<h2 class="card-title">회원명</h2>
+					<p class="card-text">${memberDto.memberName}</p>
+				</li>
+				<li class="list-group-item">
+					<h2 class="card-title">성별</h2>
+					<c:choose>
+						<c:when test="${memberDto.memberSex == 'f'}">
+							<p class="card-text">여성</p>
+						</c:when>
+						<c:otherwise>
+							<p class="card-text">남성</p>
+						</c:otherwise>
+					</c:choose>
+				</li>
+				<li class="list-group-item">
+					<h2 class="card-title">생년월일</h2>
+					<p class="card-text">${memberDto.memberBirth}</p>
+				</li>
+				<li class="list-group-item">
+					<h2 class="card-title">닉네임</h2>
+					<p class="card-text">${memberDto.memberNick}</p>
+				</li>
+				<li class="list-group-item">
+					<h2 class="card-title">이메일 주소</h2>
+					<p class="card-text">${memberDto.memberEmail}</p>
+				</li>
+				<li class="list-group-item">
+					<h2 class="card-title">보유 포인트</h2>
+					<p class="card-text">${memberDto.memberHoldingPoints} Point</p>
+				</li>
+				<li class="list-group-item">
+					<h2 class="card-title">거래 가능 시간</h2>
+					<p class="card-text">${memberDto.memberAvailableTime}</p>
+				</li>
+				<li class="list-group-item">
+					<h2 class="card-title">누적 경고 횟수</h2>
+					<c:if test="">
+						<p class="card-text" style="color:red;">${memberDto.memberRedCount}</p>
+					</c:if>
+				</li>
+				<li class="list-group-item">
+					<h2 class="card-title">가입일</h2>
+					<p class="card-text">${memberDto.memberJoindate}</p>
+				</li>
+				<li class="list-group-item">
+					<h2 class="card-title">마지막 로그인 일시</h2>
+					<p class="card-text">${memberDto.memberLogintime}</p>
+				</li>
+				<li class="list-group-item">
+					<h2 class="card-title">회원 등급</h2>
+					<div class="row">
+						<div class="col-7">
+						<c:choose>
+							<c:when test="${memberDto.memberGrade == '블랙회원'}">
+								<p class="card-text" style="color:red;">${memberDto.memberGrade}</p>
+							</c:when>
+							<c:when test="${memberDto.memberGrade == '일반회원'}">
+								<p class="card-text" style="color:black;">${memberDto.memberGrade}</p>
+							</c:when>
+							<c:otherwise>
+								<p class="card-text" style="color:gray;">${memberDto.memberGrade}</p>
+							</c:otherwise>
+						</c:choose>
+						</div>
+						<div class="col-5 text-end">
+							<c:choose>
+								<c:when test="${memberDto.memberGrade == '블랙회원' }">
+									<a href="${pageContext.request.contextPath}/admin/member/setGeneral/${memberDto.memberNo}" class="btn btn-primary set-general">일반회원 등록</a>
+								</c:when>
+								<c:when test="${memberDto.memberGrade == '일반회원' }">
+									<a href="${pageContext.request.contextPath}/admin/member/setBlock/${memberDto.memberNo}" class="btn btn-danger set-block">블랙회원 등록</a>
+								</c:when>
+								<c:otherwise>
+									<span></span>
+								</c:otherwise>
+							</c:choose>
+						</div>				
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+</div>
+
+<%@include file="/WEB-INF/views/admin/template/footer.jsp" %>

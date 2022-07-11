@@ -18,4 +18,9 @@ public class SuccessfulBidDaoImpl implements SuccessfulBidDao{
 		finish.setSuccBidNo(succBidNo);
 		sqlSession.insert("successful_bid.insert", finish);
 	}
+	
+	@Override
+	public int getMonthlyTotalBid() {
+		return sqlSession.selectOne("successfulBid.monthlyTotalSuccBid");
+	}
 }

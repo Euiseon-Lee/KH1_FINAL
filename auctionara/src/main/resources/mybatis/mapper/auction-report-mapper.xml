@@ -26,26 +26,12 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="auctionReport">
 	
-	<!-- 경매 게시글 신고 list를 위한 수동 mapping -->
-<!-- 	<resultMap type="AuctionReportListVO" id="auctionReportMap">
-		<collection property="auctionReportList" javaType="List" ofType="AuctionReportListVO" select="list" column="auction_report_no">
-			<result column="auction_report_no" property="auctionReportNo"/>
-			<result column="auction_no" property="auctionNo"/>
-			<result column="auction_reporter_no" property="auctionReporterNo"/>
-			<result column="auction_report_reason" property="auctionReportReason"/>
-			<result column="auction_report_time" property="auctionReportTime"/>
-			<result column="auctioneer_name" property="auctioneerName"/>
-			<result column="reporter_name" property="reporterName"/>
-			<result column="auctioneer_no" property="auctioneerNo"/>
-		</collection>
-	</resultMap> -->
-	
 	<!-- 경매 게시글 신고 페이징 list -->
 	<select id="list" parameterType="Map" resultType="AuctionReportListVO">
 	 	
 	 	select * from (
 	 		select rownum rn, TMP.* from (
-	 			select AR.*, M.member_name "auctioneer_name", A.auctioneer_no, M2.member_name "reporter_name" from auction_report AR 
+	 			select AR.*, M.member_name "auctioneer_name", A.auctioneer_no, A.auction_title, M2.member_name "reporter_name" from auction_report AR 
 	 				inner join auction A on AR.auction_no = A.auction_no 
 	 				inner join member M on A.auctioneer_no = M.member_no 
 	 				inner join member M2 on AR.auction_reporter_no = M2.member_no 
@@ -85,7 +71,7 @@
 	 
 	 <!-- 특정 경매에 대한 report list -->
 	 <select id="detailList" parameterType="int" resultType="AdminAuctionDetailReportVO">
-	 	select AR.*, M.member_name, M.member_nick, A.auctioneer_no, A.auction_private from auction_report AR
+	 	select AR.*, M.member_name, M.member_nick, A.auctioneer_no, A.auction_title, A.auction_private from auction_report AR
 			inner join member M on AR.auction_reporter_no = M.member_no
 			inner join auction A on AR.auction_no = A.auction_no
 		where AR.auction_no = #{auctionNo} 
