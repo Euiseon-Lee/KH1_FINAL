@@ -14,7 +14,7 @@ import com.an.auctionara.vo.AuctionListVO;
 public interface AuctionDao {
 	int write(AuctionDto auctionDto);
 	int recent(int auctioneerNo);
-	List<AuctionListVO> list(Map<String, Integer> info);
+	List<AuctionListVO> list(Map<String, Object> info);
 	AuctionDetailVO detail(Map<String, Integer> info);
 	List<SuccessfulBidDto> finish(Date now);
 	SuccessfulBidDto close(int auctionNo);

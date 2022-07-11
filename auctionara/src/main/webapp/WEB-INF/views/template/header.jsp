@@ -38,8 +38,8 @@
             <a class="navbar-brand mb-2" href="${root}/">
                 <img src="${root}/image/logo.png" alt="logo" class="d-inline-block">
             </a>
-            <form class="position-relative">
-                <input class="form-control bg-light rounded-pill border-0" type="search" placeholder="찾으시는 물품의 키워드를 입력해주세요">
+            <form class="position-relative" action="${root}/auction/search" method="get">
+                <input class="form-control bg-light rounded-pill border-0" type="search" placeholder="찾으시는 물품의 키워드를 입력해주세요" name="keyword" autocomplete="off" value="">
                 <i class="fa-solid fa-magnifying-glass text-secondary position-absolute"></i>
             </form>
             <div class="d-flex">

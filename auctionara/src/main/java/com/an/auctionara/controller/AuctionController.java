@@ -22,16 +22,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.an.auctionara.entity.BiddingDto;
 import com.an.auctionara.entity.CategoryDto;
+import com.an.auctionara.entity.GpsAddressDto;
 import com.an.auctionara.entity.PhotoDto;
 import com.an.auctionara.repository.AuctionDao;
 import com.an.auctionara.repository.BiddingDao;
 import com.an.auctionara.repository.CategoryDao;
+import com.an.auctionara.repository.GpsAddressDao;
 import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.repository.PhotoDao;
 import com.an.auctionara.repository.SuccessfulBidDao;
 import com.an.auctionara.service.AuctionService;
 import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AuctionDetailVO;
+import com.an.auctionara.vo.AuctionListVO;
 import com.an.auctionara.vo.WriteAuctionVO;
 
 @Controller
@@ -57,26 +60,34 @@ public class AuctionController {
 	private SuccessfulBidDao successfulBidDao;
 	
 	@Autowired
-	private AuctionService auctionService;
-
-	@GetMapping("/write")
-	public String write(Model model) {
-		List<CategoryDto> categoryList = categoryDao.list();
-		model.addAttribute("categoryList", categoryList);		
-		return "/auction/write";
-	}
+	private GpsAddressDao gpsAddressDao;	
 	
+	@Autowired
+	private AuctionService auctionService;
+	
+	// 경매 검색 페이지
 	@GetMapping("/search")
-	public String search() {
+	public String search(@RequestParam String keyword, Model model, HttpSession session) {
+//		int memberNo = (int) session.getAttribute("login");
 		
+		// 내 대표 동네
+		GpsAddressDto address1 = gpsAddressDao.one1(13); // 임시
+		model.addAttribute("address1", address1);
 		return "/auction/search";
 	}
 	
 	// 카테고리별 경매 페이지
 	@GetMapping("/category/{categoryNo}")
 	public String category(@PathVariable int categoryNo) {
-		
 		return "/auction/category";
+	}
+
+	// 경매 등록 페이지
+	@GetMapping("/write")
+	public String write(Model model) {
+		List<CategoryDto> categoryList = categoryDao.list();
+		model.addAttribute("categoryList", categoryList);		
+		return "/auction/write";
 	}
 	
 	// 경매 등록
