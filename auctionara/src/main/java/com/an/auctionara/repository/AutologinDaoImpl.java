@@ -1,5 +1,7 @@
 package com.an.auctionara.repository;
 
+import javax.servlet.http.Cookie;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,18 +19,7 @@ public class AutologinDaoImpl implements AutologinDao {
 	public void insertToken(AutologinDto autologinDto) {
 		AutologinDto checkAutologinDto = sqlSession.selectOne("autologin.tokenExists", autologinDto.getMemberNo());		
 				
-		if(checkAutologinDto == null) {
-
-			//암호화 과정
-			AutologinDto before = autologinDto;
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			String afterAutoToken = encoder.encode(before.getAutoToken());
-			String afterAutoIp = encoder.encode(before.getAutoIp());
-			
-			autologinDto.setAutoToken(afterAutoToken);
-			autologinDto.setAutoIp(afterAutoIp);
-
-			
+		if(checkAutologinDto == null) {			
 			sqlSession.insert("autologin.insertToken", autologinDto);
 		}
 		else {
@@ -63,6 +54,12 @@ public class AutologinDaoImpl implements AutologinDao {
 		String autoIpforCookie = encoder.encode(autoIp);
 		return autoIpforCookie;
 	}
+
+	@Override
+	public AutologinDto returnTokenforCookie(String autoToken) {
+		return sqlSession.selectOne("autologin.returnTokenforCookie",autoToken);
+	}
+
 	
 	
 

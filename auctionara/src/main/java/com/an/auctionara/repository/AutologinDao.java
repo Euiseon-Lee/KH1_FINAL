@@ -13,4 +13,7 @@ public interface AutologinDao {
 	String memberNoforCookie (int memberNo);
 	
 	String autoIpforCookie (String autoIp);
+	
+	AutologinDto returnTokenforCookie (String autoToken);
+	
 }
