@@ -53,7 +53,7 @@
 	</delete>
 	
 	<select id="returnTokenforCookie" parameterType="String" resultType="AutologinDto">
-		 select member_no, auto_ip from autologin
+		 select * from autologin
 			where auto_token= #{autoToken} 
                 and auto_issuetime + 30 >= sysdate
 	</select>
