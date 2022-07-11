@@ -22,8 +22,10 @@
 
 	<title>경매나라 Admin</title>
 
+	<link rel="stylesheet" type="text/css" href="${root}/css/reset.css">
 	<link href="${root}/css/app.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 	
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
@@ -73,7 +75,7 @@
 					
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="${root}/admin/restriction/list">
-			              <span class="align-middle">제재 목록</span>
+			              <span class="align-middle">회원 제재 내역</span>
 			            </a>
 					</li>
 					
@@ -111,7 +113,7 @@
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="${root}/admin/auction/report_list">
-			              <span class="align-middle">신고 내역</span>
+			              <span class="align-middle">경매 신고 내역</span>
 			            </a>
 					</li>
 					
@@ -135,9 +137,11 @@
 		</nav>
 
 		<div class="main">
-			<nav class="navbar navbar-expand navbar-light navbar-bg">
-				<div class="list-group text-end">
-									
+			<nav class="row navbar navbar-expand navbar-light navbar-bg">
+				<div class="col-11"></div>
+				<div class="col-1">
+					<i class="fa-regular fa-user"></i>
+					<a href="" class="text-secondary">&nbsp log out</a>
 				</div>
 			</nav>
 
