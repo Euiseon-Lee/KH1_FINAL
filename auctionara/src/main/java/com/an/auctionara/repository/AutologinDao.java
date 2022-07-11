@@ -8,7 +8,9 @@ public interface AutologinDao {
 
 	AutologinDto returnToken(int memberNo);
 
-	void deleteToken(AutologinDto autologinDto);
+	void deleteToken(int memberNo);
 	
-
+	String memberNoforCookie (int memberNo);
+	
+	String autoIpforCookie (String autoIp);
 }
