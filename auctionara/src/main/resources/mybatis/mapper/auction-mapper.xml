@@ -34,7 +34,7 @@
 	<!-- 경매 목록 조회 -->	
 	<select id="list" resultType="AuctionListVO" parameterType="Map">
 		select * from (
-			select rownum rn, TMP.* from (
+			select rownum rn, TMP.*, count(*) over() auction_count from (
 			    select C.auction_no, C.auction_title, C.auction_opening_bid, C.auction_closed_time, 
 			    	min(D.photo_attachment_no) photo_attachment_no, max(E.bidding_price) bidding_price
 			    from (select * from gps_address where 
@@ -59,7 +59,22 @@
 			    left join bidding E on C.auction_no = E.auction_no
 			    left join successful_bid F on C.auction_no = F.auction_no
 			    where C.auction_private = 0 and F.auction_no is null and C.auction_closed_time > sysdate
-			    	and distance(A.gps_latitude, A.gps_longitude, B.gps_latitude, B.gps_longitude) <![CDATA[ <= ]]> (A.gps_circle + B.gps_circle)    
+			    	and distance(A.gps_latitude, A.gps_longitude, B.gps_latitude, B.gps_longitude) <![CDATA[ <= ]]> (A.gps_circle + B.gps_circle)
+				<if test="keyword != null and search == 0">
+					<![CDATA[		    
+			    	and instr(C.auction_title, '${keyword}') > 0 or instr(C.auction_content, '${keyword}') > 0
+			    	]]>
+				</if>
+				<if test="keyword != null and search == 1">
+					<![CDATA[
+			    	and instr(C.auction_title, '${keyword}') > 0
+			    	]]>
+				</if>
+				<if test="keyword != null and search == 2">
+					<![CDATA[
+			    	and instr(C.auction_content, '${keyword}') > 0 
+			    	]]>
+				</if>										    	   
 			    group by C.auction_no, C.auction_title, C.auction_opening_bid, C.auction_closed_time
 			    order by
 				<if test="sort == 1">
