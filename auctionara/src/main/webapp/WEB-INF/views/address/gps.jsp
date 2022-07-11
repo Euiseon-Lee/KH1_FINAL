@@ -38,36 +38,41 @@ pageEncoding="UTF-8"%>
                 <c:when test="${empty gpsAddressList}">
                     <div class="row mt-4 pr-4">
                         <button type="button" class="btn btn-outline-primary rounded-pill address-save1" disabled><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
-                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put1" disabled><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
-                        <button type="button" class="btn btn-primary rounded-pill text-truncate d-none address-change1"></button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put1"><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
+                        <button type="button" class="btn btn-primary rounded-pill text-truncate d-none address-change1">주소1 : [반경 <span class="address-change1-circle"></span>km] <span class="address-change1-detail"></span></button>
                     </div>
                     <div class="row mt-2 pr-4">
                         <button type="button" class="btn btn-outline-primary rounded-pill d-none address-save2" disabled><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
-                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put2" disabled><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
-                        <button type="button" class="btn btn-primary rounded-pill text-truncate d-none address-change2"></button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put2"><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
+                        <button type="button" class="btn btn-primary rounded-pill text-truncate d-none address-change2">주소2 : [반경 <span class="address-change2-circle"></span>km] <span class="address-change2-detail"></span></button>
                         <button type="button" class="btn btn-outline-primary rounded-pill d-none address-create2"><i class="fa-solid fa-plus"></i> 주소2 추가하기</button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill d-none ml-1 address-delete2"><i class="fa-solid fa-xmark"></i> 주소2 삭제</button>
                     </div>
                 </c:when>
                 <c:when test="${fn:length(gpsAddressList) == 1}">
                     <div class="row mt-4 pr-4">
-                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put1" disabled><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
-                        <button type="button" class="btn btn-primary rounded-pill text-truncate address-change1"></button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put1"><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
+                        <button type="button" class="btn btn-primary rounded-pill text-truncate address-change1">주소1 : [반경 <span class="address-change1-circle"></span>km] <span class="address-change1-detail"></span></button>
                     </div>
                     <div class="row mt-2 pr-4">
                         <button type="button" class="btn btn-outline-primary rounded-pill d-none address-save2" disabled><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
-                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put2" disabled><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
-                        <button type="button" class="btn btn-primary rounded-pill text-truncate d-none address-change2"></button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put2"><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
+                        <button type="button" class="btn btn-primary rounded-pill text-truncate d-none address-change2">주소2 : [반경 <span class="address-change2-circle"></span>km] <span class="address-change2-detail"></span></button>
                         <button type="button" class="btn btn-outline-primary rounded-pill address-create2"><i class="fa-solid fa-plus"></i> 주소2 추가하기</button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill d-none ml-1 address-delete2"><i class="fa-solid fa-xmark"></i> 주소2 삭제</button>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <div class="row mt-4 pr-4">
-                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put1" disabled><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
-                        <button type="button" class="btn btn-primary rounded-pill text-truncate address-change1"></button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put1"><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
+                        <button type="button" class="btn btn-primary rounded-pill text-truncate address-change1">주소1 : [반경 <span class="address-change1-circle"></span>km] <span class="address-change1-detail"></span></button>
                     </div>
                     <div class="row mt-2 pr-4">
-                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put2" disabled><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
-                        <button type="button" class="btn btn-primary rounded-pill text-truncate address-change2"></button>
+                    	<button type="button" class="btn btn-outline-primary rounded-pill d-none address-save2" disabled><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-put2"><i class="fa-solid fa-plus"></i> 이 주소로 저장하기</button>
+                        <button type="button" class="btn btn-primary rounded-pill text-truncate address-change2">주소2 : [반경 <span class="address-change2-circle"></span>km] <span class="address-change2-detail"></span></button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill d-none address-create2"><i class="fa-solid fa-plus"></i> 주소2 추가하기</button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill d-none ml-1 address-delete2"><i class="fa-solid fa-xmark"></i> 주소2 삭제</button>
                     </div>
                 </c:otherwise>
             </c:choose>
@@ -156,18 +161,6 @@ pageEncoding="UTF-8"%>
     };   
     
     // 주소 -> 좌표 변환 함수 (Promise로 wrapping)
-/*     function toLatLng(address) {
-    	console.log(address);
-        const callback = function(results, status) {
-            if (status === kakao.maps.services.Status.OK) {
-                const result = results[0]; // 첫번째 결과값을 활용
-                lat = result.x;
-                lon = result.y;
-            }
-        };
-        geocoder.addressSearch(address, callback);
-    }; */
-
     const toLatLng = address => {
     	return new Promise((resolve, reject) => {
     		geocoder.addressSearch(address, function(results, status) {
@@ -184,7 +177,7 @@ pageEncoding="UTF-8"%>
             url: "http://localhost:8080/auctionara/address",
             type: "post",
             data: JSON.stringify({
-                memberNo: 13, // 임시
+                memberNo: 6, // 임시
                 gpsLatitude: lat,
                 gpsLongitude: lon,
                 gpsCircle: $("#circle").val(),
@@ -217,6 +210,8 @@ pageEncoding="UTF-8"%>
     // [주소 검색]을 통해 좌표와 주소를 얻는 함수
     function daumPostcode() {
         $("#address").val(""); // <input> 지우기
+        $(".address-put1").attr("disabled", true);
+        $(".address-put2").attr("disabled", true);
         mapContainer.className += " d-none"; // 맵 숨기기
         $("#postcode").removeClass("d-none"); // 우편 번호 검색창 열기
         
@@ -246,14 +241,10 @@ pageEncoding="UTF-8"%>
                         	$(".address-save1").attr("disabled", false); // 주소1 저장 버튼 클릭 가능하게 전환 
                         };
                         if (!$(".address-save2").hasClass("d-none")) {
-                        	$(".address-save2").attr("disabled", false); // 주소2 저장 버튼 클릭 가능하게 전환 
+                        	$(".address-save2").attr("disabled", false); // 주소2 저장 버튼 클릭 가능하게 전환
                         };
-                        if (!$(".address-put1").hasClass("d-none")) {
-                        	$(".address-put1").attr("disabled", false); // 주소1 수정 버튼 클릭 가능하게 전환 
-                        };                        
-                        if (!$(".address-put2").hasClass("d-none")) {
-                        	$(".address-put2").attr("disabled", false); // 주소2 수정 버튼 클릭 가능하게 전환 
-                        };
+                        $(".address-put1").attr("disabled", false);
+                        $(".address-put2").attr("disabled", false);
                 	} catch (e) {
                 		console.log(e);
                 	}
@@ -292,12 +283,8 @@ pageEncoding="UTF-8"%>
                         if (!$(".address-save2").hasClass("d-none")) {
                         	$(".address-save2").attr("disabled", false); // 주소2 저장 버튼 클릭 가능하게 전환 
                         };
-                        if (!$(".address-put1").hasClass("d-none")) {
-                        	$(".address-put1").attr("disabled", false); // 주소1 수정 버튼 클릭 가능하게 전환 
-                        };                        
-                        if (!$(".address-put2").hasClass("d-none")) {
-                        	$(".address-put2").attr("disabled", false); // 주소2 수정 버튼 클릭 가능하게 전환 
-                        };
+                        $(".address-put1").attr("disabled", false);
+                        $(".address-put2").attr("disabled", false);
                         
                         // 반경 범위 변경
                         if($("#address").val().substring(0,5) == "서울특별시" || $("#address").val().substring(0,2) == "서울") {
@@ -324,12 +311,12 @@ pageEncoding="UTF-8"%>
     };
 
     // 주소1 수정 함수
-    function postAddress1() {
+    function changeAddress1() {
         $.ajax({
             url: "http://localhost:8080/auctionara/address/change1",
             type: "put",
             data: JSON.stringify({
-                memberNo: 13, // 임시
+                memberNo: 6, // 임시
                 gpsLatitude: lat,
                 gpsLongitude: lon,
                 gpsCircle: $("#circle").val(),
@@ -340,12 +327,12 @@ pageEncoding="UTF-8"%>
     };
 
     // 주소2 수정 함수
-    function postAddress2() {
+    function changeAddress2() {
         $.ajax({
             url: "http://localhost:8080/auctionara/address/change2",
             type: "put",
             data: JSON.stringify({
-                memberNo: 13, // 임시
+                memberNo: 6, // 임시
                 gpsLatitude: lat,
                 gpsLongitude: lon,
                 gpsCircle: $("#circle").val(),
@@ -354,20 +341,36 @@ pageEncoding="UTF-8"%>
             success: function(resp) {}
         });
     };
-
+    
+ 	// 주소2 삭제 함수
+    function deleteAddress2() {
+        $.ajax({
+            url: "http://localhost:8080/auctionara/address/delete2",
+            type: "delete",
+            data: JSON.stringify({
+                memberNo: 6, // 임시
+            }),
+            contentType: 'application/json',
+            success: function(resp) {}
+        });
+    };
+    
     // DB에 저장된 반경과 주소 표시
 	<c:if test="${fn:length(gpsAddressList) == 1}">
 	    (async () => {
 	    	const address1 = await toAddress(${gpsAddressList[0].gpsLongitude}, ${gpsAddressList[0].gpsLatitude});
-	    	$(".address-change1").text("주소1 : [반경 " + ${gpsAddressList[0].gpsCircle} + "km] " + address1); 
+	    	$(".address-change1-circle").text(${gpsAddressList[0].gpsCircle});
+	    	$(".address-change1-detail").text(address1);
 	    })();
 	</c:if>
 	<c:if test="${fn:length(gpsAddressList) == 2}">
 	    (async () => {
 	    	const address1 = await toAddress(${gpsAddressList[0].gpsLongitude}, ${gpsAddressList[0].gpsLatitude});
 	    	const address2 = await toAddress(${gpsAddressList[1].gpsLongitude}, ${gpsAddressList[1].gpsLatitude});
-	    	$(".address-change1").text("주소1 : [반경 " + ${gpsAddressList[0].gpsCircle} + "km] " + address1); 
-	    	$(".address-change2").text("주소2 : [반경 " + ${gpsAddressList[1].gpsCircle} + "km] " + address2); 
+	    	$(".address-change1-circle").text(${gpsAddressList[0].gpsCircle});
+	    	$(".address-change1-detail").text(address1);
+	    	$(".address-change2-circle").text(${gpsAddressList[1].gpsCircle});
+	    	$(".address-change2-detail").text(address2);
 	    })();
 	</c:if>
 	
@@ -403,32 +406,59 @@ pageEncoding="UTF-8"%>
 
     // 주소1 버튼 클릭 시
     $(".address-change1").click(function() {
-    	$("#address").val(""); // <input> 지우기
-    	mapContainer.className += " d-none"; // 맵 숨기기
+    	$("#address").val($(".address-change1-detail").text());
+        (async () => { 
+            const result = await toLatLng($("#address").val());
+            lat = result.y;
+            lon = result.x;
+	        showMap(); 
+            if($("#address").val().substring(0,5) == "서울특별시" || $("#address").val().substring(0,2) == "서울") {
+            	$("#circle").attr("max", 6);
+            } else {
+            	$("#circle").attr("max", 12);
+            };
+        	$("#circle").val($(".address-change1-circle").text()).trigger("change");
+        })();
         $(".address-change1").addClass("d-none");
-        $(".address-put1").removeClass("d-none");        
-        $(".address-put2").addClass("d-none");
-        $(".address-save2").addClass("d-none");         
-        $(".address-put1").attr("disabled", true);
-        $("#findAddress").removeClass("d-none");
-        
-        if($(".address-change2").text() == "") {
-        	$(".address-create2").removeClass("d-none");
-        } else {
+        $(".address-put1").removeClass("d-none");
+        if($(".address-save2").hasClass("d-none") == false) {
+        	$(".address-create2").removeClass("d-none");  
+        	
+        }
+        if($(".address-put2").hasClass("d-none") == false) {
         	$(".address-change2").removeClass("d-none");
         }
+        $(".address-delete2").addClass("d-none");
+        $(".address-put2").addClass("d-none");
+        $(".address-save2").addClass("d-none");
+        $("#findAddress").removeClass("d-none");
+        $("#postcode").addClass("d-none");
+        $(".address-put1").attr("disabled", false);
     });
 
     // 주소2 버튼 클릭 시
     $(".address-change2").click(function() {
-    	$("#address").val(""); // <input> 지우기
-    	mapContainer.className += " d-none"; // 맵 숨기기
+    	$("#address").val($(".address-change2-detail").text());
+        (async () => { 
+            const result = await toLatLng($("#address").val());
+            lat = result.y;
+            lon = result.x;
+            showMap();
+            if($("#address").val().substring(0,5) == "서울특별시" || $("#address").val().substring(0,2) == "서울") {
+            	$("#circle").attr("max", 6);
+            } else {
+            	$("#circle").attr("max", 12);
+            };
+            $("#circle").val($(".address-change2-circle").text()).trigger("change");
+        })();
         $(".address-change2").addClass("d-none");
         $(".address-put2").removeClass("d-none");
+        $(".address-delete2").removeClass("d-none");
         $(".address-change1").removeClass("d-none");
         $(".address-put1").addClass("d-none");       	 
-        $(".address-put2").attr("disabled", true);
         $("#findAddress").removeClass("d-none");
+        $("#postcode").addClass("d-none");
+        $(".address-put2").attr("disabled", false);
     });
 
     // 주소2 생성 버튼 클릭 시
@@ -443,9 +473,21 @@ pageEncoding="UTF-8"%>
         $("#findAddress").removeClass("d-none");
     });
     
+    // 주소2 삭제 버튼 클릭 시
+    $(".address-delete2").click(function() {
+    	$("#address").val(""); // <input> 지우기
+    	mapContainer.className += " d-none"; // 맵 숨기기    	
+        $(".address-delete2").addClass("d-none");
+        $(".address-create2").removeClass("d-none");
+        $(".address-put2").addClass("d-none");
+        $("#findAddress").addClass("d-none");
+        deleteAddress2();
+    });
+    
     // 주소1 저장 버튼 클릭 시
     $(".address-save1").click(function() {
-    	$(".address-change1").text("주소1 : [반경 " + $("#circle").val() + "km] " + $("#address").val());
+    	$(".address-change1-circle").text($("#circle").val());
+    	$(".address-change1-detail").text($("#address").val());
     	$("#address").val(""); // <input> 지우기
         $(".address-save1").addClass("d-none");
         $(".address-change1").removeClass("d-none");
@@ -457,7 +499,8 @@ pageEncoding="UTF-8"%>
 
     // 주소2 저장 버튼 클릭 시
     $(".address-save2").click(function() {
-    	$(".address-change2").text("주소2 : [반경 " + $("#circle").val() + "km] " + $("#address").val());
+    	$(".address-change2-circle").text($("#circle").val());
+    	$(".address-change2-detail").text($("#address").val());
     	$("#address").val(""); // <input> 지우기
         $(".address-save2").addClass("d-none");
         $(".address-change2").removeClass("d-none");
@@ -467,24 +510,27 @@ pageEncoding="UTF-8"%>
 
     // 주소1 수정 버튼 클릭 시
     $(".address-put1").click(function() {
-    	$(".address-change1").text("주소1 : [반경 " + $("#circle").val() + "km] " + $("#address").val());
+    	$(".address-change1-circle").text($("#circle").val());
+    	$(".address-change1-detail").text($("#address").val());
     	$("#address").val(""); // <input> 지우기
     	mapContainer.className += " d-none"; // 맵 숨기기
         $(".address-put1").addClass("d-none");
         $(".address-change1").removeClass("d-none");
         $("#findAddress").addClass("d-none");
-        postAddress1();
+        changeAddress1();
     });
 
     // 주소2 수정 버튼 클릭 시
     $(".address-put2").click(function() {
-    	$(".address-change2").text("주소2 : [반경 " + $("#circle").val() + "km] " + $("#address").val());
+    	$(".address-change2-circle").text($("#circle").val());
+    	$(".address-change2-detail").text($("#address").val());
     	$("#address").val(""); // <input> 지우기
     	mapContainer.className += " d-none"; // 맵 숨기기
         $(".address-put2").addClass("d-none");
         $(".address-change2").removeClass("d-none");
+        $(".address-delete2").addClass("d-none");
         $("#findAddress").addClass("d-none");
-        postAddress2();
+        changeAddress2();
     });
     
     // 반경 변경 시

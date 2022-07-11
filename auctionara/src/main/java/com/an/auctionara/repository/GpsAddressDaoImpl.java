@@ -53,7 +53,13 @@ public class GpsAddressDaoImpl implements GpsAddressDao {
 				.gpsCircle(gpsAddressDto.getGpsCircle()) 
 				.build());	
 	}
+	
 
+	@Override
+	public void delete2(int memberNo) {
+		sqlSession.delete("gps_address.delete2", memberNo);
+	}
+	
 	@Override
 	public GpsAddressDto one1(int memberNo) {
 		return sqlSession.selectOne("gps_address.one1", memberNo);

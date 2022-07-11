@@ -39,15 +39,9 @@ public class BiddingDaoImpl implements BiddingDao {
 	}
 
 	@Override
-	public AuctionDetailRefreshVO insert(BiddingDto biddingDto) {
+	public void insert(BiddingDto biddingDto) {
 		int biddingNo = sqlSession.selectOne("bidding.sequence");
 		biddingDto.setBiddingNo(biddingNo);
 		sqlSession.insert("bidding.insert", biddingDto);
-		
-		Map<String, Integer> info = new HashMap<>();
-		info.put("bidderNo", biddingDto.getBidderNo());
-		info.put("auctionNo", biddingDto.getAuctionNo());
-		AuctionDetailRefreshVO auctionDetailRefresh = sqlSession.selectOne("bidding.refresh", info);
-		return auctionDetailRefresh;
 	}
 }

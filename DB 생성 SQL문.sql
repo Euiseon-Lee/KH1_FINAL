@@ -456,3 +456,12 @@ cert_target varchar2(100) primary key,
 cert_no char(6) not null,
 cert_time Date default sysdate not null 
 );
+
+create table autologin(
+member_no references member(member_no),
+auto_token char(16) not null,
+auto_issuetime date default sysdate not null,
+auto_os varchar2(11),
+auto_browser varchar2(7),
+auto_ip varchar2(32)
+);
