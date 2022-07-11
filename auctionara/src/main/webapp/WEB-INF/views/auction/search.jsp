@@ -192,6 +192,10 @@
     app.mount("#app");
 </script>
 <style scoped>
+	select {
+		font-size: 0.9em;
+	}
+
 	select:focus {
 		outline: none;
 	}

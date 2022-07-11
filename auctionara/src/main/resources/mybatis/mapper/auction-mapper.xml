@@ -36,7 +36,7 @@
 		select * from (
 			select rownum rn, TMP.*, count(*) over() auction_count from (
 			    select C.auction_no, C.auction_title, C.auction_opening_bid, C.auction_closed_time, 
-			    	min(D.photo_attachment_no) photo_attachment_no, max(E.bidding_price) bidding_price
+			    	min(D.photo_attachment_no) photo_attachment_no, max(E.bidding_price) bidding_price			    	
 			    from (select * from gps_address where 
 				<if test="filter == 0">
 					<![CDATA[
@@ -73,6 +73,11 @@
 				<if test="keyword != null and search == 2">
 					<![CDATA[
 			    	and instr(C.auction_content, '${keyword}') > 0 
+			    	]]>
+				</if>
+				<if test="categoryNo != null">	
+					<![CDATA[			    	
+			    	and C.category_no = ${categoryNo}
 			    	]]>
 				</if>										    	   
 			    group by C.auction_no, C.auction_title, C.auction_opening_bid, C.auction_closed_time

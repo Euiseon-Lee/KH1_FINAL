@@ -27,13 +27,15 @@
     </div>
 
     <div class="container-fluid" v-cloak>
-    	<div class="row mb-4 category-wrap overflow-hidden">
-    	<c:forEach var="categoryDto" items="${categoryList}">
-    		<a class="col" href="${root}/auction/category/${categoryDto.categoryNo}">
-    			<img class="row justify-content-center" src="${root}/image/category${categoryDto.categoryNo}.png"></img>
-    			<span class="row fw-bold text-dark category-name justify-content-center">${categoryDto.categoryName}</span>
-    		</a>
-    	</c:forEach>
+    	<div class="row pb-3 mb-5" :class="{'pl-4': categoryPage == 1}">
+    		<div class="col-1 pl-0 category-btn" v-show="categoryPage == 2" @click="categoryPrev"><i class="fa-solid fa-chevron-left pt-4 text-secondary"></i></div>
+	    	<c:forEach var="categoryDto" items="${categoryList}">
+	    		<a class="col category-link" :class="{'col-1': categoryPage == 2}" v-show="category.includes(${categoryDto.categoryNo})" href="${root}/auction/category?categoryNo=${categoryDto.categoryNo}">
+	    			<span class="row justify-content-center mb-2"><img class="category-img" src="${root}/image/category${categoryDto.categoryNo}.jpg"></img></span>
+	    			<span class="row fw-bold text-dark category-name justify-content-center">${categoryDto.categoryName}</span>
+	    		</a>	    		
+	    	</c:forEach>
+	    	<div class="col pr-0 category-btn" v-show="categoryPage == 1" @click="categoryNext"><i class="fa-solid fa-chevron-right pt-4 text-secondary"></i></div>
     	</div>
         <div class="row mb-4">
             <div class="col-9 mr-5">
@@ -94,6 +96,8 @@
             	list: [],
             	filter: 0,
             	sort: 0,
+            	category: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+            	categoryPage: 1,
             };
         },
         methods: {
@@ -126,7 +130,15 @@
             	this.page = 1;
             	window.addEventListener("scroll", this.listScroll);
             	this.loadMore();
-            }
+            },
+            categoryNext() {
+            	this.category = [14, 15, 16, 17, 18];
+            	this.categoryPage = 2;          	
+            }, 
+            categoryPrev() {
+            	this.category = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+            	this.categoryPage = 1;
+            },
         },
         mounted() {
         	this.loadMore(); // 우리 동네 경매 1페이지
@@ -166,16 +178,12 @@
     app.mount("#app");
 </script>
 <style scoped>
+	select {
+		font-size: 0.9em;
+	}
+	
 	select:focus {
 		outline: none;
-	}
-	
-	.category-name {
-		font-size: 0.8em;
-	}
-	
-	.category-wrap {
-		width: 1500px;
 	}
 </style>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
