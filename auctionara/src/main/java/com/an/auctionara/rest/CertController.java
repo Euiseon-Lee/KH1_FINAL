@@ -26,10 +26,10 @@ public class CertController {
 	private CertService certService;	
 	
 	@Autowired
-	CertDao certDao;
+	private CertDao certDao;
 	
 	@Autowired
-	MemberDao memberDao;
+	private MemberDao memberDao;
 			
 	@GetMapping("/emailExists")
 	public boolean emailExists(@RequestParam String certTarget) {
