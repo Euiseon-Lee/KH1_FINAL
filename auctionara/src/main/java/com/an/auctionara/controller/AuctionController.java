@@ -77,8 +77,12 @@ public class AuctionController {
 	}
 	
 	// 카테고리별 경매 페이지
-	@GetMapping("/category/{categoryNo}")
-	public String category(@PathVariable int categoryNo) {
+	@GetMapping("/category")
+	public String category(@RequestParam int categoryNo, Model model) {
+		// 카테고리
+		List<CategoryDto> categoryList = categoryDao.list();
+		model.addAttribute("categoryList", categoryList);
+		
 		return "/auction/category";
 	}
 

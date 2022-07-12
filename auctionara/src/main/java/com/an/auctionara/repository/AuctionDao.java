@@ -10,11 +10,13 @@ import com.an.auctionara.vo.AdminAuctionDetailVO;
 import com.an.auctionara.vo.AdminAuctionListVO;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
+import com.an.auctionara.vo.MyBiddingAuctionListVO;
 
 public interface AuctionDao {
 	int write(AuctionDto auctionDto);
 	int recent(int auctioneerNo);
 	List<AuctionListVO> list(Map<String, Object> info);
+	List<MyBiddingAuctionListVO> myBiddingAuctionList(int bidderNo);
 	AuctionDetailVO detail(Map<String, Integer> info);
 	List<SuccessfulBidDto> finish(Date now);
 	SuccessfulBidDto close(int auctionNo);

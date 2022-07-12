@@ -5,23 +5,21 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div id="app" class="mt-4">
-    <div class="container-fluid bg-info gps mb-5">
-        <div class="row position-relative">
-            <div class="col-8 py-4 px-5">
-                <h5 class="text-white mt-1">지금 내 대표 동네는</h5>
-                <h5 class="text-white"><span class="h4 text-truncate" id="address1"></span> 입니다</h5>
-            </div>
-            <div class="col py-4 px-3 bg-light" id="map">
-            </div>
-            <a href="${root}/address" class="btn btn-info rounded-pill position-absolute" role="button">내 동네 변경 <i class="fa-solid fa-angle-right"></i></a>
-        </div>
-    </div>
-
+<div id="app" class="mt-5">
     <div class="container-fluid" v-cloak>
-        <div class="row mb-4">
+    	<div class="row pb-5 mb-3 border-bottom" :class="{'pl-4': categoryPage == 1}">
+    		<div class="col-1 pl-0 category-btn" v-show="categoryPage == 2" @click="categoryPrev"><i class="fa-solid fa-chevron-left pt-4 text-secondary"></i></div>
+	    	<c:forEach var="categoryDto" items="${categoryList}">
+	    		<a class="col category-link" :class="{'col-1': categoryPage == 2}" v-show="category.includes(${categoryDto.categoryNo})" @click="selectCategory(${categoryDto.categoryNo}, '${categoryDto.categoryName}')">
+	    			<span class="row justify-content-center mb-2"><img class="category-img" :class="{'border': categoryNo == ${categoryDto.categoryNo}, 'border-primary': categoryNo == ${categoryDto.categoryNo}}" src="${root}/image/category${categoryDto.categoryNo}.jpg"></img></span>
+	    			<span id="no${categoryDto.categoryNo}" class="row fw-bold category-name justify-content-center" :class="{'text-primary': categoryNo == ${categoryDto.categoryNo}, 'text-dark': categoryNo != ${categoryDto.categoryNo}}">${categoryDto.categoryName}</span>
+	    		</a>	    		
+	    	</c:forEach>
+	    	<div class="col pr-0 category-btn" v-show="categoryPage == 1" @click="categoryNext"><i class="fa-solid fa-chevron-right pt-4 text-secondary"></i></div>
+    	</div>
+        <div class="row mb-4 pt-4">
             <div class="col-9 mr-5">
-                <h4 class="fw-bold">우리 동네 경매</h4>
+                <h4 class="fw-bold">{{ categoryName }}</h4>
             </div>
             <div class="col-1 pr-0 ml-3">
                 <select class="form-select form-select-sm border-0 text-muted" v-model.number="filter" @change="updateList">
@@ -41,7 +39,6 @@
             </div>
         </div>
         <div class="row row-cols-4">
-        <transition-group name="list">
             <div class="col" v-for="(auction, index) in list" :key="auction.auctionNo">
             	<div class="card rounded border-0 mb-4 px-2">
                 	<img :src="'${root}/attachment/download?attachmentNo=' + auction.photoAttachmentNo" class="card-img-top card-img-custom">
@@ -62,8 +59,7 @@
 					<a :href="'${root}/auction/detail/' + auction.auctionNo" class="stretched-link"></a>
 					</div>
 				</div>
-        	</div>
-        </transition-group>	          
+        	</div>        
         </div>
     </div>
 </div>
@@ -80,10 +76,11 @@
             	list: [],
             	filter: 0,
             	sort: 0,
-            	test: "테스트",
+            	categoryName: "",
+            	category: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+            	categoryPage: 1,
+            	categoryNo: 0,
             };
-        },
-        computed: {
         },
         methods: {
         	comma(money) {
@@ -93,12 +90,13 @@
                 const bottom = document.body.offsetHeight === window.innerHeight + window.scrollY;
                 if(bottom) this.loadMore();
             },
-            loadMore() { // 우리 동네 경매 불러오기
+            loadMore() { // 카테고리별 경매 불러오기
             	axios.get("http://localhost:8080/auctionara/list", {
             		params: {
             			page: this.page,
             			filter: this.filter,
             			sort: this.sort,
+            			categoryNo: this.categoryNo,
             	      }
             	})
             	.then(resp => {
@@ -115,38 +113,33 @@
             	this.page = 1;
             	window.addEventListener("scroll", this.listScroll);
             	this.loadMore();
-            }
+            },
+            categoryNext() {
+            	this.category = [14, 15, 16, 17, 18];
+            	this.categoryPage = 2;
+            }, 
+            categoryPrev() {
+            	this.category = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+            	this.categoryPage = 1;
+            },
+            getCategory() { // 카테고리 추출
+            	this.categoryNo = parseInt(location.search.replace("?categoryNo=", ""));
+            	this.categoryName = document.getElementById("no" + this.categoryNo).innerText;
+            	if(!this.category.includes(this.categoryNo)) {
+            		this.categoryNext();
+            	}
+            },
+            selectCategory(categoryNo, categoryName) { // 카테고리 선택
+            	this.categoryNo = categoryNo;
+            	this.categoryName = categoryName;
+            	history.pushState(null, null, "${root}/auction/category?categoryNo=" + this.categoryNo); // URL 변경
+            	this.updateList();
+            },
         },
         mounted() {
-        	this.loadMore(); // 우리 동네 경매 1페이지
+        	this.getCategory();
+        	this.loadMore(); // 카테고리별 1페이지
         	window.addEventListener("scroll", this.listScroll);
-        	
-            const mapContainer = document.getElementById("map"); // 지도를 표시할 div
-            const mapOption = {
-                center: new daum.maps.LatLng(${address1.gpsLatitude}, ${address1.gpsLongitude}), // 지도의 중심 좌표
-                level: 6, // 지도의 확대 레벨
-                draggable: false, // 확대 축소 막기
-            };
-            const map = new kakao.maps.Map(mapContainer, mapOption); // 지도 미리 생성
-            const marker = new kakao.maps.Marker({
-                position: new kakao.maps.LatLng(${address1.gpsLatitude}, ${address1.gpsLongitude}),
-                map: map
-            }); // 마커 미리 생성
-            
-            map.relayout(); // 지도 생성
-            
-         	// 좌표 > 주소 변환
-            const geocoder = new kakao.maps.services.Geocoder();
-            const callback = function(result, status) {
-                if (status === kakao.maps.services.Status.OK) {
-                    if (!result[0].road_address) { // 도로명 주소가 없으면
-                    	$("#address1").text(result[0].address.address_name);
-                    } else {
-                    	$("#address1").text(result[0].road_address.address_name);
-                    }        	 
-                }
-            };
-            geocoder.coord2Address(${address1.gpsLongitude}, ${address1.gpsLatitude}, callback);
         },
         beforeDestroy() {
         	window.removeEventListener("scroll", this.listScroll);
@@ -155,16 +148,16 @@
     app.mount("#app");
 </script>
 <style scoped>
+	select {
+		font-size: 0.9em;
+	}
+
 	select:focus {
 		outline: none;
 	}
 	
- 	.list-enter-active, .list-leave-active {
-	  transition: all 0.3s;
-	}
-	
-	.list-enter, .list-leave-to {
-	  opacity: 0;
+	.border-primary {
+		border-width: 2px !important;
 	}
 </style>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -72,6 +72,29 @@ footer li {
 	border-radius: 0 0.5rem 0 0.5em;
 }
 
+.category-img {
+    border-radius: 50%;
+    width: 59px;
+    border: 1px solid rgba(0, 0, 0, .1);	
+}
+
+.category-name {
+	font-size: 0.8em;
+}
+	
+.category-link:hover {
+	text-decoration: none;
+}
+
+.category-btn {
+	cursor: pointer;
+}
+
+.category-btn:first-child {
+	text-align: right;
+	max-width: 6%;
+}
+
 /* 부트스트랩 스타일 변경 */
 
 .fw-bold {
