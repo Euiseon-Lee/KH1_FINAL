@@ -81,22 +81,6 @@
 					</li>
 					
 					<li class="sidebar-header">
-						현금화 관리
-					</li>
-					
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="${root}/admin/cashing/list">
-			              <span class="align-middle">현금화 목록</span>
-			            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="${root}/admin/cashing/request_list">
-			              <span class="align-middle">현금화 신청 내역</span>
-			            </a>
-					</li>
-					
-					<li class="sidebar-header">
 						경매 관리
 					</li>
 
@@ -113,11 +97,27 @@
 					</li>
 					
 					<li class="sidebar-header">
+						현금화 관리
+					</li>
+					
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="${root}/admin/cashing/list">
+			              <span class="align-middle">현금화 목록</span>
+			            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="${root}/admin/cashing/request_list">
+			              <span class="align-middle">현금화 신청 내역</span>
+			            </a>
+					</li>
+					
+					<li class="sidebar-header">
 						채팅 / 챗봇 관리 
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="${root}/admin/chat/bot">
 			              <span class="align-middle">챗봇 관리</span>
 			            </a>
 					</li>

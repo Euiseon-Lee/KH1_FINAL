@@ -86,7 +86,9 @@
 						</li>
 						<li class="list-group-item">
 						  	<h2 class="card-title">현재 최고 입찰가</h2>
-						  	<p class="card-text">${adminAuctionDetailVO.maxBiddingPrice}원</p>
+						  	<p class="card-text">
+						  		<fmt:formatNumber value="${adminAuctionDetailVO.maxBiddingPrice}" pattern="#,###" />원
+						  	</p>
 						</li>
 						<li class="list-group-item">
 						  	<h2 class="card-title">물품 상태</h2>
