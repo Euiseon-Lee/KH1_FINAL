@@ -66,7 +66,7 @@
 		</table>
 	</div>
 	
-	<div class="row p-2 mt-2 text-center">
+	<div class="p-2 mt-2 text-center pagination">
 		<c:if test="${p > 1}">
 			<c:choose>
 				<c:when test="${search}">

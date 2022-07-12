@@ -24,6 +24,7 @@
 
 	<link rel="stylesheet" type="text/css" href="${root}/css/reset.css">
 	<link href="${root}/css/app.css" rel="stylesheet" type="text/css">
+	<link href="${root}/css/admin.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 	
@@ -34,9 +35,6 @@
 			$('li.sidebar-item a').filter(function() {
 				 return this.href == url;
 			}).parent().addClass('active');
-			
-			$('.fold-navbar').click(function(){
-			}).removeTag(nav);
 		});
 	</script>
 </head>
@@ -135,7 +133,6 @@
 
 		<div class="main">
 			<nav class="row navbar navbar-expand navbar-light navbar-bg">
-				<a class="fold-navbar"><i class="hamburger align-self-center"></i></a>
 			
 				<div class="col-11"></div>
 				<div class="col-1">
