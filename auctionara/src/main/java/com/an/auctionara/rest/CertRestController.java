@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/async")
-public class CertController {
+public class CertRestController {
 
 	@Autowired
 	private CertService certService;	
