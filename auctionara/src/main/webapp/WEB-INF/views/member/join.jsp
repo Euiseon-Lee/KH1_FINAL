@@ -47,11 +47,6 @@
 					<input type="password" name="memberPw" autocomplete="off" placeholder="password" required>
 				</label>
 			</div>
-			<div>
-				<label> 비밀번호 확인
-					<input type="password" name="memberPwCheck" autocomplete="off" placeholder="pwCheck" required>
-				</label>
-			</div>
 
 		</div>
 		
@@ -83,6 +78,12 @@
 			<label> 닉네임
 				<input type="text" name="memberNick" autocomplete="off" placeholder="nickname" required>
 			</label>
+			<span id="valid-nick">사용 가능한 닉네임입니다</span>
+			<span id="nick-exists" style="color:blue;">이미 존재하는 닉네임입니다</span>
+			<span id="invalid-nick" style="color:red;">잘못된 닉네임 양식입니다</span>
+			<div>
+				<input type="button" value="닉네임 중복 검사"class="btn-send-nick" disabled>
+			</div>			
 		</div>
 		
 		<div class="row">
@@ -116,36 +117,32 @@
 		$("#valid-email").hide();
 		$("#invalid-email").hide();
 		$("#email-exists").hide();
+		$("#valid-nick").hide();
+		$("#invalid-nick").hide();
+		$("#nick-exists").hide();
 		
 		
 		$(".email-input").on("blur", function(){
-			
+			var regex = /^[\w\.]+@([\w]+\.)+[\w]{2,4}$/;
 			var certTarget = $(".email-input").val();
-			
-			function isValid(certTarget){
-				var regex = /^[\w\.]+@([\w]+\.)+[\w]{2,4}$/;
-				return regex.test(certTarget);
-			};
-			
-// 			console.log(certTarget);
-			var confirm = isValid(certTarget);
-// 			console.log(confirm);
+				
+			var judge = regex.test(certTarget);
 			
 			
-			if(confirm){
+			if(judge){
 				
 				$.ajax({
-					url: "${pageContext.request.contextPath}/emailExists",
-					type: "get",
-					
+					url: "${pageContext.request.contextPath}/async/emailExists",
+					type: "post",				
 					data:{
 						certTarget: certTarget
 					},
 					
 					success: function(resp){
-						if(resp==true){
+						if(resp == 0){
 							$(".btn-send-email").attr("disabled", false);
 							$("#valid-email").show();
+
 						}
 						
 						else{
@@ -162,7 +159,7 @@
 			
 			else{
 				$("#invalid-email").show();
-				window.alert("이메일 양식을 지켜서 입력해주세요");
+// 				window.alert("이메일 양식을 지켜서 입력해주세요");
 			}
 
 
@@ -183,7 +180,7 @@
 			var certTarget = $(".email-input").val();
 			
 			$.ajax({
-				url:"${pageContext.request.contextPath}/asyncSend",
+				url:"${pageContext.request.contextPath}/async/asyncSend",
 				type: "post",
 				data:{
 					certTarget: certTarget
@@ -213,7 +210,7 @@
 			var certNo = $(".cert-no").val();
 			
 			$.ajax({
-				url:"${pageContext.request.contextPath}/asyncCheck",
+				url:"${pageContext.request.contextPath}/async/emailExists",
 				type: "post",
 				data:{
 					certTarget: certTarget,
@@ -231,6 +228,60 @@
 				}
 				
 			});
+			
+		});
+		
+		
+		
+		$("input[name=memberNick]").blur(function(){
+			var regex = /^[가-힣0-9]{2,10}$/;
+			var memberNick = $(this).val();
+			
+			var judge = regex.test(memberNick);
+			
+			if(judge){
+				
+				$(".btn-send-nick").attr("disabled", false);
+				
+			}
+			else{
+				$("#invalid-nick").show();
+			}
+			
+		});
+		
+		$("input[name=memberNick]").click(function(){
+			$("#valid-nick").hide();
+			$("#invalid-nick").hide();
+			$("#nick-exists").hide();
+			$(".btn-send-nick").attr("disabled", true);
+			
+			$(this).val("");
+		});
+		
+		
+		$(".btn-send-nick").click(function(){
+			
+			var memberNick = $("input[name=memberNick]").val();
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/async/nickExists",
+				type: "post",
+				data:{
+					memberNick: memberNick
+				},
+				success: function(resp){
+					if(resp==true){
+						$("#nick-exists").show();
+					}
+					
+					else{
+						$("#valid-nick").show();
+					}
+				},
+				
+			});
+			
 			
 		});
 		

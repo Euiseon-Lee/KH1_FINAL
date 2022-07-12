@@ -315,9 +315,9 @@ public class MemberController {
 	public String changePw(
 			@ModelAttribute MemberDto targetDto
 			) throws MessagingException {
-		boolean isMember = memberDao.checkEmail(targetDto.getMemberEmail());	
+		int isMember = memberDao.checkEmail(targetDto.getMemberEmail());	
 		
-		if(!isMember) {
+		if(isMember == 0) {
 			return "redirect:change_pw?fail";
 		}
 		
