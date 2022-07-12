@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,6 +17,7 @@ import com.an.auctionara.repository.CategoryDao;
 import com.an.auctionara.repository.GpsAddressDao;
 import com.an.auctionara.service.AuctionService;
 import com.an.auctionara.vo.AuctionListVO;
+import com.an.auctionara.vo.MyBiddingAuctionListVO;
 
 @Controller
 public class HomeController {
@@ -38,6 +38,10 @@ public class HomeController {
 		// 카테고리
 		List<CategoryDto> categoryList = categoryDao.list();
 		model.addAttribute("categoryList", categoryList);
+		
+		// 내 최근 입찰 경매
+		List<MyBiddingAuctionListVO> myBiddingAuctionList = auctionService.myBiddingAuctionList(9);
+		model.addAttribute("myBiddingAuctionList", myBiddingAuctionList);
 		
 		// 내 대표 동네
 		GpsAddressDto address1 = gpsAddressDao.one1(13); // 임시

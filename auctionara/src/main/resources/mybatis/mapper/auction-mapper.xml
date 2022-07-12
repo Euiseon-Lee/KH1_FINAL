@@ -102,6 +102,28 @@
 	    ) where rn between ${begin} and ${end}
 	</select>
 	
+	<!-- 최근 내 입찰 경매 목록 조회 (4개)-->
+	<select id="myBiddingList" resultType="MyBiddingAuctionListVO" parameterType="int">
+		select * from (
+			select rownum rn, TMP.* from (
+			    select A.auction_no, A.auction_title, A.auction_closed_time, 
+			    	min(B.photo_attachment_no) photo_attachment_no, max(C.bidding_price) bidding_price
+                    ,D.my_bidding_price, D.my_bidding_no	    	
+			    from auction A
+			    join photo B on A.auction_no = B.photo_auction_no
+			    left join bidding C on A.auction_no = C.auction_no
+                join (select auction_no, max(bidding_price) my_bidding_price, 
+                            min(bidding_no) keep(dense_rank first order by bidding_price desc) my_bidding_no from bidding 
+                            where bidder_no = #{bidderNo} group by auction_no) D
+                            on A.auction_no = D.auction_no
+			    left join successful_bid E on A.auction_no = E.auction_no
+			    where A.auction_private = 0 and E.auction_no is null and A.auction_closed_time > sysdate		    	   
+			    group by A.auction_no, A.auction_title, A.auction_closed_time, D.my_bidding_price, D.my_bidding_no	    
+			    order by D.my_bidding_no desc
+		    ) TMP
+	    ) where rn between 1 and 4
+	</select>
+	
 	<!-- 경매 상세 조회 -->
 	<select id="detail" resultType="AuctionDetailVO" parameterType="map">
        	select B.bidding_count, B.max_bidding_price, D.category_name, D.category_no,
