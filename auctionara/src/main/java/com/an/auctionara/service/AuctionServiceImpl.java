@@ -28,6 +28,7 @@ import com.an.auctionara.repository.SuccessfulBidDao;
 import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
+import com.an.auctionara.vo.MyBiddingAuctionListVO;
 import com.an.auctionara.vo.WriteAuctionVO;
 
 @Service
@@ -121,7 +122,39 @@ public class AuctionServiceImpl implements AuctionService {
 		
 		return list;
 	}
-
+	
+	@Override
+	public List<MyBiddingAuctionListVO> myBiddingAuctionList(int bidderNo) {
+		List<MyBiddingAuctionListVO> list = auctionDao.myBiddingAuctionList(bidderNo);
+		
+		// 마감 시간을 토대로 남은 시간 계산
+		for(MyBiddingAuctionListVO myBiddingAuctionListVO : list) {
+			LocalDateTime limit = Instant.ofEpochMilli(myBiddingAuctionListVO.getAuctionClosedTime().getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+			LocalDateTime now = LocalDateTime.now();
+			
+			long days = ChronoUnit.DAYS.between(now, limit);
+			if(days == 0) {
+				long hours = ChronoUnit.HOURS.between(now, limit);
+				if(hours == 0) {
+					long minutes = ChronoUnit.MINUTES.between(now, limit);
+					if(minutes < 10) {
+						myBiddingAuctionListVO.setDeadlineClosing(true); // 10분 이하로 남으면 마감임박 true	
+					}
+					if(minutes == 0) {
+						myBiddingAuctionListVO.setAuctionRemainTime("1분 이하");
+					} else {
+						myBiddingAuctionListVO.setAuctionRemainTime(minutes + "분");
+					}
+				} else {
+					myBiddingAuctionListVO.setAuctionRemainTime(hours + "시간");
+				}
+			} else {
+				myBiddingAuctionListVO.setAuctionRemainTime(days + "일");
+			}
+		}		
+		return list;
+	}
+	
 	@Override
 	public AuctionDetailVO detail(int bidderNo, int auctionNo) {		
 		Map<String, Integer> info = new HashMap<>();
