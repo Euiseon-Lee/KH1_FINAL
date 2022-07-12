@@ -80,6 +80,7 @@
 			<mvc:exclude-mapping path="/member/login"/>
 			<mvc:exclude-mapping path="/member/join*"/>
 			<mvc:exclude-mapping path="/async/**"/>
+			<mvc:exclude-mapping path="/attachment/**"/>
 
 			<bean class="com.an.auctionara.interceptor.IsLoginInterceptor"></bean>
 		</mvc:interceptor>
