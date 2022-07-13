@@ -228,15 +228,6 @@ pageEncoding="UTF-8"%>
             	$("#postcode").addClass("d-none"); // 우편 번호 검색창 닫기
                 const addr = data.address; // 선택한 주소값
                 $("#address").val(addr); // <input>에 주소 넣기
-                
-                // 반경 범위 변경
-                if($("#address").val().substring(0,5) == "서울특별시" || $("#address").val().substring(0,2) == "서울") {
-                	$("#circle").val("6").trigger("change"); 
-                	$("#circle").attr("max", 6);
-                } else {
-                	$("#circle").val("12").trigger("change");
-                	$("#circle").attr("max", 12);
-                };
 
                 (async () => { 
                 	try {
@@ -245,6 +236,18 @@ pageEncoding="UTF-8"%>
                         lon = result.x;
                         showMap(); // 지도 & 원 표시
 						
+                        // 반경 범위 변경
+                        if($("#address").val().substring(0,5) == "서울특별시" || $("#address").val().substring(0,2) == "서울") {
+                        	$("#circle").val("6").trigger("change"); 
+                        	$("#circle").attr("max", 6);
+                        } else {
+                        	$("#circle").val("12").trigger("change");
+                        	$("#circle").attr("max", 12);
+                        };
+                        
+                        $("#valid").addClass("d-none");
+                        $("#invalid").addClass("d-none");
+                        
                         // 동네 인증
                         if (navigator.geolocation) {
                 			navigator.geolocation.getCurrentPosition( function(position) {
@@ -314,6 +317,15 @@ pageEncoding="UTF-8"%>
                 		const result = await toAddress(lon, lat);
                 		$("#address").val(result);
                 		
+                        // 반경 범위 변경
+                        if($("#address").val().substring(0,5) == "서울특별시" || $("#address").val().substring(0,2) == "서울") {
+                        	$("#circle").val("6").trigger("change"); 
+                        	$("#circle").attr("max", 6);
+                        } else {
+                        	$("#circle").val("12").trigger("change");
+                        	$("#circle").attr("max", 12);
+                        };
+                		
                         if (!$(".address-save1").hasClass("d-none")) {
                         	$(".address-save1").attr("disabled", false); // 주소1 저장 버튼 클릭 가능하게 전환 
                         };
@@ -322,16 +334,7 @@ pageEncoding="UTF-8"%>
                         };
                         $(".address-put1").attr("disabled", false);
                         $(".address-put2").attr("disabled", false);
-                        $("#valid").removeClass("d-none");
-                        
-                        // 반경 범위 변경
-                        if($("#address").val().substring(0,5) == "서울특별시" || $("#address").val().substring(0,2) == "서울") {
-                        	$("#circle").val("6").trigger("change"); 
-                        	$("#circle").attr("max", 6);
-                        } else {
-                        	$("#circle").val("12").trigger("change");
-                        	$("#circle").attr("max", 12);
-                        };                   
+                        $("#valid").removeClass("d-none");               
                 	} catch (e) {
                 		console.log(e);
                 	}
@@ -354,7 +357,7 @@ pageEncoding="UTF-8"%>
     				// 현재 위치
     		    	let lat1 = position.coords.latitude; 
     		    	let lon1 = position.coords.longitude;
-    				
+    		    	
     		    	const R = 6371;
     				const dLat = (lat - lat1) * (Math.PI / 180);
     				const dLon = (lon - lon1) * (Math.PI / 180); 
