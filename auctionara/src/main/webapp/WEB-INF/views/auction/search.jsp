@@ -25,9 +25,9 @@
             </div>
             <div class="col ml-2 pr-2">
                 <select class="form-select form-select-sm border-0 text-muted" v-model.number="filter" @change="updateList">
-                    <option value="0">전체</option>
+                    <option value="0" v-if="${addressCount}">전체</option>
                     <option value="1">주소1</option>
-                    <option value="2">주소2</option>
+                    <option value="2" v-if="${addressCount}">주소2</option>
                 </select>
             </div>
             <div class="col pl-0 mr-5">
@@ -160,6 +160,9 @@
         mounted() {
         	this.getKeyword(); 
         	this.loadMore(); // 검색 결과 1페이지
+        	if(!${addressCount}) {
+        		this.filter = 1;
+        	}
         	
             const mapContainer = document.getElementById("map"); // 지도를 표시할 div
             const mapOption = {

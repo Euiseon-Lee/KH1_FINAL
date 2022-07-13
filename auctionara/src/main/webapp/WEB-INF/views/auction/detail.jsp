@@ -136,11 +136,14 @@
 		                </button>
                     </c:when>                    
                     <c:otherwise>
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" id="startBidding" data-bs-toggle="modal" data-bs-target="#biddingModal" @click="refresh">
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" id="startBidding" data-bs-toggle="modal" data-bs-target="#biddingModal" @click="refresh" v-if="${checkAddress}">
 		                    <i class="fa-solid fa-gavel pr-2"></i> 입찰하기
 		                </button>
 		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="auctionClose && (topBidder == 0 || topBidder == null)">
 		                    종료되었습니다
+		                </button>
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="!${checkAddress}">
+		                    동네인증 필요
 		                </button>
 		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="auctionClose && topBidder == 1">
 		                    <i class="fa-solid fa-coins pr-2"></i> 결제하기

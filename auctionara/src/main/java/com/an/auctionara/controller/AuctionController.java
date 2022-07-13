@@ -3,11 +3,10 @@ package com.an.auctionara.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +33,6 @@ import com.an.auctionara.repository.SuccessfulBidDao;
 import com.an.auctionara.service.AuctionService;
 import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AuctionDetailVO;
-import com.an.auctionara.vo.AuctionListVO;
 import com.an.auctionara.vo.WriteAuctionVO;
 
 @Controller
@@ -70,9 +68,17 @@ public class AuctionController {
 	public String search(@RequestParam String keyword, Model model, HttpSession session) {
 //		int memberNo = (int) session.getAttribute("login");
 		
+		// 주소 필터 표시 여부
+		List<GpsAddressDto> address = gpsAddressDao.list(13); // 임시
+		if(address.size() == 2) {
+			model.addAttribute("addressCount", true);
+		} else {
+			model.addAttribute("addressCount", false);
+		}
+		
 		// 내 대표 동네
-		GpsAddressDto address1 = gpsAddressDao.one1(13); // 임시
-		model.addAttribute("address1", address1);
+		model.addAttribute("address1", address.get(0));
+		
 		return "/auction/search";
 	}
 	
@@ -83,14 +89,27 @@ public class AuctionController {
 		List<CategoryDto> categoryList = categoryDao.list();
 		model.addAttribute("categoryList", categoryList);
 		
+		// 주소 필터 표시 여부
+		List<GpsAddressDto> address = gpsAddressDao.list(13); // 임시
+		if(address.size() == 2) {
+			model.addAttribute("addressCount", true);
+		} else {
+			model.addAttribute("addressCount", false);
+		}
+		
 		return "/auction/category";
 	}
 
 	// 경매 등록 페이지
 	@GetMapping("/write")
 	public String write(Model model) {
+		// 카테고리 목록
 		List<CategoryDto> categoryList = categoryDao.list();
-		model.addAttribute("categoryList", categoryList);		
+		model.addAttribute("categoryList", categoryList);	
+		
+		// 회원 인증 주소 목록
+		List<GpsAddressDto> addressList = gpsAddressDao.validList(13); // 임시
+		model.addAttribute("addressList", addressList);
 		return "/auction/write";
 	}
 	
@@ -113,12 +132,18 @@ public class AuctionController {
 //		int memberNo = (int) session.getAttribute("whoLogin");
 		
 		// 경매 상세 정보 조회
-		AuctionDetailVO auctionDetail = auctionService.detail(9, auctionNo); // 임시
+		AuctionDetailVO auctionDetail = auctionService.detail(6, auctionNo); // 임시
 		model.addAttribute("auctionDetail", auctionDetail);
 		
 		// 경매 사진 조회
 		List<PhotoDto> photoList = photoDao.list(auctionNo);
 		model.addAttribute("photoList", photoList);
+		
+		// 입찰 가능 여부 확인 (인증 주소)
+		Map<String, Integer> info = new HashMap<>();
+		info.put("memberNo", 6); // 임시
+		info.put("auctionNo", auctionNo);
+		model.addAttribute("checkAddress", gpsAddressDao.checkBiddingAddress(info));
 		
 		return "/auction/detail";
 	}

@@ -20,4 +20,11 @@ public class WriteAuctionVO {
 	private int auctionBidUnit;
 	private int auctionStatus;
 	List<MultipartFile> attachment;
+	
+	private double auctionLatitude1;
+	private double auctionLongitude1;
+	private int auctionCircle1;
+	private double auctionLatitude2;
+	private double auctionLongitude2;
+	private int auctionCircle2;
 }
