@@ -20,12 +20,12 @@
 	
 		<div class="row">
 			<input type="email" name="memberEmail" id="memberEmail" value="${cookie.saveId.value}"
-			class="form-control m-2" autocomplete="off" placeholder="name@example.com" >
+				class="form-control m-2" autocomplete="off" placeholder="name@example.com" >
 		</div>
 		
 		<div class="row">
 			<input type="password" name="memberPw" 
-			class="form-control m-2" autocomplete="off" placeholder="password">
+				class="form-control m-2" autocomplete="off" placeholder="password">
 		</div>
 
 	
