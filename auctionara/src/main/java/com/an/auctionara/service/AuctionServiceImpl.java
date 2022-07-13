@@ -64,6 +64,12 @@ public class AuctionServiceImpl implements AuctionService {
 									.auctionClosingBid(writeAuctionVO.getAuctionClosingBid())
 									.auctionBidUnit(writeAuctionVO.getAuctionBidUnit())
 									.auctionStatus(writeAuctionVO.getAuctionStatus())
+									.auctionLatitude1(writeAuctionVO.getAuctionLatitude1())
+									.auctionLongitude1(writeAuctionVO.getAuctionLongitude1())
+									.auctionCircle1(writeAuctionVO.getAuctionCircle1())
+									.auctionLatitude2(writeAuctionVO.getAuctionLatitude2())
+									.auctionLongitude2(writeAuctionVO.getAuctionLongitude2())
+									.auctionCircle2(writeAuctionVO.getAuctionCircle2())
 									.build();
 		
 		// 경매 정보 저장

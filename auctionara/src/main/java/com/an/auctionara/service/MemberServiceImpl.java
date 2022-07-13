@@ -1,19 +1,18 @@
 package com.an.auctionara.service;
 
 import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.AttachmentDao;
+import com.an.auctionara.repository.GpsAddressDao;
 import com.an.auctionara.repository.MemberDao;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -22,8 +21,10 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao memberDao;
 	
 	@Autowired
-	private AttachmentDao attachmentDao;
+	private GpsAddressDao gpsAddressDao;
 	
+	@Autowired
+	private AttachmentDao attachmentDao;
 	
 	
 	//첨부파일(프로필) 없이 구현함 이후 추가 구현 필요
@@ -49,7 +50,10 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
-
-
-
+	@Scheduled(cron = "0 0 12 * * *") // 매일 오후 12시마다 인증 후 30일이 지난 주소 미인증 처리
+	@Override
+	public void changeGpsStaus() {
+		Date limit = new java.sql.Date(System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 30L));
+		gpsAddressDao.changeGpsStaus(limit);
+	}
 }

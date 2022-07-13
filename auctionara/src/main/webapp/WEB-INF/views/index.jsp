@@ -68,9 +68,9 @@
             </div>
             <div class="col-1 pr-0 ml-3">
                 <select class="form-select form-select-sm border-0 text-muted" v-model.number="filter" @change="updateList">
-                    <option value="0">전체</option>
-                    <option value="1">주소1</option>
-                    <option value="2">주소2</option>
+                    <option value="0" v-if="${addressCount}">전체</option>  
+                    <option value="1">주소1</option>  
+                    <option value="2" v-if="${addressCount}">주소2</option>
                 </select>
             </div>
             <div class="col pl-0">
@@ -83,7 +83,7 @@
                 </select>
             </div>
         </div>
-        <div class="row row-cols-4">
+        <div id="list-wrap" class="row row-cols-4">
             <div class="col" v-for="(auction, index) in list" :key="auction.auctionNo">
             	<div class="card rounded border-0 mb-4 px-2">
                 	<img :src="'${root}/attachment/download?attachmentNo=' + auction.photoAttachmentNo" class="card-img-top card-img-custom">
@@ -138,7 +138,7 @@
             },
             listScroll(e) { // 스크롤 바닥 감지
                 const bottom = document.body.offsetHeight === window.innerHeight + window.scrollY;
-                if(bottom) this.loadMore();
+                if(bottom) {this.loadMore();}
             },
             loadMore() { // 우리 동네 경매 불러오기
             	axios.get("http://localhost:8080/auctionara/list", {
@@ -158,10 +158,10 @@
             	})
             },
             updateList() { // 필터 or 정렬 변경 시 리스트 갱신
+            	window.addEventListener("scroll", this.listScroll);
             	this.list = [];
             	this.page = 1;
-            	window.addEventListener("scroll", this.listScroll);
-            	this.loadMore();
+             	this.loadMore();
             },
             categoryNext() {
             	this.category = [14, 15, 16, 17, 18];
@@ -176,6 +176,9 @@
         	this.loadMore(); // 우리 동네 경매 1페이지
         	this.comma2();
         	window.addEventListener("scroll", this.listScroll);
+        	if(!${addressCount}) {
+        		this.filter = 1;
+        	}
         	
             const mapContainer = document.getElementById("map"); // 지도를 표시할 div
             const mapOption = {
@@ -217,6 +220,10 @@
 	
 	select:focus {
 		outline: none;
+	}
+	
+	#list-wrap {
+		min-height: 800px;
 	}
 </style>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

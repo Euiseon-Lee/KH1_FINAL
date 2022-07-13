@@ -39,7 +39,13 @@ CREATE TABLE auction (
 	auction_opening_bid	number		NOT NULL,
 	auction_closing_bid	number		NULL,
 	auction_bid_unit	number		NOT NULL,
-	auction_status	number		NOT NULL
+	auction_status	number		NOT NULL,
+    auction_latitude1 number(9,7),
+    auction_longitude1 number(10,7),
+    auction_circle1 number(2,0),
+    auction_latitude2 number(9,7),
+    auction_longitude2 number(10,7),
+    auction_circle2 number(2,0)
 );
 
 COMMENT ON COLUMN auction.auction_status IS '1~5
@@ -133,7 +139,8 @@ CREATE TABLE gps_address (
 	gps_latitude	number(9,7)		NOT NULL,
 	gps_longitude	number(10,7)		NOT NULL,
 	gps_regist_time	Date	DEFAULT sysdate	NOT NULL,
-    gps_circle number(2) not nul
+    gps_circle number(2) not null,
+    gps_status number default 1 not null
 );
 
 CREATE TABLE chat_report (
