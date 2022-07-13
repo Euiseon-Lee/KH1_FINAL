@@ -33,7 +33,7 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String home(Model model, HttpSession session) {
-//		int memberNo = (int) session.getAttribute("login");
+		int memberNo = (int) session.getAttribute("whoLogin");
 		
 		// 카테고리
 		List<CategoryDto> categoryList = categoryDao.list();
