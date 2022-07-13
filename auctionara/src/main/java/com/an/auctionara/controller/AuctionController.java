@@ -119,21 +119,19 @@ public class AuctionController {
 	
 	// 경매 등록
 	@PostMapping("/write")
-	public void write2(@ModelAttribute WriteAuctionVO writeAuctionVO, HttpSession session) throws IllegalStateException, IOException {	
+	@ResponseBody
+	public int write2(@ModelAttribute WriteAuctionVO writeAuctionVO, HttpSession session) throws IllegalStateException, IOException {	
 		int memberNo = (int) session.getAttribute("whoLogin");
 		auctionService.write(memberNo, writeAuctionVO);
-	}
-	
-	@PostMapping("/submit")
-	public String submit(HttpSession session) {
-		int memberNo = (int) session.getAttribute("whoLogin");
-		return "redirect:/auction/detail/" + auctionDao.recent(memberNo);
+		
+		return auctionDao.recent(memberNo);
 	}
 	
 	// 경매 물품 상세
 	@GetMapping("/detail/{auctionNo}")
 	public String detail(@PathVariable int auctionNo, HttpSession session, Model model) {
 		int memberNo = (int) session.getAttribute("whoLogin");
+		session.setAttribute("auctionNo", auctionNo);
 		
 		// 경매 상세 정보 조회
 		AuctionDetailVO auctionDetail = auctionService.detail(memberNo, auctionNo);

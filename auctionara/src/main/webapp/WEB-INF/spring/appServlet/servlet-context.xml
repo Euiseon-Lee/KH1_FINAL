@@ -114,6 +114,28 @@
 			<bean class="com.an.auctionara.interceptor.AddressInterceptor"></bean>
 		</mvc:interceptor>
 		
+		<mvc:interceptor>
+			<mvc:mapping path="/auction/detail/**"/>
+			
+ 			<mvc:exclude-mapping path="/auction/detail/refresh*"/>
+			<mvc:exclude-mapping path="/auction/detail/bidding*"/>
+			<mvc:exclude-mapping path="/auction/detail/bidding/close*"/>
+			<mvc:exclude-mapping path="/auction/detail/cancle/**"/>
+			<mvc:exclude-mapping path="/auction/detail/stop/**"/>
+
+			<bean class="com.an.auctionara.interceptor.AuctionPrivateInterceptor"></bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+ 			<mvc:mapping path="/auction/detail/refresh*"/>
+			<mvc:mapping path="/auction/detail/bidding*"/>
+			<mvc:mapping path="/auction/detail/bidding/close*"/>
+			<mvc:mapping path="/auction/detail/cancle/**"/>
+			<mvc:mapping path="/auction/detail/stop/**"/>
+
+			<bean class="com.an.auctionara.interceptor.AuctionPrivate2Interceptor"></bean>
+		</mvc:interceptor>
+		
 	</mvc:interceptors>
 	
 	

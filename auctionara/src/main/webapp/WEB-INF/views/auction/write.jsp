@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <div class="container-fluid" id="app" v-cloak>
-    <form action="${root}/auction/submit" method="post" class="needs-validation" enctype="multipart/form-data" @submit="beforeSubmit" id="form">
+    <form class="needs-validation" enctype="multipart/form-data" @submit="beforeSubmit" id="form">
         <div class="row pt-5 pb-3 border-bottom border-dark">
             <div class="col-sm">
                 <h2 class="fw-bold">경매 등록</h2>
@@ -225,9 +225,11 @@ pageEncoding="UTF-8"%>
                 return this.closingBidValid;
             },
             beforeSubmit(e) {
+            	e.preventDefault();
                 const form = document.getElementById("form");
                 const formData = new FormData(form);
                 var request = new XMLHttpRequest();
+
                 for (var i = 0; i < this.attachmentCount; i++) {
                     formData.append("attachment", this.attachment[i]);
                 };
@@ -241,7 +243,12 @@ pageEncoding="UTF-8"%>
                 }
                 request.open("POST", "http://localhost:8080/auctionara/auction/write");
                 request.send(formData);
-                console.log("완료");
+                
+                request.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    	location.href = "http://localhost:8080/auctionara/auction/detail/" + this.responseText;
+                    }
+                };
             }
         },
         mounted() {

@@ -434,7 +434,12 @@ ${auctionDetail.auctionContent}
                 		this.comma();
                 		this.closeBidModal();
             		};
-	            });
+	            }).catch(err=>{
+	            	if(err.response.status == 403) {
+		            	alert("비공개 처리 된 경매입니다");
+		            	location.href = "${root}/";	            		
+	            	}
+            	});
             },
             throttleRefresh: _.throttle((app) => { // 0.5초에 한 번씩 새로고침 가능
             	app.refresh();
@@ -486,7 +491,12 @@ ${auctionDetail.auctionContent}
                         	}
                         }
             		}
-            	})
+            	}).catch(err=>{
+	            	if(err.response.status == 403) {
+		            	alert("비공개 처리 된 경매입니다");
+		            	location.href = "${root}/";	            		
+	            	}
+            	});
             },
             blindBidding() {
             	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
@@ -523,7 +533,12 @@ ${auctionDetail.auctionContent}
                             })
                     	}       	
             		}
-            	})
+            	}).catch(err=>{
+	            	if(err.response.status == 403) {
+		            	alert("비공개 처리 된 경매입니다");
+		            	location.href = "${root}/";	            		
+	            	}
+            	});
             },
             closeBidding() {
             	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
@@ -549,7 +564,12 @@ ${auctionDetail.auctionContent}
                         	this.myBidding = true;
                     	})  
             		}
-            	})
+            	}).catch(err=>{
+	            	if(err.response.status == 403) {
+		            	alert("비공개 처리 된 경매입니다");
+		            	location.href = "${root}/";	            		
+	            	}
+            	});
             },
             closeAuction() {
             	if(this.auctionClose == false) {
@@ -596,7 +616,12 @@ ${auctionDetail.auctionContent}
             		} else {
             			location.href = "${root}/auction/detail/cancle/${auctionDetail.auctionNo}";
             		}
-            	})            	
+            	}).catch(err=>{
+	            	if(err.response.status == 403) {
+		            	alert("비공개 처리 된 경매입니다");
+		            	location.href = "${root}/";      		
+	            	}
+            	});           	
             },
             checkAuction2() {
             	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
@@ -613,7 +638,12 @@ ${auctionDetail.auctionContent}
             		} else {
             			location.href = "${root}/auction/detail/stop/${auctionDetail.auctionNo}"
             		}
-            	})            	
+            	}).catch(err=>{
+	            	if(err.response.status == 403) {
+		            	alert("비공개 처리 된 경매입니다");
+		            	location.href = "${root}/";	            		
+	            	}
+            	});
             },
         },
         mounted() {
