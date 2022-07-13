@@ -29,8 +29,8 @@ public class GpsAddressController {
 	// 주소 설정 페이지
 	@GetMapping
 	public String gps(HttpSession session, Model model) {
-//		int memberNo = (int) session.getAttribute("whoLogin");
-		List<GpsAddressDto> gpsAddressList =  gpsAddressDao.list(6); // 임시
+		int memberNo = (int) session.getAttribute("whoLogin");
+		List<GpsAddressDto> gpsAddressList =  gpsAddressDao.list(memberNo);
 		model.addAttribute("gpsAddressList", gpsAddressList);
 		return "/address/gps";
 	}

@@ -33,7 +33,7 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String home(Model model, HttpSession session) {
-//		int memberNo = (int) session.getAttribute("login");
+		int memberNo = (int) session.getAttribute("whoLogin");
 		
 		// 카테고리
 		List<CategoryDto> categoryList = categoryDao.list();
@@ -44,7 +44,7 @@ public class HomeController {
 		model.addAttribute("myBiddingAuctionList", myBiddingAuctionList);
 		
 		// 주소 필터 표시 여부
-		List<GpsAddressDto> address = gpsAddressDao.list(13); // 임시
+		List<GpsAddressDto> address = gpsAddressDao.list(memberNo);
 		if(address.size() == 2) {
 			model.addAttribute("addressCount", true);
 		} else {
@@ -66,10 +66,10 @@ public class HomeController {
 											@RequestParam(required = false) String keyword,
 											@RequestParam(required = false) Integer search,
 											HttpSession session) {
-//		int memberNo = (int) session.getAttribute("login");
+		int memberNo = (int) session.getAttribute("whoLogin");
 		
 		// 우리 동네 경매
-		List<AuctionListVO> auctionList = auctionService.list(6, page, filter, sort, categoryNo, keyword, search); // 임시
+		List<AuctionListVO> auctionList = auctionService.list(memberNo, page, filter, sort, categoryNo, keyword, search);
 		return auctionList;
 	}
 }

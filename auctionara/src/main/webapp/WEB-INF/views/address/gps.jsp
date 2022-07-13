@@ -181,7 +181,7 @@ pageEncoding="UTF-8"%>
             url: "http://localhost:8080/auctionara/address",
             type: "post",
             data: JSON.stringify({
-                memberNo: 6, // 임시
+                memberNo: ${whoLogin},
                 gpsLatitude: lat,
                 gpsLongitude: lon,
                 gpsCircle: $("#circle").val(),
@@ -407,7 +407,7 @@ pageEncoding="UTF-8"%>
             url: "http://localhost:8080/auctionara/address/change1",
             type: "put",
             data: JSON.stringify({
-                memberNo: 6, // 임시
+                memberNo: ${whoLogin},
                 gpsLatitude: lat,
                 gpsLongitude: lon,
                 gpsCircle: $("#circle").val(),
@@ -423,7 +423,7 @@ pageEncoding="UTF-8"%>
             url: "http://localhost:8080/auctionara/address/change2",
             type: "put",
             data: JSON.stringify({
-                memberNo: 6, // 임시
+                memberNo: ${whoLogin},
                 gpsLatitude: lat,
                 gpsLongitude: lon,
                 gpsCircle: $("#circle").val(),
@@ -439,7 +439,7 @@ pageEncoding="UTF-8"%>
             url: "http://localhost:8080/auctionara/address/delete2",
             type: "delete",
             data: JSON.stringify({
-                memberNo: 6, // 임시
+                memberNo: ${whoLogin},
             }),
             contentType: 'application/json',
             success: function(resp) {}
