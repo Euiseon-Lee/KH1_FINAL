@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +19,9 @@ import com.an.auctionara.service.CertService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
-public class CertController {
+@RequestMapping("/async")
+public class CertRestController {
 
 	@Autowired
 	private CertService certService;	
@@ -31,16 +32,10 @@ public class CertController {
 	@Autowired
 	private MemberDao memberDao;
 			
-	@GetMapping("/emailExists")
-	public boolean emailExists(@RequestParam String certTarget) {
-		boolean memberNo = memberDao.checkMemberNo(certTarget);
+	@PostMapping("/emailExists")
+	public int emailExists(@RequestParam String certTarget) {
+		return memberDao.checkEmail(certTarget);
 		
-		if (memberNo) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 	
 	@PostMapping("/asyncSend")
@@ -51,6 +46,16 @@ public class CertController {
 	@PostMapping("/asyncCheck")
 	public boolean vertifyCert(@ModelAttribute CertDto certDto) {
 		return certDao.certifyCert(certDto);
+	}
+	
+	@PostMapping("/nickExists")
+	public boolean nickExists(@RequestParam String memberNick) {
+		int result = memberDao.checkNick(memberNick);
+		
+		if(result==1) {
+			return true;
+		}
+		else return false;
 	}
 	
 	

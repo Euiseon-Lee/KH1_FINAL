@@ -6,14 +6,6 @@
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
 <div id="app" class="mt-4">
-
-	<div>
-		세션 확인용
-		memberNo = ${whoLogin}
-		memberGrade = ${auth}
-	</div>
-
-
     <div class="container-fluid bg-info gps mb-5">
         <div class="row position-relative">
             <div class="col-8 py-4 px-5">

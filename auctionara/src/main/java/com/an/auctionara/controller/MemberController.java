@@ -1,5 +1,6 @@
 package com.an.auctionara.controller;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.Random;
@@ -11,16 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.AutologinDto;
 import com.an.auctionara.entity.CertDto;
@@ -30,6 +29,7 @@ import com.an.auctionara.repository.CertDao;
 import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.service.AutologinService;
 import com.an.auctionara.service.CertService;
+import com.an.auctionara.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +48,9 @@ public class MemberController {
 	private AutologinDao autologinDao;
 	
 	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
 	private CertService certService;
 	
 	@Autowired
@@ -64,8 +67,9 @@ public class MemberController {
 	@PostMapping("/join")
 	public String join(
 			@ModelAttribute MemberDto memberDto,
+			MultipartFile attachment,
 			HttpServletRequest request
-			) {
+			) throws IllegalStateException, IOException {
 		String year = request.getParameter("yy");
 		String month = request.getParameter("mm");
 		String day = request.getParameter("dd");
@@ -73,7 +77,7 @@ public class MemberController {
 		
 		memberDto.setMemberBirth(birth);
 		
-		memberDao.join(memberDto);
+		memberService.join(memberDto, attachment);
 		
 		return "redirect:/member/join_success";
 	}
@@ -274,7 +278,7 @@ public class MemberController {
 		session.removeAttribute("whoLogin");
 		session.removeAttribute("auth");
 		
-		return "redirect:/";
+		return "redirect:/member/login";
 	}
 	
 	
@@ -315,9 +319,9 @@ public class MemberController {
 	public String changePw(
 			@ModelAttribute MemberDto targetDto
 			) throws MessagingException {
-		boolean isMember = memberDao.checkMemberNo(targetDto.getMemberEmail());	
+		int isMember = memberDao.checkEmail(targetDto.getMemberEmail());	
 		
-		if(!isMember) {
+		if(isMember == 0) {
 			return "redirect:change_pw?fail";
 		}
 		

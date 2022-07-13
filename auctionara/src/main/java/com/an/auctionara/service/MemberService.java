@@ -9,6 +9,6 @@ import com.an.auctionara.entity.MemberDto;
 public interface MemberService {
 	
 	//첨부파일(프로필) 없이 구현 후 사용할 것
-	void join(MemberDto memberDto, MultipartFile attachmentNo) throws IllegalStateException, IOException;
+	void join(MemberDto memberDto, MultipartFile memberProfile) throws IllegalStateException, IOException;
 	void changeGpsStaus();
 }

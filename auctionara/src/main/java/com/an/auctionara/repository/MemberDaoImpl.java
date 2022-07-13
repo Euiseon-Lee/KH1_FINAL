@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.an.auctionara.entity.MemberDto;
 
+import lombok.extern.slf4j.Slf4j;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -73,11 +74,8 @@ public class MemberDaoImpl implements MemberDao {
 
 
 	@Override
-	public boolean checkMemberNo(String memberEmail) {
-		Integer memberNo = sqlSession.selectOne("member.checkMemberNo", memberEmail);
-		
-		if(memberNo==null) return false;
-		else return true;
+	public int checkEmail(String certTarget) {
+		return sqlSession.selectOne("member.checkEmail", certTarget);
 		
 	}
 	
@@ -145,5 +143,11 @@ public class MemberDaoImpl implements MemberDao {
 //							.build());
 		
 		return count > 0;
+	}
+
+
+	@Override
+	public int checkNick(String memberNick) {
+		return sqlSession.selectOne("member.nickExists", memberNick);
 	}
 }

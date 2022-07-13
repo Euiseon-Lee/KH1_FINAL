@@ -7,9 +7,9 @@
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
-<div class="container-fluid">
-	<div class="row">
-		<h1>점보트론:<br>
+<div class="container-fluid col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-10 offset-sm-1">
+	<div class="row jumbotron jumbotron-fluid">
+		<h1>경매나라:<br>
 			우리 동네에서<br>
 			간편한 중고 경매
 		</h1>
@@ -19,21 +19,23 @@
 		<input type="hidden" name="referer" value="${referer}">
 	
 		<div class="row">
-			<input type="email" name="memberEmail" autocomplete="off" placeholder="email as id" id="memberEmail" value="${cookie.saveId.value}">
+			<input type="email" name="memberEmail" id="memberEmail" value="${cookie.saveId.value}"
+			class="form-control m-2" autocomplete="off" placeholder="name@example.com" >
 		</div>
 		
 		<div class="row">
-			<input type="password" name="memberPw" autocomplete="off" placeholder="password">
+			<input type="password" name="memberPw" 
+			class="form-control m-2" autocomplete="off" placeholder="password">
 		</div>
 
 	
 		<c:if test="${param.fail != null}">
-			<div class="row">
+			<div class="row m-2">
 					<h4 style="color:red;">로그인 정보가 일치하지 않습니다</h4>
 			</div>
 		</c:if>		
 
-		<div class="row">
+		<div class="row m-2">
 			<label>
 				<c:choose>
 					<c:when test="${saveIdExists}">
@@ -46,7 +48,7 @@
 			</label> 아이디 저장하기		
 		</div>
 
-		<div class="row">
+		<div class="row m-2">
 			<label>
 				<c:choose>
 					<c:when test="${autologinExists}">
@@ -59,7 +61,7 @@
 			</label> 자동 로그인 설정
 		</div>
 
-		<div class="row">
+		<div class="row m-2">
 			<button type="submit" onkeydown="hitEnterkey(event);" id="submit">로그인</button>
 		</div>	
 

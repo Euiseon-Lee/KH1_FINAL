@@ -14,7 +14,7 @@ public interface MemberDao {
 
 	int checkEmailNum(String memberEmail);
 	
-	boolean checkMemberNo(String memberEmail);
+	int checkEmail(String memberEmail);
 
 	void plusRedCount(int memberNo);
 
@@ -31,5 +31,7 @@ public interface MemberDao {
 	MemberDto setBlock(int memberNo);
 
 	boolean resetPw(MemberDto memberDto);
+
+	int checkNick(String memberNick);
 	
 }
