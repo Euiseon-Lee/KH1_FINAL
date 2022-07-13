@@ -16,13 +16,25 @@
 			auction_no, auctioneer_no, category_no, 
 			auction_title, auction_content,
 			auction_closed_time, auction_opening_bid, auction_closing_bid,
-			auction_bid_unit, auction_status
+			auction_bid_unit, auction_status,
+			auction_latitude1, auction_longitude1, auction_circle1
+		<if test="auctionCircle2 != 0">
+			<![CDATA[
+			,auction_latitude2, auction_longitude2, auction_circle2
+			]]>
+		</if>			
 		)
 		values(
 			#{auctionNo}, #{auctioneerNo}, #{categoryNo},
 			#{auctionTitle}, #{auctionContent},
 			to_date(#{auctionClosedTime}, 'YYYY-MM-DD HH24:MI'), #{auctionOpeningBid}, #{auctionClosingBid},
-			#{auctionBidUnit}, #{auctionStatus}
+			#{auctionBidUnit}, #{auctionStatus},
+			#{auctionLatitude1}, #{auctionLongitude1}, #{auctionCircle1}
+		<if test="auctionCircle2 != 0">
+			<![CDATA[			
+			,#{auctionLatitude2}, #{auctionLongitude2}, #{auctionCircle2}
+			]]>
+		</if>			
 		)
 	</insert>
 	
@@ -53,13 +65,11 @@
 			    	gps_no = (select max(gps_no) from gps_address where member_no = #{memberNo})
 			    	]]>
 				</if>
-			    	) A, gps_address B
-			    join auction C on B.member_no = C.auctioneer_no
+			    	) A, auction C
 			    join photo D on C.auction_no = D.photo_auction_no
 			    left join bidding E on C.auction_no = E.auction_no
 			    left join successful_bid F on C.auction_no = F.auction_no
 			    where C.auction_private = 0 and F.auction_no is null and C.auction_closed_time > sysdate
-			    	and distance(A.gps_latitude, A.gps_longitude, B.gps_latitude, B.gps_longitude) <![CDATA[ <= ]]> (A.gps_circle + B.gps_circle)
 				<if test="keyword != null and search == 0">
 					<![CDATA[		    
 			    	and instr(C.auction_title, '${keyword}') > 0 or instr(C.auction_content, '${keyword}') > 0
@@ -79,7 +89,9 @@
 					<![CDATA[			    	
 			    	and C.category_no = ${categoryNo}
 			    	]]>
-				</if>										    	   
+				</if>
+			    	and (distance(A.gps_latitude, A.gps_longitude, C.auction_latitude1, C.auction_longitude1) <![CDATA[ <= ]]> (A.gps_circle + C.auction_circle1)	
+                    or distance(A.gps_latitude, A.gps_longitude, C.auction_latitude2, C.auction_longitude2) <![CDATA[ <= ]]> (A.gps_circle + C.auction_circle2))			    														    	   
 			    group by C.auction_no, C.auction_title, C.auction_opening_bid, C.auction_closed_time
 			    order by
 				<if test="sort == 1">

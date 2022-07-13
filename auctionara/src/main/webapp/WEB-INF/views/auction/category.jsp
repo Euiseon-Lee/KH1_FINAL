@@ -23,9 +23,9 @@
             </div>
             <div class="col-1 pr-0 ml-3">
                 <select class="form-select form-select-sm border-0 text-muted" v-model.number="filter" @change="updateList">
-                    <option value="0">전체</option>
+                    <option value="0" v-if="${addressCount}">전체</option>
                     <option value="1">주소1</option>
-                    <option value="2">주소2</option>
+                    <option value="2" v-if="${addressCount}">주소2</option>
                 </select>
             </div>
             <div class="col pl-0">
@@ -38,7 +38,7 @@
                 </select>
             </div>
         </div>
-        <div class="row row-cols-4">
+        <div id="list-wrap" class="row row-cols-4">
             <div class="col" v-for="(auction, index) in list" :key="auction.auctionNo">
             	<div class="card rounded border-0 mb-4 px-2">
                 	<img :src="'${root}/attachment/download?attachmentNo=' + auction.photoAttachmentNo" class="card-img-top card-img-custom">
@@ -59,7 +59,7 @@
 					<a :href="'${root}/auction/detail/' + auction.auctionNo" class="stretched-link"></a>
 					</div>
 				</div>
-        	</div>        
+        	</div>
         </div>
     </div>
 </div>
@@ -139,6 +139,9 @@
         mounted() {
         	this.getCategory();
         	this.loadMore(); // 카테고리별 1페이지
+        	if(!${addressCount}) {
+        		this.filter = 1;
+        	}
         	window.addEventListener("scroll", this.listScroll);
         },
         beforeDestroy() {
@@ -158,6 +161,10 @@
 	
 	.border-primary {
 		border-width: 2px !important;
+	}
+	
+	#list-wrap {
+		min-height: 300px;
 	}
 </style>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

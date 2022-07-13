@@ -43,9 +43,16 @@ public class HomeController {
 		List<MyBiddingAuctionListVO> myBiddingAuctionList = auctionService.myBiddingAuctionList(9);
 		model.addAttribute("myBiddingAuctionList", myBiddingAuctionList);
 		
+		// 주소 필터 표시 여부
+		List<GpsAddressDto> address = gpsAddressDao.list(13); // 임시
+		if(address.size() == 2) {
+			model.addAttribute("addressCount", true);
+		} else {
+			model.addAttribute("addressCount", false);
+		}
+		
 		// 내 대표 동네
-		GpsAddressDto address1 = gpsAddressDao.one1(13); // 임시
-		model.addAttribute("address1", address1);	
+		model.addAttribute("address1", address.get(0));	
 				
 		return "index";
 	}
