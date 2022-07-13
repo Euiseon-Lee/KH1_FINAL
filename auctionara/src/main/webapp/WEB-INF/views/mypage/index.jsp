@@ -6,11 +6,16 @@
 <div id="app">
 
 
-	<div class="container-fluid d-flex">
+	<div class="container d-flex">
 	<!-- 사이드바 -->
 
-		<div class="row col-3">
-			<ul class="nav flex-column">
+		<div class="row col-3 mt-4">
+			<ul class="nav flex-column text-center">
+			  <li class="nav-item border-bottom">
+			  	<h4>
+			  		<a href="${root}/mypage/" class="nav-link btn-outline-secondary">마이페이지</a>
+			  	</h4>
+			  </li>
 			  <li class="nav-item border-bottom">
 			  	<a href="${root}/mypage/info" class="nav-link btn-outline-info">정보수정</a>
 			  </li>
@@ -30,11 +35,47 @@
 		</div>
 		
 	<!-- 본문 -->
-	<div class="row flex-fill justify-content-center">
-		<div class="row center m30">
+	<div class="row flex-fill">
+		<div class="row col-4 m-3 d-inline">
 			<img src="${pageContext.request.contextPath}${profileUrl}"
-					width="150" class="img img-circle img-shadow">
+					class="img-thumbnail center-block">
 		</div>
+		
+		<div class="row col-4 m-5 d-inline">
+			<div>${memberDto.memberNick}</div>
+			<div>${memberDto.memberEmail}</div>
+			
+			<table class="table-borderless table-responsive table-sm mt-3">
+				<tr>
+					<th class="text-left">보유 포인트</th>
+					<td class="text-right">
+						<a href="${root}/mypage/cash_log">${memberDto.memberHoldingPoints}p ></a>
+					</td>
+				</tr>
+				<tr>
+					<th class="text-left">경매/낙찰 횟수</th>
+					<td class="text-right">
+						<a href="${root}/mypage/auction_history"></a>
+					
+					</td>
+				</tr>
+				<tr>
+					<th class="text-left">경고횟수</th>
+					<td class="text-right">
+						${memberDto.memberRedCount}회 >
+					</td>
+				</tr>
+
+				
+	
+	
+			</table>			
+			
+		</div>
+		
+		
+
+		
 	
 	</div>
 

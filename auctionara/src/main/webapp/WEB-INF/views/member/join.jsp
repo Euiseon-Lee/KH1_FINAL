@@ -6,12 +6,12 @@
 
 
 
-<form action="join" method="post">
+<form action="join" method="post" enctype="multipart/form-data">
 	
-	<div class="container-fluid">
+	<div class="container-fluid col-lg-6 offset-lg-3 col-md-8 offset-md-2">
 	
-		<div class="row">
-			<h1>점보트론: 회원 가입</h1>
+		<div class="row jumbotron jumbotron-fluid">
+			<h1>회원 가입</h1>
 		</div>
 		
 		<div class="row">
@@ -88,7 +88,7 @@
 		
 		<div class="row">
 	    	<label>프로필
-	    		<input type="file" name="attachmentNo">
+	    		<input type="file" name="attachment">
 	    	</label>
 	    </div>
 		
