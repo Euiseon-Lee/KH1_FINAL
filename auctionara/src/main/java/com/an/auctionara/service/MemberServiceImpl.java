@@ -36,14 +36,14 @@ public class MemberServiceImpl implements MemberService {
 		
 		//프로필 등록코드
 		if(!attachment.isEmpty())	{
-			
 			int attachmentNo = attachmentDao.save(attachment);
-			
 			memberDto.setAttachmentNo(attachmentNo);
-	
 			memberDao.join(memberDto);
-			
-			
+		}
+		else {
+			int attachmentNo = 153;
+			memberDto.setAttachmentNo(attachmentNo);
+			memberDao.join(memberDto);
 		}
 		
 		

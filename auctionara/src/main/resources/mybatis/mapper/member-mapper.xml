@@ -54,10 +54,10 @@
 
 	<insert id="join" parameterType="MemberDto">
 		insert into member(
-			member_no, member_email, member_pw, member_nick, member_name, member_sex, member_birth, attachment_no
+			member_no, member_email, member_pw, member_nick, attachment_no
 		)
 		values(
-			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}, #{memberName}, #{memberSex}, to_date(#{memberBirth},'YY/MM/DD'), #{attachmentNo}
+			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}, #{attachmentNo}
 		)
 	</insert>
 	
