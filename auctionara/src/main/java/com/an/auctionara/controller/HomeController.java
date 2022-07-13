@@ -40,7 +40,7 @@ public class HomeController {
 		model.addAttribute("categoryList", categoryList);
 		
 		// 내 최근 입찰 경매
-		List<MyBiddingAuctionListVO> myBiddingAuctionList = auctionService.myBiddingAuctionList(9);
+		List<MyBiddingAuctionListVO> myBiddingAuctionList = auctionService.myBiddingAuctionList(memberNo);
 		model.addAttribute("myBiddingAuctionList", myBiddingAuctionList);
 		
 		// 주소 필터 표시 여부

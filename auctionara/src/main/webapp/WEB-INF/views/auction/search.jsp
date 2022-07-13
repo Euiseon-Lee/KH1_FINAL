@@ -127,8 +127,13 @@
             	})
             	.then(resp => {
     				this.list = resp.data;
-    				this.auctionCount = resp.data[0].auctionCount;
-    				this.totalPage = parseInt(resp.data[0].auctionCount / 12) + 1;
+    				if(resp.data.length != 0) {
+        				this.auctionCount = resp.data[0].auctionCount;
+        				this.totalPage = parseInt(resp.data[0].auctionCount / 12) + 1;    					
+    				} else {
+        				this.auctionCount = 0;
+        				this.totalPage = 1;      					
+    				}
             	})
             },
             updateList() { // 필터 or 정렬 변경 시 리스트 갱신

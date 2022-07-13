@@ -193,6 +193,11 @@
 			on A.auction_no = B.auction_no
 		left join successful_bid C on A.auction_no = C.auction_no
 		where A.auction_no = ${auctionNo}
+	</select>
+	
+	<!-- 경매 공개/비공개 여부 확인 -->
+	<select id="checkPrivate" resultType="int" parameterType="int">
+		select auction_private from auction where auction_no = ${auctionNo}
 	</select>	
 
 	<!-- 관리자 페이지 - 경매 리스트 -->
