@@ -63,7 +63,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="${root}/">관리자 페이지</a></li>
+                        <li><a class="dropdown-item" href="${root}/admin/">관리자 페이지</a></li>
                     </ul>
                 </div>
             </div>
