@@ -403,7 +403,7 @@ ${auctionDetail.auctionContent}
             	this.alert = 0; // 입찰 경고창 닫기
             	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
             		params: {
-                		bidderNo : 9, // 임시
+                		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
             	      }
             	}).then(resp=>{
@@ -447,7 +447,7 @@ ${auctionDetail.auctionContent}
             bidding() {
             	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
             		params: {
-                		bidderNo : 9, // 임시
+                		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
             	      }
             	}).then(resp=>{	
@@ -467,7 +467,7 @@ ${auctionDetail.auctionContent}
                         } else { // 입찰 성공
                         	if(this.inputBid >= this.closingBid) { // 즉시 낙찰
                             	axios.post("http://localhost:8080/auctionara/auction/detail/bidding/close", {
-                                    bidderNo : 9, // 임시
+                                    bidderNo : ${whoLogin},
                                     auctionNo : this.auctionNo,
                                     biddingPrice : this.inputBid,
                                 }).then(resp=>{
@@ -476,7 +476,7 @@ ${auctionDetail.auctionContent}
                                 })
                         	} else { // 일반 입찰
                             	axios.post("http://localhost:8080/auctionara/auction/detail/bidding", {
-                                    bidderNo : 9, // 임시
+                                    bidderNo : ${whoLogin},
                                     auctionNo : this.auctionNo,
                                     biddingPrice : this.inputBid,
                                 }).then(resp=>{
@@ -491,7 +491,7 @@ ${auctionDetail.auctionContent}
             blindBidding() {
             	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
             		params: {
-                		bidderNo : 9, // 임시
+                		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
             	      }
             	}).then(resp=>{	
@@ -505,7 +505,7 @@ ${auctionDetail.auctionContent}
             		} else {
                     	if(this.inputBid >= this.closingBid) { // 즉시 낙찰
                         	axios.post("http://localhost:8080/auctionara/auction/detail/bidding/close", {
-                                bidderNo : 9, // 임시
+                                bidderNo : ${whoLogin},
                                 auctionNo : this.auctionNo,
                                 biddingPrice : this.inputBid,
                             }).then(resp=>{
@@ -514,7 +514,7 @@ ${auctionDetail.auctionContent}
                             })
                     	} else { // 일반 입찰
                         	axios.post("http://localhost:8080/auctionara/auction/detail/bidding", {
-                                bidderNo : 9, // 임시
+                                bidderNo : ${whoLogin},
                                 auctionNo : this.auctionNo,
                                 biddingPrice : this.inputBid,
                             }).then(resp=>{
@@ -528,7 +528,7 @@ ${auctionDetail.auctionContent}
             closeBidding() {
             	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
             		params: {
-                		bidderNo : 9, // 임시
+                		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
             	      }
             	}).then(resp=>{	
@@ -541,7 +541,7 @@ ${auctionDetail.auctionContent}
 	        			this.refresh();					
             		} else {  // 내가 즉시 낙찰
                     	axios.post("http://localhost:8080/auctionara/auction/detail/bidding/close", {
-                        	bidderNo : 9, // 임시
+                        	bidderNo : ${whoLogin},
                             auctionNo : this.auctionNo,
                             biddingPrice : this.closingBid,
                         }).then(resp=>{
@@ -580,7 +580,7 @@ ${auctionDetail.auctionContent}
             checkAuction1() {
             	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
             		params: {
-                		bidderNo : 9, // 임시
+                		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
             	      }
             	}).then(resp=>{
@@ -601,7 +601,7 @@ ${auctionDetail.auctionContent}
             checkAuction2() {
             	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
             		params: {
-                		bidderNo : 9, // 임시
+                		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
             	      }
             	}).then(resp=>{
