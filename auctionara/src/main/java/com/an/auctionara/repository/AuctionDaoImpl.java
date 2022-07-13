@@ -71,6 +71,16 @@ public class AuctionDaoImpl implements AuctionDao {
    } 
 	
 	@Override
+	public Boolean checkPrivate(int auctionNo) {
+		int checkNum = sqlSession.selectOne("auction.checkPrivate", auctionNo);
+		if(checkNum == 0) { // 공개
+			return true;
+		} else { // 비공개
+			return false;
+		}
+	}
+	
+	@Override
 	public List<AdminAuctionListVO> adminList(String type, String keyword, int p, int s) {
 		// 관리자 페이지 - 경매 list 메소드 
 		Map<String, Object> param = new HashMap<String, Object>();

@@ -131,6 +131,7 @@ public class AuctionController {
 	@GetMapping("/detail/{auctionNo}")
 	public String detail(@PathVariable int auctionNo, HttpSession session, Model model) {
 		int memberNo = (int) session.getAttribute("whoLogin");
+		session.setAttribute("auctionNo", auctionNo);
 		
 		// 경매 상세 정보 조회
 		AuctionDetailVO auctionDetail = auctionService.detail(memberNo, auctionNo);
