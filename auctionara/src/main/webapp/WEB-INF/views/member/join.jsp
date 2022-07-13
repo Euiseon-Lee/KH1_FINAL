@@ -17,7 +17,7 @@
 		<div class="row">
 			<div>
 				<label> 이메일
-					<input type="email" name="memberEmail" autocomplete="off" placeholder="email" class="email-input">
+					<input type="email" name="memberEmail" autocomplete="off" placeholder="email" class="email-input" required>
 				</label>
 				<div>
 					<span id="valid-email">인증 가능한 이메일입니다</span>
@@ -47,31 +47,6 @@
 					<input type="password" name="memberPw" autocomplete="off" placeholder="password" required>
 				</label>
 			</div>
-
-		</div>
-		
-		<div class="row">
-			<label> 이름
-				<input type="text" name="memberName" autocomplete="off" placeholder="name" required>
-			</label>
-		</div>		
-
-		<div class="row">
-			<label> 성별
-				<select name="memberSex" required>
-					<option selected>==선택==</option>
-					<option value="f">여자</option>
-					<option value="m">남자</option>
-				</select>
-			</label>
-		</div>	
-
-		<div class="row">
-			<label> 생년월일
-				<select name="yy" id="year" required></select>
-				<select name="mm" id="month" required></select>
-				<select name="dd" id="day" required></select>
-			</label>
 		</div>
 		
 		<div class="row">
