@@ -30,7 +30,7 @@
 				<c:forEach var="managerRestrictionListVO" items="${list}">
 					<tr>
 						<td>${managerRestrictionListVO.restrictionNo }</td>
-						<td>${managerRestrictionListVO.memberName }</td>
+						<td>${managerRestrictionListVO.memberNick }</td>
 						<td>${managerRestrictionListVO.restrictionType }</td>
 						<td>${managerRestrictionListVO.restrictionReason }</td>
 						<td>${managerRestrictionListVO.restrictionTime }</td>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 
 <%@include file="/WEB-INF/views/admin/template/header.jsp" %>
 
@@ -45,25 +46,6 @@
 		<div class="card-body">
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">
-					<h2 class="card-title">회원명</h2>
-					<p class="card-text">${memberDto.memberName}</p>
-				</li>
-				<li class="list-group-item">
-					<h2 class="card-title">성별</h2>
-					<c:choose>
-						<c:when test="${memberDto.memberSex == 'f'}">
-							<p class="card-text">여성</p>
-						</c:when>
-						<c:otherwise>
-							<p class="card-text">남성</p>
-						</c:otherwise>
-					</c:choose>
-				</li>
-				<li class="list-group-item">
-					<h2 class="card-title">생년월일</h2>
-					<p class="card-text">${memberDto.memberBirth}</p>
-				</li>
-				<li class="list-group-item">
 					<h2 class="card-title">닉네임</h2>
 					<p class="card-text">${memberDto.memberNick}</p>
 				</li>
@@ -73,7 +55,9 @@
 				</li>
 				<li class="list-group-item">
 					<h2 class="card-title">보유 포인트</h2>
-					<p class="card-text">${memberDto.memberHoldingPoints} Point</p>
+					<p class="card-text">
+						<fmt:formatNumber value="${memberDto.memberHoldingPoints}" pattern="#,###" /> Point
+					</p>
 				</li>
 				<li class="list-group-item">
 					<h2 class="card-title">거래 가능 시간</h2>
@@ -81,7 +65,7 @@
 				</li>
 				<li class="list-group-item">
 					<h2 class="card-title">누적 경고 횟수</h2>
-					<c:if test="">
+					<c:if test="${memberDto.memberRedCount >= 10}">
 						<p class="card-text" style="color:red;">${memberDto.memberRedCount}</p>
 					</c:if>
 				</li>

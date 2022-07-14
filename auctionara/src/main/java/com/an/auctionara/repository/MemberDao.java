@@ -31,5 +31,11 @@ public interface MemberDao {
 	MemberDto setBlock(int memberNo);
 
 	boolean resetPw(MemberDto memberDto);
+
+	// 관리자 - 회원 수 count 
+	int countMember();
+
+	// 관리자 - 현금화 승인 후 보유 포인트 차감 메소드 
+	MemberDto deductPoints(int memberNo, int cashingMoney);
 	
 }

@@ -33,13 +33,10 @@
 			<div class="card">
 				<div class="card-body">
 					<div class="row p-5">
-						<img src="${pageContext.request.contextPath}${profileUrl}" class="img-fluid" style="width:100%; height:250px; border-radius:15%;">
+						<img src="${pageContext.request.contextPath}${profileUrl}" class="img-fluid" style="width:100%; height:200px; border-radius:20%;">
 					</div>
 					<div class="row p-1">
 						<h2>${adminAuctionDetailVO.auctionTitle}</h2>
-					</div>
-					<div class="row p-1">
-						<p>${adminAuctionDetailVO.auctionContent}</p>
 					</div>
 				</div>
 			</div>
@@ -55,15 +52,19 @@
 							</c:forEach>
 						</li>
 						<li class="list-group-item">
+						  	<h2 class="card-title">게시글 내용</h2>
+						  	<p class="card-text">${adminAuctionDetailVO.auctionContent}</p>
+						</li>
+						<li class="list-group-item">
 						  	<h2 class="card-title">카테고리</h2>
 						  	<p class="card-text">${adminAuctionDetailVO.categoryName}</p>
 						</li>
 						<li class="list-group-item">
 						  	<h2 class="card-title">판매자</h2>
-						  	<p class="card-text">${adminAuctionDetailVO.memberName} (${adminAuctionDetailVO.memberNick})</p>
+						  	<p class="card-text">${adminAuctionDetailVO.memberNick}</p>
 						</li>
 						<li class="list-group-item">
-						  	<h2 class="card-title">게시글 등록 시간</h2>
+						  	<h2 class="card-title">게시글 등록일</h2>
 						  	<p class="card-text">${adminAuctionDetailVO.auctionUploadTime}</p>
 						</li>
 						<li class="list-group-item">

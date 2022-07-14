@@ -18,7 +18,6 @@ public class AdminAuctionDetailVO {
 	private int auctionBidUnit; 
 	private int auctionStatus;
 	private int auctionPrivate;
-	private String memberName;
 	private String memberNick;
 	private int maxBiddingPrice;
 	private int photoAttachmentNo; 

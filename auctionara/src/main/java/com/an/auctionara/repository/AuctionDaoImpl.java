@@ -113,4 +113,10 @@ public class AuctionDaoImpl implements AuctionDao {
 		
 		return sqlSession.selectOne("auction.one", auctionNo);
 	}
+	
+	@Override
+	public int countAuction() {
+		// 관리자 페이지 - 경매 게시글 수 
+		return sqlSession.selectOne("auction.countAuction");
+	}
 }

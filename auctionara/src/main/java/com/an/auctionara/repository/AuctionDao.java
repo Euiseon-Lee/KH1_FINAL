@@ -28,4 +28,6 @@ public interface AuctionDao {
 	AuctionDto setOpen(int auctionNo);
 	// 관리자 페이지 - 경매 게시글 비공개 처리 
 	AuctionDto setPrivate(int auctionNo);
+	// 관리자 페이지 - 경매 게시글 수 
+	int countAuction();
 }

@@ -44,7 +44,7 @@
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="${root}/admin/">
-		          <span class="align-middle">경매나라 Admin</span>
+		          <span class="align-middle">경매나라</span>
 		        </a>
 
 				<ul class="sidebar-nav">
@@ -53,7 +53,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="${root}/admin/sales/chart">
 			              <span class="align-middle">매출 현황</span>
 			            </a>
 					</li>

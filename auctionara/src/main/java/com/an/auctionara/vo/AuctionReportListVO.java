@@ -16,9 +16,9 @@ public class AuctionReportListVO {
 	private int auctionReporterNo;
 	private String auctionReportReason;
 	private Date auctionReportTime;
-	private String auctioneerName;
+	private String auctioneerNick;
 	private int auctioneerNo; 
-	private String reporterName;
+	private String reporterNick;
 	
 	// 컬럼 추가
 	private int auctionReportRestriction;
