@@ -149,4 +149,17 @@ public class MemberDaoImpl implements MemberDao {
 	public int checkNick(String memberNick) {
 		return sqlSession.selectOne("member.nickExists", memberNick);
 	}
+
+
+	@Override
+	public boolean exit(String memberEmail, String memberPw) {
+		MemberDto memberDto = this.login(memberEmail, memberPw);
+		if(memberDto == null) {
+			return false;
+		}
+		else {
+			int count = sqlSession.delete("member.exit", memberEmail);
+			return count > 0;
+		}
+	}
 }

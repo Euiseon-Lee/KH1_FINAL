@@ -33,38 +33,13 @@
 	
 	
 	<!-- 본문 -->
-	<div class="row flex-fill d-flex flex-column">
-		<div class="alert alert-info text-center" style="width:50%" role="alert">
-			<h1>경매나라:<br>
-				정말 저희와<br>
-				헤어지실 건가요?
+	<div class="row flex-fill justify-content-center">
+		<div class="alert alert-info text-center mt-5" role="alert">
+			<h1>저희 경매나라를<br>
+				이용해주셔서 감사합니다<br><br>
+				다시 또 만나요 :)
 			</h1>
 		</div>
-		
-		<div class="row text-center m-2">
-			<p>탈퇴를 원하신다면<br> 
-				현재 비밀번호를 입력해주세요</p>
-		</div>
-	
-		<div class="row col-5 mb-5">
-
-			<form action="exit" method="post">
-				<div class="row form-group">
-					<label for="email">이메일 계정</label>
-					<input type="email" name="memberEmail" value="${memberDto.memberEmail}" readonly id="email"
-						class="form-control-plaintext">
-				</div>
-				<div class="row mt-2">
-					<label for="pw">비밀번호</label>
-					<input type="password" name="memberPw" required placeholder="현재 비밀번호를 입력해주세요" id="pw"
-						class="form-control form-control-lg mb-4">
-				</div>
-				<div class="row mb-5">
-					<button type="submit" class="btn btn-secondary btn-block">탈퇴하겠습니다</button>
-				</div>
-			</form>
-		</div>
-	
 	
 	</div>
 	

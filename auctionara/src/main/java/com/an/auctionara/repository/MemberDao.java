@@ -33,5 +33,7 @@ public interface MemberDao {
 	boolean resetPw(MemberDto memberDto);
 
 	int checkNick(String memberNick);
+
+	boolean exit(String memberEmail, String memberPw);
 	
 }
