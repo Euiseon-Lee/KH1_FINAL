@@ -5,14 +5,14 @@
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
 
-<div class="container-fluid">
-	<div class="row">
-		<h1>회원가입 완료</h1>
+<div class="container col-6 offset-3 form-group center-block">
+	<div class="row jumbotron text-center">
+		<h1>회원가입이 완료되었습니다</h1>
 	</div>
 	
-	<div class="row">
+	<div class="alert alert-info" role="alert">
 		<h3>
-			<a href="${root}/member/login">로그인하러가기</a>
+			<a href="${root}/member/login" class="alert-link">☞ 바로 로그인하러가기</a>
 		</h3>
 	</div>
 </div>
