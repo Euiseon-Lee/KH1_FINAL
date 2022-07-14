@@ -16,7 +16,10 @@
 	
 	<div class="card">
 		<div class="card-body">
-			<div class="row p-2 mt-2">
+			<div class="mt-2">
+				<h2 class="text-secondary">순수익</h2>
+			</div>
+			<div class="mt-5">
 				<canvas id="netSalesChart"></canvas>
 			</div>
 		</div>
@@ -24,7 +27,10 @@
 		
 	<div class="card">
 		<div class="card-body">
-			<div class="row p-2 mt-2">
+			<div class="mt-2">
+				<h2 class="text-secondary">충전 포인트</h2>
+			</div>
+			<div class="mt-5">
 				<canvas id="pointsChart"></canvas>
 			</div>
 		</div>
@@ -32,7 +38,10 @@
 	
 	<div class="card">
 		<div class="card-body">
-			<div class="row p-2 mt-2">
+			<div class="mt-2">
+				<h2 class="text-secondary">낙찰액</h2>
+			</div>
+			<div class="mt-5">
 				<canvas id="bidChart"></canvas>
 			</div>
 		</div>
@@ -75,7 +84,6 @@
 	            const data = {
 	                labels: labels,
 	                datasets: [{
-	                    label: '순이익', // 범례 
 	                    backgroundColor: '#3B7CDD', 
 	                    borderColor: '#3B7CDD', 
 	                    data: cnt,
@@ -85,7 +93,13 @@
 	            var config = {
 	                type: 'line',
 	                data: data,
-	                options: {}
+	                options: {
+	                	plugins:{
+                    		legend: {
+        	                	display: false
+                        	}
+                    	}
+	                }
 	            };
 	
 	            var myChart = new Chart(
@@ -113,7 +127,6 @@
 	            const data = {
 	                labels: labels,
 	                datasets: [{
-	                    label: '충전 포인트', // 범례 
 	                    backgroundColor: '#3B7CDD', 
 	                    borderColor: '#3B7CDD', 
 	                    data: cnt,
@@ -123,7 +136,13 @@
 	            var config = {
 	                type: 'line',
 	                data: data,
-	                options: {}
+	                options: {
+	                	plugins:{
+                    		legend: {
+        	                	display: false
+                        	}
+                    	}
+	                }
 	            };
 	
 	            var myChart = new Chart(
@@ -151,7 +170,6 @@
 	            const data = {
 	                labels: labels,
 	                datasets: [{
-	                    label: '낙찰액', // 범례 
 	                    backgroundColor: '#3B7CDD', 
 	                    borderColor: '#3B7CDD', 
 	                    data: cnt,
@@ -161,7 +179,13 @@
 	            var config = {
 	                type: 'line',
 	                data: data,
-	                options: {}
+	                options: {
+	                	plugins:{
+                    		legend: {
+        	                	display: false
+                        	}
+                    	}
+	                }
 	            };
 	
 	            var myChart = new Chart(
