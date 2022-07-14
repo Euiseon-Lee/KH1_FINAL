@@ -27,21 +27,16 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatWebsocketServer extends BinaryWebSocketHandler {	
 	
 	private ChatRoomManager manager = new ChatRoomManager();
-
 	private ObjectMapper mapper = new ObjectMapper();
-
 	public static final int JOIN=1, CHAT=2;
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("afterConnectionEstablished");
-		System.out.println(session);
 		manager.login(session);
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		System.out.println("afterConnectionClosed");
 		manager.leave(session);
 	}
 
@@ -49,7 +44,6 @@ public class ChatWebsocketServer extends BinaryWebSocketHandler {
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
 
 		ByteBuffer buffer = message.getPayload();
-
 		File dir = new File("C:/test");
 		dir.mkdirs();
 
@@ -72,14 +66,11 @@ public class ChatWebsocketServer extends BinaryWebSocketHandler {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		TextMessage newMessage = new TextMessage(mapper.writeValueAsBytes(messageMap));
-		log.info("messageMap:{}", messageMap);
 		ReceiveFileVO receiveFileVO = mapper.readValue(newMessage.getPayload(), ReceiveFileVO.class);
 		
 		if(receiveFileVO.getType()==JOIN) {
-			System.out.println("JOIN");
 			manager.enterChat(session, receiveFileVO.getChatRoomNo());
 		}else if(receiveFileVO.getType()==CHAT) {
-			System.out.println("CHAT");
 			manager.fileBroadcastRoom(session, receiveFileVO.getChatRoomNo(), receiveFileVO.getMessage(), messageMap.get("type"));
 		}
 	}
@@ -93,9 +84,6 @@ public class ChatWebsocketServer extends BinaryWebSocketHandler {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			ReceiveChatVO receiveChatVO = mapper.readValue(message.getPayload(), ReceiveChatVO.class);
-			log.info("receiveChatVO:{}", receiveChatVO);
-			log.info("session:{}", session);
-//			TextMessage newMessage = new TextMessage(mapper.writeValueAsBytes(messageMap)); 
 			if(receiveChatVO.getType() == JOIN) {
 				manager.enterChat(session, receiveChatVO.getChatRoomNo());
 			}

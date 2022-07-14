@@ -95,6 +95,10 @@ footer li {
 	max-width: 6%;
 }
 
+pre {
+    white-space: pre-wrap;
+}
+
 /* 부트스트랩 스타일 변경 */
 
 .fw-bold {

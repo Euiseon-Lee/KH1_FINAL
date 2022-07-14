@@ -12,7 +12,7 @@
     <div class="row pt-5">
         <span class="text-muted mr-3">카테고리</span>
         <span class="text-muted mr-3">></span>
-        <a href="${root}/auction/category/${auctionDetail.categoryNo}"><span class="text-muted">${auctionDetail.categoryName}</span></a>
+        <a href="${root}/auction/category?categoryNo=${auctionDetail.categoryNo}"><span class="text-muted">${auctionDetail.categoryName}</span></a>
     </div>
     <div class="row mt-4 py-4 border-bottom border-top">
         <div class="col-5 p-0">
@@ -108,24 +108,24 @@
             <div class="col p-0">
                 <c:choose>
                     <c:when test="${whoLogin == auctionDetail.auctioneerNo}">
-		                <button type="button" class="btn btn-info btn-lg btn-block py-3" v-if="(auctionClose && biddingCount == 0) || !auctionClose">
+                    	<a class="btn btn-info btn-lg btn-block py-3" href="${root}/chat" role="button" v-if="(auctionClose && biddingCount == 0) || !auctionClose">
 		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 1:1 채팅 관리
-		                </button>
+		                </a>
 		                <button type="button" class="btn btn-info btn-lg btn-block py-3" v-if="auctionClose && biddingCount != 0">
 		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 구매자와 1:1 채팅
 		                </button>		                
                     </c:when>
                     <c:otherwise>
-		                <button type="button" class="btn btn-info btn-lg btn-block py-3">
-		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 판매자와 1:1 채팅
-		                </button>
+                    	<a class="btn btn-info btn-lg btn-block py-3" href="${root}/chat/${auctionDetail.auctionNo}" role="button">
+                    		<i class="fa-solid fa-comments-dollar pr-2"></i> 판매자와 1:1 채팅
+                    	</a>
                     </c:otherwise>
                 </c:choose>
             </div>
             <div class="col">
                 <c:choose>
                     <c:when test="${whoLogin == auctionDetail.auctioneerNo}">
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="biddingCount == 0 && !auctionClose" data-bs-toggle="modal" data-bs-target="#cancleAuctionModal">
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="biddingCount == 0 && !auctionClose" data-bs-toggle="modal" data-bs-target="#cancelAuctionModal">
 		                    <i class="fa-solid fa-ban pr-2"></i> 경매 취소
 		                </button>
 		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="biddingCount != 0 && !auctionClose" data-bs-toggle="modal" data-bs-target="#stopAuctionModal">
@@ -185,7 +185,7 @@
             </nav>
         </div>
         <div class="row">
-            <pre class="text-muted text-wrap pr-4">
+            <pre class="text-muted pr-4">
 ${auctionDetail.auctionContent}
 </pre>
         </div>
@@ -283,11 +283,11 @@ ${auctionDetail.auctionContent}
     	</div>
   	</div>
 </div>
-<div class="modal fade" id="cancleAuctionModal" aria-hidden="true" aria-labelledby="cancleAuctionModalLable" tabindex="-1" v-if="biddingCount == 0 && !auctionClose">
+<div class="modal fade" id="cancelAuctionModal" aria-hidden="true" aria-labelledby="cancelAuctionModalLable" tabindex="-1" v-if="biddingCount == 0 && !auctionClose">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="cancleAuctionModalLable"><i class="fa-solid fa-ban pr-2 text-primary"></i> 경매 취소</h5>
+				<h5 class="modal-title" id="cancelAuctionModalLable"><i class="fa-solid fa-ban pr-2 text-primary"></i> 경매 취소</h5>
 				<button type="button" class="btn-close close" data-bs-dismiss="modal">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -614,7 +614,7 @@ ${auctionDetail.auctionContent}
             			const modal = new bootstrap.Modal(document.getElementById("stopAuctionModal"));
                     	modal.show();
             		} else {
-            			location.href = "${root}/auction/detail/cancle/${auctionDetail.auctionNo}";
+            			location.href = "${root}/auction/detail/cancel/${auctionDetail.auctionNo}";
             		}
             	}).catch(err=>{
 	            	if(err.response.status == 403) {
@@ -770,7 +770,7 @@ ${auctionDetail.auctionContent}
 	.photo-modal {
  		width: 100%; 
  		max-width: 100%;
-	}	
+	} 
 </style>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
