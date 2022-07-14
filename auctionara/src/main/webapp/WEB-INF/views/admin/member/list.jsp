@@ -14,20 +14,20 @@
 		</div>
 	</div>
 	
-	<div class="row p-2 mt-2">
+	<%-- <div class="row p-2 mt-2">
 		<div class="col-10">
 			<span></span>
 		</div>
 		<div class="col-2" id="app">
-			<%-- <form action="list" method="get">
+			<form action="list" method="get">
 				<select class="form-select" name="type" onchange="this.form.submit()">
 					<option value="">회원등급</option>
 					<option value="member_grade" <c:if test="${member_grade == '일반회원'}">selected</c:if>>일반회원</option>
 					<option value="member_grade" <c:if test="${member_grade == '블랙회원'}">selected</c:if>>블랙회원</option>
 				</select>
-			</form> --%>
+			</form>
 		</div>
-	</div>
+	</div> --%>
 	
 	<div class="row p-2 mt-2">
 		<table class="table table-hover">
