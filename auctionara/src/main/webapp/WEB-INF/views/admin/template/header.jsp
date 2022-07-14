@@ -137,7 +137,7 @@
 				<div class="col-11"></div>
 				<div class="col-1">
 					<i class="fa-regular fa-user"></i>
-					<a href="" class="text-secondary">&nbsp log out</a>
+					<a href="${root }/member/logout" class="text-secondary">&nbsp log out</a>
 				</div>
 			</nav>
 
