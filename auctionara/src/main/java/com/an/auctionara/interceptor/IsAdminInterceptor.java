@@ -20,7 +20,7 @@ public class IsAdminInterceptor implements HandlerInterceptor{
 		
 		String auth = (String) session.getAttribute("auth");
 
-		if(auth.equals("관리자")) {
+		if(auth.equals("관리자") && session.getAttribute("whoLogin") != null) {
 			return true;
 		} else {
 			response.sendRedirect(request.getContextPath() + "/");
