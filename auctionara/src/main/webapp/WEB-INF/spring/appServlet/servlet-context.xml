@@ -136,6 +136,12 @@
 			<bean class="com.an.auctionara.interceptor.AuctionPrivate2Interceptor"></bean>
 		</mvc:interceptor>
 		
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+
+			<bean class="com.an.auctionara.interceptor.IsAdminInterceptor"></bean>
+		</mvc:interceptor>
+		
 	</mvc:interceptors>
 	
 	
