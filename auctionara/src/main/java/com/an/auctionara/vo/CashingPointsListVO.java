@@ -13,10 +13,10 @@ public class CashingPointsListVO {
 	private int memberNo;
 	private int cashingMoney;
 	private String cashingBank;
-	private int cashingAccount;
+	private long cashingAccount;
 	private String cashingType;
 	private String cashingStatus;
 	private Date cashingRequestTime;
 	private Date cashingSuccessTime; 
-	private String memberName; 
+	private String memberNick; 
 }

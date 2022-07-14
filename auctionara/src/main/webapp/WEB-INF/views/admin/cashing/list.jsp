@@ -19,7 +19,7 @@
 			<thead>
 				<tr>
 					<th>신청 번호</th>
-					<th>회원명</th>
+					<th>닉네임</th>
 					<th>신청 금액</th>
 					<th>신청 은행</th>
 					<th>신청 계좌번호</th>
@@ -33,7 +33,7 @@
 				<c:forEach var="cashingPointsListVO" items="${list}">
 					<tr>
 						<td>${cashingPointsListVO.cashingNo}</td>
-						<td>${cashingPointsListVO.memberName}</td>
+						<td>${cashingPointsListVO.memberNick}</td>
 						<td>${cashingPointsListVO.cashingMoney}</td>
 						<td>${cashingPointsListVO.cashingBank}</td>
 						<td>${cashingPointsListVO.cashingAccount}</td>
@@ -145,7 +145,7 @@
 			<div class="row justify-content-md-center">
 				<div class="col-2">
 					<select name="type" class="form-select">
-						<option value="member_name" <c:if test="${type == 'member_name'}">selected</c:if>>회원명</option>
+						<option value="member_nick" <c:if test="${type == 'member_nick'}">selected</c:if>>닉네임</option>
 						<option value="cashing_account" <c:if test="${type == 'cashing_account'}">selected</c:if>>계좌번호</option>
 					</select>
 				</div>
