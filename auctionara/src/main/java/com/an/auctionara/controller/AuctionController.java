@@ -177,8 +177,8 @@ public class AuctionController {
 	}
 	
 	// 경매 취소
-	@GetMapping("/detail/cancle/{auctionNo}")
-	public String cancle(@PathVariable int auctionNo)  {
+	@GetMapping("/detail/cancel/{auctionNo}")
+	public String cancel(@PathVariable int auctionNo)  {
 		auctionDao.setPrivate(auctionNo); // 경매 비공개
 		return "redirect:/"; // 임시 // 추후 마이페이로 이동
 	}

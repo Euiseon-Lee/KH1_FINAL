@@ -1,100 +1,88 @@
 package com.an.auctionara.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.an.auctionara.entity.ChatContentDto;
-import com.an.auctionara.repository.ChatDao;
+import com.an.auctionara.repository.ChatContentDao;
 import com.an.auctionara.repository.ChatRoomDao;
-import com.an.auctionara.vo.ChatRoomListVO;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.an.auctionara.repository.SuccessfulBidDao;
+import com.an.auctionara.vo.CheckRatingVO;
 
 @Controller
-@RequiredArgsConstructor
-@Slf4j
+@RequestMapping("/chat")
 public class ChatController {
-	private final String path = "C:/test";
-	private final ChatRoomDao chatRoomDao;
-	private final ChatDao chatDao;
-	//view 컨트롤러에도 뽑아갈 거 있다 잊지말자
 	
-	@GetMapping("/chat/download")
-	public ResponseEntity<ByteArrayResource> download(@RequestParam String fileName) throws IOException{
-		File target = new File(path, fileName);
-		byte[] data = FileUtils.readFileToByteArray(target);
-		ByteArrayResource  byteArrayResource = new ByteArrayResource(data);
-		return ResponseEntity.ok()
-				.contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.contentLength(target.length())
-				.header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
-				.header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
-						.filename(fileName, StandardCharsets.UTF_8)
-						.build().toString())
-				.body(byteArrayResource);
+	@Autowired
+	private ChatRoomDao chatRoomDao;
 	
-	}
+	@Autowired
+	private ChatContentDao chatContentDao;
 	
-	@GetMapping("/chat")
-	public String chatIndex(HttpSession httpSession, Model model) {
-		//int memberNo = (int)httpSession.getAttribute("whoLogin");
-//		model.addAttribute("chatRoomListVO", chatRoomDao.list(memberNo));
+	@Autowired
+	private SuccessfulBidDao successfulBidDao;
 
-		return "chat/chat";
-	}
-	//post로 바꾸기
-	@GetMapping("/chat/{auctionNo}/{auctioneerNo}")
-	public String chatTry(HttpSession httpSession, Model model, 
-			@PathVariable("auctionNo") int auctionNo, 
-			@PathVariable("auctioneerNo") int auctioneerNo) {
-		int memberNo = (int)httpSession.getAttribute("whoLogin");
-		
-		int chatRoomNo = chatRoomDao.isJoin(auctionNo, memberNo, auctioneerNo);
-		model.addAttribute("chatRoomNo", chatRoomNo);			
-		return "chat/chat";
+	// 채팅 메인
+	@GetMapping
+	public String chatIndex(Model model, HttpSession httpSession) {
+		int memberNo = (int) httpSession.getAttribute("whoLogin");
+		model.addAttribute("chatRoomList", chatRoomDao.list(memberNo)); // 채팅방 리스트 출력
+		return "/chat/chat";
 	}
 	
-	@ResponseBody
-	@GetMapping("/chat/list")
-	@CrossOrigin(origins = "*")
-	public List<ChatRoomListVO> list(HttpSession httpSession) {
-		return chatRoomDao.list((int) httpSession.getAttribute("whoLogin"));
+	// 판매자와 채팅 시작
+	@GetMapping("/{auctionNo}")
+	public String startChat(@PathVariable("auctionNo") int auctionNo, Model model, HttpSession httpSession) {
+		int memberNo = (int) httpSession.getAttribute("whoLogin");
+		model.addAttribute("chatRoomNo", chatRoomDao.join(auctionNo, memberNo));
+		model.addAttribute("chatRoomList", chatRoomDao.list(memberNo)); // 채팅방 리스트 출력
+		return "/chat/chat";
 	}
+	
+	// 채팅 이력 출력
+	@GetMapping("/talk/{chatRoomNo}")
 	@ResponseBody
-	@GetMapping("/chat/talk/{chatRoomNo}")
-	@CrossOrigin(origins = "*")
 	public List<ChatContentDto> talk(Model model, @PathVariable int chatRoomNo){
 		model.addAttribute("chatRoomNo", chatRoomNo);
-		return chatDao.list(chatRoomNo);
+		return chatContentDao.list(chatRoomNo);
 	}
 	
+	// 보낸 채팅 메세지 저장
+	@PostMapping("/save")
+	@ResponseBody
+	public void save(@RequestBody ChatContentDto chatContentDto) {
+		chatContentDao.save(chatContentDto);
+	}
 	
-//	@GetMapping("/chat/{auctionNo}")
-//	public String channel(Model model, HttpSession session, @PathVariable int auctionNo) {
-//		int memberNo = (int) session.getAttribute("whoLogin");
-//		
-//		List<>
-//		model.addAttribute(chatRoomDto);
-//		return "chat/chat";
-//	}
-			
+	// 거래완료 및 평가 여부 확인
+	@GetMapping("/check/{auctionNo}")
+	@ResponseBody
+	public CheckRatingVO checkRating(@PathVariable("auctionNo") int auctionNo) {
+		return successfulBidDao.checkRating(auctionNo);
+	}
+	
+	// 판매자 거래 완료
+	@GetMapping("/auctioneer/approve/{auctionNo}")
+	@ResponseBody
+	public void auctioneerApprove(@PathVariable("auctionNo") int auctionNo) {
+		successfulBidDao.auctioneerApprove(auctionNo);
+	}
+	
+	// 구매자 거래 완료
+	@GetMapping("/bidder/approve/{auctionNo}")
+	@ResponseBody
+	public void bidderApprove(@PathVariable("auctionNo") int auctionNo) {
+		successfulBidDao.bidderApprove(auctionNo);
+	}
 }
