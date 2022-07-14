@@ -205,9 +205,7 @@
 		select * from (
 	 		select rownum rn, TMP.* from (
 	 			select 
-				    A.auction_no, A.auction_title, A.auction_upload_time, A.auction_private,
-				    M.member_name, M.member_nick,
-				    C.category_name,
+				    A.auction_no, A.auction_title, A.auction_upload_time, A.auction_private, M.member_nick, C.category_name,
 				    (select count(*) from auction_report AR where AR.auction_no = A.auction_no) "report_count"
 				from auction A
 				    inner join member M on A.auctioneer_no = M.member_no
@@ -239,7 +237,7 @@
 	<select id="adminAuctionDetail" parameterType="int" resultType="AdminAuctionDetailVO">
 		select 
 		    A.*,
-		    M.member_name, M.member_nick,
+		    M.member_nick,
 		    C.category_name,
 		    (select min(photo_attachment_no) from photo P where A.auction_no = P.photo_auction_no) "photo_attachment_no",
 		    (select max(bidding_price) from bidding B where A.auction_no = B.auction_no) "max_bidding_price"
@@ -262,6 +260,11 @@
 	<!-- 관리자 페이지 - update 후 사용할 selectOne -->
 	<select id="one" parameterType="int" resultType="AuctionDto">
 		select * from auction where auction_no = #{auctionNo}
+	</select>
+	
+	<!-- 관리자 페이지 - 경매 게시글 count	 -->
+	<select id="countAuction" resultType="int">
+		select count(*) "auction_count" from auction where to_char(auction_upload_time, 'YYMM') = to_char(sysdate, 'YYMM')
 	</select>
 
 </mapper> 

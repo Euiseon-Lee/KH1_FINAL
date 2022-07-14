@@ -27,7 +27,8 @@
 <mapper namespace="chatbot">
 	
 	<select id="list" resultType="ChatbotDto">
-		select * from chatbot
+		select * from chatbot 
+		connect by prior chatbot_no = chatbot_super_no start with chatbot_super_no = 0
 	</select>
 	
 	<select id="sequence" resultType="int">

@@ -40,7 +40,7 @@
 	<select id="list" parameterType="Map" resultType="ManagerRestrictionListVO">
 		select * from (
 	 		select rownum rn, TMP.* from (
-	 			select MR.*, M.member_name from manager_restriction MR inner join member M on MR.member_no = M.member_no
+	 			select MR.*, M.member_nick from manager_restriction MR inner join member M on MR.member_no = M.member_no
 				 	<if test="type != null and keyword != null">
 					 	<![CDATA[
 					 		where instr(${type}, #{keyword}) > 0

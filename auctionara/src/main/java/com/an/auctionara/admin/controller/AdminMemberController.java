@@ -48,7 +48,7 @@ public class AdminMemberController {
 		model.addAttribute("p", p);
 		model.addAttribute("s", s);
 		model.addAttribute("type", type);
-		model.addAttribute("keyword",keyword);
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("lastPage", lastPage);
@@ -76,5 +76,11 @@ public class AdminMemberController {
 		MemberDto memberDto = memberDao.setBlock(memberNo);
 		
 		return "redirect: /auctionara/admin/member/detail/"+memberNo; 
+	}
+	
+	@GetMapping("/rating")
+	public String rating() {
+		
+		return "admin/member/rating";
 	}
 }

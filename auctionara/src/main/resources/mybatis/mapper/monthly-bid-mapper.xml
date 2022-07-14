@@ -31,4 +31,8 @@
 		values (to_date(add_months(sysdate,-1),'YYYY-MM-DD'), #{totalBid})
 	</insert>
 
+	<select id="monthlyList" resultType="monthlyBidVO">
+		select to_char(renewal_date, 'MM') "month", total_bid from monthly_bid order by renewal_date asc
+	</select>
+	
 </mapper> 
