@@ -44,7 +44,7 @@ public class CertRestController {
 	}
 	
 	@PostMapping("/asyncCheck")
-	public boolean vertifyCert(@ModelAttribute CertDto certDto) {
+	public boolean certifyCert(@ModelAttribute CertDto certDto) {
 		return certDao.certifyCert(certDto);
 	}
 	

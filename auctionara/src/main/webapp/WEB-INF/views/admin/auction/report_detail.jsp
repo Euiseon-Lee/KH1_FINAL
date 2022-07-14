@@ -66,7 +66,7 @@
 				<c:forEach var="detailReportList" items="${detailReportList}">
 					<tr>
 						<td>${detailReportList.auctionReportNo}</td>
-						<td>${detailReportList.memberName}</td>
+						<td>${detailReportList.memberNick}</td>
 						<td>${detailReportList.auctionReportReason}</td>
 						<td>${detailReportList.auctionReportTime}</td>
 						<td>

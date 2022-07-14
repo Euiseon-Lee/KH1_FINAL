@@ -31,4 +31,7 @@
 		values (to_date(add_months(sysdate,-1),'YYYY-MM-DD'), #{totalPoints})
 	</insert>
 	
+	<select id="monthlyList" resultType="monthlyChargedPointsVO">
+		select to_char(renewal_date, 'MM') "month", total_points from monthly_charged_points order by renewal_date asc
+	</select>
 </mapper> 

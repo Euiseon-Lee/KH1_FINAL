@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.an.auctionara.entity.MemberDto;
 
-import lombok.extern.slf4j.Slf4j;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -150,4 +149,40 @@ public class MemberDaoImpl implements MemberDao {
 	public int checkNick(String memberNick) {
 		return sqlSession.selectOne("member.nickExists", memberNick);
 	}
+
+
+	@Override
+	public boolean exit(String memberEmail, String memberPw) {
+		MemberDto memberDto = this.login(memberEmail, memberPw);
+		if(memberDto == null) {
+			return false;
+		}
+		else {
+			int count = sqlSession.delete("member.exit", memberEmail);
+			return count > 0;
+		}
+	}
+	
+	
+	// 관리자
+	@Override
+	public int countMember() {
+		// 회원 수 count 메소드 
+		return sqlSession.selectOne("member.countMember");
+	}
+	
+	
+	@Override
+	public MemberDto deductPoints(int memberNo, int cashingMoney) {
+		// 관리자 - 현금화 승인 후 보유 포인트 차감 메소드
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("memberNo", memberNo);
+		param.put("cashingMoney", cashingMoney);
+		
+		int count = sqlSession.update("member.deductPoint", param);
+//		if(count == 0) throw new CannotFindException();
+		
+		return sqlSession.selectOne("member.one", memberNo);
+	}
+	
 }

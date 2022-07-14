@@ -27,8 +27,15 @@
 <mapper namespace="monthlyNetSales">
 	
 	<insert id="insert" parameterType="int">
-		insert into monthly_netSales (renewal_date, total_net_sales) 
+		insert into monthly_net_sales (renewal_date, total_net_sales) 
 		values (to_date(add_months(sysdate,-1),'YYYY-MM-DD'), #{totalNetSales})
 	</insert>
 	
+	<select id="monthlyNetSales" resultType="int">
+		select sum(commission) "monthly_net_sales" from net_sales where to_char(net_sales_time, 'YYMM') = to_char(sysdate,'YYMM')
+	</select>
+	
+	<select id="monthlyList" resultType="MonthlyNetSalesVO">
+		select to_char(renewal_date, 'MM') "month", total_net_sales from monthly_net_sales order by renewal_date asc
+	</select>
 </mapper> 

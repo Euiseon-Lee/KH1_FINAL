@@ -18,10 +18,4 @@ public class MemberDto {
 	private int memberRedCount;
 	private String memberJoindate;
 	private String memberLogintime;
-	
-	
-	//아이디 조회용으로 쓸 개인정보 추가
-	private String memberName;
-	private String memberSex;
-	private String memberBirth;
 }

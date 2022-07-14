@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ManagerRestrictionListVO {
 	private int restrictionNo;
-	private String memberName;
+	private String memberNick;
 	private String restrictionReason;
 	private String restrictionType;
 	private Date restrictionTime;

@@ -7,8 +7,13 @@
 <div class="container-fluid d-flex">
 <!-- 사이드바 -->
 
-	<div class="row col-3">
+	<div class="row col-3 mt-4">
 		<ul class="nav flex-column">
+		  <li class="nav-item border-bottom">
+		  	<h4>
+		  		<a href="${root}/mypage/index" class="nav-link btn-outline-secondary">마이페이지</a>
+		  	</h4>
+		  </li>
 		  <li class="nav-item border-bottom">
 		  	<a href="${root}/mypage/info" class="nav-link btn-outline-info">정보수정</a>
 		  </li>

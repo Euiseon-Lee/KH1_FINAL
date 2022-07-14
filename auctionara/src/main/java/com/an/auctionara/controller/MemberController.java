@@ -70,12 +70,6 @@ public class MemberController {
 			MultipartFile attachment,
 			HttpServletRequest request
 			) throws IllegalStateException, IOException {
-		String year = request.getParameter("yy");
-		String month = request.getParameter("mm");
-		String day = request.getParameter("dd");
-		String birth = year+month+day;
-		
-		memberDto.setMemberBirth(birth);
 		
 		memberService.join(memberDto, attachment);
 		

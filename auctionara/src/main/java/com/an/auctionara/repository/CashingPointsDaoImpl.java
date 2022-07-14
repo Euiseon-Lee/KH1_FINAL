@@ -68,4 +68,5 @@ public class CashingPointsDaoImpl implements CashingPointsDao {
 		
 		return sqlSession.selectOne("cashingPoints.one", cashingNo);
 	}
+	
 }

@@ -5,107 +5,85 @@
 
 
 
-
-<form action="join" method="post" enctype="multipart/form-data">
+<div class="container col-6 offset-3 form-group center-block">
+	<form action="join" method="post" enctype="multipart/form-data">
 	
-	<div class="container-fluid col-lg-6 offset-lg-3 col-md-8 offset-md-2">
-	
-		<div class="row jumbotron jumbotron-fluid">
+		<div class="alert alert-info text-center" role="alert">
 			<h1>회원 가입</h1>
 		</div>
 		
 		<div class="row">
-			<div>
-				<label> 이메일
-					<input type="email" name="memberEmail" autocomplete="off" placeholder="email" class="email-input">
-				</label>
-				<div>
-					<span id="valid-email">인증 가능한 이메일입니다</span>
-					<span id="email-exists" style="color:blue;">이미 가입된 계정입니다</span>
-					<span id="invalid-email" style="color:red;">잘못된 이메일 양식입니다</span>
-				</div>
+			<label> 이메일</label>
+			<div class="input-group m-1">
+				<input type="email" name="memberEmail" autocomplete="off" placeholder="name@example.com" 
+					class="email-input form-control form-control-lg" aria-describedby="button-addon1" required>
+				<input type="button" value="인증 메일 발송" class="btn-send-email btn-outline-info "
+					id="button-addon1" disabled>
 			</div>
-			<div>
-				<input type="button" value="인증메일 발송"class="btn-send-email" disabled>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div>
-				<label> 인증번호
-					<input type="text" name="certNo" placeholder="certNumber" class="cert-no" required>
-				</label>
-			</div>
-			<div>
-				<input type="button" value="인증하기" class="btn-cert-check" disabled>
+			<div class="mb-3">
+				<span id="valid-email" style="color:blue;">인증 가능한 이메일입니다</span>
+				<span id="email-exists" style="color:#6F75F6">이미 가입된 계정입니다</span>
+				<span id="invalid-email" style="color:red;">잘못된 이메일 양식입니다</span>
 			</div>
 		</div>
 		
 		<div class="row">
-			<div>
-				<label> 비밀번호
-					<input type="password" name="memberPw" autocomplete="off" placeholder="password" required>
-				</label>
+			<label>인증번호</label>
+			<div class="input-group row center m-1 mb-3">
+				<input type="text" name="certNo" placeholder="인증번호를 입력해주세요" 
+					class="cert-no form-control form-control-lg" aria-describedby="button-addon2"  required>
+				<input type="button" value="메일 인증 완료" class="btn-cert-check btn-outline-info" 
+					id="button-addon2" disabled>
+			</div>
+		</div>
+		
+		<div class="row">
+			<label> 비밀번호</label>
+			<div class="input-group row center m-1">
+				<input type="password" name="memberPw" placeholder="알파벳 대소문자 및 숫자 8~16자" 
+					class="form-control form-control-lg" autocomplete="off" required>
+			</div>
+			<div class="mb-3">
+				<span id="valid-pw" style="color:blue;">사용 가능한 비밀번호입니다</span>
+				<span id="invalid-pw" style="color:red;">잘못된 비밀번호 양식입니다</span>
+			</div>
+		</div>
+		
+		<div class="row">
+			<label> 닉네임</label>
+			<div class="input-group row center m-1">		
+				<input type="text" name="memberNick" autocomplete="off" placeholder="한글 2~10자" 
+					class="form-control form-control-lg" aria-describedby="button-addon3"  required>
+				<input type="button" value="중복 검사하기" class="btn-send-nick btn-outline-info btn-small" 
+					id="button-addon3" disabled>	
 			</div>
 
+			<div class="mb-3">
+				<span id="valid-nick" style="color:blue;">사용 가능한 닉네임입니다</span>
+				<span id="nick-exists" style="color:#6F75F6">이미 존재하는 닉네임입니다</span>
+				<span id="invalid-nick" style="color:red;">잘못된 닉네임 양식입니다</span>
+			</div>		
 		</div>
 		
 		<div class="row">
-			<label> 이름
-				<input type="text" name="memberName" autocomplete="off" placeholder="name" required>
-			</label>
-		</div>		
-
-		<div class="row">
-			<label> 성별
-				<select name="memberSex" required>
-					<option selected>==선택==</option>
-					<option value="f">여자</option>
-					<option value="m">남자</option>
-				</select>
-			</label>
-		</div>	
-
-		<div class="row">
-			<label> 생년월일
-				<select name="yy" id="year" required></select>
-				<select name="mm" id="month" required></select>
-				<select name="dd" id="day" required></select>
-			</label>
+			<label>프로필</label>
+			<div class="input-group row center m-1 mb-3">
+	    		<input type="file" class="form-control form-control-lg" name="attachment">
+		    </div>
 		</div>
 		
-		<div class="row">
-			<label> 닉네임
-				<input type="text" name="memberNick" autocomplete="off" placeholder="nickname" required>
-			</label>
-			<span id="valid-nick">사용 가능한 닉네임입니다</span>
-			<span id="nick-exists" style="color:blue;">이미 존재하는 닉네임입니다</span>
-			<span id="invalid-nick" style="color:red;">잘못된 닉네임 양식입니다</span>
-			<div>
-				<input type="button" value="닉네임 중복 검사"class="btn-send-nick" disabled>
-			</div>			
-		</div>
-		
-		<div class="row">
-	    	<label>프로필
-	    		<input type="file" name="attachment">
-	    	</label>
-	    </div>
-		
-		<div class="row">
+		<div class="row center m-2">
 			<label>
 				<input type="checkbox">전체 동의		
 			</label>
 		</div>
 		
-		<div class="row">
-			<button type="submit" onkeydown="hitEnterkey(event);" class="btn-submit">회원가입</button>
+		<div class="row center m-2">
+			<button type="submit" onkeydown="hitEnterkey(event);" class="btn-submit btn-primary btn-block btn-lg">회원가입</button>
 		</div>
-	
-	</div>
 
-</form>
-
+	</form>
+</div>
 
 
 
@@ -120,48 +98,46 @@
 		$("#valid-nick").hide();
 		$("#invalid-nick").hide();
 		$("#nick-exists").hide();
+		$("#valid-pw").hide();
+		$("#invalid-pw").hide();
 		
 		
 		$(".email-input").on("blur", function(){
 			var regex = /^[\w\.]+@([\w]+\.)+[\w]{2,4}$/;
 			var certTarget = $(".email-input").val();
-				
-			var judge = regex.test(certTarget);
 			
-			
-			if(judge){
+			if(certTarget != ""){
+				var judge = regex.test(certTarget);
 				
-				$.ajax({
-					url: "${pageContext.request.contextPath}/async/emailExists",
-					type: "post",				
-					data:{
-						certTarget: certTarget
-					},
+				if(judge){
 					
-					success: function(resp){
-						if(resp == 0){
-							$(".btn-send-email").attr("disabled", false);
-							$("#valid-email").show();
-
-						}
+					$.ajax({
+						url: "${pageContext.request.contextPath}/async/emailExists",
+						type: "post",				
+						data:{
+							certTarget: certTarget
+						},
 						
-						else{
-							$("#email-exists").show();
-// 							window.alert("이미 있는 계정입니다");
-						}
-					},
+						success: function(resp){
+							if(resp == 0){
+								$(".btn-send-email").attr("disabled", false);
+								$("#valid-email").show();
+							}
+							
+							else{
+								$("#email-exists").show();
+							}
+						},
+						
+						
+					});
 					
-// 					error: function(){}
-					
-				});
+				}
 				
+				else{
+					$("#invalid-email").show();
+				}
 			}
-			
-			else{
-				$("#invalid-email").show();
-// 				window.alert("이메일 양식을 지켜서 입력해주세요");
-			}
-
 
 		});
 		
@@ -193,9 +169,10 @@
 					window.alert("인증 메일이 발송되었습니다. 메일함을 확인해주세요.");
 				},
 				
-				error:function(){
+				error: function(){
 					window.alert("인증 메일 전송에 실패하였습니다.");
-				},
+				}
+				
 				
 			});
 			
@@ -210,7 +187,7 @@
 			var certNo = $(".cert-no").val();
 			
 			$.ajax({
-				url:"${pageContext.request.contextPath}/async/emailExists",
+				url:"${pageContext.request.contextPath}/async/asyncCheck",
 				type: "post",
 				data:{
 					certTarget: certTarget,
@@ -218,13 +195,21 @@
 				},
 				
 				success: function(resp){
-					$(".btn-cert-check").attr("disabled", true);
-					$(".cert-no").prop('readonly', true);
-					window.alert("메일 인증이 정상적으로 완료되었습니다.");
+					
+					if(resp==true){
+						$(".btn-cert-check").attr("disabled", true);
+						$(".cert-no").prop('readonly', true);
+						window.alert("메일 인증이 정상적으로 완료되었습니다.");						
+					}
+					
+					else{
+						window.alert("인증 번호가 일치하지 않습니다.");
+					}
+
 				},
 				
 				error: function(){
-					window.alert("인증 번호가 일치하지 않습니다.");
+
 				}
 				
 			});
@@ -232,20 +217,49 @@
 		});
 		
 		
+		$("input[name=memberPw]").blur(function(){
+			var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+			var memberPw = $(this).val();
+				
+			if(memberPw != ""){
+				var judge = regex.test(memberPw);
+				
+				if(judge){
+					$("#valid-pw").show();
+				}
+				else{
+					$("#invalid-pw").show();
+				}
+					
+			}
+
+		});
+		
+		
+		$("input[name=memberPw]").click(function(){
+			$("#valid-pw").hide();
+			$("#invalid-pw").hide();
+			
+			$(this).val("");
+		});
+		
+		
+		
+		
 		
 		$("input[name=memberNick]").blur(function(){
 			var regex = /^[가-힣0-9]{2,10}$/;
 			var memberNick = $(this).val();
 			
-			var judge = regex.test(memberNick);
-			
-			if(judge){
+			if(memberNick != ""){
+				var judge = regex.test(memberNick);	
 				
-				$(".btn-send-nick").attr("disabled", false);
-				
-			}
-			else{
-				$("#invalid-nick").show();
+				if(judge){	
+					$(".btn-send-nick").attr("disabled", false);	
+				}
+				else{
+					$("#invalid-nick").show();
+				}
 			}
 			
 		});
@@ -260,10 +274,9 @@
 		});
 		
 		
-		$(".btn-send-nick").click(function(){
-			
+		$(".btn-send-nick").click(function(){	
 			var memberNick = $("input[name=memberNick]").val();
-			
+	
 			$.ajax({
 				url:"${pageContext.request.contextPath}/async/nickExists",
 				type: "post",
@@ -288,37 +301,9 @@
 		
 	});
 	
-
 </script>
 
 
-<script>
-	$(document).ready(function(){            
-	    var now = new Date();
-	    var year = now.getFullYear();
-	    var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
-	    var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate());           
-	    // 연도 selectbox             
-	    for(var i = 1900 ; i <= year ; i++) {
-	        $('#year').append('<option value="' + i + '">' + i + '년</option>');    
-	    }
-	
-	    // 월별 selectbox          
-	    for(var i=1; i <= 12; i++) {
-	        var mm = i > 9 ? i : "0"+i ;            
-	        $('#month').append('<option value="' + mm + '">' + mm + '월</option>');    
-	    }
-	    
-	    // 일별 selectbox
-	    for(var i=1; i <= 31; i++) {
-	        var dd = i > 9 ? i : "0"+i ;            
-	        $('#day').append('<option value="' + dd + '">' + dd+ '일</option>');    
-	    }
-	    $("#year > option[value="+year+"]").attr("selected", "true");        
-	    $("#month > option[value="+mon+"]").attr("selected", "true");    
-	    $("#day > option[value="+day+"]").attr("selected", "true");       
-	  
-	})
-</script>
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

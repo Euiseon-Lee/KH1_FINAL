@@ -3,9 +3,9 @@
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
-<div class="container-fluid d-flex">
-<!-- 사이드바 -->
 
+<div class="container-fluid d-flex">
+	<!-- 사이드바 -->
 	<div class="row col-3 mt-4">
 		<ul class="nav flex-column">
 		  <li class="nav-item border-bottom">
@@ -30,23 +30,19 @@
 		  </li>
 		</ul>
 	</div>
-
+	
+	
 	<!-- 본문 -->
 	<div class="row flex-fill justify-content-center">
-		<div class="row m-2 p-2">
-			<button type="button" class="btn btn-primary">포인트 충전</button>
-		</div>
-	
-		<div class="row m-2 p-2">
-			<button type="button" class="btn btn-info">현금화 신청</button>
-		</div>
-		
-		<div>
+		<div class="alert alert-info text-center mt-5" role="alert">
+			<h1>저희 경매나라를<br>
+				이용해주셔서 감사합니다<br><br>
+				다시 또 만나요 :)
+			</h1>
 		</div>
 	
 	</div>
 	
 </div>
-
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
