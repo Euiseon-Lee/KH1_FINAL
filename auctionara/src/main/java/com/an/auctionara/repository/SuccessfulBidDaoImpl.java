@@ -21,6 +21,6 @@ public class SuccessfulBidDaoImpl implements SuccessfulBidDao{
 	
 	@Override
 	public int getMonthlyTotalBid() {
-		return sqlSession.selectOne("successfulBid.monthlyTotalSuccBid");
+		return sqlSession.selectOne("successful_bid.monthlyTotalSuccBid");
 	}
 }

@@ -37,9 +37,9 @@
 	 		select rownum rn, TMP.* from (
 	 			select * from member 
 			 	<if test="type != null and keyword != null">
-				 	<![CDATA[
-				 		where instr(${type}, #{keyword}) > 0
-				 	]]>
+			 		<![CDATA[
+					 	where instr(${type}, #{keyword}) > 0
+			 		]]>
 			 	</if>
 			 	order by member_no desc
 	 		) TMP
@@ -89,11 +89,11 @@
 	<!-- 관리자 페이지 - 회원 목록 페이징을 위한 count -->
 	<select id="count" parameterType="Map" resultType="int">
 		select count(*) from member
-		 	<if test="type != null and keyword != null">
-		 		<![CDATA[
-				 	where instr(${type}, #{keyword}) > 0
-		 		]]>
-		 	</if>
+			 <if test="type != null and keyword != null">
+			 	<![CDATA[
+					 where instr(${type}, #{keyword}) > 0
+			 	]]>
+			 </if>
 	</select>
 	
 	<!-- 관리자 페이지 - 일반회원 / 블랙회원 update -->

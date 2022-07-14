@@ -23,7 +23,7 @@
 								<h6 class="text-secondary">월 수익</h6>
 							</div>
 							<div class="row" var="">
-								<h3>{{monthlyNetSales}}원</h3>
+								<h3>{{comma(monthlyNetSales)}}원</h3>
 							</div>
 						</div>
 					</div>
@@ -42,7 +42,7 @@
 								<h6 class="text-secondary">신규 회원</h6>
 							</div>
 							<div class="row">
-								<h3>{{memberCount}}명</h3>
+								<h3>{{comma(memberCount)}}명</h3>
 							</div>
 						</div>
 					</div>
@@ -61,7 +61,7 @@
 								<h6 class="text-secondary">경매 게시글</h6>
 							</div>
 							<div class="row">
-								<h3>{{auctionCount}}건</h3>
+								<h3>{{comma(auctionCount)}}건</h3>
 							</div>
 						</div>
 					</div>
@@ -72,7 +72,12 @@
 	
 	<div class="card">
 		<div class="card-body">
-			<canvas id="netSalesChart"></canvas>
+			<div class="mt-2">
+				<h2 class="text-secondary">순수익</h2>
+			</div>
+			<div class="mt-5">
+				<canvas id="netSalesChart"></canvas>
+			</div>
 		</div>
 	</div>
 </div>
@@ -107,6 +112,9 @@
 			
 		},
 		methods:{
+			comma(money) {
+        	  	return String(money).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        	},
 			createNetSalesChart(){
 				var labels = [];
 				var totalNetSales = [];
@@ -119,7 +127,6 @@
 	            const data = {
 	                labels:labels,
 	                datasets:[{
-	                    label:"순이익",
 	                    backgroundColor: '#3B7CDD',
 	                    borderColor: '#3B7CDD',
 	                    data:totalNetSales,
@@ -129,7 +136,13 @@
                 const config = {
                     type:"line",
                     data:data,
-                    options:{}
+                    options:{
+                    	plugins:{
+                    		legend: {
+        	                	display: false
+                        	}
+                    	}
+                    }
                 };
                 var myChart = new Chart(
                     document.querySelector("#netSalesChart"),

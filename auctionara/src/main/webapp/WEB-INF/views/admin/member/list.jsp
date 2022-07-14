@@ -18,11 +18,14 @@
 		<div class="col-10">
 			<span></span>
 		</div>
-		<div class="col-2">
-			<select name="member_grade" class="form-select">
-				<option value="일반회원" <c:if test="${member_grade == '일반회원'}">selected</c:if>>일반회원</option>
-				<option value="블랙회원" <c:if test="${member_grade == '블랙회원'}">selected</c:if>>블랙회원</option>
-			</select>
+		<div class="col-2" id="app">
+			<%-- <form action="list" method="get">
+				<select class="form-select" name="type" onchange="this.form.submit()">
+					<option value="">회원등급</option>
+					<option value="member_grade" <c:if test="${member_grade == '일반회원'}">selected</c:if>>일반회원</option>
+					<option value="member_grade" <c:if test="${member_grade == '블랙회원'}">selected</c:if>>블랙회원</option>
+				</select>
+			</form> --%>
 		</div>
 	</div>
 	
@@ -143,12 +146,11 @@
 					<div class="col-2">
 						<select name="type" class="form-select">
 							<option value="member_nick" <c:if test="${type == 'member_nick'}">selected</c:if>>닉네임</option>
-							<option value="member_grade" <c:if test="${type == 'member_grade'}">selected</c:if>>회원 등급</option>
 							<option value="member_email" <c:if test="${type == 'member_email'}">selected</c:if>>이메일</option>
 						</select>
 					</div>
 					<div class="col-3">
-						<input type="search" name="keyword" placeholder="검색어 입력" required class="form-control" value="${keyword}">
+						<input type="search" name="keyword" placeholder="검색어 입력" required class="form-control" value="${keyword}" autocomplete="off">
 					</div>
 					<div class="col-2">
 						<input type="submit" value="검색" class="btn btn-primary">
