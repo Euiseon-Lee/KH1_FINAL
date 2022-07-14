@@ -17,7 +17,6 @@
 
 	<div>
 	<form action="login" method="post">
-		<input type="hidden" name="referer" value="${referer}">
 	
 		<div>
 			<input type="email" name="memberEmail" id="memberEmail" value="${cookie.saveId.value}"
@@ -31,42 +30,44 @@
 
 	
 		<c:if test="${param.fail != null}">
-			<div class="text-center m-3">
-					<h5 style="color:red;">로그인 정보가 일치하지 않습니다</h5>
+			<div class="text-center mt-3 mb-3 alert alert-info" role="alert">
+					<h5>로그인 정보가 일치하지 않습니다</h5>
 			</div>	
 		</c:if>
 
-		<div class="m-2">
-			<button type="submit" class="btn-submit btn-primary btn-block btn-lg" onkeydown="hitEnterkey(event);" id="submit">로그인</button>
-		</div>	
+
 		
-		<div class="mt-3">
+		<div class="mt-3 mb-2">
 			<div class="float-left ml-5">
 				<c:choose>
 					<c:when test="${saveIdExists}">
-						<input type="checkbox" name="remember" checked>
+						<input type="checkbox" name="remember" id="ck1" class="btn btn-outline-info" checked>
 					</c:when>
 					<c:otherwise>
-						<input type="checkbox" name="remember">
+						<input type="checkbox" name="remember" id="ck1" class="btn btn-outline-info">
 					</c:otherwise>
 				</c:choose>
-				<label>아이디 저장하기</label>		
+				<label for="ck1">아이디 저장하기</label>		
 			</div>
 	
 	
 			<div class="float-right mr-5">
 				<c:choose>
 					<c:when test="${autologinExists}">
-						<input type="checkbox" name="autologin" checked>
+						<input type="checkbox" name="autologin" id="ck2" class="btn btn-outline-info" checked>
 					</c:when>
 					<c:otherwise>
-						<input type="checkbox" name="autologin">
+						<input type="checkbox" name="autologin" id="ck2" class="btn btn-outline-info">
 					</c:otherwise>
 				</c:choose>
-				<label>자동 로그인 설정</label>	
+				<label for="ck2">자동 로그인 설정</label>	
 			</div>
 		</div>
-
+		
+		
+		<div class="mt-3 m-2">
+			<button type="submit" class="btn-submit btn-primary btn-block btn-lg" onkeydown="hitEnterkey(event);" id="submit">로그인</button>
+		</div>	
 
 	</form>	
 	</div>
@@ -75,11 +76,11 @@
 	
 	<div class="mt-5 text-right">
 		<div class="m-1">
-			<a href="${root}/member/check_email">이메일을 잊으셨나요?</a>
+			<a href="${root}/member/check_email" style="color: #6F75F6">이메일을 잊으셨나요?</a>
 		</div>
 		
 		<div class="m-1">
-			<a href="${root}/member/change_pw">비밀번호를 잊으셨나요?</a>
+			<a href="${root}/member/change_pw" style="color: #6F75F6">비밀번호를 잊으셨나요?</a>
 		</div>
 			
 		<div class="m-1">
