@@ -116,4 +116,8 @@
 		select count(*) from member
 			where member_nick = #{memberNick}
 	</select>
+	
+	<delete id="exit" parameterType="String">
+		delete member where member_email = #{memberEmail}
+	</delete>
 </mapper> 

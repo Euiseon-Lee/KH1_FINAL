@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.MemberDao;
@@ -48,10 +50,41 @@ public class MypageController {
 		return "mypage/info";
 	}
 	
+	
+	
 	@GetMapping("/exit")
-	public String exit() {
+	public String exit(HttpSession session, Model model) {
+		int memberNo = (int) session.getAttribute("whoLogin");
+		
+		MemberDto memberDto = memberDao.memberSearch(memberNo);
+		model.addAttribute("memberDto", memberDto);
+		
 		return "mypage/exit";
 	}
+	
+	@PostMapping("/exit")
+	public String exit(
+					@RequestParam String memberEmail,
+					@RequestParam String memberPw,
+					HttpSession session) {
+		
+		boolean success = memberDao.exit(memberEmail, memberPw);
+		if(success) {
+			session.removeAttribute("whoLogin");
+			session.removeAttribute("auth");
+			return "redirect:exit_finish";
+		}
+		else {
+			return "redirect:exit?error";
+		}
+	}
+	
+	@GetMapping("/exit_finish")
+	public String exitFinish() {
+		return "mypage/exit_finish";
+	}
+	
+	
 	
 	@GetMapping("/auction_history")
 	public String auctionHistory(HttpSession session, Model model) {
