@@ -23,7 +23,7 @@
 	<!-- 주소 수정 -->
 	<update id="update" parameterType="GpsAddressDto">
 		update gps_address 
-		set gps_latitude = #{gpsLatitude}, gps_longitude = #{gpsLongitude}, gps_circle = #{gpsCircle}
+		set gps_latitude = #{gpsLatitude}, gps_longitude = #{gpsLongitude}, gps_circle = #{gpsCircle}, gps_regist_time = sysdate, gps_status = 1
 		where gps_no = #{gpsNo}
 	</update>
 	
@@ -32,9 +32,14 @@
 		delete from gps_address where gps_no = (select max(gps_no) from gps_address where member_no = #{memberNo})
 	</select>
 	
-	<!-- 회원의 주소 목록 조회 -->
+	<!-- 회원의 주소 목록 조회 (미인증 포함) -->
 	<select id="list" resultType="GpsAddressDto" parameterType="int">
 		select * from gps_address where member_no = #{memberNo} order by gps_no
+	</select>
+	
+	<!-- 회원의 주소 목록 조회 (인증만)-->
+	<select id="validList" resultType="GpsAddressDto" parameterType="int">
+		select * from gps_address where member_no = #{memberNo} and gps_status = 1 order by gps_no
 	</select>
 
 	<!-- 회원의 주소1 조회 -->
@@ -46,5 +51,21 @@
 	<select id="one2" resultType="GpsAddressDto" parameterType="int">
 		select * from gps_address where gps_no = (select max(gps_no) from gps_address where member_no = #{memberNo})
 	</select>
-		
+	
+	<!-- 주소 미인증 처리 -->
+	<update id="updateStaus" parameterType="Date">
+		update gps_address 
+		set gps_status = 0
+		where gps_regist_time <![CDATA[ <= ]]> #{limit}
+	</update>
+	
+	<!-- 입찰 가능한 경매인지를 동네인증 여부를 통해 확인 -->
+ 	<select id="checkBiddingAddress" resultType="GpsAddressDto" parameterType="Map">
+		select A.*
+		from (select * from gps_address where member_no = #{memberNo}) A, (select * from auction where auction_no = #{auctionNo}) B
+	    where A.gps_status = 1
+        and (distance(A.gps_latitude, A.gps_longitude, B.auction_latitude1, B.auction_longitude1) <![CDATA[ <= ]]> (A.gps_circle + B.auction_circle1)
+        or distance(A.gps_latitude, A.gps_longitude, B.auction_latitude2, B.auction_longitude2) <![CDATA[ <= ]]> (A.gps_circle + B.auction_circle2))
+	</select>
+
 </mapper> 

@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <div class="container-fluid" id="app" v-cloak>
-    <form action="${root}/auction/submit" method="post" class="needs-validation" enctype="multipart/form-data" @submit="beforeSubmit" id="form">
+    <form class="needs-validation" enctype="multipart/form-data" @submit="beforeSubmit" id="form">
         <div class="row pt-5 pb-3 border-bottom border-dark">
             <div class="col-sm">
                 <h2 class="fw-bold">경매 등록</h2>
@@ -88,8 +88,8 @@ pageEncoding="UTF-8"%>
                 <label for="auctionContent" class="form-label">경매 물품 설명</label>
             </div>
             <div class="col-sm">
-                <textarea class="form-control" id="auctionContent" name="auctionContent" rows="5" v-model="auctionContent" placeholder="경매 물품에 대한 설명을 자세히 입력해주세요" autocomplete="off" maxlength="100"></textarea>
-                <div class="text-right mt-1"><span class="text-primary">{{ contentCount }}</span> / 100</div>
+                <textarea class="form-control" id="auctionContent" name="auctionContent" rows="5" v-model="auctionContent" placeholder="경매 물품에 대한 설명을 자세히 입력해주세요" autocomplete="off" maxlength="1000"></textarea>
+                <div class="text-right mt-1"><span class="text-primary">{{ contentCount }}</span> / 1000</div>
             </div>
         </div>
         <div class="row py-4 border-bottom">
@@ -134,22 +134,42 @@ pageEncoding="UTF-8"%>
                 <input type="datetime-local" class="form-control" id="auctionClosedTime" name="auctionClosedTime" v-model="auctionClosedTime" />
             </div>
         </div>
+        <div class="row py-4 border-bottom">
+            <div class="col-sm-3">
+                <label class="form-label">경매 등록 동네</label>
+            </div>
+            <div class="col-sm">
+                <div class="form-check mb-2" v-if="auctionCircle2 != 0">
+                    <label class="form-check-label" for="addressAll">
+                        <input class="form-check-input" type="radio" name="auctionAddress" id="addressAll" />모든 동네
+                    </label>
+                </div>
+                <div class="form-check mb-2" v-if="auctionCircle1 != 0">
+                    <label class="form-check-label" for="address1">
+                        <input class="form-check-input" type="radio" name="auctionAddress" id="address1" checked/>[반경 {{ auctionCircle1 }}km] <span id="address1-text"></span>
+                    </label>
+                </div>
+                <div class="form-check" v-if="auctionCircle2 != 0">
+                    <label class="form-check-label" for="address2">
+                        <input class="form-check-input" type="radio" name="auctionAddress" id="address2" />[반경 {{ auctionCircle2 }}km] <span id="address2-text"></span>
+                    </label>
+                </div>
+                <div class="form-check" v-if="auctionCircle1 == 0">
+                    <label class="form-check-label" for="noAddress">
+                        <input class="form-check-input" type="radio" name="auctionAddress" id="noAddress" disabled /> 인증된 동네가 없습니다. 동네인증을 먼저 진행해주세요!
+                    </label>
+                </div>
+            </div>
+        </div>        
         <div class="row py-4 d-flex justify-content-end">
             <button type="submit" class="btn btn-primary mr-2" :disabled="!formPass">경매 등록하기</button>
             <a class="btn btn-secondary" href="${root}/">돌아가기</a>
         </div>
     </form>
 </div>
-
 <script src="https://unpkg.com/vue@next"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=714d787408b068ef9f0ff6126a1c0b99&libraries=services"></script>
 <script>
-    // 현재 시간 +1일 전 / +31일 후는 경매 마감일로 설정하지 못하도록 설정
-    let today = new Date();
-    let min = new Date(today.setDate(today.getDate() + 1)).toISOString().slice(0, 16);
-    let max = new Date(today.setDate(today.getDate() + 31)).toISOString().slice(0, 16);
-    document.getElementById("auctionClosedTime").min = min;
-    document.getElementById("auctionClosedTime").max = max;
-
     const app = Vue.createApp({
         data() {
             return {
@@ -163,6 +183,12 @@ pageEncoding="UTF-8"%>
                 auctionClosingBid: "",
                 auctionBidUnit: "100",
                 auctionClosedTime: "",
+                auctionLatitude1: 0,
+                auctionLongitude1: 0,
+                auctionCircle1: 0,
+                auctionLatitude2: 0,
+                auctionLongitude2: 0,
+                auctionCircle2: 0,
                 openingBidVaild: false,
                 closingBidValid: false,
             };
@@ -175,7 +201,7 @@ pageEncoding="UTF-8"%>
                 return this.auctionContent.length;
             },
             formPass() {
-                return this.attachmentCount > 0 && this.auctionTitle != "" && this.categoryNo != "" && this.openingBidVaild && this.closingBidValid && this.auctionOpeningBid != "" && this.auctionClosingBid != "" && this.auctionContent != "" && this.auctionClosedTime != "";
+                return this.attachmentCount > 0 && this.auctionTitle != "" && this.categoryNo != "" && this.openingBidVaild && this.closingBidValid && this.auctionOpeningBid != "" && this.auctionClosingBid != "" && this.auctionContent != "" && this.auctionClosedTime != "" && document.querySelector('input[name="auctionAddress"]').checked;
             },
         },
         methods: {
@@ -199,15 +225,76 @@ pageEncoding="UTF-8"%>
                 return this.closingBidValid;
             },
             beforeSubmit(e) {
+            	e.preventDefault();
                 const form = document.getElementById("form");
                 const formData = new FormData(form);
                 var request = new XMLHttpRequest();
+
                 for (var i = 0; i < this.attachmentCount; i++) {
                     formData.append("attachment", this.attachment[i]);
                 };
+                formData.append("auctionLatitude1", this.auctionLatitude1);
+                formData.append("auctionLongitude1", this.auctionLongitude1);
+                formData.append("auctionCircle1", this.auctionCircle1);
+                if(this.auctionCircle2 != 0) {
+                    formData.append("auctionLatitude2", this.auctionLatitude2);
+                    formData.append("auctionLongitude2", this.auctionLongitude2);
+                    formData.append("auctionCircle2", this.auctionCircle2);  	
+                }
                 request.open("POST", "http://localhost:8080/auctionara/auction/write");
                 request.send(formData);
+                
+                request.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    	location.href = "http://localhost:8080/auctionara/auction/detail/" + this.responseText;
+                    }
+                };
             }
+        },
+        mounted() {
+            // 현재 시간 +1일 전 / +31일 후는 경매 마감일로 설정하지 못하도록 설정
+            let today = new Date();
+            let min = new Date(today.setDate(today.getDate() + 1)).toISOString().slice(0, 16);
+            let max = new Date(today.setDate(today.getDate() + 31)).toISOString().slice(0, 16);
+            document.getElementById("auctionClosedTime").min = min;
+            document.getElementById("auctionClosedTime").max = max;
+            
+         	// 좌표 > 주소 변환
+            const geocoder = new kakao.maps.services.Geocoder();
+            const callback1 = function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    if (!result[0].road_address) { // 도로명 주소가 없으면
+                    	document.getElementById("address1-text").innerText = result[0].address.address_name;
+                    } else {
+                    	document.getElementById("address1-text").innerText = result[0].road_address.address_name;
+                    }        	 
+                }
+            };
+            const callback2 = function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    if (!result[0].road_address) {
+                    	document.getElementById("address2-text").innerText = result[0].address.address_name;
+                    } else {
+                    	document.getElementById("address2-text").innerText = result[0].road_address.address_name;
+                    }        	 
+                }
+            };
+            <c:forEach var="address" items="${addressList}" varStatus="status">
+            <c:choose>
+	            <c:when test="${status.first}">
+	            this.auctionLongitude1 = ${address.gpsLongitude};
+	            this.auctionLatitude1 = ${address.gpsLatitude};
+	            this.auctionCircle1 = ${address.gpsCircle};
+	            geocoder.coord2Address(this.auctionLongitude1, this.auctionLatitude1, callback1);
+	            </c:when>
+	            <c:otherwise>
+	            this.auctionLongitude2 = ${address.gpsLongitude};
+	            this.auctionLatitude2 = ${address.gpsLatitude};
+	            this.auctionCircle2 = ${address.gpsCircle};
+	            geocoder.coord2Address(this.auctionLongitude2, this.auctionLatitude2, callback2); 
+	            </c:otherwise>
+	        </c:choose>    
+        	</c:forEach>
         },
     });
     app.mount("#app");

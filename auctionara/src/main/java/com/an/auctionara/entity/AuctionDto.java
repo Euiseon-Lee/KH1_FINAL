@@ -1,7 +1,5 @@
 package com.an.auctionara.entity;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +21,10 @@ public class AuctionDto {
 	
 	// 컬럼 추가
 	private int auctionPrivate;
+	private double auctionLatitude1;
+	private double auctionLongitude1;
+	private int auctionCircle1;
+	private double auctionLatitude2;
+	private double auctionLongitude2;
+	private int auctionCircle2;
 }

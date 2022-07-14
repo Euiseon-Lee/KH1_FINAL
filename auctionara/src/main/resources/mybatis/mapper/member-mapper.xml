@@ -54,10 +54,10 @@
 
 	<insert id="join" parameterType="MemberDto">
 		insert into member(
-			member_no, member_email, member_pw, member_nick, member_name, member_sex, member_birth
+			member_no, member_email, member_pw, member_nick, attachment_no
 		)
 		values(
-			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}, #{memberName}, #{memberSex}, to_date(#{memberBirth},'YY/MM/DD')
+			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}, #{attachmentNo}
 		)
 	</insert>
 	
@@ -72,9 +72,9 @@
 		where member_no = #{memberNo}
 	</update>
 	
-	<select id="checkEmailNum" resultType="int">
-		select count(*) from
-				 (select * from member where member_email = #{memberEmail})
+	<select id="checkEmail" parameterType="String" resultType="int">
+		select count(*) from member
+				  where member_email = #{certTarget}
 	</select>
 	
 	<select id="checkMemberNo" resultType="int">
@@ -111,6 +111,15 @@
 				set member_pw = #{memberPw}
 			where member_email = #{memberEmail}
 	</update>
+	
+	<select id="nickExists" parameterType="String" resultType="int">
+		select count(*) from member
+			where member_nick = #{memberNick}
+	</select>
+	
+	<delete id="exit" parameterType="String">
+		delete member where member_email = #{memberEmail}
+	</delete>
 	
 	<!-- 관리자 페이지 - 회원 수 count -->
 	<select id="countMember" resultType="int">

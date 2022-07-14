@@ -1,6 +1,6 @@
 package com.an.auctionara.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ChatContentDto {
 	private int chatNo;
-	private int chatroomNo;
+	private int chatRoomNo;
 	private int chatterNo;
 	private String chatContent;
 	private Date chatTime;

@@ -73,11 +73,8 @@ public class MemberDaoImpl implements MemberDao {
 
 
 	@Override
-	public boolean checkMemberNo(String memberEmail) {
-		Integer memberNo = sqlSession.selectOne("member.checkMemberNo", memberEmail);
-		
-		if(memberNo==null) return false;
-		else return true;
+	public int checkEmail(String certTarget) {
+		return sqlSession.selectOne("member.checkEmail", certTarget);
 		
 	}
 	
@@ -146,6 +143,25 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return count > 0;
 	}
+
+
+	@Override
+	public int checkNick(String memberNick) {
+		return sqlSession.selectOne("member.nickExists", memberNick);
+	}
+
+
+	@Override
+	public boolean exit(String memberEmail, String memberPw) {
+		MemberDto memberDto = this.login(memberEmail, memberPw);
+		if(memberDto == null) {
+			return false;
+		}
+		else {
+			int count = sqlSession.delete("member.exit", memberEmail);
+			return count > 0;
+		}
+	}
 	
 	
 	// 관리자
@@ -168,4 +184,5 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return sqlSession.selectOne("member.one", memberNo);
 	}
+	
 }

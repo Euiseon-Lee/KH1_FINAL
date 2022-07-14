@@ -14,7 +14,7 @@ public interface MemberDao {
 
 	int checkEmailNum(String memberEmail);
 	
-	boolean checkMemberNo(String memberEmail);
+	int checkEmail(String memberEmail);
 
 	void plusRedCount(int memberNo);
 
@@ -32,6 +32,10 @@ public interface MemberDao {
 
 	boolean resetPw(MemberDto memberDto);
 
+	int checkNick(String memberNick);
+
+	boolean exit(String memberEmail, String memberPw);
+	
 	// 관리자 - 회원 수 count 
 	int countMember();
 

@@ -7,7 +7,9 @@
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -67,13 +69,73 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 
-			<mvc:exclude-mapping path="/member/login"/>
 			<mvc:exclude-mapping path="/member/join*"/>
-			<mvc:exclude-mapping path="/"/>
+			<mvc:exclude-mapping path="/member/check_email"/>
+			<mvc:exclude-mapping path="/member/change_pw"/>
+			<mvc:exclude-mapping path="/**/*.css"/>
+		    <mvc:exclude-mapping path="/**/*.js"/>
+		    <mvc:exclude-mapping path="/image/**/*.*"/>			
 
 			<bean class="com.an.auctionara.interceptor.AutologinInterceptor"></bean>
 		</mvc:interceptor>
+		
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			
+			<mvc:exclude-mapping path="/member/login"/>
+			<mvc:exclude-mapping path="/member/join*"/>
+			<mvc:exclude-mapping path="/member/check_email"/>
+			<mvc:exclude-mapping path="/member/change_pw"/>
+			<mvc:exclude-mapping path="/async/**"/>
+			<mvc:exclude-mapping path="/attachment/**"/>
+			<mvc:exclude-mapping path="/**/*.css"/>
+		    <mvc:exclude-mapping path="/**/*.js"/>
+		    <mvc:exclude-mapping path="/image/**/*.*"/>			
 
+			<bean class="com.an.auctionara.interceptor.IsLoginInterceptor"></bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			
+			<mvc:exclude-mapping path="/member/login"/>
+			<mvc:exclude-mapping path="/member/join*"/>
+			<mvc:exclude-mapping path="/member/logout"/>
+			<mvc:exclude-mapping path="/member/check_email"/>
+			<mvc:exclude-mapping path="/member/change_pw"/>
+			<mvc:exclude-mapping path="/async/**"/>
+			<mvc:exclude-mapping path="/attachment/**"/>
+			<mvc:exclude-mapping path="/address/**"/>
+			<mvc:exclude-mapping path="/**/*.css"/>
+		    <mvc:exclude-mapping path="/**/*.js"/>
+		    <mvc:exclude-mapping path="/image/**/*.*"/>
+
+			<bean class="com.an.auctionara.interceptor.AddressInterceptor"></bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/auction/detail/**"/>
+			
+ 			<mvc:exclude-mapping path="/auction/detail/refresh*"/>
+			<mvc:exclude-mapping path="/auction/detail/bidding*"/>
+			<mvc:exclude-mapping path="/auction/detail/bidding/close*"/>
+			<mvc:exclude-mapping path="/auction/detail/cancle/**"/>
+			<mvc:exclude-mapping path="/auction/detail/stop/**"/>
+
+			<bean class="com.an.auctionara.interceptor.AuctionPrivateInterceptor"></bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+ 			<mvc:mapping path="/auction/detail/refresh*"/>
+			<mvc:mapping path="/auction/detail/bidding*"/>
+			<mvc:mapping path="/auction/detail/bidding/close*"/>
+			<mvc:mapping path="/auction/detail/cancle/**"/>
+			<mvc:mapping path="/auction/detail/stop/**"/>
+
+			<bean class="com.an.auctionara.interceptor.AuctionPrivate2Interceptor"></bean>
+		</mvc:interceptor>
+		
 	</mvc:interceptors>
 	
 	
@@ -113,6 +175,15 @@
 	<bean id="swagger2Config" class="com.an.auctionara.configuration.SwaggerCustomConfiguration"></bean>
 	
 	
+	<bean id="chatWebsocketServer" class="com.an.auctionara.ws.ChatWebsocketServer"></bean>
+	
+	<websocket:handlers>
+		<websocket:mapping handler="chatWebsocketServer" path="/ws/chat"/>
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></bean>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs></websocket:sockjs>
+	</websocket:handlers>
 	<!-- 
 		Swagger에서 제공하는 화면에 대한 정적 자원 위치 지정
 		<참고> Spring-Boot에서는 따로 처리할 필요가 없다

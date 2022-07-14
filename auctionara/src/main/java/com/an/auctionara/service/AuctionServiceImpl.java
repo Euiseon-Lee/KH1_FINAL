@@ -28,6 +28,7 @@ import com.an.auctionara.repository.SuccessfulBidDao;
 import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
+import com.an.auctionara.vo.MyBiddingAuctionListVO;
 import com.an.auctionara.vo.WriteAuctionVO;
 
 @Service
@@ -63,6 +64,12 @@ public class AuctionServiceImpl implements AuctionService {
 									.auctionClosingBid(writeAuctionVO.getAuctionClosingBid())
 									.auctionBidUnit(writeAuctionVO.getAuctionBidUnit())
 									.auctionStatus(writeAuctionVO.getAuctionStatus())
+									.auctionLatitude1(writeAuctionVO.getAuctionLatitude1())
+									.auctionLongitude1(writeAuctionVO.getAuctionLongitude1())
+									.auctionCircle1(writeAuctionVO.getAuctionCircle1())
+									.auctionLatitude2(writeAuctionVO.getAuctionLatitude2())
+									.auctionLongitude2(writeAuctionVO.getAuctionLongitude2())
+									.auctionCircle2(writeAuctionVO.getAuctionCircle2())
 									.build();
 		
 		// 경매 정보 저장
@@ -81,13 +88,16 @@ public class AuctionServiceImpl implements AuctionService {
 	}		
 	
 	@Override
-	public List<AuctionListVO> list(int memberNo, int page, int filter, int sort) {
-		Map<String, Integer> info = new HashMap<>();
+	public List<AuctionListVO> list(int memberNo, int page, int filter, int sort, Integer categoryNo, String keyword, Integer search) {
+		Map<String, Object> info = new HashMap<>();
 		info.put("memberNo", memberNo);
 		info.put("begin", (page * 12) - (12 - 1)); // 12개씩 불러오기
 		info.put("end", page * 12);
 		info.put("filter", filter);
 		info.put("sort", sort);
+		info.put("categoryNo", categoryNo);
+		info.put("keyword", keyword);
+		info.put("search", search);
 		List<AuctionListVO> list = auctionDao.list(info);
 		
 		// 마감 시간을 토대로 남은 시간 계산
@@ -118,7 +128,39 @@ public class AuctionServiceImpl implements AuctionService {
 		
 		return list;
 	}
-
+	
+	@Override
+	public List<MyBiddingAuctionListVO> myBiddingAuctionList(int bidderNo) {
+		List<MyBiddingAuctionListVO> list = auctionDao.myBiddingAuctionList(bidderNo);
+		
+		// 마감 시간을 토대로 남은 시간 계산
+		for(MyBiddingAuctionListVO myBiddingAuctionListVO : list) {
+			LocalDateTime limit = Instant.ofEpochMilli(myBiddingAuctionListVO.getAuctionClosedTime().getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+			LocalDateTime now = LocalDateTime.now();
+			
+			long days = ChronoUnit.DAYS.between(now, limit);
+			if(days == 0) {
+				long hours = ChronoUnit.HOURS.between(now, limit);
+				if(hours == 0) {
+					long minutes = ChronoUnit.MINUTES.between(now, limit);
+					if(minutes < 10) {
+						myBiddingAuctionListVO.setDeadlineClosing(true); // 10분 이하로 남으면 마감임박 true	
+					}
+					if(minutes == 0) {
+						myBiddingAuctionListVO.setAuctionRemainTime("1분 이하");
+					} else {
+						myBiddingAuctionListVO.setAuctionRemainTime(minutes + "분");
+					}
+				} else {
+					myBiddingAuctionListVO.setAuctionRemainTime(hours + "시간");
+				}
+			} else {
+				myBiddingAuctionListVO.setAuctionRemainTime(days + "일");
+			}
+		}		
+		return list;
+	}
+	
 	@Override
 	public AuctionDetailVO detail(int bidderNo, int auctionNo) {		
 		Map<String, Integer> info = new HashMap<>();
