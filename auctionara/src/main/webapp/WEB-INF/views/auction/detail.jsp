@@ -155,7 +155,7 @@
     </div>
 </div>
 <div class="row mt-4">
-    <div class="col-8 border-right">
+    <div class="col-8">
         <div class="row mb-3">
             <h5 class="fw-bold">경매 물품 정보</h5>
         </div>
@@ -191,14 +191,26 @@ ${auctionDetail.auctionContent}
         </div>
     </div>
     <div class="col">
-        <div class="row ml-3">
+        <div class="row ml-3 mb-3">
             <h5 class="fw-bold">판매자 정보</h5>
         </div>
-        <div class="row ml-3">
-            <h6>
-                추후 회원 정보 표시 예정
-            </h6>
+        <div class="row ml-3 pb-3 border-bottom">
+            <div class="col-2"><img id="profile" class="rounded-circle" src="${root}/attachment/download?attachmentNo=${auctioneerInfo.attachmentNo}"></div>
+            <div class="col ml-4">
+            	<h6 class="row fw-bold mb-2">${auctioneerInfo.memberNick}</h6>
+            	<h6 class="row text-muted">선호 거래일 : ${auctioneerInfo.memberPreference}</h6>
+            </div>
         </div>
+        <div class="row ml-3 py-3 border-bottom">
+        	<div class="col-4 text-muted ml-2">긍정 평가 <span class="text-success fw-bold fs-large ml-3">${auctioneerInfo.likeCount}개</span></div>
+        	<div class="col-4 text-muted ml-2">부정 평가 <span class="text-primary fw-bold fs-large ml-3">${auctioneerInfo.dislikeCount}개</span></div>
+        </div>
+        <div class="row ml-3 pt-3 pb-2">
+        	<div class="text-muted">마지막 접속일 : ${auctioneerInfo.memberLogintime}</div>
+        </div>
+        <div class="row ml-3">
+        	<div class="text-muted">누적 제재 : ${auctioneerInfo.memberRedCount}회</div>
+        </div>        
     </div>
 </div>
 <c:forEach var="photoDto" items="${photoList}">
@@ -803,7 +815,17 @@ ${auctionDetail.auctionContent}
 	.photo-modal {
  		width: 100%; 
  		max-width: 100%;
-	} 
+	}
+	
+	#profile {
+    	object-fit: cover;
+    	width: 50px;
+        height: 50px; 	
+	}
+	
+	.fs-large {
+		font-size: 1.5em;
+	}
 </style>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
