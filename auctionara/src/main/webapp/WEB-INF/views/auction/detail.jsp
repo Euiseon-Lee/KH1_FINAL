@@ -100,7 +100,7 @@
             <div id="refresh" class="col-3 text-muted p-0 pointer" @click="throttleRefresh(this)">
            		<span class="pl-5"><i id="rotate" class="fa-solid fa-arrow-rotate-left"></i> 새로고침</span>
             </div>
-            <div class="col-3 p-0 pl-2 mr-2 text-muted pointer">
+            <div class="col-3 p-0 pl-2 mr-2 text-muted pointer" data-bs-toggle="modal" data-bs-target="#reportModal">
                 <i class="fa-solid fa-land-mine-on pl-3 pr-2"></i> 신고하기
             </div>
         </div>
@@ -261,6 +261,27 @@ ${auctionDetail.auctionContent}
     	</div>
   	</div>
 </div>
+<div class="modal fade" id="reportModal" aria-hidden="true" aria-labelledby="reportModalLable" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="reportModalLable">&#129402; 경매 신고하기</h5>
+				<button type="button" class="btn-close close" data-bs-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+        		경매 신고 이유를 알려주세요!
+        		<input type="text" class="form-control mt-2" v-model="reportReason" autocomplete="off" maxlength="100" />
+                <div class="text-right mt-1"><span class="text-primary">{{ reportCount }}</span> / 100</div>
+      		</div>
+            <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">돌아가기</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" :disabled="reportReason == ''" @click="report">신고하기</button>
+            </div>      		
+    	</div>
+  	</div>
+</div>
 <c:if test="${whoLogin == auctionDetail.auctioneerNo}">
 <div class="modal fade" id="stopAuctionModal" aria-hidden="true" aria-labelledby="stopAuctionModalLable" tabindex="-1" v-show="biddingCount != 0 && !auctionClose">
 	<div class="modal-dialog modal-dialog-centered">
@@ -342,6 +363,7 @@ ${auctionDetail.auctionContent}
                 alert: 0,
                 interval: "",
                 auctionClose: false,
+                reportReason: "",
             };
         },
         computed: {
@@ -351,6 +373,9 @@ ${auctionDetail.auctionContent}
                 } else {
                 	return this.inputBid > this.maxBid && (this.inputBid % this.bidUnit) == 0;
                 }
+            },
+            reportCount() {
+                return this.reportReason.length;
             },
         },        
         methods: {
@@ -645,6 +670,14 @@ ${auctionDetail.auctionContent}
 	            	}
             	});
             },
+            report() {
+            	axios.post("http://localhost:8080/auctionara/auction/detail/report", {
+            		auctionNo: this.auctionNo,
+            		auctionReporterNo: ${whoLogin},
+            		auctionReportReason: this.reportReason,
+            	})
+            	.then(resp => {}); 
+            }
         },
         mounted() {
             document.getElementById("biddingModal").addEventListener("hidden.bs.modal", this.closeBidModal);

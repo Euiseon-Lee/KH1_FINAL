@@ -24,14 +24,14 @@
 	        </div>       
 	        </c:forEach>
         </div>
-        <div class="col" v-show="!showRating">
+        <div class="col" v-show="!showRating && !showReport">
         	<div class="row">
         		<div class="col">
         			<div class="row p-3 border-bottom bg-light" v-if="chatRoomNo != 0">
         				<div class="col-1 mr-4"><img class="rounded" :src="'${root}/attachment/download?attachmentNo=' + photoAttachmentNo"></div>
         				<div class="col ml-3">
         					<div class="row fw-bold mt-2 text-truncate">{{ auctionTitle }}</div>
-        					<a class="row text-muted chatroomName mt-2 pointer"><i class="fa-solid fa-right-from-bracket mt-1 pr-2"></i> 판매자 정보 보러가기</a>
+        					<a class="row text-muted chatroomName mt-2 pointer" @click="showReport = true"><i class="fa-solid fa-land-mine-on mt-1 pl-1 pr-2"></i> 이 채팅 신고하기</a>
         				</div>
         				<div class="col-2 pt-3">
         					<button class="btn btn-info" v-if="auctioneerBtn == null && ${whoLogin} == auctioneerNo" @click="auctioneerFinish">거래 완료</button>
@@ -83,6 +83,15 @@
         	</div>
         	<div class="row mt-5 ml-5 px-5"><button type="button" class="btn btn-primary px-3" @click="finishRating">평가 선택 완료</button></div>
         </div>
+        <div class="col" v-show="showReport">
+			<div class="row p-3 border-bottom bg-light text-muted pointer" @click="showReport = false"><i class="fa-solid fa-arrow-left-long pr-2"></i>채팅방으로 돌아가기</div>
+        	<h4 class="row fw-bold pl-5 my-5 ml-5">{{ auctioneerNick }} 님과의 채팅을 신고하시겠습니까?</h4>
+        	<div class="row px-5 ml-5">
+        		<input type="text" class="form-control" v-model="reportReason" placeholder="신고 이유를 알려주세요" autocomplete="off" maxlength="100" />
+                <div class="text-right mt-1"><span class="text-primary">{{ reportCount }}</span> / 100</div>
+        	</div>
+        	<div class="row mt-5 ml-5 px-5"><button type="button" class="btn btn-primary px-3" @click="finishReport" :disabled="reportReason == ''">신고 완료</button></div>
+        </div>        
     </div>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -113,11 +122,19 @@
                 memberBtn: false,
                 rating: false,
                 showRating: false,
+                showReport: false,
+                reportReason: "",
             };
+        },
+        computed: {
+        	reportCount() {
+                return this.reportReason.length;
+            },
         },
         methods: {
             talk(chatRoomNo) {
             	this.showRating = false; // 평가창 닫기
+            	this.showReport = false; // 신고창 닫기
             	
             	if(this.socket != null) {
             		this.socket.close(); // 이전 연결 닫기
@@ -246,6 +263,16 @@
             		this.rating = false;
             	});
             },
+            finishReport() {
+            	axios.post("http://localhost:8080/auctionara/chat/report", {
+            		chatRoomNo: this.chatRoomNo,
+            		memberNo: ${whoLogin},
+            		chatReportReason: this.reportReason,
+            	})
+            	.then(resp => {
+            		this.showReport = false;
+            	}); 	
+            },
             chatTime() {
             	var d = new Date();
                 return (d.getMonth()+1) + "월 " + d.getDate() + "일 " + d.getHours() + ":" + d.getMinutes();
@@ -316,7 +343,6 @@
     .message-wrapper>.message {
         display: flex;
     }
-    
 
 </style>
 

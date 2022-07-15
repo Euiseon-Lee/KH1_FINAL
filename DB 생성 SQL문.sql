@@ -143,12 +143,12 @@ CREATE TABLE gps_address (
     gps_status number default 1 not null
 );
 
-CREATE TABLE chat_report (
-	chat_report_no	number		NOT NULL,
-	chat_no	number		NOT NULL,
-	chat_reporter_no	number		NOT NULL,
-	chat_report_reason	varchar2(300)		NOT NULL,
-	chat_report_time	Date	DEFAULT sysdate	NOT NULL
+create table chat_report (
+    chat_report_no number primary key,
+    chatroom_no number references chatroom(chatroom_no),
+    member_no number references member(member_no),
+    chat_report_reason varchar2(300) not null,
+    chat_report_time Date default sysdate not null
 );
 
 CREATE TABLE manager_restriction (
@@ -261,10 +261,6 @@ ALTER TABLE chat_content ADD CONSTRAINT PK_CHAT_CONTENT PRIMARY KEY (
 
 ALTER TABLE gps_address ADD CONSTRAINT PK_GPS_ADDRESS PRIMARY KEY (
 	gps_no
-);
-
-ALTER TABLE chat_report ADD CONSTRAINT PK_CHAT_REPORT PRIMARY KEY (
-	chat_report_no
 );
 
 ALTER TABLE manager_restriction ADD CONSTRAINT PK_MANAGER_RESTRICTION PRIMARY KEY (
@@ -394,18 +390,8 @@ REFERENCES member (
 	member_no
 );
 
-ALTER TABLE chat_report ADD CONSTRAINT FK FOREIGN KEY (
-	chat_no
-)
 REFERENCES chat_content (
 	chat_no
-);
-
-ALTER TABLE chat_report ADD CONSTRAINT FK_member_TO_chat_report_1 FOREIGN KEY (
-	chat_reporter_no
-)
-REFERENCES member (
-	member_no
 );
 
 ALTER TABLE manager_restriction ADD CONSTRAINT FK_manager_restriction FOREIGN KEY (
