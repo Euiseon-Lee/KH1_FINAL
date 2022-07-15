@@ -102,5 +102,44 @@ public class CertServiceImpl implements CertService {
 									.certNo(certString)
 									.build());
 	}
+
+	@Override
+	public void sendPwResetMail(String memberEmail) throws MessagingException {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+		
+		//메일 내용 구성
+		helper.setTo(memberEmail);
+		helper.setSubject("경매나라 비밀번호 재설정");
+		
+		//랜덤 인증번호 생성
+		int certNumber = r.nextInt(1000000);
+		String certString = f.format(certNumber);
+		
+		String returnUri = ServletUriComponentsBuilder
+								.fromCurrentContextPath()
+								.path("/member/reset")
+								.queryParam("memberEmail", memberEmail)
+								.queryParam("certNo", certString)
+								.toUriString();
+		
+		String content = 
+			"<a href='"+returnUri+"'>"
+				+ "비밀번호를 재설정하시려면 여기를 누르세요"
+			+ "</a><br><br>"
+				+"위의 링크는 한 번만 사용가능합니다.";
+		helper.setText(content, true);
+		
+		
+		//메일 전송
+		mailSender.send(message);
+		
+		
+		//DB에 넣기
+		certDao.makeCert(CertDto.builder()
+									.certTarget(memberEmail)
+									.certNo(certString)
+									.build());
+	}
 	
 }
