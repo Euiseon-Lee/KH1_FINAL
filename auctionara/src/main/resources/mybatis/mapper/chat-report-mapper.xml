@@ -70,7 +70,7 @@
 	
 	<!-- 관리자 제재가 진행되면 제재 여부 컬럼 update -->
 	 <update id="setRestrict" parameterType="int">
-	 	update chat_report set auction_report_restriction = 1 where chat_report_no = #{chatReportNo}	
+	 	update chat_report set chat_report_restriction = 1 where chat_report_no = #{chatReportNo}	
 	 </update>
 	 
 	 <!-- 상세 조회 -->
