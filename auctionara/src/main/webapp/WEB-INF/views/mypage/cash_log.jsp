@@ -3,11 +3,11 @@
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
-<div class="container-fluid d-flex">
+<div class="container d-flex">
 <!-- 사이드바 -->
 
 	<div class="row col-3 mt-4">
-		<ul class="nav flex-column">
+		<ul class="nav flex-column text-center">
 		  <li class="nav-item border-bottom">
 		  	<h4>
 		  		<a href="${root}/mypage/index" class="nav-link btn-outline-secondary">마이페이지</a>
@@ -32,7 +32,7 @@
 	</div>
 
 	<!-- 본문 -->
-	<div class="row flex-fill justify-content-center">
+	<div class="row flex-fill d-flex flex-column">
 		<div class="row m-2 p-2">
 			<button type="button" class="btn btn-primary">포인트 충전</button>
 		</div>
