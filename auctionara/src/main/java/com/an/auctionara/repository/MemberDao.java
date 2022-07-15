@@ -42,4 +42,8 @@ public interface MemberDao {
 	// 관리자 - 현금화 승인 후 보유 포인트 차감 메소드 
 	MemberDto deductPoints(int memberNo, int cashingMoney);
 	
+	boolean info(MemberDto memberDto);
+
+	int recall(String memberEmail);
+	
 }

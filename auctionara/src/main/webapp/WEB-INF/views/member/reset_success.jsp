@@ -11,18 +11,13 @@
 	}
 </style>
 
-<div class="container-fluid">
+<div class="container col-6 offset-3 form-group center-block">
 
 	<div class="row">
 		<h1>아이디(이메일)·비밀번호 찾기</h1>
 	</div>
 	
-	<div class="row">
-		<div class="half"><a href="${root}/member/check_email">아이디 찾기</a></div>
-		<div class="half"><a href="${root}/member/change_pw">비밀번호 찾기</a></div>
-	</div>
-	
-	<div class="row">
+	<div class="alert alert-info text-center" role="alert">
 		<h3>비밀번호가 정상적으로 재설정되었습니다</h3>
 	</div>
 	
