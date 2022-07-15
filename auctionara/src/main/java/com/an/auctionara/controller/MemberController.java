@@ -63,7 +63,7 @@ public class MemberController {
 	}
 	
 	
-	//프로필 없이 구현 후 @RequestParam MultipartFile attachmentNo <- 추가할것
+	//@RequestParam MultipartFile attachmentNo 추가완료
 	@PostMapping("/join")
 	public String join(
 			@ModelAttribute MemberDto memberDto,
@@ -292,7 +292,7 @@ public class MemberController {
 					@RequestParam String memberEmail,
 					Model model
 			) {
-		int result = memberDao.checkEmailNum(memberEmail);
+		int result = memberDao.checkEmail(memberEmail);
 		model.addAttribute("checkedEmail", memberEmail);
 		
 		if(result != 1) {
