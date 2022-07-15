@@ -27,4 +27,7 @@ public class AuctionDto {
 	private double auctionLatitude2;
 	private double auctionLongitude2;
 	private int auctionCircle2;
+	
+	//경매진행상태 컬럼 추가
+	private int auction_process;
 }
