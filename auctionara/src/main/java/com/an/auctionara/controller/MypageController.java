@@ -74,41 +74,9 @@ public class MypageController {
 		String begin = request.getParameter("begin");
 		String end = request.getParameter("end");
 		
-		if(week!=null && begin!=null && end!=null) {
-			String memberPreference = week+", "+begin+" ~ "+end;
-			memberDto.setMemberPreference(memberPreference);
-		}
-		else if(week!=null || begin!=null || end!=null) {
-			if(week!=null) {
-				if(begin==null && end==null) {
-					String memberPreference = week;
-					memberDto.setMemberPreference(memberPreference);
-				}
-				else if(begin!= null) {
-					String memberPreference = week+", "+begin;
-					memberDto.setMemberPreference(memberPreference);				
-				}
-				else if(end!=null){
-					String memberPreference = week+", "+end;
-					memberDto.setMemberPreference(memberPreference);					
-				}
-			}
-			else {
-				if(begin!=null && end!=null) {
-					String memberPreference = begin+" ~ "+end;
-					memberDto.setMemberPreference(memberPreference);
-				}
-				else if(begin!=null) {
-					String memberPreference = begin;
-					memberDto.setMemberPreference(memberPreference);
-				}
-				else if(end!=null) {
-					String memberPreference = end;
-					memberDto.setMemberPreference(memberPreference);
-				}
-			}
-		}
 		
+		String memberPreference = week+", "+begin+" ~ "+end;
+		memberDto.setMemberPreference(memberPreference);		
 		
 		boolean success = memberService.info(memberDto, attachment);
 		
