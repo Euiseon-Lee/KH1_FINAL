@@ -35,6 +35,7 @@ import com.an.auctionara.repository.SuccessfulBidDao;
 import com.an.auctionara.service.AuctionService;
 import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AuctionDetailVO;
+import com.an.auctionara.vo.AuctioneerInfoVO;
 import com.an.auctionara.vo.WriteAuctionVO;
 
 @Controller
@@ -145,6 +146,10 @@ public class AuctionController {
 		// 경매 사진 조회
 		List<PhotoDto> photoList = photoDao.list(auctionNo);
 		model.addAttribute("photoList", photoList);
+		
+		// 판매자 정보 조회
+		AuctioneerInfoVO auctioneerInfo = auctionDao.auctioneerInfo(auctionDetail.getAuctioneerNo());
+		model.addAttribute("auctioneerInfo", auctioneerInfo);
 		
 		// 입찰 가능 여부 확인 (인증 주소)
 		Map<String, Integer> info = new HashMap<>();

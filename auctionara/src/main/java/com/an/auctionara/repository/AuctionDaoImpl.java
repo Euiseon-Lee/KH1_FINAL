@@ -18,6 +18,7 @@ import com.an.auctionara.vo.AdminAuctionDetailVO;
 import com.an.auctionara.vo.AdminAuctionListVO;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
+import com.an.auctionara.vo.AuctioneerInfoVO;
 import com.an.auctionara.vo.MyBiddingAuctionListVO;
 
 @Repository
@@ -78,6 +79,11 @@ public class AuctionDaoImpl implements AuctionDao {
 		} else { // 비공개
 			return false;
 		}
+	}
+	
+	@Override
+	public AuctioneerInfoVO auctioneerInfo(int auctioneerNo) {
+		return sqlSession.selectOne("auction.auctioneerInfo", auctioneerNo);
 	}
 	
 	@Override
