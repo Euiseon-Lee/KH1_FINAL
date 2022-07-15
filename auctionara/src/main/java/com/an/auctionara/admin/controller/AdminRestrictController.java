@@ -15,8 +15,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.an.auctionara.entity.AuctionReportDto;
 import com.an.auctionara.entity.ManagerRestrictionDto;
+import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.AuctionReportDao;
 import com.an.auctionara.repository.ManagerRestrictionDao;
+import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.service.AdminRestrictService;
 import com.an.auctionara.vo.CashingPointsListVO;
 import com.an.auctionara.vo.ManagerRestrictionListVO;
@@ -31,6 +33,9 @@ public class AdminRestrictController {
 	
 	@Autowired
 	private AdminRestrictService adminRestrictService;
+	
+	@Autowired
+	private MemberDao memberDao; 
 	
 	// 회원 제재 입력 페이지 
 	@GetMapping("/restrict_member/{memberNo}/{auctionReportNo}")
@@ -48,6 +53,11 @@ public class AdminRestrictController {
 			@PathVariable int auctionReportNo, 
 			@PathVariable int memberNo) {		
 		adminRestrictService.restrictMember(managerRestrictionDto, auctionReportNo, memberNo);
+		
+		MemberDto memberDto = memberDao.memberSearch(memberNo);
+		if(memberDto.getMemberRedCount() >= 10) {
+			memberDao.setBlock(memberNo);
+		}
 		
 		return "redirect: /auctionara/admin/restriction/list";
 	}
