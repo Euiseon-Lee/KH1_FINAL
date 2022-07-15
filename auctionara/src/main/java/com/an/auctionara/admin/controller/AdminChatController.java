@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.an.auctionara.repository.ChatReportDao;
+import com.an.auctionara.vo.ChatReportVO;
 import com.an.auctionara.vo.ManagerRestrictionListVO;
 
 @Controller
@@ -31,7 +32,7 @@ public class AdminChatController {
 			@RequestParam(required = false, defaultValue = "1") int p,  
 			@RequestParam(required = false, defaultValue = "10") int s,
 			Model model) {
-		List<ManagerRestrictionListVO> list = chatReportDao.list(type, keyword, p, s);
+		List<ChatReportVO> list = chatReportDao.list(type, keyword, p, s);
 		model.addAttribute("list", list);
 		
 		

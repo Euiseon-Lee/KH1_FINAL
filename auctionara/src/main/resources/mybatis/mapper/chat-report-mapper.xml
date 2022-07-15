@@ -37,10 +37,11 @@
  		values (#{chatReportNo}, #{chatRoomNo}, #{memberNo}, #{chatReportReason})
  	</insert>
 	
+	<!-- 신고 list -->
 	<select id="list" resultType="ChatReportVO" parameterType="Map">
 		select * from (
 	 		select rownum rn, TMP.* from (
-	 			select CR.*, M.member_nick, c.auction_no, A.auction_title from chat_report CR
+	 			select CR.*, M.member_nick, c.auction_no, A.auction_title, A.auctioneer_no from chat_report CR
 				    inner join member M on CR.member_no = M.member_no
 				    inner join chatroom C on CR.chatroom_no = c.chatroom_no
 				    inner join auction A on C.auction_no = A.auction_no
@@ -53,5 +54,28 @@
 	 		) TMP
 	 	) where rn between #{begin} and #{end}
 	</select>
+	
+	<!-- 신고 list count -->
+	<select id="count" parameterType="Map" resultType="int">
+		select count(*) from chat_report CR
+				    inner join member M on CR.member_no = M.member_no
+				    inner join chatroom C on CR.chatroom_no = c.chatroom_no
+				    inner join auction A on C.auction_no = A.auction_no
+		 	<if test="type != null and keyword != null">
+		 		<![CDATA[
+				 	where instr(${type}, #{keyword}) > 0
+		 		]]>
+		 	</if>
+	</select>
+	
+	<!-- 관리자 제재가 진행되면 제재 여부 컬럼 update -->
+	 <update id="setRestrict" parameterType="int">
+	 	update chat_report set auction_report_restriction = 1 where chat_report_no = #{chatReportNo}	
+	 </update>
+	 
+	 <!-- 상세 조회 -->
+	 <select id="one" resultType="ChatReportDto" parameterType="int">
+	 	select * from chat_report where chat_report_no = #{chatReportNo}
+	 </select>
 	
 </mapper> 

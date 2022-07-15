@@ -28,16 +28,16 @@
 			<tbody>
 				<c:forEach var="chatReportVO" items="${list}">
 					<tr>
-						<td>${chartReportVO.chartReportNo}</td>
+						<td>${chatReportVO.chatReportNo}</td>
 						<td>
-							<a href="${root}/admin/chat/report_detail/${chatReportVO.chatroomNo}">${chartReportVO.auctionTitle}</a>
+							<a href="${root}/admin/chat/report_detail/${chatReportVO.chatroomNo}">${chatReportVO.auctionTitle}</a>
 						</td>
-						<td>${chartReportVO.memberNick}</td>
-						<td>${chartReportVO.chatReportTime}</td>
+						<td>${chatReportVO.memberNick}</td>
+						<td>${chatReportVO.chatReportTime}</td>
 						<td>
 							<c:choose>
 								<c:when test="${chatReportVO.chatReportRestriction == 0}">
-									<a href="${pageContext.request.contextPath}/admin/restriction/restrict_member/${auctionReportListVO.auctioneerNo}/${auctionReportListVO.auctionReportNo}">제재하기</a>
+									<a href="${pageContext.request.contextPath}/admin/restriction/restrict_chat/${chatReportVO.auctioneerNo}/${chatReportVO.chatReportNo}">제재하기</a>
 								</c:when>
 								<c:when test="${chatReportVO.chatReportRestriction == 1}">
 									제재 완료

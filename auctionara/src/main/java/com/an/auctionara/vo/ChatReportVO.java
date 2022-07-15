@@ -17,4 +17,5 @@ public class ChatReportVO {
 	private String auctionTitle; 
 	// 신고자 닉네임 
 	private String memberNick; 
+	private int auctioneerNo; 
 }
