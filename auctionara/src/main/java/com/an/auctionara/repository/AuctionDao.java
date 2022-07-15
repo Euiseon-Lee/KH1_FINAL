@@ -35,4 +35,22 @@ public interface AuctionDao {
 	AuctionDto setPrivate(int auctionNo);
 	// 관리자 페이지 - 경매 게시글 수 
 	int countAuction();
+	
+	
+	//마이페이지 경매 등록한 총 물품 개수 추출
+	int mypageCount(int memberNo);
+	//마이페이지 정상 경매 중인 물품 개수 추출
+	int mypageNormalCount(int memberNo);
+	//마이페이지 경매 취소한 물품 개수 추출
+	int mypageCancelCount(int memberNo);
+	//마이페이지 경매 중지한 물품 개수 추출
+	int mypageStopCount(int memberNo);
+	//마이페이지 경매 등록한 총 물품 리스트 추출
+	List<AuctionDto> mypageList(int memberNo);
+	//마이페이지 정상 경매 중인 물품 리스트 추출
+	List<AuctionDto> mypageNormalList(int memberNo);
+	//마이페이지 경매 취소한 물품 리스트 추출
+	List<AuctionDto> mypageCancelList(int memberNo);
+	//마이페이지 경매 중지한 물품 리스트 추출
+	List<AuctionDto> mypageStopList(int memberNo);
 }

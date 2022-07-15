@@ -41,21 +41,21 @@
 		</div>
 		
 		<div class="row m-5 d-inline">
-			<div>${memberDto.memberNick}</div>
-			<div>${memberDto.memberEmail}</div>
+			<div>${memberVO.memberNick}</div>
+			<div>${memberVO.memberEmail}</div>
 			
 			<table class="table-borderless table-responsive table-sm mt-3">
 				<tr>
 					<th class="text-left" style="width:50%;">보유 포인트</th>
 					<td class="text-right">
-						<a href="${root}/mypage/cash_log">${memberDto.memberHoldingPoints}p ></a>
+						<a href="${root}/mypage/cash_log">${memberVO.memberHoldingPoints}p ></a>
 					</td>
 				</tr>
 				<tr>
 					<th class="text-left">총 경매 횟수</th>
 					<td class="text-right">
 						<a href="${root}/mypage/auction_history">
-						
+							${memberVO.normalCount}회 >
 						</a>
 					</td>
 				</tr>
@@ -63,7 +63,7 @@
 					<th class="text-left">총 낙찰 횟수</th>
 					<td class="text-right">
 						<a href="${root}/mypage/auction_history">
-						
+							${memberVO.succCount}회 >
 						</a>
 					</td>
 				</tr>
@@ -71,7 +71,7 @@
 					<th class="text-left">경고횟수</th>
 					<td class="text-right">
 						<a href="${root}/mypage/auction_history">
-							${memberDto.memberRedCount}회 >						
+							${memberVO.memberRedCount}회 >						
 						</a>
 					</td>
 				</tr>

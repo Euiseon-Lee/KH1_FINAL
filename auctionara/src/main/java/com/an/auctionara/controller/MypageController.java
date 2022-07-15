@@ -1,6 +1,7 @@
 package com.an.auctionara.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.service.MemberService;
+import com.an.auctionara.vo.MemberVO;
 
 @Controller
 @RequestMapping("/mypage")
@@ -33,20 +35,12 @@ public class MypageController {
 	@GetMapping("/index")
 	public String mypageIndex(HttpSession session, Model model) {
 		int memberNo = (int) session.getAttribute("whoLogin");
+		MemberVO memberVO = memberService.mypage(memberNo);
+		model.addAttribute("memberVO", memberVO);
 		
-		MemberDto memberDto = memberDao.memberSearch(memberNo);
-		model.addAttribute("memberDto", memberDto);
-		
-		int attachmentNo = memberDto.getAttachmentNo();
-		
-		if(attachmentNo == 0) {
-			model.addAttribute("profileUrl", "/image/user.png");
-		}
-		else {
-			model.addAttribute("profileUrl", "/attachment/download?attachmentNo=" + attachmentNo);
-		}
-		
-		
+		int attachmentNo = memberVO.getAttachmentNo();
+		model.addAttribute("profileUrl", "/attachment/download?attachmentNo=" + attachmentNo);
+
 		return "mypage/index";
 	}
 	
@@ -74,9 +68,8 @@ public class MypageController {
 		String begin = request.getParameter("begin");
 		String end = request.getParameter("end");
 		
-		
 		String memberPreference = week+", "+begin+" ~ "+end;
-		memberDto.setMemberPreference(memberPreference);		
+		memberDto.setMemberPreference(memberPreference);	
 		
 		boolean success = memberService.info(memberDto, attachment);
 		
@@ -122,6 +115,7 @@ public class MypageController {
 	
 	@GetMapping("/auction_history")
 	public String auctionHistory(HttpSession session, Model model) {
+
 		return "mypage/auction_history";
 	}
 	

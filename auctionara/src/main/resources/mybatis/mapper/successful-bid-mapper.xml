@@ -47,4 +47,8 @@
 		update successful_bid set succ_bidder_approve = sysdate where trunc(sysdate) - trunc(succ_date) >= 7
 	</update>
 	
+	<!-- 마이페이지 낙찰성공한 총 개수 출력 -->
+	<select id="countSuccbidbyMemberNo" parameterType="int" resultType="int">
+		select count(*) from successful_bid where succ_bidder_no = #{memberNo}
+	</select>	
 </mapper> 

@@ -3,6 +3,7 @@ package com.an.auctionara.repository;
 import java.util.List;
 
 import com.an.auctionara.entity.MemberDto;
+import com.an.auctionara.vo.MemberVO;
 
 public interface MemberDao {
 	
@@ -11,6 +12,8 @@ public interface MemberDao {
 	MemberDto login(String memberEmail, String memberPw);
 	
 	MemberDto memberSearch(int memberNo);
+	
+	MemberVO mypageMemberSearch(int memberNo);
 
 	int checkEmailNum(String memberEmail);
 	

@@ -2,6 +2,7 @@ package com.an.auctionara.service;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,8 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.AttachmentDao;
+import com.an.auctionara.repository.AuctionDao;
 import com.an.auctionara.repository.GpsAddressDao;
 import com.an.auctionara.repository.MemberDao;
+import com.an.auctionara.repository.SuccessfulBidDao;
+import com.an.auctionara.vo.MemberVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -25,6 +29,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private AttachmentDao attachmentDao;
+	
+	@Autowired
+	private AuctionDao auctionDao;
+	
+	@Autowired
+	private SuccessfulBidDao successfulBidDao;
 	
 	
 	//첨부파일(프로필) 없이 구현함 이후 추가 구현 필요
@@ -79,6 +89,26 @@ public class MemberServiceImpl implements MemberService {
 			return true;
 		}
 
+	}
+
+	@Override
+	public MemberVO mypage(int memberNo) {
+		MemberVO memberVO = memberDao.mypageMemberSearch(memberNo);
+
+		int totalCount = auctionDao.mypageCount(memberNo);
+		int normalCount = auctionDao.mypageNormalCount(memberNo);
+		int cancelCount = auctionDao.mypageCancelCount(memberNo);
+		int stopCount = auctionDao.mypageStopCount(memberNo);
+		
+		int succCount = successfulBidDao.succCount(memberNo);
+		
+		memberVO.setTotalCount(totalCount);
+		memberVO.setNormalCount(normalCount);
+		memberVO.setCancelCount(cancelCount);
+		memberVO.setStopCount(stopCount);
+		memberVO.setSuccCount(succCount);
+		
+		return memberVO;
 	}
 	
 	

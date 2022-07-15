@@ -131,7 +131,7 @@
 		update member set member_holding_points = member_holding_points - #{cashingMoney} where member_no = #{memberNo}
 	</update>
 	
-		
+	
 	<update id="info" parameterType="MemberDto">
 		update member 
 			set
@@ -144,5 +144,9 @@
 	<select id="recall" parameterType="String" resultType="int">
 		select attachment_no from member
 			where member_email = #{memberEmail}
+	</select>
+	
+	<select id="mypageOne" parameterType="int" resultType="MemberVO">
+		select * from member where member_no = #{memberNo}
 	</select>
 </mapper> 

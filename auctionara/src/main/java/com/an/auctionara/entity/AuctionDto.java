@@ -29,5 +29,5 @@ public class AuctionDto {
 	private int auctionCircle2;
 	
 	//경매진행상태 컬럼 추가
-	private int auction_process;
+	private int auctionProcess;
 }

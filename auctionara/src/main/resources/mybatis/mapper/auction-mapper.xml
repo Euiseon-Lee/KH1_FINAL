@@ -311,7 +311,7 @@
 		select count(*) "auction_count" from auction where to_char(auction_upload_time, 'YYMM') = to_char(sysdate, 'YYMM')
 	</select>
 	
-	<!-- 마이페이지 - 회원번호로 경매 등록한 총 물품 개수 추출 -->
+		<!-- 마이페이지 - 회원번호로 경매 등록한 총 물품 개수 추출 -->
 	<select id="countAuctionbyMemberNo" parameterType="int" resultType="int">
 		select count(*) from auction where auctioneer_no = #{memberNo}
 	</select>
@@ -332,7 +332,6 @@
 	<select id="countStopbyMemberNo" parameterType="int" resultType="int">
 		select count(*) from auction 
 			where auctioneer_no = #{memberNo} and auction_process = 2
-	</select>	
-
-
+	</select>
+	
 </mapper> 
