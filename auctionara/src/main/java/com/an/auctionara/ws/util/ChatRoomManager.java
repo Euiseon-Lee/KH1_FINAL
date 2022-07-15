@@ -13,9 +13,6 @@ import com.an.auctionara.vo.ReceiveChatVO;
 import com.an.auctionara.vo.ReceiveFileVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class ChatRoomManager {
 	
 	private Map<Integer, ChatRoom> rooms = Collections.synchronizedMap(new ConcurrentHashMap<>());
@@ -60,18 +57,19 @@ public class ChatRoomManager {
 	public boolean notExist(int chatRoomNo) {
 		return rooms.containsKey(chatRoomNo) == false;
 	}
-	public void textBroadcastRoom(WebSocketSession session, int chatRoomNo, String message, String type) throws IOException {
+	public void textBroadcastRoom(WebSocketSession session, int chatRoomNo, int chatterNo, String chatTime, String message, String type) throws IOException {
 		Member member = new Member(session);
 		if(!member.isMember()) return;
 		ReceiveChatVO vo = ReceiveChatVO.builder()
 					.chatRoomNo(chatRoomNo)
+					.chatterNo(chatterNo)
+					.chatTime(String.valueOf(chatTime))
 					.message(String.valueOf(message))
 					.messageType(type)
 					.build();			
 		
 		String json = mapper.writeValueAsString(vo);
 		TextMessage textMessage = new TextMessage(json);
-		log.info("##########textMessage  " + textMessage);
 		getRoom(chatRoomNo).broadcast(textMessage);
 	}
 	public void fileBroadcastRoom(WebSocketSession session, int chatRoomNo, ByteArray message, String type) throws IOException {

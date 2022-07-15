@@ -16,5 +16,6 @@ public interface AuctionService {
 	List<MyBiddingAuctionListVO> myBiddingAuctionList(int bidderNo);
 	AuctionDetailVO detail(int bidderNo, int auctionNo);
 	AuctionDetailRefreshVO bidding(BiddingDto biddingDto);
-	public void successfulBid();
+	void successfulBid();
+	void autoApprove();
 }

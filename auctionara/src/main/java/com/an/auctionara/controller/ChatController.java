@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.an.auctionara.entity.ChatContentDto;
+import com.an.auctionara.entity.MemberRatingDto;
+import com.an.auctionara.entity.RatingDto;
 import com.an.auctionara.repository.ChatContentDao;
 import com.an.auctionara.repository.ChatRoomDao;
+import com.an.auctionara.repository.MemberRatingDao;
+import com.an.auctionara.repository.RatingDao;
 import com.an.auctionara.repository.SuccessfulBidDao;
 import com.an.auctionara.vo.CheckRatingVO;
 
@@ -32,6 +36,12 @@ public class ChatController {
 	
 	@Autowired
 	private SuccessfulBidDao successfulBidDao;
+	
+	@Autowired
+	private RatingDao ratingDao;
+	
+	@Autowired
+	private MemberRatingDao memberRatingDao;
 
 	// 채팅 메인
 	@GetMapping
@@ -46,7 +56,7 @@ public class ChatController {
 	public String startChat(@PathVariable("auctionNo") int auctionNo, Model model, HttpSession httpSession) {
 		int memberNo = (int) httpSession.getAttribute("whoLogin");
 		model.addAttribute("chatRoomNo", chatRoomDao.join(auctionNo, memberNo));
-		model.addAttribute("chatRoomList", chatRoomDao.list(memberNo)); // 채팅방 리스트 출력
+		model.addAttribute("chatRoomList", chatRoomDao.list(memberNo));
 		return "/chat/chat";
 	}
 	
@@ -84,5 +94,19 @@ public class ChatController {
 	@ResponseBody
 	public void bidderApprove(@PathVariable("auctionNo") int auctionNo) {
 		successfulBidDao.bidderApprove(auctionNo);
+	}
+	
+	// 평가 항목 출력
+	@GetMapping("/rating/list")
+	@ResponseBody
+	public List<RatingDto> ratingList() {
+		return ratingDao.list();
+	}
+	
+	// 평가 저장
+	@PostMapping("/rating/save")
+	@ResponseBody
+	public void saveRating(@RequestBody MemberRatingDto memberRatingDto) {
+		memberRatingDao.save(memberRatingDto);
 	}
 }

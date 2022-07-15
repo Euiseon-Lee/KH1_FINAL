@@ -111,9 +111,9 @@
                     	<a class="btn btn-info btn-lg btn-block py-3" href="${root}/chat" role="button" v-if="(auctionClose && biddingCount == 0) || !auctionClose">
 		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 1:1 채팅 관리
 		                </a>
-		                <button type="button" class="btn btn-info btn-lg btn-block py-3" v-if="auctionClose && biddingCount != 0">
-		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 구매자와 1:1 채팅
-		                </button>		                
+		                <a class="btn btn-info btn-lg btn-block py-3" href="${root}/chat" role="button" v-if="auctionClose && biddingCount != 0">
+		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 낙찰자와 1:1 채팅
+		                </a>		                
                     </c:when>
                     <c:otherwise>
                     	<a class="btn btn-info btn-lg btn-block py-3" href="${root}/chat/${auctionDetail.auctionNo}" role="button">

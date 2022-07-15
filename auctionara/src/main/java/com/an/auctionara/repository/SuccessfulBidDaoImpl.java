@@ -40,4 +40,9 @@ public class SuccessfulBidDaoImpl implements SuccessfulBidDao{
 	public void bidderApprove(int auctionNo) {
 		sqlSession.update("successful_bid.bidderApprove", auctionNo);
 	}
+
+	@Override
+	public void autoApprove() {
+		sqlSession.update("successful_bid.autoApprove");
+	}
 }

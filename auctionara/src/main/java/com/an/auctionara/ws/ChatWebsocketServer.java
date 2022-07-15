@@ -21,9 +21,6 @@ import com.an.auctionara.vo.ReceiveFileVO;
 import com.an.auctionara.ws.util.ChatRoomManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class ChatWebsocketServer extends BinaryWebSocketHandler {	
 	
 	private ChatRoomManager manager = new ChatRoomManager();
@@ -88,7 +85,7 @@ public class ChatWebsocketServer extends BinaryWebSocketHandler {
 				manager.enterChat(session, receiveChatVO.getChatRoomNo());
 			}
 			else if(receiveChatVO.getType() == CHAT) {
-				manager.textBroadcastRoom(session, receiveChatVO.getChatRoomNo(), receiveChatVO.getMessage(), messageMap.get("type"));
+				manager.textBroadcastRoom(session, receiveChatVO.getChatRoomNo(), receiveChatVO.getChatterNo(), receiveChatVO.getChatTime(), receiveChatVO.getMessage(), messageMap.get("type"));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
