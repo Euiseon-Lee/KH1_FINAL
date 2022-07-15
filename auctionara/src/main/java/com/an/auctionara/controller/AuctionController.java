@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.an.auctionara.entity.AuctionReportDto;
 import com.an.auctionara.entity.BiddingDto;
 import com.an.auctionara.entity.CategoryDto;
 import com.an.auctionara.entity.GpsAddressDto;
 import com.an.auctionara.entity.PhotoDto;
 import com.an.auctionara.repository.AuctionDao;
+import com.an.auctionara.repository.AuctionReportDao;
 import com.an.auctionara.repository.BiddingDao;
 import com.an.auctionara.repository.CategoryDao;
 import com.an.auctionara.repository.GpsAddressDao;
@@ -62,6 +64,9 @@ public class AuctionController {
 	
 	@Autowired
 	private AuctionService auctionService;
+	
+	@Autowired
+	private AuctionReportDao auctionReportDao;
 	
 	// 경매 검색 페이지
 	@GetMapping("/search")
@@ -190,5 +195,13 @@ public class AuctionController {
 		memberDao.plusRedCount(memberNo); // 회원 경고 횟수 +1
 		auctionDao.setPrivate(auctionNo); // 경매 비공개
 		return "redirect:/"; // 임시 // 추후 마이페이로 이동
-	}	
+	}
+	
+	// 경매 신고
+	@ResponseBody
+	@PostMapping("/detail/report")
+	public void report(@RequestBody AuctionReportDto auctionReportDto)  {
+		auctionReportDao.report(auctionReportDto); 
+	}
+	
 }

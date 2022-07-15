@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.an.auctionara.entity.ChatContentDto;
+import com.an.auctionara.entity.ChatReportDto;
 import com.an.auctionara.entity.MemberRatingDto;
 import com.an.auctionara.entity.RatingDto;
 import com.an.auctionara.repository.ChatContentDao;
@@ -109,4 +110,11 @@ public class ChatController {
 	public void saveRating(@RequestBody MemberRatingDto memberRatingDto) {
 		memberRatingDao.save(memberRatingDto);
 	}
+	
+	// 채팅 신고
+	@PostMapping("/report")
+	@ResponseBody
+	public void report(@RequestBody ChatReportDto chatReportDto) {
+		chatRoomDao.report(chatReportDto);
+	}	
 }

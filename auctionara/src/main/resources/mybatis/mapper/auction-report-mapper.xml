@@ -77,5 +77,15 @@
 		where AR.auction_no = #{auctionNo} 
 		order by auction_report_no desc
 	 </select>
-
+	
+	<!-- 시퀸스 생성 -->
+ 	<select id="sequence" resultType="int">
+ 		select auction_report_seq.nextval from dual
+ 	</select>
+ 	
+ 	<!-- 채팅방 신고 -->
+ 	<insert id="insert" parameterType="chatReportDto">
+ 		insert into auction_report (auction_report_no, auction_no, auction_reporter_no, auction_report_reason) 
+ 		values (#{auctionReportNo}, #{auctionNo}, #{auctionReporterNo}, #{auctionReportReason})
+ 	</insert>
 </mapper> 

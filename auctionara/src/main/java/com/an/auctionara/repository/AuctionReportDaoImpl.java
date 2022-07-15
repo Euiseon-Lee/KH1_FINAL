@@ -58,4 +58,11 @@ public class AuctionReportDaoImpl implements AuctionReportDao{
 		// 특정 경매에 대한 report list를 출력하는 메소드
 		return sqlSession.selectList("auctionReport.detailList", auctionNo);
 	}
+
+	@Override
+	public void report(AuctionReportDto auctionReportDto) {
+		int auctionReportNo = sqlSession.selectOne("auctionReport.sequence");
+		auctionReportDto.setAuctionReportNo(auctionReportNo);		
+		sqlSession.insert("auctionReport.insert", auctionReportDto);
+	}
 }

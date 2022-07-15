@@ -122,6 +122,7 @@
 			<mvc:exclude-mapping path="/auction/detail/bidding/close*"/>
 			<mvc:exclude-mapping path="/auction/detail/cancel/**"/>
 			<mvc:exclude-mapping path="/auction/detail/stop/**"/>
+			<mvc:exclude-mapping path="/auction/detail/report/**"/>
 
 			<bean class="com.an.auctionara.interceptor.AuctionPrivateInterceptor"></bean>
 		</mvc:interceptor>
