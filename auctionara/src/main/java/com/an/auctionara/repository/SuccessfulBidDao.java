@@ -9,4 +9,5 @@ public interface SuccessfulBidDao {
 	CheckRatingVO checkRating(int auctionNo);
 	void auctioneerApprove(int auctionNo);
 	void bidderApprove(int auctionNo);
+	void autoApprove();
 }

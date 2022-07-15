@@ -204,5 +204,11 @@ public class AuctionServiceImpl implements AuctionService {
 					successfulBidDao.insert(finish); 
 			}			
 		}
-	}	
+	}
+	
+	@Scheduled(cron = "0 0 12 * * *") // 매일 오후 12시마다 낙찰 후 7일이 지났고 거래완료 안한 낙찰자 자동 거래완료 처리
+	@Override
+	public void autoApprove() {
+		successfulBidDao.autoApprove();
+	}
 }

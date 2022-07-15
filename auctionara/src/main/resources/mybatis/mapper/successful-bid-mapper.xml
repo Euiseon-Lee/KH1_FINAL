@@ -42,4 +42,9 @@
 		update successful_bid set succ_bidder_approve = sysdate where auction_no = #{auctionNo}
 	</update>
 	
+	<!-- 낙찰 7일 후 자동 판매자 거래완료 처리 -->
+	<update id="autoApprove">
+		update successful_bid set succ_bidder_approve = sysdate where trunc(sysdate) - trunc(succ_date) >= 7
+	</update>
+	
 </mapper> 
