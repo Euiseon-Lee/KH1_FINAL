@@ -12,4 +12,9 @@ public class AdminChatController {
 	public String bot() {
 		return "admin/chat/bot";
 	}
+	
+	@GetMapping("/report_list")
+	public String repost_list() {
+		return "admin/chat/report_list"; 
+	}
 }
