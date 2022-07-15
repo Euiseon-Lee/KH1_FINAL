@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="chat_report">
+ 	
+ 	<!-- 시퀸스 생성 -->
+ 	<select id="sequence" resultType="int">
+ 		select chat_report_seq.nextval from dual
+ 	</select>
+ 	
+ 	<!-- 채팅방 신고 -->
+ 	<insert id="insert" parameterType="chatReportDto">
+ 		insert into chat_report (chat_report_no, chatroom_no, member_no, chat_report_reason) 
+ 		values (#{chatReportNo}, #{chatRoomNo}, #{memberNo}, #{chatReportReason})
+ 	</insert>
+ 	 
+ </mapper>

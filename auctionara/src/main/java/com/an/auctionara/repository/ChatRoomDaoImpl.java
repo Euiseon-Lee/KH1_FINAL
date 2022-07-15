@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.an.auctionara.entity.ChatReportDto;
 import com.an.auctionara.entity.ChatRoomDto;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.ChatRoomListVO;
@@ -46,5 +47,10 @@ public class ChatRoomDaoImpl implements ChatRoomDao{
 		return sqlSession.selectOne("chatroom.auctionOne", auctionNo);
 	}
 
-
+	@Override
+	public void report(ChatReportDto chatReportDto) {
+		int chatReportNo = sqlSession.selectOne("chat_report.sequence");
+		chatReportDto.setChatReportNo(chatReportNo);
+		sqlSession.insert("chat_report.insert", chatReportDto);
+	}
 }
