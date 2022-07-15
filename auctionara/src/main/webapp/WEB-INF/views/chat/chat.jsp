@@ -31,21 +31,25 @@
         				<div class="col-1 mr-4"><img class="rounded" :src="'${root}/attachment/download?attachmentNo=' + photoAttachmentNo"></div>
         				<div class="col ml-3">
         					<div class="row fw-bold mt-2 text-truncate">{{ auctionTitle }}</div>
-        					<a class="row text-muted chatroomName mt-2"><i class="fa-solid fa-right-from-bracket mt-1 pr-2"></i> 판매자 정보 보러가기</a>
+        					<a class="row text-muted chatroomName mt-2 pointer"><i class="fa-solid fa-right-from-bracket mt-1 pr-2"></i> 판매자 정보 보러가기</a>
         				</div>
         				<div class="col-2 pt-3">
         					<button class="btn btn-info" v-if="auctioneerBtn == null && ${whoLogin} == auctioneerNo" @click="auctioneerFinish">거래 완료</button>
         					<button class="btn btn-info" v-if="memberBtn == null && ${whoLogin} != auctioneerNo" @click="memberFinish">거래 완료</button>
-        					<button class="btn btn-success" v-if="auctioneerBtn != null && memberBtn != null && rating && ${whoLogin} != auctioneerNo" @click="showRating = true">평가하기</button>
+        					<button class="btn btn-success" v-if="auctioneerBtn != null && memberBtn != null && rating && ${whoLogin} != auctioneerNo" @click="setRating">평가하기</button>
         				</div>
         			</div>
         			<div class="row py-3">
         				<div class="col" id="chat-wrap">
         					<div v-for="(chatContent, index) in chatContentDto" class="row my-2 pl-3 pr-5" :key="index" :class="{'flex-row-reverse': chatContent.chatterNo == ${whoLogin}}">
+				            	<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + attachmentNo" v-if="${whoLogin} == auctioneerNo && chatContent.chatterNo != ${whoLogin}">
+								<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + auctioneerAttachmentNo" v-if="${whoLogin} != auctioneerNo && chatContent.chatterNo != ${whoLogin}">
 				            	<span class="bg-primary rounded-pill px-3 py-2 text-white">{{ chatContent.chatContent }}</span><span class="text-muted chat-time mt-3 mx-2">{{ chatContent.chatTimeFormat }}</span>     
 				            </div>
-				            <div v-for="(message, index) in messageList" :key="index" class="row">
-			                        {{messageList[index].message}}
+				            <div v-for="(message, index) in messageList" :key="index" class="row my-2 pl-3 pr-5" :class="{'flex-row-reverse': message.chatterNo == ${whoLogin}}">
+			                	<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + attachmentNo" v-if="${whoLogin} == auctioneerNo && message.chatterNo != ${whoLogin}">
+								<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + auctioneerAttachmentNo" v-if="${whoLogin} != auctioneerNo && message.chatterNo != ${whoLogin}">
+			                	<span class="bg-primary rounded-pill px-3 py-2 text-white">{{ message.message }}</span><span class="text-muted chat-time mt-3 mx-2">{{ message.chatTime }}</span>   
 			            	</div>
         				</div>
         			</div>
@@ -58,35 +62,26 @@
         </div>
         <div class="col" v-show="showRating">
 			<div class="row p-3 border-bottom bg-light text-muted pointer" @click="showRating = false"><i class="fa-solid fa-arrow-left-long pr-2"></i>채팅방으로 돌아가기</div>
-        	<h4 class="row">{{ auctioneerNick }}님과 거래가 어떠셨나요?</h4>
-        	<div class="row">
+        	<h4 class="row fw-bold pl-5 my-5 ml-5">{{ auctioneerNick }} 님과의 거래가 어떠셨나요?</h4>
+        	<div class="row px-5 ml-5">
         		<div class="col">
-        			<h5 class="row">좋아요</h5>
-        			<div class="form-check row">
-						<label class="form-check-label mr-3" for="like1">
-					    	<input class="form-check-input" type="radio" name="rating" id="like1" checked /> 임시
-						</label>
-					</div>
-        			<div class="form-check row">
-						<label class="form-check-label mr-3" for="like1">
-					    	<input class="form-check-input" type="radio" name="rating" id="like1" checked /> 임시
-						</label>
+        			<h3 class="row fw-bold text-success pb-3">&#129392; 좋아요</h3>
+        			<div v-for="(rating, index) in ratingList" :key="index" :class="{'form-check row mb-2': rating.ratingSortNo == '1'}">
+						<label class="form-check-label mr-3 fw-bold text-muted"  for="rating.ratingItemNo" v-if="rating.ratingSortNo == '1'">
+				        	<input class="form-check-input" type="radio" name="rating" id="rating.ratingItemNo" :value="rating.ratingItemNo" checked /> {{ rating.ratingContent }}
+				        </label>
 					</div>					
         		</div>
         		<div class="col">
-        			<h5 class="row">별로에요</h5>
-        			<div class="form-check row">
-						<label class="form-check-label mr-3" for="like1">
-					    	<input class="form-check-input" type="radio" name="rating" id="like1" checked /> 임시
-						</label>
-					</div>
-        			<div class="form-check row">
-						<label class="form-check-label mr-3" for="like1">
-					    	<input class="form-check-input" type="radio" name="rating" id="like1" checked /> 임시
-						</label>
-					</div>					        			
+        			<h3 class="row fw-bold text-primary pb-3">&#128532; 별로에요</h3>
+        			<div v-for="(rating, index) in ratingList" :key="index" :class="{'form-check row mb-2': rating.ratingSortNo == '0'}">
+						<label class="form-check-label mr-3 fw-bold text-muted" for="rating.ratingItemNo" v-if="rating.ratingSortNo == '0'">
+				        	<input class="form-check-input" type="radio" name="rating" id="rating.ratingItemNo" :value="rating.ratingItemNo" /> {{ rating.ratingContent }}
+				        </label>
+					</div>				        			
         		</div>
         	</div>
+        	<div class="row mt-5 ml-5 px-5"><button type="button" class="btn btn-primary px-3" @click="finishRating">평가 선택 완료</button></div>
         </div>
     </div>
 </div>
@@ -107,6 +102,9 @@
                 photoAttachmentNo: 0,
                 auctioneerNo: 0,
                 auctioneerNick: "",
+                attachmentNo: 0,
+                auctioneerAttachmentNo: 0,
+                ratingList: "",
                 socket: null,
                 messageList: [],
                 content: "",
@@ -134,7 +132,7 @@
              	// 해당 채팅방 채팅 이력 가져오기
                 axios.get("http://localhost:8080/auctionara/chat/talk/" + chatRoomNo)
                 .then(resp => {
-                    this.chatContentDto = resp.data; 
+                    this.chatContentDto = resp.data;
                 }); 
                 
                 // 경매 정보 출력
@@ -144,6 +142,8 @@
             	this.photoAttachmentNo = findInfo.photoAttachmentNo;
             	this.auctioneerNo = findInfo.auctioneerNo;
             	this.auctioneerNick = findInfo.auctioneerNick;
+            	this.attachmentNo = findInfo.attachmentNo;
+            	this.auctioneerAttachmentNo = findInfo.auctioneerAttachmentNo;
             	
                 // 거래 완료 및 평가 여부 확인
                 this.updateCheck();
@@ -162,27 +162,27 @@
                 };
                 var json = JSON.stringify(message);
                 this.socket.send(json);
+                this.scrollBottom();
             },
             whenDisconnected() {
-                console.log("연결 종료");
             },
             whenError() {
-            	console.log("서버와의 연결 오류가 발생하였습니다");
+            	alter("서버와의 연결 오류가 발생하였습니다");
             },
             whenMessageReceived(e) {
                 var data = JSON.parse(e.data);
-                var timeObject = moment(data.chatTime).format("MM-DD H:mm");
-
-                    this.div = data; // 받기
-                    if (data.chatRoomNo == this.chatRoomNo) {
-                        this.messageList.push(this.div);
-                    }
+                this.div = data; // 받기
+                if (data.chatRoomNo == this.chatRoomNo) {
+                	this.messageList.push(this.div);
+                }
+                this.scrollBottom();
             },
             send() {
                 var message = {
                     type: 2,
-                    // 채터 추가
+                    chatterNo : ${whoLogin},
                     chatRoomNo: this.chatRoomNo,
+                    chatTime: this.chatTime(),
                     message: this.content,
                     messageType: "string",
                 };
@@ -193,6 +193,7 @@
             		chatContent : this.content,
             	}).then(resp=>{
             		this.content = ""; // 초기화
+            		this.scrollBottom();
             	});
             },
             auctionInfo(e) {
@@ -215,7 +216,6 @@
             updateCheck() {
                	axios.get("http://localhost:8080/auctionara/chat/check/" + this.auctionNo)
                 .then(resp => {
-                	console.log(resp.data);
                     if(resp.data) {
                     	this.auctioneerBtn = resp.data.succAuctioneerApprove;
                     	this.memberBtn = resp.data.succBidderApprove;
@@ -229,6 +229,30 @@
                     }
                 });
             },
+            setRating() {
+            	axios.get("http://localhost:8080/auctionara/chat/rating/list")
+            	.then(resp => {
+            		this.showRating = true;
+            		this.ratingList = resp.data;
+            	});
+            },
+            finishRating() {
+            	axios.post("http://localhost:8080/auctionara/chat/rating/save", {
+            		ratingItemNo: $('input:radio[name=rating]:checked').val(),
+            		auctionNo: this.auctionNo,
+            	})
+            	.then(resp => {
+            		this.showRating = false;
+            		this.rating = false;
+            	});
+            },
+            chatTime() {
+            	var d = new Date();
+                return (d.getMonth()+1) + "월 " + d.getDate() + "일 " + d.getHours() + ":" + d.getMinutes();
+            },
+            scrollBottom() {
+            	$("#chat-wrap").scrollTop($("#chat-wrap")[0].scrollHeight); // 스크롤 맨 아래로
+            },
         },
         mounted() {
         	history.pushState(null, null, "${root}/chat"); // URL 변경
@@ -236,7 +260,10 @@
         		this.chatRoomNo = ${chatRoomNo};
         	</c:if>
         	<c:forEach var="ChatRoomListVO" items="${chatRoomList}">
-	    		this.chatRoomList.push({chatRoomNo: ${ChatRoomListVO.chatRoomNo}, auctionNo: ${ChatRoomListVO.auctionNo}, auctioneerNo: ${ChatRoomListVO.auctioneerNo}, photoAttachmentNo: ${ChatRoomListVO.photoAttachmentNo}, auctionTitle: "${ChatRoomListVO.auctionTitle}", auctioneerNick: ${ChatRoomListVO.auctioneerNick}});
+	    		this.chatRoomList.push({chatRoomNo: ${ChatRoomListVO.chatRoomNo}, auctionNo: ${ChatRoomListVO.auctionNo}, 
+	    			auctioneerNo: ${ChatRoomListVO.auctioneerNo}, photoAttachmentNo: ${ChatRoomListVO.photoAttachmentNo}, 
+	    			auctionTitle: "${ChatRoomListVO.auctionTitle}", auctioneerNick: "${ChatRoomListVO.auctioneerNick}",
+	    			attachmentNo: ${ChatRoomListVO.attachmentNo}, auctioneerAttachmentNo: ${ChatRoomListVO.auctioneerAttachmentNo}});
 	    	</c:forEach>
         	
         	if(this.chatRoomNo != 0) {
@@ -266,6 +293,12 @@
         height: 50px;
     }
     
+    .rounded-circle.profile {
+    	object-fit: cover;
+    	width: 40px;
+        height: 40px;    
+    }
+    
     img.rounded {
     	object-fit: cover;
     	width: 70px;
@@ -277,7 +310,7 @@
     }
 	
 	.pointer {
-		corsur: pointer;
+		cursor: pointer;
 	}
 	
     .message-wrapper>.message {
