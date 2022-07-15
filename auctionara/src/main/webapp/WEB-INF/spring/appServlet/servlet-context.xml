@@ -74,7 +74,9 @@
 			<mvc:exclude-mapping path="/member/change_pw"/>
 			<mvc:exclude-mapping path="/**/*.css"/>
 		    <mvc:exclude-mapping path="/**/*.js"/>
-		    <mvc:exclude-mapping path="/image/**/*.*"/>			
+		    <mvc:exclude-mapping path="/image/**/*.*"/>
+		    <mvc:exclude-mapping path="/member/reset*"/>			
+			
 
 			<bean class="com.an.auctionara.interceptor.AutologinInterceptor"></bean>
 		</mvc:interceptor>
@@ -91,7 +93,8 @@
 			<mvc:exclude-mapping path="/attachment/**"/>
 			<mvc:exclude-mapping path="/**/*.css"/>
 		    <mvc:exclude-mapping path="/**/*.js"/>
-		    <mvc:exclude-mapping path="/image/**/*.*"/>			
+		    <mvc:exclude-mapping path="/image/**/*.*"/>	
+		    <mvc:exclude-mapping path="/member/reset*"/>		
 
 			<bean class="com.an.auctionara.interceptor.IsLoginInterceptor"></bean>
 		</mvc:interceptor>
@@ -110,6 +113,7 @@
 			<mvc:exclude-mapping path="/**/*.css"/>
 		    <mvc:exclude-mapping path="/**/*.js"/>
 		    <mvc:exclude-mapping path="/image/**/*.*"/>
+		    <mvc:exclude-mapping path="/member/reset*"/>
 
 			<bean class="com.an.auctionara.interceptor.AddressInterceptor"></bean>
 		</mvc:interceptor>

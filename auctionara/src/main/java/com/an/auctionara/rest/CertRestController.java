@@ -59,19 +59,12 @@ public class CertRestController {
 	}
 	
 	
-//	@PostMapping("/asyncPw")
-//	public String sendPw(@ModelAttribute MemberDto targetDto) throws MessagingException {
-//		boolean isMember = memberDao.checkMemberNo(targetDto.getMemberEmail());
-//		
-//		if(!isMember) {
-//			return "redirect:change_pw?fail";
-//		}
-//		
-//		else {
-//			certService.sendPwResetMail(targetDto);
-//			return "change_pw?success";
-//		}
-//	}
+	@PostMapping("/asyncPw")
+	public boolean sendPw(@RequestParam String memberEmail
+			) throws MessagingException {
+			certService.sendPwResetMail(memberEmail);
+			return true;
+	}
 	
 
 }

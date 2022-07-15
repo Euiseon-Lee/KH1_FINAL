@@ -10,7 +10,7 @@
 	}
 </style>
 
-<div class="container-fluid">
+<div class="container">
 
 	<div class="row">
 		<h1>아이디(이메일)·비밀번호 찾기</h1>

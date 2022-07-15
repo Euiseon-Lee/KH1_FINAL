@@ -130,6 +130,20 @@
 	<update id="deductPoint" parameterType="Map">
 		update member set member_holding_points = member_holding_points - #{cashingMoney} where member_no = #{memberNo}
 	</update>
+		
+	<update id="info" parameterType="MemberDto">
+		update member 
+			set
+				member_nick = #{memberNick}, attachment_no = #{attachmentNo},
+				member_preference = #{memberPreference}
+			where
+				member_email = #{memberEmail}
+	</update>
+	
+	<select id="recall" parameterType="String" resultType="int">
+		select attachment_no from member
+			where member_email = #{memberEmail}
+	</select>
 	
 	<!-- 관리자 페이지 - 일반회원 전환 후 red_count = 0으로 리셋 -->
 	<update id="resetRedCount" parameterType="int">

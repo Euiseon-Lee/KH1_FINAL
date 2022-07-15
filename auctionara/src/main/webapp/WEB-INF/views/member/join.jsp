@@ -38,7 +38,7 @@
 		</div>
 		
 		<div class="row">
-			<label> 비밀번호</label>
+			<label>비밀번호</label>
 			<div class="input-group row center m-1">
 				<input type="password" name="memberPw" placeholder="알파벳 대소문자 및 숫자 8~16자" 
 					class="form-control form-control-lg" autocomplete="off" required>
@@ -84,7 +84,7 @@
 
 	</form>
 </div>
-
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script> -->
@@ -303,7 +303,3 @@
 	
 </script>
 
-
-
-
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

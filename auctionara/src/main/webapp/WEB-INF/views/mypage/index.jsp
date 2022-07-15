@@ -34,19 +34,19 @@
 	</div>
 		
 	<!-- 본문 -->
-	<div class="row flex-fill">
-		<div class="row col-4 m-3 d-inline">
+	<div class="row flex-fill d-flex flex-column">
+		<div class="row col-3 m-3 d-inline">
 			<img src="${pageContext.request.contextPath}${profileUrl}"
 					class="img-thumbnail center-block">
 		</div>
 		
-		<div class="row col-4 m-5 d-inline">
+		<div class="row m-5 d-inline">
 			<div>${memberDto.memberNick}</div>
 			<div>${memberDto.memberEmail}</div>
 			
 			<table class="table-borderless table-responsive table-sm mt-3">
 				<tr>
-					<th class="text-left">보유 포인트</th>
+					<th class="text-left" style="width:50%;">보유 포인트</th>
 					<td class="text-right">
 						<a href="${root}/mypage/cash_log">${memberDto.memberHoldingPoints}p ></a>
 					</td>
@@ -70,10 +70,22 @@
 				<tr>
 					<th class="text-left">경고횟수</th>
 					<td class="text-right">
-						${memberDto.memberRedCount}회 >
+						<a href="${root}/mypage/auction_history">
+							${memberDto.memberRedCount}회 >						
+						</a>
 					</td>
 				</tr>
-
+				<tr>
+					<th class="text-left">거래 시간</th>
+					<td class="text-right">
+						<c:if test="${memberDto.memberPreference != null}">
+							${memberDto.memberPreference}
+						</c:if>
+						<c:if test="${memberDto.memberPreference == null}">
+							<a href="${root}/mypage/info">거래 선호시간을 설정해주세요</a>
+						</c:if>
+					</td>
+				</tr>
 				
 	
 	

@@ -49,6 +49,11 @@
 			select rownum rn, TMP.*, count(*) over() auction_count from (
 			    select C.auction_no, C.auction_title, C.auction_opening_bid, C.auction_closed_time, 
 			    	min(D.photo_attachment_no) photo_attachment_no, max(E.bidding_price) bidding_price			    	
+				<if test="sort == 4">
+					<![CDATA[				
+                	, G.like_count
+			    	]]>
+				</if>
 			    from (select * from gps_address where 
 				<if test="filter == 0">
 					<![CDATA[
@@ -69,10 +74,19 @@
 			    join photo D on C.auction_no = D.photo_auction_no
 			    left join bidding E on C.auction_no = E.auction_no
 			    left join successful_bid F on C.auction_no = F.auction_no
+				<if test="sort == 4">
+					<![CDATA[				
+                left join (select A.auctioneer_no, count(A.auctioneer_no) like_count from auction A 
+                       join member_rating B on A.auction_no = B.auction_no
+                       join rating C on B.rating_item_no = C.rating_item_no
+                       where C.rating_sort_no = 1
+                       group by A.auctioneer_no) G on C.auctioneer_no = G.auctioneer_no
+			    	]]>
+				</if>			    
 			    where C.auction_private = 0 and F.auction_no is null and C.auction_closed_time > sysdate
 				<if test="keyword != null and search == 0">
 					<![CDATA[		    
-			    	and instr(C.auction_title, '${keyword}') > 0 or instr(C.auction_content, '${keyword}') > 0
+			    	and (instr(C.auction_title, '${keyword}') > 0 or instr(C.auction_content, '${keyword}') > 0)
 			    	]]>
 				</if>
 				<if test="keyword != null and search == 1">
@@ -93,6 +107,11 @@
 			    	and (distance(A.gps_latitude, A.gps_longitude, C.auction_latitude1, C.auction_longitude1) <![CDATA[ <= ]]> (A.gps_circle + C.auction_circle1)	
                     or distance(A.gps_latitude, A.gps_longitude, C.auction_latitude2, C.auction_longitude2) <![CDATA[ <= ]]> (A.gps_circle + C.auction_circle2))			    														    	   
 			    group by C.auction_no, C.auction_title, C.auction_opening_bid, C.auction_closed_time
+				<if test="sort == 4">
+					<![CDATA[				
+					, G.like_count
+			    	]]>
+				</if>			    
 			    order by
 				<if test="sort == 1">
 					<![CDATA[		    
@@ -108,7 +127,12 @@
 					<![CDATA[				
 					C.auction_closed_time asc,
 			    	]]>
-				</if>				
+				</if>
+				<if test="sort == 4">
+					<![CDATA[				
+					G.like_count desc nulls last,
+			    	]]>
+				</if>							
 			    C.auction_no desc
 		    ) TMP
 	    ) where rn between ${begin} and ${end}
@@ -172,7 +196,27 @@
 	    	]]>
 		</if>  	
 	</select>
-
+	
+	<!-- 판매자 정보 조회 -->
+	<select id="auctioneerInfo" resultType="AuctioneerInfoVO" parameterType="int">
+       select A.auctioneer_no, A.dislike_count, B.like_count, 
+       D.member_nick, D.attachment_no, D.member_preference, D.member_logintime, D.member_red_count 
+       from (select A.auctioneer_no, count(C.rating_sort_no) dislike_count from auction A 
+	       left join member_rating B on A.auction_no = B.auction_no
+	       left outer join (select * from rating where rating_sort_no = 0) C on B.rating_item_no = C.rating_item_no 
+	       where A.auctioneer_no = ${auctioneerNo}
+	       group by A.auctioneer_no
+	       ) A
+       left join (select A.auctioneer_no, count(C.rating_sort_no) like_count from auction A 
+	       left join member_rating B on A.auction_no = B.auction_no
+	       left outer join (select * from rating where rating_sort_no = 1) C on B.rating_item_no = C.rating_item_no 
+	       where A.auctioneer_no = ${auctioneerNo}
+	       group by A.auctioneer_no
+	       ) B
+       on A.auctioneer_no = B.auctioneer_no
+       join member D on A.auctioneer_no = D.member_no	
+	</select>
+	
 	<!-- 마감 시간이 되어서 낙찰처리가 필요한 경매 리스트 조회 -->
 	<select id="finish" resultType="SuccessfulBidDto" parameterType="Date">
 		select A.auction_no, B.succ_bidder_no, B.succ_final_bid, B.succ_auction_count from auction A 
@@ -266,5 +310,29 @@
 	<select id="countAuction" resultType="int">
 		select count(*) "auction_count" from auction where to_char(auction_upload_time, 'YYMM') = to_char(sysdate, 'YYMM')
 	</select>
+	
+	<!-- 마이페이지 - 회원번호로 경매 등록한 총 물품 개수 추출 -->
+	<select id="countAuctionbyMemberNo" parameterType="int" resultType="int">
+		select count(*) from auction where auctioneer_no = #{memberNo}
+	</select>
+	
+	<!-- 마이페이지 - 회원번호로 정상 경매 중인 물품 개수 추출 -->
+	<select id="countNormalbyMemberNo" parameterType="int" resultType="int">
+		select count(*) from auction 
+			where auctioneer_no = #{memberNo} and auction_process = 0
+	</select>
+	
+	<!-- 마이페이지 - 회원번호로 경매 취소한 물품 개수 추출 -->
+	<select id="countCancelbyMemberNo" parameterType="int" resultType="int">
+		select count(*) from auction 
+			where auctioneer_no = #{memberNo} and auction_process = 1
+	</select>
+	
+	<!-- 마이페이지 - 회원번호로 경매 중지한 물품 개수 추출 -->
+	<select id="countStopbyMemberNo" parameterType="int" resultType="int">
+		select count(*) from auction 
+			where auctioneer_no = #{memberNo} and auction_process = 2
+	</select>	
+
 
 </mapper> 
