@@ -59,29 +59,33 @@
 				</div>
 			</div>
 			
-			<div class="row">
-				<label>거래선호시간</label>
-				<div class="input-group row center m-1 mb-3">
-				
-				<select class="form-control" name="week">
-					<option value="" selected>선택해주세요</option>
-					<option value="요일무관">요일무관</option>
-					<option value="평일">평일</option>
-					<option value="주말">주말</option>
-				</select>
-				<div>&nbsp;&nbsp;</div>
-				<select class="form-control" name="begin">
-					<option value="" selected>선택해주세요</option>
-				</select>
-				<div>부터&nbsp;&nbsp;</div>
-				<select class="form-control" name="end">
-					<option value="" selected>선택해주세요</option>
-				</select>
-				<div>까지</div>
+			<div class="row">			
+				<div>
+					<label>거래선호시간</label>					
+					<div class="input-group row center m-1 mb-3">
+					<select class="form-control" id="week" name="week" required>
+						<option value="" selected>선택해주세요</option>
+						<option value="요일무관">요일무관</option>
+						<option value="평일">평일</option>
+						<option value="주말">주말</option>
+					</select>
+					<div>&nbsp;&nbsp;</div>
+					<select class="form-control" id="begin" name="begin" required>
+						<option value="" selected>선택해주세요</option>
+					</select>
+					<div>부터&nbsp;&nbsp;</div>
+					<select class="form-control" id="end" name="end" required>
+						<option value="" selected>선택해주세요</option>
+					</select>
+					<div>까지</div>
+					</div>
 				</div>
 			</div>
+			<div class="row float-right">
+				<strong>현재 설정된 거래 선호 시간: ${memberDto.memberPreference}</strong>
+			</div>
 			
-			<div class="row">
+			<div class="row mt-5">
 				<label> 비밀번호</label>
 				<div class="input-group row center m-1">
 					<input type="button" value="비밀번호 재설정을 위한 링크를 메일 발송해드립니다" class="form-control-lg btn-send-email btn-info">
@@ -208,7 +212,6 @@
 			$("#valid-nick").hide();
 			$("#invalid-nick").hide();
 			$("#nick-exists").hide();
-			$(".btn-send-nick").attr("disabled", true);
 			
 			$(this).val("");
 		});
