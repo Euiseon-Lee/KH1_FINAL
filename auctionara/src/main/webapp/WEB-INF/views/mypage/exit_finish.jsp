@@ -4,10 +4,11 @@
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
 
-<div class="container-fluid d-flex">
-	<!-- 사이드바 -->
+<div class="container d-flex">
+<!-- 사이드바 -->
+
 	<div class="row col-3 mt-4">
-		<ul class="nav flex-column">
+		<ul class="nav flex-column text-center">
 		  <li class="nav-item border-bottom">
 		  	<h4>
 		  		<a href="${root}/mypage/index" class="nav-link btn-outline-secondary">마이페이지</a>
@@ -33,7 +34,7 @@
 	
 	
 	<!-- 본문 -->
-	<div class="row flex-fill justify-content-center">
+	<div class="row flex-fill d-flex flex-column">
 		<div class="alert alert-info text-center mt-5" role="alert">
 			<h1>저희 경매나라를<br>
 				이용해주셔서 감사합니다<br><br>
