@@ -28,6 +28,10 @@
 				<div class="row">
 					<button type="submit" class="btn btn-primary btn-block mt-2">링크 발송</button>	
 				</div>
+				<div class="row justify-content-center">
+					<span class="fw-bold mt-4">로그인하러 가시겠습니까? <a class="ml-3" href="${root}/member/login">바로 로그인</a></span>
+				</div>
+				<a class="row text-muted mt-3 justify-content-center fs-small" href="${root}/member/check_email">이메일을 잊으셨나요?</a>
 			</form>
 		</div>
 		<div class="col">
