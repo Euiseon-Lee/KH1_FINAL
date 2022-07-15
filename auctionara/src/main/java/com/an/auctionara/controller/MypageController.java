@@ -1,14 +1,19 @@
 package com.an.auctionara.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.MemberDao;
@@ -47,9 +52,70 @@ public class MypageController {
 	
 	@GetMapping("/info")
 	public String info(HttpSession session, Model model) {
+		int memberNo = (int) session.getAttribute("whoLogin");
+		
+		MemberDto memberDto = memberDao.memberSearch(memberNo);
+		model.addAttribute("memberDto", memberDto);
+		
+		int attachmentNo = memberDto.getAttachmentNo();	
+		model.addAttribute("profileUrl", "/attachment/download?attachmentNo=" + attachmentNo);
+		
+		
 		return "mypage/info";
 	}
 	
+	@PostMapping("/info")
+	public String info(
+			@ModelAttribute MemberDto memberDto,
+			MultipartFile attachment,
+			HttpServletRequest request
+			) throws IllegalStateException, IOException {
+		String week = request.getParameter("week");
+		String begin = request.getParameter("begin");
+		String end = request.getParameter("end");
+		
+		if(week!=null && begin!=null && end!=null) {
+			String memberPreference = week+", "+begin+" ~ "+end;
+			memberDto.setMemberPreference(memberPreference);
+		}
+		else if(week!=null || begin!=null || end!=null) {
+			if(week!=null) {
+				if(begin==null && end==null) {
+					String memberPreference = week;
+					memberDto.setMemberPreference(memberPreference);
+				}
+				else if(begin!= null) {
+					String memberPreference = week+", "+begin;
+					memberDto.setMemberPreference(memberPreference);				
+				}
+				else if(end!=null){
+					String memberPreference = week+", "+end;
+					memberDto.setMemberPreference(memberPreference);					
+				}
+			}
+			else {
+				if(begin!=null && end!=null) {
+					String memberPreference = begin+" ~ "+end;
+					memberDto.setMemberPreference(memberPreference);
+				}
+				else if(begin!=null) {
+					String memberPreference = begin;
+					memberDto.setMemberPreference(memberPreference);
+				}
+				else if(end!=null) {
+					String memberPreference = end;
+					memberDto.setMemberPreference(memberPreference);
+				}
+			}
+		}
+		
+		
+		boolean success = memberService.info(memberDto, attachment);
+		
+		if(success) return "redirect:/mypage/info";
+		else return "redirect:mypage/info?error";
+		
+	}
 	
 	
 	@GetMapping("/exit")

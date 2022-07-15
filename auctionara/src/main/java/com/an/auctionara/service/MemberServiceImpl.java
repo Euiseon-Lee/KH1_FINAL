@@ -56,4 +56,30 @@ public class MemberServiceImpl implements MemberService {
 		Date limit = new java.sql.Date(System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 30L));
 		gpsAddressDao.changeGpsStaus(limit);
 	}
+
+	@Override
+	public boolean info(MemberDto memberDto, MultipartFile attachment) throws IllegalStateException, IOException {
+		
+		if(memberDto == null) return false;
+		
+		else {
+			//프로필 등록코드
+			if(!attachment.isEmpty())	{
+				int attachmentNo = attachmentDao.save(attachment);
+				memberDto.setAttachmentNo(attachmentNo);
+				memberDao.info(memberDto);
+			}
+			else {
+				int existingNo = memberDao.recall(memberDto.getMemberEmail());
+
+				memberDto.setAttachmentNo(existingNo);
+				memberDao.info(memberDto);
+			}
+			
+			return true;
+		}
+
+	}
+	
+	
 }

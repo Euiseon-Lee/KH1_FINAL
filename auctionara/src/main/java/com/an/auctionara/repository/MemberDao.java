@@ -36,4 +36,8 @@ public interface MemberDao {
 
 	boolean exit(String memberEmail, String memberPw);
 	
+	boolean info(MemberDto memberDto);
+
+	int recall(String memberEmail);
+	
 }

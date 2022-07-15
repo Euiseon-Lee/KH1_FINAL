@@ -162,4 +162,19 @@ public class MemberDaoImpl implements MemberDao {
 			return count > 0;
 		}
 	}
+
+
+	@Override
+	public boolean info(MemberDto memberDto) {
+		if(memberDto == null) return false;
+		
+		int count = sqlSession.update("member.info", memberDto);	
+		return count > 0;
+	}
+
+
+	@Override
+	public int recall(String memberEmail) {
+		return sqlSession.selectOne("member.recall", memberEmail);
+	}
 }
