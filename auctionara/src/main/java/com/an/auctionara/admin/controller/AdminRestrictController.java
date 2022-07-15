@@ -15,8 +15,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.an.auctionara.entity.AuctionReportDto;
 import com.an.auctionara.entity.ManagerRestrictionDto;
+import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.AuctionReportDao;
 import com.an.auctionara.repository.ManagerRestrictionDao;
+import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.service.AdminRestrictService;
 import com.an.auctionara.vo.CashingPointsListVO;
 import com.an.auctionara.vo.ManagerRestrictionListVO;
@@ -32,25 +34,58 @@ public class AdminRestrictController {
 	@Autowired
 	private AdminRestrictService adminRestrictService;
 	
-	// 회원 제재 입력 페이지 
-	@GetMapping("/restrict_member/{memberNo}/{auctionReportNo}")
-	public String restrictMember(@PathVariable int memberNo, @PathVariable int auctionReportNo, Model model) {
+	@Autowired
+	private MemberDao memberDao; 
+	
+	// 경매 신고 내역 제재 입력 페이지 
+	@GetMapping("/restrict_auction/{memberNo}/{auctionReportNo}")
+	public String restrictAuction(@PathVariable int memberNo, @PathVariable int auctionReportNo, Model model) {
 		model.addAttribute("memberNo", memberNo);
 		model.addAttribute("auctionReportNo", auctionReportNo);
 		
-		return "admin/restriction/restrict_member";
+		return "admin/restriction/restrict_auction";
 	}
 	
-	// 회원 제재 입력 
-	@PostMapping("/restrict_member/{memberNo}/{auctionReportNo}")
-	public String restrictMember(
+	// 경매 신고 내역 제재 입력 
+	@PostMapping("/restrict_auction/{memberNo}/{auctionReportNo}")
+	public String restrictAuction(
 			@ModelAttribute ManagerRestrictionDto managerRestrictionDto, 
 			@PathVariable int auctionReportNo, 
 			@PathVariable int memberNo) {		
-		adminRestrictService.restrictMember(managerRestrictionDto, auctionReportNo, memberNo);
+		adminRestrictService.restrictAuction(managerRestrictionDto, auctionReportNo, memberNo);
+		
+		MemberDto memberDto = memberDao.memberSearch(memberNo);
+		if(memberDto.getMemberRedCount() >= 10 && memberDto.getMemberGrade().equals("일반회원")) {
+			memberDao.setBlock(memberNo);
+		}
 		
 		return "redirect: /auctionara/admin/restriction/list";
 	}
+	
+	// 경매 신고 내역 제재 입력 페이지 
+	@GetMapping("/restrict_chat/{memberNo}/{chatReportNo}")
+	public String restrictChat(@PathVariable int memberNo, @PathVariable int chatReportNo, Model model) {
+		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("chatReportNo", chatReportNo);
+			
+		return "admin/restriction/restrict_chat";
+	}
+		
+	// 경매 신고 내역 제재 입력 
+	@PostMapping("/restrict_chat/{memberNo}/{chatReportNo}")
+	public String restrictMember(
+			@ModelAttribute ManagerRestrictionDto managerRestrictionDto, 
+			@PathVariable int chatReportNo, 
+			@PathVariable int memberNo) {		
+		adminRestrictService.restrictChat(managerRestrictionDto, chatReportNo, memberNo);
+			
+		MemberDto memberDto = memberDao.memberSearch(memberNo);
+		if(memberDto.getMemberRedCount() >= 10 && memberDto.getMemberGrade().equals("일반회원")) {
+			memberDao.setBlock(memberNo);
+		}
+			
+		return "redirect: /auctionara/admin/restriction/list";
+	}	
 	
 	// 회원 제재 내역 페이지 
 	@GetMapping("/list")

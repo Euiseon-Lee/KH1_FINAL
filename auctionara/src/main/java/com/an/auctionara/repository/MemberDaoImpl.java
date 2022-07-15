@@ -114,6 +114,9 @@ public class MemberDaoImpl implements MemberDao {
 		int count = sqlSession.update("member.setGeneral", memberNo);
 //		if(count == 0) throw new CannotFindException();
 		
+		int count2 = sqlSession.update("member.resetRedCount", memberNo);
+//		if(count2 == 0) throw new CannotFindException();
+		
 		return sqlSession.selectOne("member.one", memberNo);
 	}
 	

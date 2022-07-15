@@ -9,7 +9,7 @@
 	<div class="card">
 		<div class="card-body">
 			<div class="row p-2 mt-2">
-				<h1>경매 신고 내역</h1>
+				<h1>채팅 신고 내역</h1>
 			</div>
 		</div>
 	</div>
@@ -19,27 +19,27 @@
 			<thead>
 				<tr>
 					<th style="width:10%;">신고 번호</th>
-					<th style="width:40%;">신고 내용</th>
-					<th style="width:20%;">신고 경매글</th>
+					<th style="width:40%;">신고 경매글</th>
 					<th>신고자</th>
-					<th>신고 시각</th>
+					<th>신고 날짜</th>
 					<th>관리</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="auctionReportListVO" items="${list}">
+				<c:forEach var="chatReportVO" items="${list}">
 					<tr>
-						<td>${auctionReportListVO.auctionReportNo}</td>
-						<td>${auctionReportListVO.auctionReportReason}</td>
-						<td>${auctionReportListVO.auctionTitle}</td>
-						<td>${auctionReportListVO.reporterNick}</td>
-						<td>${auctionReportListVO.auctionReportTime}</td>
+						<td>${chatReportVO.chatReportNo}</td>
+						<td>
+							<a href="${root}/admin/chat/report_detail/${chatReportVO.chatReportNo}/${chatReportVO.chatroomNo}/${chatReportVO.auctioneerNo}/${chatReportVO.chatReportRestriction}">${chatReportVO.auctionTitle}</a>
+						</td>
+						<td>${chatReportVO.memberNick}</td>
+						<td>${chatReportVO.chatReportTime}</td>
 						<td>
 							<c:choose>
-								<c:when test="${auctionReportListVO.auctionReportRestriction == 0}">
-									<a href="${pageContext.request.contextPath}/admin/restriction/restrict_auction/${auctionReportListVO.auctioneerNo}/${auctionReportListVO.auctionReportNo}">제재하기</a>
+								<c:when test="${chatReportVO.chatReportRestriction == 0 }">
+									<span></span>
 								</c:when>
-								<c:when test="${auctionReportListVO.auctionReportRestriction == 1}">
+								<c:when test="${chatReportVO.chatReportRestriction == 1 }">
 									제재 완료
 								</c:when>
 							</c:choose>
@@ -129,8 +129,8 @@
 			<div class="row justify-content-md-center">
 				<div class="col-2">
 					<select name="type" class="form-select">
+						<option value="member_nick" <c:if test="${type == 'member_nick'}">selected</c:if>>신고자</option>
 						<option value="auction_title" <c:if test="${type == 'auction_title'}">selected</c:if>>경매글</option>
-						<option value="m2.member_nick" <c:if test="${type == 'm2.member_nick'}">selected</c:if>>신고자</option>
 					</select>
 				</div>
 				<div class="col-3">

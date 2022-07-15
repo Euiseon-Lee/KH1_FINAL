@@ -123,7 +123,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="${root}/admin/chat/report_list">
 			              <span class="align-middle">채팅 신고 내역</span>
 			            </a>
 					</li>

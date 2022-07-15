@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.an.auctionara.entity.ChatContentDto;
 import com.an.auctionara.vo.AuctionListVO;
+import com.an.auctionara.vo.ChatContentVO;
 
 @Repository
 public class ChatContentDaoImpl implements ChatContentDao {
@@ -31,5 +32,10 @@ public class ChatContentDaoImpl implements ChatContentDao {
 		int chatNo = sqlSession.selectOne("chatContent.sequence");
 		chatContentDto.setChatNo(chatNo);
 		sqlSession.insert("chatContent.insert", chatContentDto);
+	}
+	
+	@Override
+	public List<ChatContentVO> content(int chatroomNo) {
+		return sqlSession.selectList("chatContent.content", chatroomNo);
 	}
 }
