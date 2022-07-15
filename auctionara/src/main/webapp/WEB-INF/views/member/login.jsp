@@ -8,7 +8,7 @@
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
 <div class="container col-6 offset-3 form-group center-block">
-	<div class="row jumbotron text-center">
+	<div class="alert alert-info text-center" role="alert">
 		<h1>경매나라:<br>
 			우리 동네에서<br>
 			간편한 중고 경매
