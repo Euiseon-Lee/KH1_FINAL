@@ -18,4 +18,6 @@ public class MemberDto {
 	private int memberRedCount;
 	private String memberJoindate;
 	private String memberLogintime;
+	
+	private String memberPreference;
 }
