@@ -49,16 +49,6 @@
 
 				<ul class="sidebar-nav">
 					<li class="sidebar-header">
-						매출 관리
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="${root}/admin/sales/chart">
-			              <span class="align-middle">매출 현황</span>
-			            </a>
-					</li>
-					
-					<li class="sidebar-header">
 						회원 관리
 					</li>
 
