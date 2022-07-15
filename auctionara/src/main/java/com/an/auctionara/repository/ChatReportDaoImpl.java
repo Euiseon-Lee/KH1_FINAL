@@ -51,4 +51,9 @@ public class ChatReportDaoImpl implements ChatReportDao{
 				
 		return sqlSession.selectOne("chatReport.one", chatReportNo);
 	}
+	
+	@Override
+	public ChatReportDto getReason(int chatReportNo) {
+		return sqlSession.selectOne("chatReport.one", chatReportNo);
+	}
 }

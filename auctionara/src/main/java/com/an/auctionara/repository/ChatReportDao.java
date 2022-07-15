@@ -14,4 +14,6 @@ public interface ChatReportDao {
 
 	ChatReportDto setRestrict(int chatReportNo);
 
+	ChatReportDto getReason(int chatReportNo);
+
 }

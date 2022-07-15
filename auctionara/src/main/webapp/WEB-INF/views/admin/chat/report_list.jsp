@@ -30,16 +30,16 @@
 					<tr>
 						<td>${chatReportVO.chatReportNo}</td>
 						<td>
-							<a href="${root}/admin/chat/report_detail/${chatReportVO.chatroomNo}">${chatReportVO.auctionTitle}</a>
+							<a href="${root}/admin/chat/report_detail/${chatReportVO.chatReportNo}/${chatReportVO.chatroomNo}/${chatReportVO.auctioneerNo}/${chatReportVO.chatReportRestriction}">${chatReportVO.auctionTitle}</a>
 						</td>
 						<td>${chatReportVO.memberNick}</td>
 						<td>${chatReportVO.chatReportTime}</td>
 						<td>
 							<c:choose>
-								<c:when test="${chatReportVO.chatReportRestriction == 0}">
-									<a href="${pageContext.request.contextPath}/admin/restriction/restrict_chat/${chatReportVO.auctioneerNo}/${chatReportVO.chatReportNo}">제재하기</a>
+								<c:when test="${chatReportVO.chatReportRestriction == 0 }">
+									<span></span>
 								</c:when>
-								<c:when test="${chatReportVO.chatReportRestriction == 1}">
+								<c:when test="${chatReportVO.chatReportRestriction == 1 }">
 									제재 완료
 								</c:when>
 							</c:choose>

@@ -6,10 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.an.auctionara.entity.ChatContentDto;
+import com.an.auctionara.entity.ChatReportDto;
+import com.an.auctionara.repository.ChatContentDao;
 import com.an.auctionara.repository.ChatReportDao;
+import com.an.auctionara.vo.ChatContentVO;
 import com.an.auctionara.vo.ChatReportVO;
 import com.an.auctionara.vo.ManagerRestrictionListVO;
 
@@ -19,6 +24,9 @@ public class AdminChatController {
 	
 	@Autowired
 	private ChatReportDao chatReportDao; 
+	
+	@Autowired
+	private ChatContentDao chatContentDao; 
 
 	@GetMapping("/bot")
 	public String bot() {
@@ -59,5 +67,25 @@ public class AdminChatController {
 		model.addAttribute("lastPage", lastPage);
 		
 		return "admin/chat/report_list"; 
+	}
+	
+	@GetMapping("/report_detail/{chatReportNo}/{chatroomNo}/{auctioneerNo}/{chatReportRestriction}")
+	public String report_detail(@PathVariable int chatReportNo, 
+								@PathVariable int chatroomNo, 
+								@PathVariable int auctioneerNo,
+								@PathVariable int chatReportRestriction,
+								Model model) {
+		model.addAttribute("restriction", chatReportRestriction);
+		model.addAttribute("auctioneerNo", auctioneerNo);
+		model.addAttribute("chatReportNo", chatReportNo);
+		
+		ChatReportDto chatReportDto = chatReportDao.getReason(chatReportNo);
+		model.addAttribute("reportReason", chatReportDto.getChatReportReason());
+		
+		List<ChatContentVO> content = chatContentDao.content(chatroomNo);
+		model.addAttribute("content", content);
+		
+		
+		return "admin/chat/report_detail"; 
 	}
 }
