@@ -5,7 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data@NoArgsConstructor@AllArgsConstructor@Builder
-public class ChatRoomSelectVO {
-	private int auctionNo, memberNo;
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
+public class MonthlyBidVO {
+	private String month;
+	private int totalBid;  
 }

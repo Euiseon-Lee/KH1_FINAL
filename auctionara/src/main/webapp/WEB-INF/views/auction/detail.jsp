@@ -12,7 +12,7 @@
     <div class="row pt-5">
         <span class="text-muted mr-3">카테고리</span>
         <span class="text-muted mr-3">></span>
-        <a href="${root}/auction/category/${auctionDetail.categoryNo}"><span class="text-muted">${auctionDetail.categoryName}</span></a>
+        <a href="${root}/auction/category?categoryNo=${auctionDetail.categoryNo}"><span class="text-muted">${auctionDetail.categoryName}</span></a>
     </div>
     <div class="row mt-4 py-4 border-bottom border-top">
         <div class="col-5 p-0">
@@ -100,7 +100,7 @@
             <div id="refresh" class="col-3 text-muted p-0 pointer" @click="throttleRefresh(this)">
            		<span class="pl-5"><i id="rotate" class="fa-solid fa-arrow-rotate-left"></i> 새로고침</span>
             </div>
-            <div class="col-3 p-0 pl-2 mr-2 text-muted pointer">
+            <div class="col-3 p-0 pl-2 mr-2 text-muted pointer" data-bs-toggle="modal" data-bs-target="#reportModal">
                 <i class="fa-solid fa-land-mine-on pl-3 pr-2"></i> 신고하기
             </div>
         </div>
@@ -108,24 +108,24 @@
             <div class="col p-0">
                 <c:choose>
                     <c:when test="${whoLogin == auctionDetail.auctioneerNo}">
-		                <button type="button" class="btn btn-info btn-lg btn-block py-3" v-if="(auctionClose && biddingCount == 0) || !auctionClose">
+                    	<a class="btn btn-info btn-lg btn-block py-3" href="${root}/chat" role="button" v-if="(auctionClose && biddingCount == 0) || !auctionClose">
 		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 1:1 채팅 관리
-		                </button>
-		                <button type="button" class="btn btn-info btn-lg btn-block py-3" v-if="auctionClose && biddingCount != 0">
-		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 구매자와 1:1 채팅
-		                </button>		                
+		                </a>
+		                <a class="btn btn-info btn-lg btn-block py-3" href="${root}/chat" role="button" v-if="auctionClose && biddingCount != 0">
+		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 낙찰자와 1:1 채팅
+		                </a>		                
                     </c:when>
                     <c:otherwise>
-		                <button type="button" class="btn btn-info btn-lg btn-block py-3">
-		                    <i class="fa-solid fa-comments-dollar pr-2"></i> 판매자와 1:1 채팅
-		                </button>
+                    	<a class="btn btn-info btn-lg btn-block py-3" href="${root}/chat/${auctionDetail.auctionNo}" role="button">
+                    		<i class="fa-solid fa-comments-dollar pr-2"></i> 판매자와 1:1 채팅
+                    	</a>
                     </c:otherwise>
                 </c:choose>
             </div>
             <div class="col">
                 <c:choose>
                     <c:when test="${whoLogin == auctionDetail.auctioneerNo}">
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="biddingCount == 0 && !auctionClose" data-bs-toggle="modal" data-bs-target="#cancleAuctionModal">
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="biddingCount == 0 && !auctionClose" data-bs-toggle="modal" data-bs-target="#cancelAuctionModal">
 		                    <i class="fa-solid fa-ban pr-2"></i> 경매 취소
 		                </button>
 		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="biddingCount != 0 && !auctionClose" data-bs-toggle="modal" data-bs-target="#stopAuctionModal">
@@ -155,7 +155,7 @@
     </div>
 </div>
 <div class="row mt-4">
-    <div class="col-8 border-right">
+    <div class="col-8">
         <div class="row mb-3">
             <h5 class="fw-bold">경매 물품 정보</h5>
         </div>
@@ -185,20 +185,32 @@
             </nav>
         </div>
         <div class="row">
-            <pre class="text-muted text-wrap pr-4">
+            <pre class="text-muted pr-4">
 ${auctionDetail.auctionContent}
 </pre>
         </div>
     </div>
     <div class="col">
-        <div class="row ml-3">
+        <div class="row ml-3 mb-3">
             <h5 class="fw-bold">판매자 정보</h5>
         </div>
-        <div class="row ml-3">
-            <h6>
-                추후 회원 정보 표시 예정
-            </h6>
+        <div class="row ml-3 pb-3 border-bottom">
+            <div class="col-2"><img id="profile" class="rounded-circle" src="${root}/attachment/download?attachmentNo=${auctioneerInfo.attachmentNo}"></div>
+            <div class="col ml-4">
+            	<h6 class="row fw-bold mb-2">${auctioneerInfo.memberNick}</h6>
+            	<h6 class="row text-muted">선호 거래일 : ${auctioneerInfo.memberPreference}</h6>
+            </div>
         </div>
+        <div class="row ml-3 py-3 border-bottom">
+        	<div class="col-4 text-muted ml-2">긍정 평가 <span class="text-success fw-bold fs-large ml-3">${auctioneerInfo.likeCount}개</span></div>
+        	<div class="col-4 text-muted ml-2">부정 평가 <span class="text-primary fw-bold fs-large ml-3">${auctioneerInfo.dislikeCount}개</span></div>
+        </div>
+        <div class="row ml-3 pt-3 pb-2">
+        	<div class="text-muted">마지막 접속일 : ${auctioneerInfo.memberLogintime}</div>
+        </div>
+        <div class="row ml-3">
+        	<div class="text-muted">누적 제재 : ${auctioneerInfo.memberRedCount}회</div>
+        </div>        
     </div>
 </div>
 <c:forEach var="photoDto" items="${photoList}">
@@ -261,6 +273,27 @@ ${auctionDetail.auctionContent}
     	</div>
   	</div>
 </div>
+<div class="modal fade" id="reportModal" aria-hidden="true" aria-labelledby="reportModalLable" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="reportModalLable">&#129402; 경매 신고하기</h5>
+				<button type="button" class="btn-close close" data-bs-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+        		경매 신고 이유를 알려주세요!
+        		<input type="text" class="form-control mt-2" v-model="reportReason" autocomplete="off" maxlength="100" />
+                <div class="text-right mt-1"><span class="text-primary">{{ reportCount }}</span> / 100</div>
+      		</div>
+            <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">돌아가기</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" :disabled="reportReason == ''" @click="report">신고하기</button>
+            </div>      		
+    	</div>
+  	</div>
+</div>
 <c:if test="${whoLogin == auctionDetail.auctioneerNo}">
 <div class="modal fade" id="stopAuctionModal" aria-hidden="true" aria-labelledby="stopAuctionModalLable" tabindex="-1" v-show="biddingCount != 0 && !auctionClose">
 	<div class="modal-dialog modal-dialog-centered">
@@ -283,11 +316,11 @@ ${auctionDetail.auctionContent}
     	</div>
   	</div>
 </div>
-<div class="modal fade" id="cancleAuctionModal" aria-hidden="true" aria-labelledby="cancleAuctionModalLable" tabindex="-1" v-if="biddingCount == 0 && !auctionClose">
+<div class="modal fade" id="cancelAuctionModal" aria-hidden="true" aria-labelledby="cancelAuctionModalLable" tabindex="-1" v-if="biddingCount == 0 && !auctionClose">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="cancleAuctionModalLable"><i class="fa-solid fa-ban pr-2 text-primary"></i> 경매 취소</h5>
+				<h5 class="modal-title" id="cancelAuctionModalLable"><i class="fa-solid fa-ban pr-2 text-primary"></i> 경매 취소</h5>
 				<button type="button" class="btn-close close" data-bs-dismiss="modal">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -342,6 +375,7 @@ ${auctionDetail.auctionContent}
                 alert: 0,
                 interval: "",
                 auctionClose: false,
+                reportReason: "",
             };
         },
         computed: {
@@ -351,6 +385,9 @@ ${auctionDetail.auctionContent}
                 } else {
                 	return this.inputBid > this.maxBid && (this.inputBid % this.bidUnit) == 0;
                 }
+            },
+            reportCount() {
+                return this.reportReason.length;
             },
         },        
         methods: {
@@ -614,7 +651,7 @@ ${auctionDetail.auctionContent}
             			const modal = new bootstrap.Modal(document.getElementById("stopAuctionModal"));
                     	modal.show();
             		} else {
-            			location.href = "${root}/auction/detail/cancle/${auctionDetail.auctionNo}";
+            			location.href = "${root}/auction/detail/cancel/${auctionDetail.auctionNo}";
             		}
             	}).catch(err=>{
 	            	if(err.response.status == 403) {
@@ -645,6 +682,14 @@ ${auctionDetail.auctionContent}
 	            	}
             	});
             },
+            report() {
+            	axios.post("http://localhost:8080/auctionara/auction/detail/report", {
+            		auctionNo: this.auctionNo,
+            		auctionReporterNo: ${whoLogin},
+            		auctionReportReason: this.reportReason,
+            	})
+            	.then(resp => {}); 
+            }
         },
         mounted() {
             document.getElementById("biddingModal").addEventListener("hidden.bs.modal", this.closeBidModal);
@@ -770,7 +815,17 @@ ${auctionDetail.auctionContent}
 	.photo-modal {
  		width: 100%; 
  		max-width: 100%;
-	}	
+	}
+	
+	#profile {
+    	object-fit: cover;
+    	width: 50px;
+        height: 50px; 	
+	}
+	
+	.fs-large {
+		font-size: 1.5em;
+	}
 </style>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

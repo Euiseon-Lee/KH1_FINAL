@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.an.auctionara.entity.AttachmentDto;
 import com.an.auctionara.entity.AuctionDto;
+import com.an.auctionara.entity.PhotoDto;
 import com.an.auctionara.repository.AttachmentDao;
 import com.an.auctionara.repository.AuctionDao;
 import com.an.auctionara.repository.AuctionReportDao;
+import com.an.auctionara.repository.PhotoDao;
 import com.an.auctionara.vo.AdminAuctionDetailReportVO;
 import com.an.auctionara.vo.AdminAuctionDetailVO;
 import com.an.auctionara.vo.AdminAuctionListVO;
@@ -32,7 +34,10 @@ public class AdminAuctionController {
 	private AuctionDao auctionDao; 
 	
 	@Autowired
-	private AttachmentDao attachmentDao; 
+	private AttachmentDao attachmentDao;
+	
+	@Autowired
+	private PhotoDao photoDao; 
 	
 	
 	@GetMapping("/report_list")
@@ -113,6 +118,9 @@ public class AdminAuctionController {
 		AdminAuctionDetailVO adminAuctionDetailVO = auctionDao.adminAuctionDetail(auctionNo);
 		model.addAttribute("adminAuctionDetailVO", adminAuctionDetailVO);
 		model.addAttribute("profileUrl", "/attachment/download?attachmentNo=" + adminAuctionDetailVO.getPhotoAttachmentNo());
+		
+		List<PhotoDto> photoList = photoDao.list(auctionNo);
+		model.addAttribute("photoList", photoList);
 		
 		return "admin/auction/detail";
 	}

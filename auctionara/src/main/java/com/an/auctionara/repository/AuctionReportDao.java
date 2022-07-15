@@ -15,5 +15,6 @@ public interface AuctionReportDao {
 	AuctionReportDto setRestrict(int auctionReportNo);
 
 	List<AdminAuctionDetailReportVO> detailReportList(int auctionNo);
-
+	
+	void report(AuctionReportDto auctionReportDto);
 }

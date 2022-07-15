@@ -18,6 +18,7 @@ import com.an.auctionara.vo.AdminAuctionDetailVO;
 import com.an.auctionara.vo.AdminAuctionListVO;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
+import com.an.auctionara.vo.AuctioneerInfoVO;
 import com.an.auctionara.vo.MyBiddingAuctionListVO;
 
 @Repository
@@ -81,6 +82,11 @@ public class AuctionDaoImpl implements AuctionDao {
 	}
 	
 	@Override
+	public AuctioneerInfoVO auctioneerInfo(int auctioneerNo) {
+		return sqlSession.selectOne("auction.auctioneerInfo", auctioneerNo);
+	}
+	
+	@Override
 	public List<AdminAuctionListVO> adminList(String type, String keyword, int p, int s) {
 		// 관리자 페이지 - 경매 list 메소드 
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -129,5 +135,11 @@ public class AuctionDaoImpl implements AuctionDao {
 //		if(count == 0) throw new CannotFindException();
 		
 		return sqlSession.selectOne("auction.one", auctionNo);
+	}
+	
+	@Override
+	public int countAuction() {
+		// 관리자 페이지 - 경매 게시글 수 
+		return sqlSession.selectOne("auction.countAuction");
 	}
 }

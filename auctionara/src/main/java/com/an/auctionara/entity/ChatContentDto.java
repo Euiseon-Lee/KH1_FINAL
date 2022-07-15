@@ -16,4 +16,5 @@ public class ChatContentDto {
 	private Date chatTime;
 	private String chatReported;
 	private Date chatReadTime;
+	private String chatTimeFormat;
 }

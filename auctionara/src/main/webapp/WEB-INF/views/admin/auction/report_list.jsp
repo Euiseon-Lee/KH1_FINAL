@@ -32,7 +32,7 @@
 						<td>${auctionReportListVO.auctionReportNo}</td>
 						<td>${auctionReportListVO.auctionReportReason}</td>
 						<td>${auctionReportListVO.auctionTitle}</td>
-						<td>${auctionReportListVO.reporterName}</td>
+						<td>${auctionReportListVO.reporterNick}</td>
 						<td>${auctionReportListVO.auctionReportTime}</td>
 						<td>
 							<c:choose>
@@ -50,7 +50,7 @@
 		</table>
 	</div>
 	
-	<div class="row p-2 mt-2 text-center">
+	<div class="p-2 mt-2 text-center pagination">
 		<c:if test="${p > 1}">
 			<c:choose>
 				<c:when test="${search}">
@@ -130,11 +130,11 @@
 				<div class="col-2">
 					<select name="type" class="form-select">
 						<option value="auction_title" <c:if test="${type == 'auction_title'}">selected</c:if>>경매글</option>
-						<option value="m2.member_name" <c:if test="${type == 'm2.member_name'}">selected</c:if>>신고자</option>
+						<option value="m2.member_nick" <c:if test="${type == 'm2.member_nick'}">selected</c:if>>신고자</option>
 					</select>
 				</div>
 				<div class="col-3">
-					<input type="search" name="keyword" placeholder="검색어 입력" required class="form-control" value="${keyword}">
+					<input type="search" name="keyword" placeholder="검색어 입력" required class="form-control" value="${keyword}" autocomplete="off">
 				</div>
 				<div class="col-2">
 					<input type="submit" value="검색" class="btn btn-primary">

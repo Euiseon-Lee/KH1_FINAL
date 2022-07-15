@@ -38,7 +38,7 @@
 			<thead>
 				<tr>
 					<th>신청 번호</th>
-					<th>회원명</th>
+					<th>닉네임</th>
 					<th>신청 금액</th>
 					<th>신청 은행</th>
 					<th>신청 계좌번호</th>
@@ -52,7 +52,7 @@
 				<c:forEach var="cashingPointsVO" items="${requestList}">
 					<tr>
 						<td>${cashingPointsVO.cashingNo}</td>
-						<td>${cashingPointsVO.memberName}</td>
+						<td>${cashingPointsVO.memberNick}</td>
 						<td>${cashingPointsVO.cashingMoney}</td>
 						<td>${cashingPointsVO.cashingBank}</td>
 						<td>${cashingPointsVO.cashingAccount}</td>
@@ -69,9 +69,9 @@
 						<td>${cashingPointsVO.cashingStatus}</td>
 						<td>${cashingPointsVO.cashingRequestTime}</td>
 						<td>
-							<a href="approve/${cashingPointsVO.cashingNo}" class="approve-cashing">승인</a>
+							<a href="approve/${cashingPointsVO.cashingNo}/${cashingPointsVO.cashingMoney}/${cashingPointsVO.memberNo}" class="approve-cashing">승인</a>
 							&nbsp|&nbsp
-							<a href="refuse/${cashingPointsVO.cashingNo}" class="refuse-cashing">거절</a>
+							<a href="refuse/${cashingPointsVO.cashingNo}" class="refuse-cashing">보류</a>
 						</td>
 					</tr>
 				</c:forEach>

@@ -20,7 +20,7 @@
 			<thead>
 				<tr>
 					<th>경매 번호</th>
-					<th style="width:15%;">판매인</th>
+					<th style="width:15%;">판매자</th>
 					<th>카테고리</th>
 					<th style="width:30%;">경매 제목</th>
 					<th>등록일</th>
@@ -32,7 +32,7 @@
 				<c:forEach var="adminAuctionListVO" items="${list}">
 					<tr>
 						<td>${adminAuctionListVO.auctionNo}</td>
-						<td>${adminAuctionListVO.memberName}(${adminAuctionListVO.memberNick})</td>
+						<td>${adminAuctionListVO.memberNick}</td>
 						<td>${adminAuctionListVO.categoryName}</td>
 						<td>
 							<a href="${pageContext.request.contextPath}/admin/auction/detail/${adminAuctionListVO.auctionNo}">${adminAuctionListVO.auctionTitle}</a>
@@ -58,7 +58,7 @@
 		</table>
 	</div>
 	
-	<div class="row p-2 mt-2 text-center">
+	<div class="text-center p-2 mt-2 pagination">
 		<c:if test="${p > 1}">
 			<c:choose>
 				<c:when test="${search}">
@@ -137,9 +137,8 @@
 			<div class="row justify-content-md-center">
 				<div class="col-2">
 					<select name="type" class="form-select">
-						<option value="member_name" <c:if test="${type == 'member_name'}">selected</c:if>>회원명</option>
-						<option value="member_nick" <c:if test="${type == 'member_nick'}">selected</c:if>>닉네임</option>
-						<option value="auction_title" <c:if test="${type == 'auction_title'}">selected</c:if>>경매 제목</option>
+						<option value="member_nick" <c:if test="${type == 'member_nick'}">selected</c:if>>판매자</option>
+						<option value="auction_title" <c:if test="${type == 'auction_title'}">selected</c:if>>게시글 제목</option>
 					</select>
 				</div>
 				<div class="col-3">

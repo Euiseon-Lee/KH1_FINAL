@@ -32,10 +32,9 @@ public class Member {
 		this.setWebSocketSession(webSocketSession);
 	}
 	public boolean isMember() {
-		return this.memberNo >0;
+		return this.memberNo > 0;
 	}
 	public void send(TextMessage message) throws IOException {
-		log.info("message={}",message.getPayload());
 		webSocketSession.sendMessage(message);
 	}
 }

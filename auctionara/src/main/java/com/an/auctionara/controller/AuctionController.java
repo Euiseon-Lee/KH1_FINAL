@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.an.auctionara.entity.AuctionReportDto;
 import com.an.auctionara.entity.BiddingDto;
 import com.an.auctionara.entity.CategoryDto;
 import com.an.auctionara.entity.GpsAddressDto;
 import com.an.auctionara.entity.PhotoDto;
 import com.an.auctionara.repository.AuctionDao;
+import com.an.auctionara.repository.AuctionReportDao;
 import com.an.auctionara.repository.BiddingDao;
 import com.an.auctionara.repository.CategoryDao;
 import com.an.auctionara.repository.GpsAddressDao;
@@ -33,6 +35,7 @@ import com.an.auctionara.repository.SuccessfulBidDao;
 import com.an.auctionara.service.AuctionService;
 import com.an.auctionara.vo.AuctionDetailRefreshVO;
 import com.an.auctionara.vo.AuctionDetailVO;
+import com.an.auctionara.vo.AuctioneerInfoVO;
 import com.an.auctionara.vo.WriteAuctionVO;
 
 @Controller
@@ -62,6 +65,9 @@ public class AuctionController {
 	
 	@Autowired
 	private AuctionService auctionService;
+	
+	@Autowired
+	private AuctionReportDao auctionReportDao;
 	
 	// 경매 검색 페이지
 	@GetMapping("/search")
@@ -141,6 +147,10 @@ public class AuctionController {
 		List<PhotoDto> photoList = photoDao.list(auctionNo);
 		model.addAttribute("photoList", photoList);
 		
+		// 판매자 정보 조회
+		AuctioneerInfoVO auctioneerInfo = auctionDao.auctioneerInfo(auctionDetail.getAuctioneerNo());
+		model.addAttribute("auctioneerInfo", auctioneerInfo);
+		
 		// 입찰 가능 여부 확인 (인증 주소)
 		Map<String, Integer> info = new HashMap<>();
 		info.put("memberNo", memberNo);
@@ -177,8 +187,8 @@ public class AuctionController {
 	}
 	
 	// 경매 취소
-	@GetMapping("/detail/cancle/{auctionNo}")
-	public String cancle(@PathVariable int auctionNo)  {
+	@GetMapping("/detail/cancel/{auctionNo}")
+	public String cancel(@PathVariable int auctionNo)  {
 		auctionDao.setPrivate(auctionNo); // 경매 비공개
 		return "redirect:/"; // 임시 // 추후 마이페이로 이동
 	}
@@ -190,5 +200,13 @@ public class AuctionController {
 		memberDao.plusRedCount(memberNo); // 회원 경고 횟수 +1
 		auctionDao.setPrivate(auctionNo); // 경매 비공개
 		return "redirect:/"; // 임시 // 추후 마이페이로 이동
-	}	
+	}
+	
+	// 경매 신고
+	@ResponseBody
+	@PostMapping("/detail/report")
+	public void report(@RequestBody AuctionReportDto auctionReportDto)  {
+		auctionReportDao.report(auctionReportDto); 
+	}
+	
 }

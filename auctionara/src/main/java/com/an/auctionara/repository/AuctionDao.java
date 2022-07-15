@@ -10,6 +10,7 @@ import com.an.auctionara.vo.AdminAuctionDetailVO;
 import com.an.auctionara.vo.AdminAuctionListVO;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
+import com.an.auctionara.vo.AuctioneerInfoVO;
 import com.an.auctionara.vo.MyBiddingAuctionListVO;
 
 public interface AuctionDao {
@@ -21,6 +22,7 @@ public interface AuctionDao {
 	List<SuccessfulBidDto> finish(Date now);
 	SuccessfulBidDto close(int auctionNo);
 	Boolean checkPrivate(int auctionNo);
+	AuctioneerInfoVO auctioneerInfo(int auctioneerNo);
 	
 	// 관리자 페이지 - 경매 list, count 메소드 
 	List<AdminAuctionListVO> adminList(String type, String keyword, int p, int s);
@@ -31,4 +33,6 @@ public interface AuctionDao {
 	AuctionDto setOpen(int auctionNo);
 	// 관리자 페이지 - 경매 게시글 비공개 처리 
 	AuctionDto setPrivate(int auctionNo);
+	// 관리자 페이지 - 경매 게시글 수 
+	int countAuction();
 }

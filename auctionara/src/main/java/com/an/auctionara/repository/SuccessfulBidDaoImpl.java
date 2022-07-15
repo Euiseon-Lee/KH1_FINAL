@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.an.auctionara.entity.SuccessfulBidDto;
+import com.an.auctionara.vo.CheckRatingVO;
 
 @Repository
 public class SuccessfulBidDaoImpl implements SuccessfulBidDao{
@@ -21,6 +22,27 @@ public class SuccessfulBidDaoImpl implements SuccessfulBidDao{
 	
 	@Override
 	public int getMonthlyTotalBid() {
-		return sqlSession.selectOne("successfulBid.monthlyTotalSuccBid");
+		return sqlSession.selectOne("successful_bid.monthlyTotalSuccBid");
+	}
+
+	@Override
+	public CheckRatingVO checkRating(int auctionNo) {
+		CheckRatingVO checkRatingVO = sqlSession.selectOne("successful_bid.checkRating", auctionNo);
+		return checkRatingVO;
+	}
+
+	@Override
+	public void auctioneerApprove(int auctionNo) {
+		sqlSession.update("successful_bid.auctioneerApprove", auctionNo);
+	}
+
+	@Override
+	public void bidderApprove(int auctionNo) {
+		sqlSession.update("successful_bid.bidderApprove", auctionNo);
+	}
+
+	@Override
+	public void autoApprove() {
+		sqlSession.update("successful_bid.autoApprove");
 	}
 }
