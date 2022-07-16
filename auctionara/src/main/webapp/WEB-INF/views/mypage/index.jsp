@@ -35,15 +35,19 @@
 		
 	<!-- 본문 -->
 	<div class="row flex-fill d-flex flex-column">
-		<div class="row col-3 m-3 d-inline">
-			<img src="${pageContext.request.contextPath}${profileUrl}"
-					class="img-thumbnail center-block">
-		</div>
-		
-		<div class="row m-5 d-inline">
+		<h4 class="row fw-bold my-4 pt-2">마이페이지</h4>
+		<div class="row col-3 m-3 d-inline center">
+			<div>
+				<img src="${pageContext.request.contextPath}${profileUrl}"
+					id="profile" class="rounded-circle center-block">
+			</div>
 			<div>${memberVO.memberNick}</div>
 			<div>${memberVO.memberEmail}</div>
-			
+		</div>
+		
+		
+		
+		<div class="row m-5 d-inline">
 			<table class="table-borderless table-responsive table-sm mt-3">
 				<tr>
 					<th class="text-left" style="width:50%;">보유 포인트</th>
@@ -88,20 +92,12 @@
 						</c:if>
 					</td>
 				</tr>
-				
-	
-	
+
 			</table>			
 			
 		</div>
-		
-		
-
-		
 	
 	</div>
-
-
 
 </div>
 
@@ -109,3 +105,16 @@
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
+
+
+
+<style scoped>
+
+	#profile {
+		object-fit: cover;
+	    width: 250px;
+	    height: 250px;
+	}
+
+</style>
