@@ -76,16 +76,20 @@
 	
 	<div class="mt-5 text-right">
 		<div class="m-1">
-			<a href="${root}/member/check_email" style="color: #6F75F6">이메일을 잊으셨나요?</a>
+			<a href="${root}/member/check_email" style="color: #6F75F6"><i class="fa-solid fa-caret-right"></i>
+				이메일을 잊으셨나요?
+			</a>
 		</div>
 		
 		<div class="m-1">
-			<a href="${root}/member/change_pw" style="color: #6F75F6">비밀번호를 잊으셨나요?</a>
+			<a href="${root}/member/change_pw" style="color: #6F75F6"><i class="fa-solid fa-caret-right"></i>
+				비밀번호를 잊으셨나요?
+			</a>
 		</div>
 			
 		<div class="m-1">
 			<span><strong>아직 경매나라 계정이 없나요? </strong></span> &nbsp;&nbsp;
-			<a href="${root}/member/join"><i class="fa-solid fa-arrow-right-to-bracket"></i>회원가입</a>		
+			<a href="${root}/member/join"><i class="fa-solid fa-arrow-right-to-bracket"></i> 회원가입</a>		
 		</div>
 	</div>
 	

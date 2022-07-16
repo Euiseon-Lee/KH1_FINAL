@@ -48,14 +48,16 @@
 				<tr>
 					<th class="text-left" style="width:50%;">보유 포인트</th>
 					<td class="text-right">
-						<a href="${root}/mypage/cash_log">${memberVO.memberHoldingPoints}p ></a>
+						<a href="${root}/mypage/cash_log">
+							${memberVO.memberHoldingPoints}p <i class="fa-solid fa-chevron-right"></i>
+						</a>
 					</td>
 				</tr>
 				<tr>
 					<th class="text-left">총 경매 횟수</th>
 					<td class="text-right">
 						<a href="${root}/mypage/auction_history">
-							${memberVO.normalCount}회 >
+							${memberVO.normalCount}회 <i class="fa-solid fa-chevron-right"></i>
 						</a>
 					</td>
 				</tr>
@@ -63,16 +65,15 @@
 					<th class="text-left">총 낙찰 횟수</th>
 					<td class="text-right">
 						<a href="${root}/mypage/auction_history">
-							${memberVO.succCount}회 >
+							${memberVO.succCount}회 <i class="fa-solid fa-chevron-right"></i>
 						</a>
+
 					</td>
 				</tr>
 				<tr>
 					<th class="text-left">경고횟수</th>
 					<td class="text-right">
-						<a href="${root}/mypage/auction_history">
-							${memberVO.memberRedCount}회 >						
-						</a>
+						${memberVO.memberRedCount}회 <i class="fa-solid fa-chevron-right"></i>
 					</td>
 				</tr>
 				<tr>
@@ -82,7 +83,8 @@
 							${memberDto.memberPreference}
 						</c:if>
 						<c:if test="${memberDto.memberPreference == null}">
-							<a href="${root}/mypage/info">거래 선호시간을 설정해주세요</a>
+							<a href="${root}/mypage/info">거래 선호시간을 설정해주세요 <i class="fa-solid fa-chevron-right"></i>
+							</a>
 						</c:if>
 					</td>
 				</tr>
