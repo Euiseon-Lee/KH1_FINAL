@@ -19,10 +19,10 @@
 			<thead>
 				<tr>
 					<th style="width:10%;">신고 번호</th>
-					<th style="width:40%;">신고 내용</th>
-					<th style="width:20%;">신고 경매글</th>
+					<th style="width:50%;">신고 내용</th>
 					<th>신고자</th>
 					<th>신고 시각</th>
+					<th>보기</th>
 					<th>관리</th>
 				</tr>
 			</thead>
@@ -31,9 +31,11 @@
 					<tr>
 						<td>${auctionReportListVO.auctionReportNo}</td>
 						<td>${auctionReportListVO.auctionReportReason}</td>
-						<td>${auctionReportListVO.auctionTitle}</td>
 						<td>${auctionReportListVO.reporterNick}</td>
 						<td>${auctionReportListVO.auctionReportTime}</td>
+						<td>
+							<a href="${pageContext.request.contextPath}/admin/auction/detail/${auctionReportListVO.auctionNo}">보기</a>
+						</td>
 						<td>
 							<c:choose>
 								<c:when test="${auctionReportListVO.auctionReportRestriction == 0}">

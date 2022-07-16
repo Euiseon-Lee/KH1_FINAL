@@ -38,6 +38,8 @@
 						</div>
 						<div class="col-8">
 							<input type="search" class="form-control" required v-model="currentData.ratingContent"></input>
+							<div class="text-end mt-1" v-if="currentData.ratingContent.length <= 30">{{currentData.ratingContent.length}} / 30</div>
+							<div class="text-end mt-1 text-danger" v-if="currentData.ratingContent.length > 30">{{currentData.ratingContent.length}} / 30</div>
 						</div>
 					</div>
 					<div class="row mt-3">
@@ -180,6 +182,7 @@
 					}
 				});
 			},
+			
 		},
 		created(){
 			axios({

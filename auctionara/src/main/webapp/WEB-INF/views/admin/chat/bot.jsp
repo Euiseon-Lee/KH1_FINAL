@@ -25,7 +25,9 @@
 						<label>{{superContent}}</label>
 					</div>
 					<div class="row p-2">
-						<input class="form-control" required v-model="currentData.chatbotContent">
+						<textarea class="form-control" required v-model="currentData.chatbotContent">{{currentData.chatbotContent}}</textarea>
+						<div class="text-end mt-1" v-if="currentData.chatbotContent.length <= 100">{{currentData.chatbotContent.length}} / 100</div>
+						<div class="text-end mt-1 text-danger" v-if="currentData.chatbotContent.length > 100">{{currentData.chatbotContent.length}} / 100</div>
 					</div>
 					<div class="row p-2">
 						<button class="btn btn-primary" v-on:click="addItem">{{mode}}</button>
@@ -86,6 +88,8 @@
 					chatbotSuperNo:"", 
 				},
 				
+				count:0, 
+				
 				index:-1,
 			};
 		},
@@ -107,27 +111,21 @@
 				
 				const chatbotNo = this.dataList[index].chatbotNo;
 				
-				if(index > 0) {
-					if(this.dataList[index].chatbotNo == this.dataList[index + 1].chatbotSuperNo) {
-						this.dataList.splice(index, 2);
-					} else {
-						this.dataList.splice(index, 1);
+				for(var i = 0; i < this.dataList.length; i++) {
+					if(this.dataList[i].chatbotSuperNo == chatbotNo) {
+						this.count++; 
 					}
-				} else {
-					this.dataList.splice(index, 1);
 				}
+				
+				console.log(this.count);
 				
 				axios({
 					url:"${pageContext.request.contextPath}/rest/chatbot/"+chatbotNo,
 					method:"delete", // deleteMapping
 				})
 				.then(()=>{
-					if(index > 0) {
-						if(this.dataList[index].chatbotNo == this.dataList[index + 1].chatbotSuperNo) {
-							this.dataList.splice(index, 2);
-						} else {
-							this.dataList.splice(index, 1);
-						}
+					if(this.count > 0) {
+						this.dataList.splice(index, this.count+1);
 					} else {
 						this.dataList.splice(index, 1);
 					}
