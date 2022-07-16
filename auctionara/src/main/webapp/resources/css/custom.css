@@ -15,6 +15,14 @@
     height: 850px;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
+.fs-large {
+	font-size: 1.5em;
+}
+
 pre {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 1rem;

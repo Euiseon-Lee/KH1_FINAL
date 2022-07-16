@@ -201,7 +201,9 @@ pageEncoding="UTF-8"%>
                 return this.auctionContent.length;
             },
             formPass() {
-                return this.attachmentCount > 0 && this.auctionTitle != "" && this.categoryNo != "" && this.openingBidVaild && this.closingBidValid && this.auctionOpeningBid != "" && this.auctionClosingBid != "" && this.auctionContent != "" && this.auctionClosedTime != "" && document.querySelector('input[name="auctionAddress"]').checked;
+                return this.attachmentCount > 0 && this.auctionTitle != "" && this.categoryNo != "" && this.openingBidVaild && this.closingBidValid 
+                	&& this.auctionOpeningBid != "" && this.auctionClosingBid != "" && this.auctionContent != "" && this.auctionClosedTime != "" 
+                	&& document.querySelectorAll("input[name='auctionAddress']:checked").length > 0
             },
         },
         methods: {
