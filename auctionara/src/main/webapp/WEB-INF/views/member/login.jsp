@@ -85,7 +85,7 @@
 			
 		<div class="m-1">
 			<span><strong>아직 경매나라 계정이 없나요? </strong></span> &nbsp;&nbsp;
-			<a href="${root}/member/join">회원가입</a>		
+			<a href="${root}/member/join"><i class="fa-solid fa-arrow-right-to-bracket"></i>회원가입</a>		
 		</div>
 	</div>
 	
