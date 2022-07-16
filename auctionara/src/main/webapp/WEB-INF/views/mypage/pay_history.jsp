@@ -34,17 +34,41 @@
 
 	<!-- 본문 -->
 	<div class="row flex-fill d-flex flex-column">
-		<div class="row m-2 p-2">
-			<button type="button" class="btn btn-info">포인트 충전</button>
-		</div>
-	
-		<div class="row m-2 p-2">
-			<button type="button" class="btn btn-info">현금화 신청</button>
-		</div>
-		
-		<div>
-		</div>
-	
+		<div class="col">
+        	<h4 class="row fw-bold my-4 pt-2">내 경매 내역</h4>
+        	<table class="table table-hover">
+			  <thead>
+			    <tr>
+			      <th scope="col">등록일시</th>
+			      <th scope="col">카테고리</th>
+			      <th scope="col">경매 제목</th>
+			      <th scope="col">마감일시</th>
+			      <th scope="col">경매 상태</th>
+			      <th scope="col"></th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <td></td>
+			    </tr>
+			    <tr>
+			      <td></td>
+			    </tr>
+			    <tr>
+			      <td class="fw-bold text-info"></td>
+			    </tr>
+			    <tr>
+			      <td></td>
+			    </tr>
+			    <tr>
+			      <td></td>
+			    </tr>
+			    <tr>
+			      <td></td>
+			    </tr>			    			    
+			  </tbody>
+			</table>
+        </div>
 	</div>
 </div>
 

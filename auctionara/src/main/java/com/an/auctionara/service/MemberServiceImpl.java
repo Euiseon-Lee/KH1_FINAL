@@ -2,6 +2,9 @@ package com.an.auctionara.service;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,8 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.AttachmentDao;
+import com.an.auctionara.repository.AuctionDao;
 import com.an.auctionara.repository.GpsAddressDao;
 import com.an.auctionara.repository.MemberDao;
+import com.an.auctionara.vo.MyAuctionVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -26,6 +31,9 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private AttachmentDao attachmentDao;
 	
+	
+	@Autowired
+	private AuctionDao auctionDao;
 	
 	//첨부파일(프로필) 없이 구현함 이후 추가 구현 필요
 	@Override
@@ -80,6 +88,17 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 	}
-	
-	
+
+	@Override
+	public List<MyAuctionVO> list(int auctioneerNo, int page, Integer filter, Integer sort, Integer categoryNo, String keyword) {
+		Map<String, Object> info = new HashMap<>();
+		info.put("auctioneerNo", auctioneerNo);
+		info.put("begin", (page * 10) - (10 - 1)); // 10개씩 불러오기
+		info.put("end", page * 10);
+		info.put("filter", filter);
+		info.put("sort", sort);
+		info.put("categoryNo", categoryNo);
+		info.put("keyword", keyword);
+		return auctionDao.myAuction(info);
+	}
 }

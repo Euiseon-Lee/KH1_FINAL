@@ -11,6 +11,7 @@ import com.an.auctionara.vo.AdminAuctionListVO;
 import com.an.auctionara.vo.AuctionDetailVO;
 import com.an.auctionara.vo.AuctionListVO;
 import com.an.auctionara.vo.AuctioneerInfoVO;
+import com.an.auctionara.vo.MyAuctionVO;
 import com.an.auctionara.vo.MyBiddingAuctionListVO;
 
 public interface AuctionDao {
@@ -23,6 +24,7 @@ public interface AuctionDao {
 	SuccessfulBidDto close(int auctionNo);
 	Boolean checkPrivate(int auctionNo);
 	AuctioneerInfoVO auctioneerInfo(int auctioneerNo);
+	List<MyAuctionVO> myAuction(Map<String, Object> info);
 	
 	// 관리자 페이지 - 경매 list, count 메소드 
 	List<AdminAuctionListVO> adminList(String type, String keyword, int p, int s);
