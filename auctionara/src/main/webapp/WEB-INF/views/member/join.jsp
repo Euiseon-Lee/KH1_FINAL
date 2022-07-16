@@ -3,88 +3,75 @@
     
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
-
-
-<div class="container col-6 offset-3 form-group center-block">
-	<form action="join" method="post" enctype="multipart/form-data">
-	
-		<div class="alert alert-info text-center" role="alert">
-			<h1>회원 가입</h1>
+<div class="container-fluid">
+	<div class="row mt-3">
+		<div class="col-4 align-self-center mr-5">
+			<h2 class="row fw-bold"><span class="border-bottom border-dark pb-4">회원가입</span></h2>
+			<form action="join" method="post" enctype="multipart/form-data">
+				<div class="row mt-4">프로필 사진</div>
+				<div class="row mt-3">
+					<label id="profile-label" class="position-relative">
+	                    <img id="profile" class="rounded-circle" src="${root}/image/default_attachment.jpg"/>
+	                    <input class="form-control d-none" type="file" name="attachment" accept=".png, .jpg, .gif"/>
+	                    <a id="profile-hover" class="d-none rounded-circle position-absolute fw-bold text-white">선택</a>
+	                </label>
+				</div>			
+				<div class="row mt-3">
+					<label>이메일</label>
+					<div class="input-group">
+						<input type="email" name="memberEmail" autocomplete="off" placeholder="name@example.com" 
+							class="email-input form-control" aria-describedby="email-btn" required>
+						<input type="button" value="인증 메일 발송" class="btn-send-email btn btn-outline-info"
+							id="email-btn" disabled>	
+					</div>
+					<div id="valid-email" class="text-success mt-1">인증 가능한 이메일입니다</div>
+					<div id="email-exists" class="text-primary mt-1">이미 가입된 계정입니다</div>
+					<div id="invalid-email" class="text-primary mt-1">잘못된 이메일 양식입니다</div>
+				</div>	
+				<div class="row mt-3">
+					<label>인증번호</label>
+					<div class="input-group">
+						<input type="text" name="certNo" placeholder="인증번호를 입력해주세요" 
+							class="cert-no form-control" aria-describedby="cert-btn" autocomplete="off" required>
+						<input type="button" value="메일 인증 완료" class="btn-cert-check btn btn-outline-info" 
+							id="cert-btn" autocomplete="off" disabled>
+					</div>
+				</div>
+				<div class="row mt-3">
+					<label>비밀번호</label>
+					<div class="input-group">
+						<input type="password" name="memberPw" placeholder="알파벳 대소문자 및 숫자 8~16자" 
+							class="form-control" autocomplete="off" required>
+					</div>
+					<div id="valid-pw" class="text-success mt-1">사용 가능한 비밀번호입니다</div>
+					<div id="invalid-pw" class="text-primary mt-1">잘못된 비밀번호 양식입니다</div>
+				</div>
+				<div class="row mt-3">
+					<label>닉네임</label>
+					<div class="input-group">		
+						<input type="text" name="memberNick" autocomplete="off" placeholder="한글 2~10자" 
+							class="form-control" aria-describedby="nick-btn" required>
+						<input type="button" value="중복 검사하기" class="btn-send-nick btn btn-outline-info" 
+							id="nick-btn" disabled>
+					</div>
+					<div id="valid-nick" class="text-success mt-1">사용 가능한 닉네임입니다</div>
+					<div id="nick-exists" class="text-primary mt-1">이미 존재하는 닉네임입니다</div>
+					<div id="invalid-nick" class="text-primary mt-1">잘못된 닉네임 양식입니다</div>					
+				</div>
+				<div class="row my-4 form-check">
+					<label class="form-check-label" for="ck">
+						<input type="checkbox" class="form-check-input" id="ck"> 전체 동의
+					</label>
+				</div>
+				<div class="row">
+					<button type="submit" onkeydown="hitEnterkey(event);" class="btn btn-primary btn-block mt-2">회원가입</button>
+				</div>
+			</form>
 		</div>
-		
-		<div class="row">
-			<label> 이메일</label>
-			<div class="input-group m-1">
-				<input type="email" name="memberEmail" autocomplete="off" placeholder="name@example.com" 
-					class="email-input form-control form-control-lg" aria-describedby="button-addon1" required>
-				<input type="button" value="인증 메일 발송" class="btn-send-email btn-outline-info "
-					id="button-addon1" disabled>
-			</div>
-			<div class="mb-3">
-				<span id="valid-email" style="color:blue;">인증 가능한 이메일입니다</span>
-				<span id="email-exists" style="color:#6F75F6"><strong>이미 가입된 계정입니다</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="${root}/member/login"><i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;즉시 로그인</a>
-				</span>
-				<span id="invalid-email" style="color:red;">잘못된 이메일 양식입니다</span>
-			</div>
+		<div class="col">
+			<img src="${root}/image/login_bg.jpg" id="login-bg" />
 		</div>
-		
-		<div class="row">
-			<label>인증번호</label>
-			<div class="input-group row center m-1 mb-3">
-				<input type="text" name="certNo" placeholder="인증번호를 입력해주세요" 
-					class="cert-no form-control form-control-lg" aria-describedby="button-addon2"  required>
-				<input type="button" value="메일 인증 완료" class="btn-cert-check btn-outline-info" 
-					id="button-addon2" disabled>
-			</div>
-		</div>
-		
-		<div class="row">
-			<label>비밀번호</label>
-			<div class="input-group row center m-1">
-				<input type="password" name="memberPw" placeholder="알파벳 대소문자 및 숫자 8~16자" 
-					class="form-control form-control-lg" autocomplete="off" required>
-			</div>
-			<div class="mb-3">
-				<span id="valid-pw" style="color:blue;">사용 가능한 비밀번호입니다</span>
-				<span id="invalid-pw" style="color:red;">잘못된 비밀번호 양식입니다</span>
-			</div>
-		</div>
-		
-		<div class="row">
-			<label> 닉네임</label>
-			<div class="input-group row center m-1">		
-				<input type="text" name="memberNick" autocomplete="off" placeholder="한글 2~10자" 
-					class="form-control form-control-lg" aria-describedby="button-addon3"  required>
-				<input type="button" value="중복 검사하기" class="btn-send-nick btn-outline-info btn-small" 
-					id="button-addon3" disabled>	
-			</div>
-
-			<div class="mb-3">
-				<span id="valid-nick" style="color:blue;">사용 가능한 닉네임입니다</span>
-				<span id="nick-exists" style="color:#6F75F6">이미 존재하는 닉네임입니다</span>
-				<span id="invalid-nick" style="color:red;">잘못된 닉네임 양식입니다</span>
-			</div>		
-		</div>
-		
-		<div class="row">
-			<label>프로필</label>
-			<div class="input-group row center m-1 mb-3">
-	    		<input type="file" class="form-control form-control-lg" name="attachment">
-		    </div>
-		</div>
-		
-		<div class="row center m-2">
-			<label>
-				<input type="checkbox">전체 동의		
-			</label>
-		</div>
-		
-		<div class="row center m-2">
-			<button type="submit" onkeydown="hitEnterkey(event);" class="btn-submit btn-primary btn-block btn-lg">회원가입</button>
-		</div>
-
-	</form>
+	</div>	
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
@@ -300,8 +287,38 @@
 			
 		});
 		
-		
+		// 프로필 사진 선택
+		$("#profile-label").mouseover(function(){
+			$("#profile-hover").removeClass("d-none");
+		});
+		$("#profile-label").mouseleave(function(){
+			$("#profile-hover").addClass("d-none");
+		});
+		$("input[name=attachment]").change(function(){
+			const url = URL.createObjectURL($("input[name=attachment]")[0].files[0]); 
+			$("#profile").attr("src", url);
+		});
 	});
 	
 </script>
+<style scoped>
 
+	#profile {
+		object-fit: cover;
+	    width: 100px;
+	    height: 100px;
+	}
+	
+	#profile-hover {
+		top: 0;
+	    left: 0;
+	    background-color: rgba(111, 117, 246, 0.6);
+	    width: 100px;
+	    height: 100px;
+	    line-height: 100px;
+	    text-align: center;
+	    cursor: pointer;
+	}
+
+</style>
+</style>
