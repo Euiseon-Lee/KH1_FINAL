@@ -74,7 +74,7 @@
 					<thead>
 				    	<tr>
 				    		<th scope="col" class="col-2">등록일시</th>
-				    		<th scope="col" class="col-2">카테고리</th>
+				    		<th scope="col" class="col-2 pointer" @click="categoryNo = 0; updateList();">카테고리</th>
 				    		<th scope="col" class="col-5">경매 제목</th>
 				    		<th scope="col">경매 상태</th>
 				    		<th scope="col">받은 포인트</th>
@@ -83,7 +83,7 @@
 					<tbody>
 				    	<tr v-for="(auction, index) in list" :key="index">
 				    		<td class="text-muted fs-small">{{ dateFormat(auction.auctionUploadTime) }}</td>
-				    		<td class="text-muted fs-small pointer cate" @click="categoryNo = auction.categoryNo">{{ auction.categoryName }}</td>
+				    		<td class="text-muted fs-small pointer cate" @click="categoryNo = auction.categoryNo; updateList();">{{ auction.categoryName }}</td>
 				    		<td class="fw-bold fs-small">
 				    			<a v-if="auction.auctionProcess == 0" class="text-dark text-truncate" 
 				    				:href="'${root}/auction/detail/' + auction.auctionNo">{{ auction.auctionTitle }}</a>
@@ -136,7 +136,6 @@
 
 <script src="https://unpkg.com/vue@next"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	const app = Vue.createApp({
         data() {
@@ -160,7 +159,7 @@
         	dateFormat(time) { // 날짜 포맷
         		let date = new Date(time);
         	  	return date.getFullYear() + "." + (date.getMonth() + 1) + "." + date.getDate() + " " 
-        	  		+ date.getHours() + ":" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+        	  		+ (date.getHours() < 10 ? "0" : "") + date.getHours() + ":" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
         	},
             loadFirst() { // 첫 리스트 불러오기
             	axios.get("http://localhost:8080/auctionara/mypage/auction_history/list", {
@@ -191,7 +190,6 @@
             			sort: this.sort,
             			keyword: this.keyword,
             			categoryNo: this.categoryNo,
-            			period: this.period,
             	      }
             	})
             	.then(resp => {
@@ -227,7 +225,7 @@
             search(e) { // 검색
             	e.preventDefault();
             	this.updateList();
-            }
+            },
         },
         mounted() {
         	this.loadFirst(); // 1페이지 불러오기
