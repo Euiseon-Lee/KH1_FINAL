@@ -40,12 +40,6 @@ public class MemberServiceImpl implements MemberService {
 	private SuccessfulBidDao successfulBidDao;
 	
 	
-	@Autowired
-	private AuctionDao auctionDao;
-	
-	@Autowired
-	private AuctionDao auctionDao;
-	
 	//첨부파일(프로필) 없이 구현함 이후 추가 구현 필요
 	@Override
 	@Transactional

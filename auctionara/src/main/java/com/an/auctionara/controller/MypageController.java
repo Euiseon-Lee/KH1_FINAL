@@ -41,7 +41,7 @@ public class MypageController {
 		MemberVO memberVO = memberService.mypage(memberNo);
 		model.addAttribute("memberVO", memberVO);
 		
-		int attachmentNo = memberDto.getAttachmentNo();
+		int attachmentNo = memberVO.getAttachmentNo();
 		
 		if(attachmentNo == 0) {
 			model.addAttribute("profileUrl", "/image/user.png");
