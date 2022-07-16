@@ -107,8 +107,14 @@
 				
 				const chatbotNo = this.dataList[index].chatbotNo;
 				
-				if(index > 0 && this.dataList[index + 1].chatbotSuperNo == chatbotNo) {
-					this.dataList.splice(next, 1);
+				if(index > 0) {
+					if(this.dataList[index].chatbotNo == this.dataList[index + 1].chatbotSuperNo) {
+						this.dataList.splice(index, 2);
+					} else {
+						this.dataList.splice(index, 1);
+					}
+				} else {
+					this.dataList.splice(index, 1);
 				}
 				
 				axios({
@@ -116,7 +122,15 @@
 					method:"delete", // deleteMapping
 				})
 				.then(()=>{
-					this.dataList.splice(index, 1);
+					if(index > 0) {
+						if(this.dataList[index].chatbotNo == this.dataList[index + 1].chatbotSuperNo) {
+							this.dataList.splice(index, 2);
+						} else {
+							this.dataList.splice(index, 1);
+						}
+					} else {
+						this.dataList.splice(index, 1);
+					}
 				});
 			},
 			

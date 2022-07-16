@@ -39,7 +39,7 @@
 					<div class="col">
 						<select name="restrictionType" class="form-select">
 							<option value="비매너 채팅">비매너 채팅</option>
-							<option value="허위 매물 작성">허위 매물 작성</option>
+							<option value="허위 매물 작성" selected>허위 매물 작성</option>
 							<option value="기타">기타</option>
 						</select>
 					</div>

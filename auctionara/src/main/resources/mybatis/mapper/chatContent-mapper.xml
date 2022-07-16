@@ -24,4 +24,10 @@
  		select * from chat_content where chatroom_no = #{chatRoomNo} order by chat_no
  	</select>
  	
+ 	<select id="content" parameterType="int" resultType="ChatContentVO">
+ 		select C.*, M.member_nick from chat_content C 
+ 			inner join member M on C.chatter_no = M.member_no
+ 		where chatroom_no = #{chatRoomNo} order by chat_no desc
+ 	</select>
+ 	
  </mapper>

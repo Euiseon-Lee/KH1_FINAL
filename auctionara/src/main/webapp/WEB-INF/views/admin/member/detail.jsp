@@ -65,9 +65,14 @@
 				</li>
 				<li class="list-group-item">
 					<h2 class="card-title">누적 경고 횟수</h2>
-					<c:if test="${memberDto.memberRedCount >= 10}">
-						<p class="card-text" style="color:red;">${memberDto.memberRedCount}</p>
-					</c:if>
+					<c:choose>
+						<c:when test="${memberDto.memberRedCount >= 10}">
+							<p class="card-text" style="color:red;">${memberDto.memberRedCount}</p>
+						</c:when>
+						<c:when test="${memberDto.memberRedCount < 10}">
+							<p class="card-text" style="color:black;">${memberDto.memberRedCount}</p>
+						</c:when>
+					</c:choose>
 				</li>
 				<li class="list-group-item">
 					<h2 class="card-title">가입일</h2>
