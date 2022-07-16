@@ -22,7 +22,9 @@
 			</div>
 			<div class="mb-3">
 				<span id="valid-email" style="color:blue;">인증 가능한 이메일입니다</span>
-				<span id="email-exists" style="color:#6F75F6">이미 가입된 계정입니다</span>
+				<span id="email-exists" style="color:#6F75F6"><strong>이미 가입된 계정입니다</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="${root}/member/login"><i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;즉시 로그인</a>
+				</span>
 				<span id="invalid-email" style="color:red;">잘못된 이메일 양식입니다</span>
 			</div>
 		</div>

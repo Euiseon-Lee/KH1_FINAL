@@ -11,23 +11,23 @@
 		<ul class="nav flex-column text-center">
 		  <li class="nav-item border-bottom">
 		  	<h4>
-		  		<a href="${root}/mypage/index" class="nav-link btn-outline-secondary">마이페이지</a>
+		  		<a href="${root}/mypage/index" class="nav-link btn-outline-dark">마이페이지</a>
 		  	</h4>
 		  </li>
 		  <li class="nav-item border-bottom">
 		  	<a href="${root}/mypage/info" class="nav-link btn-outline-info">정보수정</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		    <a href="${root}/mypage/exit" class="nav-link btn-outline-info">회원탈퇴</a>
-		  </li>
-		  <li class="nav-item border-bottom">
 		    <a href="${root}/mypage/auction_history" class="nav-link btn-outline-info">경매내역</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">결제완료내역</a>
+		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">입찰/낙찰내역</a>
 		  </li>
 		  <li class="nav-item border-bottom">
 		    <a href="${root}/mypage/cash_log" class="nav-link btn-outline-info">포인트/현금화</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원탈퇴</a>
 		  </li>
 		</ul>
 	</div>
@@ -36,8 +36,7 @@
 	<!-- 본문 -->
 	<div class="row flex-fill d-flex flex-column">
 		<div class="alert alert-info text-center" role="alert">
-			<h1>경매나라:<br>
-				정말 저희와<br>
+			<h1>정말 저희와<br>
 				헤어지실 건가요?
 			</h1>
 		</div>
