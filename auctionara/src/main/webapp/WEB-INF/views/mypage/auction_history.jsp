@@ -7,27 +7,25 @@
 <div id="app" class="container d-flex" v-cloak>
 <!-- 사이드바 -->
 
-	<div class="row col-3 mt-4">
+	<div class="row col-3 mt-3">
 		<ul class="nav flex-column text-center">
 		  <li class="nav-item border-bottom">
-		  	<h4>
-		  		<a href="${root}/mypage/index" class="nav-link btn-outline-secondary">마이페이지</a>
-		  	</h4>
+		  	<a href="${root}/mypage/index" class="nav-link btn-outline-secondary fw-bold fs-large">마이페이지</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		  	<a href="${root}/mypage/info" class="nav-link btn-outline-info">정보수정</a>
+		  	<a href="${root}/mypage/info" class="nav-link btn-outline-info">내 정보 수정</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		    <a href="${root}/mypage/exit" class="nav-link btn-outline-info">회원탈퇴</a>
+		    <a href="${root}/mypage/auction_history" class="nav-link btn-outline-info">내 경매</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		    <a href="${root}/mypage/auction_history" class="nav-link btn-outline-info">경매내역</a>
-		  </li>
-		  <li class="nav-item border-bottom">
-		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">결제완료내역</a>
+		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">내 입찰</a>
 		  </li>
 		  <li class="nav-item border-bottom">
 		    <a href="${root}/mypage/cash_log" class="nav-link btn-outline-info">포인트/현금화</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+		    <a href="${root}/mypage/exit" class="nav-link btn-outline-info">회원 탈퇴</a>
 		  </li>
 		</ul>
 	</div>

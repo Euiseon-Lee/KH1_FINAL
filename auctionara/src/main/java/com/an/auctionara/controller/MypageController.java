@@ -80,7 +80,7 @@ public class MypageController {
 		String end = request.getParameter("end");
 		
 		
-		String memberPreference = week+", "+begin+" ~ "+end;
+		String memberPreference = week + " " + begin + "~" + end;
 		memberDto.setMemberPreference(memberPreference);		
 		
 		boolean success = memberService.info(memberDto, attachment);
