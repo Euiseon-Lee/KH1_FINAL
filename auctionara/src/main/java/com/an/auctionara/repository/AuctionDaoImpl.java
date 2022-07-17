@@ -157,4 +157,14 @@ public class AuctionDaoImpl implements AuctionDao {
 		// 관리자 페이지 - 경매 게시글 수 
 		return sqlSession.selectOne("auction.countAuction");
 	}
+
+	@Override
+	public void auctionCancel(int auctionNo) {
+		sqlSession.update("auction.auctionCancel", auctionNo);
+	}
+
+	@Override
+	public void auctionStop(int auctionNo) {
+		sqlSession.update("auction.auctionStop", auctionNo);
+	}
 }

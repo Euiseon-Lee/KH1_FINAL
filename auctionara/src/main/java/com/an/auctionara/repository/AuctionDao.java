@@ -27,6 +27,8 @@ public interface AuctionDao {
 	AuctioneerInfoVO auctioneerInfo(int auctioneerNo);
 	List<MyAuctionVO> myAuction(Map<String, Object> info);
 	List<MyBiddingVO> myBidding(Map<String, Object> info);
+	void auctionCancel(int auctionNo);
+	void auctionStop(int auctionNo);
 	
 	// 관리자 페이지 - 경매 list, count 메소드 
 	List<AdminAuctionListVO> adminList(String type, String keyword, int p, int s);

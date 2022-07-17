@@ -533,5 +533,14 @@
 			where auctioneer_no = #{memberNo} and auction_process = 2
 	</select>	
 
+	<!-- 경매 취소 처리 -->
+	<update id="auctionCancel" parameterType="int">
+		update auction set auction_private = 1, auction_process = 1 where auction_no = #{auctionNo}
+	</update>
+	
+	<!-- 경매 중지 처리 -->
+	<update id="auctionStop" parameterType="int">
+		update auction set auction_private = 1, auction_process = 2 where auction_no = #{auctionNo}
+	</update>
 
 </mapper> 

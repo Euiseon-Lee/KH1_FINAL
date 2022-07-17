@@ -6,16 +6,13 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.springframework.web.socket.TextMessage;
 
-import lombok.extern.slf4j.Slf4j;
-
-//채팅방
-@Slf4j
+// 채팅방
 public class ChatRoom {
 	
-	//사용자
+	// 사용자
 	private Set<Member> members = new CopyOnWriteArraySet<>();
 	
-	//기능
+	// 기능
 	public boolean enter(Member member) {
 		return members.add(member);
 	}
