@@ -194,4 +194,15 @@ public class AuctionDaoImpl implements AuctionDao {
 		List<AuctionDto> list = sqlSession.selectList("auction.stopbyMemberNo", memberNo);
 		return list;
 	}
+
+	@Override
+	public int countAuctionbyMemberNo(int memberNo) {
+		return sqlSession.selectOne("auction.countbyMemberNo", memberNo);
+	}
+
+	@Override
+	public void intoPrivateMode(int memberNo) {
+		sqlSession.update("auction.intoPrivateMode", memberNo);
+	}
+
 }

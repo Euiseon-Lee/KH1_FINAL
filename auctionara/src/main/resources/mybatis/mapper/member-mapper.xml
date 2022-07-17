@@ -154,4 +154,8 @@
 	<select id="mypageOne" parameterType="int" resultType="MemberVO">
 		select * from member where member_no = #{memberNo}
 	</select>
+	
+	<select id="exitOne" parameterType="int" resultType="MemberDto">
+		select member_email, member_holding_points from member where member_no = #{memberNo}
+	</select>
 </mapper> 

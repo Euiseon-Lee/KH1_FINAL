@@ -3,7 +3,9 @@ package com.an.auctionara.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.MemberDto;
+import com.an.auctionara.repository.AutologinDao;
 import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.service.MemberService;
 import com.an.auctionara.vo.AuctionListVO;
@@ -30,6 +33,9 @@ public class MypageController {
 	
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private AutologinDao autologinDao;
 	
 	@Autowired
 	private MemberService memberService;
@@ -94,7 +100,7 @@ public class MypageController {
 	public String exit(HttpSession session, Model model) {
 		int memberNo = (int) session.getAttribute("whoLogin");
 		
-		MemberDto memberDto = memberDao.memberSearch(memberNo);
+		MemberDto memberDto = memberDao.memberSearchforExit(memberNo);
 		model.addAttribute("memberDto", memberDto);
 		
 		return "mypage/exit";
@@ -104,12 +110,50 @@ public class MypageController {
 	public String exit(
 					@RequestParam String memberEmail,
 					@RequestParam String memberPw,
+					HttpServletResponse response,
 					HttpSession session) {
-		
-		boolean success = memberDao.exit(memberEmail, memberPw);
+		int memberNo = (int) session.getAttribute("whoLogin");
+		boolean success = memberService.exit(memberNo, memberEmail, memberPw);
 		if(success) {
+			
+			//아이디저장기능 제거
+			Cookie ck = new Cookie("saveId","");
+			ck.setMaxAge(0);
+			ck.setPath("/");
+			response.addCookie(ck);
+			
+		    //자동로그인 관련 정보 제거 
+		    Cookie tn = new Cookie("tn", "");
+		    Cookie it = new Cookie("it", "");
+		    Cookie tp = new Cookie("tp", "");
+		    
+		    tn.setMaxAge(0);
+		    it.setMaxAge(0);
+		    tp.setMaxAge(0);
+		    
+		    tn.setPath("/");
+		    it.setPath("/");
+		    tp.setPath("/");
+		    
+		    response.addCookie(tn);
+		    response.addCookie(it);
+		    response.addCookie(tp);
+		    
+			
+			//쿠키에 자동로그인 체크 빼기
+			Cookie auto = new Cookie("autologin", "");
+		    auto.setMaxAge(0);
+		    auto.setPath("/");
+		    response.addCookie(auto);
+	  		
+	  		//자동로그인 토큰을 DB에서 제거	    
+	  		autologinDao.deleteToken(memberNo);	
+		    
+	  		
+			//세션정보 제거
 			session.removeAttribute("whoLogin");
 			session.removeAttribute("auth");
+			
 			return "redirect:exit_finish";
 		}
 		else {

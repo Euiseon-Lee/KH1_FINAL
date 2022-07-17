@@ -163,7 +163,8 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		else {
 			int count = sqlSession.delete("member.exit", memberEmail);
-			return count > 0;
+			if(count > 0) return true;
+			else return false;
 		}
 	}
 	
@@ -206,8 +207,15 @@ public class MemberDaoImpl implements MemberDao {
 
 
 	@Override
-	public MemberVO mypageMemberSearch(int memberNo) {
+	public MemberVO memberSearchforMypage(int memberNo) {
 		MemberVO memberVO = sqlSession.selectOne("member.mypageOne", memberNo);
 		return memberVO;
+	}
+
+
+	@Override
+	public MemberDto memberSearchforExit(int memberNo) {
+		MemberDto memberDto = sqlSession.selectOne("member.exitOne", memberNo);
+		return memberDto;
 	}
 }

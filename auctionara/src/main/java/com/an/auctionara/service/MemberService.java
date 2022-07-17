@@ -18,4 +18,5 @@ public interface MemberService {
 	boolean info(MemberDto memberDto, MultipartFile attachment) throws IllegalStateException, IOException;
 	List<MyAuctionVO> list(int auctioneerNo, int page, Integer filter, Integer sort, Integer categoryNo, String keyword);
 	MemberVO mypage(int memberNo);
+	boolean exit(int memberNo, String memberEmail, String memberPw);
 }

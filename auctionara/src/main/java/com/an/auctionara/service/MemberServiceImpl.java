@@ -109,7 +109,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO mypage(int memberNo) {
-		MemberVO memberVO = memberDao.mypageMemberSearch(memberNo);
+		MemberVO memberVO = memberDao.memberSearchforMypage(memberNo);
 
 		int totalCount = auctionDao.mypageCount(memberNo);
 		int normalCount = auctionDao.mypageNormalCount(memberNo);
@@ -125,5 +125,45 @@ public class MemberServiceImpl implements MemberService {
 		memberVO.setSuccCount(succCount);
 		
 		return memberVO;
+	}
+
+	@Override
+	public boolean exit(int memberNo, String memberEmail, String memberPw) {
+		
+		MemberDto memberDto = memberDao.login(memberEmail, memberPw);
+		if(memberDto == null) {
+			return false;
+		}
+		
+		else {
+			//자신이 진행 중인 경매내역이 있는지 다시 한 번 확인
+			int auction = auctionDao.countAuctionbyMemberNo(memberNo);
+			
+			//자신이 올린 경매내역 중 낙찰 후 결제완료된 경매내역이 있는지 확인
+			int succBidasAuctioneer = successfulBidDao.countPayment(memberNo);
+			
+			//낙찰받은 내역이 있고 결제완료를 한 내역이 있는지 확인
+			int succBidasBidder = successfulBidDao.countPaymentasBidder(memberNo);
+			
+			boolean cannotExit = auction > 0 || succBidasAuctioneer > 0 || succBidasBidder > 0;
+			
+			if(cannotExit) {
+				return false;
+			}
+			
+			else {
+				//경매올린 내역 중 낙찰된 경매글 중 결제예정인 경우는 비공개글 처리
+				auctionDao.intoPrivateMode(memberNo);
+				//경매올린 내역 중 낙찰된 경매글 중 결제예정인 경우는 상태변경
+				successfulBidDao.intoStatusThrid(memberNo);
+				boolean exit = memberDao.exit(memberEmail, memberPw);
+				return exit;
+			}
+		}
+		
+
+
+		
+		
 	}
 }

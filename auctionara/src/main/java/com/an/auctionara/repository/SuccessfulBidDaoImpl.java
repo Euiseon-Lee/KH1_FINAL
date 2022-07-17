@@ -50,4 +50,21 @@ public class SuccessfulBidDaoImpl implements SuccessfulBidDao{
 	public int succCount(int memberNo) {
 		return sqlSession.selectOne("successful_bid.countSuccbidbyMemberNo", memberNo);
 	}
+	
+	@Override
+	public int countPayment(int memberNo) {
+		return sqlSession.selectOne("successful_bid.countPaymentbyMemberNo", memberNo);
+	}
+
+	@Override
+	public int countPaymentasBidder(int memberNo) {
+		return sqlSession.selectOne("successful_bid.countPaymentbybidderNo", memberNo);
+	}
+	
+	@Override
+	public void intoStatusThrid(int memberNo) {
+		sqlSession.update("successful_bid.intoStatusThrid", memberNo);
+		
+	}
+
 }

@@ -6,7 +6,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.an.auctionara.entity.AuctionDto;
@@ -25,5 +27,11 @@ public class MypageRestController {
 		return auctionDao.mypageList(memberNo);
 	}
 
-
+	@PostMapping
+	public int auctionExists(HttpSession session) {
+		int memberNo = (int) session.getAttribute("whoLogin");
+		int auction = auctionDao.countAuctionbyMemberNo(memberNo);
+		
+		return auction;
+	}
 }

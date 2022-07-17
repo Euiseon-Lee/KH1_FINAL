@@ -55,4 +55,10 @@ public interface AuctionDao {
 	List<AuctionDto> mypageCancelList(int memberNo);
 	//마이페이지 경매 중지한 물품 리스트 추출
 	List<AuctionDto> mypageStopList(int memberNo);
+	
+	//탈퇴 시 진행중인 auction 개수 확인
+	int countAuctionbyMemberNo(int memberNo);
+	//탈퇴 시 낙찰된 경매물품 중 결제예정인 물품은 비공개처리
+	void intoPrivateMode(int memberNo);
+
 }
