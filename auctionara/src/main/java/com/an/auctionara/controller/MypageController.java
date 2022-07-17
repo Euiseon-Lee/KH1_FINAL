@@ -1,6 +1,7 @@
 package com.an.auctionara.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,11 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.service.MemberService;
+import com.an.auctionara.vo.AuctionListVO;
+import com.an.auctionara.vo.MyAuctionVO;
 
 @Controller
 @RequestMapping("/mypage")
@@ -118,8 +122,6 @@ public class MypageController {
 		return "mypage/exit_finish";
 	}
 	
-	
-	
 	@GetMapping("/auction_history")
 	public String auctionHistory(HttpSession session, Model model) {
 		return "mypage/auction_history";
@@ -135,5 +137,17 @@ public class MypageController {
 		return "mypage/cash_log";
 	}
 	
-	
+	// 내 경매 이력 리스트 출력
+	@ResponseBody
+	@GetMapping("/auction_history/list")
+	public List<MyAuctionVO> auctionList(@RequestParam int page,
+											@RequestParam Integer filter,
+											@RequestParam Integer sort,
+											@RequestParam(required = false) Integer categoryNo,
+											@RequestParam(required = false) String keyword,
+											HttpSession session) {
+		int auctioneerNo = (int) session.getAttribute("whoLogin");
+		List<MyAuctionVO> list = memberService.list(auctioneerNo, page, filter, sort, categoryNo, keyword);
+		return list;
+	}
 }

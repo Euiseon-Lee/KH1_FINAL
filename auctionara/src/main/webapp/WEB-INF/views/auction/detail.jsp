@@ -778,11 +778,7 @@ ${auctionDetail.auctionContent}
         bottom: 0;
         text-align: right;
     }
-    
-    .pointer {
-    	cursor: pointer;
-    }
-    
+
     .text-warning {
     	font-size: 0.5em;
     	vertical-align: middle;
@@ -823,9 +819,6 @@ ${auctionDetail.auctionContent}
         height: 50px; 	
 	}
 	
-	.fs-large {
-		font-size: 1.5em;
-	}
 </style>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

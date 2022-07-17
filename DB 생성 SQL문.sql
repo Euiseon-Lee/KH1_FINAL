@@ -457,3 +457,74 @@ auto_token char(60) not null,
 auto_issuetime date default sysdate not null,
 auto_ip varchar2(60)
 );
+
+
+
+ALTER TABLE chat_report DROP CONSTRAINT SYS_C0048973;
+ALTER TABLE auction DROP CONSTRAINT FK_MEMBER_TO_AUCTION_1;
+ALTER TABLE chatroom DROP CONSTRAINT SYS_C0048942;
+ALTER TABLE bidding DROP CONSTRAINT FK_MEMBER_TO_BIDDING_1;
+ALTER TABLE cashing_points DROP CONSTRAINT SYS_C0048170;
+ALTER TABLE chat_content DROP CONSTRAINT FK_MEMBER_TO_CHAT_CONTENT_1;
+ALTER TABLE gps_address DROP CONSTRAINT FK_MEMBER_TO_GPS_ADDRESS_1;
+ALTER TABLE manager_restriction DROP CONSTRAINT FK_MANAGER_RESTRICTION;
+ALTER TABLE payment DROP CONSTRAINT FK_MEMBER_TO_PAYMENT_1;
+ALTER TABLE auction_report DROP CONSTRAINT FK_MEMBER_TO_AUCTION_REPORT_1;
+ALTER TABLE autologin DROP CONSTRAINT SYS_C0048831;
+
+
+ALTER TABLE chat_report
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+                             
+ALTER TABLE auction
+       ADD FOREIGN KEY (auctioneer_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+                             
+ALTER TABLE chatroom
+       ADD FOREIGN KEY (participator_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE bidding
+       ADD FOREIGN KEY (bidder_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE cashing_points
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE chat_content
+       ADD FOREIGN KEY (chatter_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE gps_address
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE manager_restriction
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE payment
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE auction_report
+       ADD FOREIGN KEY (auction_reporter_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE autologin
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
