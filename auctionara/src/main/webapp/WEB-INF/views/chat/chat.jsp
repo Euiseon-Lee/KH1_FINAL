@@ -10,19 +10,23 @@
     <div class="row mt-5">
         <div class="col-3 border-right">
         	<h4 class="fw-bold row border-bottom pb-3 my-0">내 채팅방</h4>
-	        <c:forEach var="ChatRoomListVO" items="${chatRoomList}">
-			<div class="row border-bottom pb-2 pt-3" @click="talk(${ChatRoomListVO.chatRoomNo})" :class="{'bg-light': ${ChatRoomListVO.chatRoomNo} == chatRoomNo}">
-				<div class="col-3 pr-0">
-					<img class="rounded-circle" src="${root}/attachment/download?attachmentNo=${ChatRoomListVO.attachmentNo}" v-if="${whoLogin} == ${ChatRoomListVO.auctioneerNo}">
-					<img class="rounded-circle" src="${root}/attachment/download?attachmentNo=${ChatRoomListVO.auctioneerAttachmentNo}" v-if="${whoLogin} != ${ChatRoomListVO.auctioneerNo}">
-				</div>
-				<div class="col py-1">
-					<h6 class="fw-bold chatroomName" v-if="${whoLogin} == ${ChatRoomListVO.auctioneerNo}">${ChatRoomListVO.memberNick}</h6>
-					<h6 class="fw-bold chatroomName"v-if="${whoLogin} != ${ChatRoomListVO.auctioneerNo}">${ChatRoomListVO.auctioneerNick}</h6>
-					<h6 class="chatroomName text-muted text-truncate">${ChatRoomListVO.auctionTitle}</h6>
-				</div>
-	        </div>       
-	        </c:forEach>
+        	<div class="row">
+        		<div id="chatroom-wrap" class="col">
+			        <c:forEach var="ChatRoomListVO" items="${chatRoomList}">
+					<div class="row border-bottom pb-2 pt-3" @click="talk(${ChatRoomListVO.chatRoomNo})" :class="{'bg-light': ${ChatRoomListVO.chatRoomNo} == chatRoomNo}">
+						<div class="col-3 pr-0">
+							<img class="rounded-circle" src="${root}/attachment/download?attachmentNo=${ChatRoomListVO.attachmentNo}" v-if="${whoLogin} == ${ChatRoomListVO.auctioneerNo}">
+							<img class="rounded-circle" src="${root}/attachment/download?attachmentNo=${ChatRoomListVO.auctioneerAttachmentNo}" v-if="${whoLogin} != ${ChatRoomListVO.auctioneerNo}">
+						</div>
+						<div class="col py-1">
+							<h6 class="fw-bold chatroomName" v-if="${whoLogin} == ${ChatRoomListVO.auctioneerNo}">${ChatRoomListVO.memberNick}</h6>
+							<h6 class="fw-bold chatroomName"v-if="${whoLogin} != ${ChatRoomListVO.auctioneerNo}">${ChatRoomListVO.auctioneerNick}</h6>
+							<h6 class="chatroomName text-muted text-truncate">${ChatRoomListVO.auctionTitle}</h6>
+						</div>
+			        </div>       
+			        </c:forEach>        		
+        		</div>
+        	</div>
         </div>
         <div class="col" v-show="!showRating && !showReport">
         	<div class="row">
@@ -308,6 +312,11 @@
     #chat-wrap {
     	height: 640px;
     	overflow: scroll;
+    }
+    
+    #chatroom-wrap {
+    	height: 765px;
+    	overflow: scroll;    
     }
     
     .chat-time {
