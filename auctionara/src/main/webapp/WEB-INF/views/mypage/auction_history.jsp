@@ -8,7 +8,6 @@
 
 <div id="app" class="container d-flex" v-cloak>
 <!-- 사이드바 -->
-
 	<div class="row col-3 mt-3">
 		<ul class="nav flex-column text-center">
 		  <li class="nav-item border-bottom">

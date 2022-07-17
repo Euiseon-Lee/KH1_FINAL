@@ -27,6 +27,7 @@
 		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원 탈퇴</a>
 		  </li>
 		</ul>
+	</div></ul>
 	</div>
 
 	<!-- 본문 -->
