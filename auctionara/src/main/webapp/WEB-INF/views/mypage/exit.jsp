@@ -35,15 +35,37 @@
 	
 	<!-- 본문 -->
 	<div class="row flex-fill d-flex flex-column">
+		<h4 class="row fw-bold my-4 pt-2">회원 탈퇴</h4>
 		<div class="alert alert-info text-center" role="alert">
-			<h1>정말 저희와<br>
+			<h5>정말 저희와<br>
 				헤어지실 건가요?
-			</h1>
+			</h5>
 		</div>
 		
 		<div class="text-center m-2">
+
+			<c:choose>
+				<c:when test="${memberDto.memberHoldingPoints == 0}">
+					<p>현재 보유 중인 포인트: ${memberDto.memberHoldingPoints}p</p>
+				</c:when>
+				<c:otherwise>
+					<p>
+						현재 보유 중인 포인트  
+						<strong><a href="#">
+						<i class="fa-solid fa-angles-right"></i> ${memberDto.memberHoldingPoints}p</a>
+						</strong>
+					</p>
+					<p>보유포인트는 탈퇴 시 사라지며 복구가 불가능합니다<br>
+						<strong>탈퇴하기 전에 반드시 현금화 신청을 해주세요</strong>
+					</p>
+				</c:otherwise>
+			</c:choose>	
+				
+			<p></p>
+				
 			<p>탈퇴를 원하신다면<br> 
 				현재 비밀번호를 입력해주세요</p>
+			
 		</div>
 	
 		<div class="mb-5">
