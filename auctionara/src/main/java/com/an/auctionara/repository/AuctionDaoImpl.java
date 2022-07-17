@@ -21,6 +21,7 @@ import com.an.auctionara.vo.AuctionListVO;
 import com.an.auctionara.vo.AuctioneerInfoVO;
 import com.an.auctionara.vo.MyAuctionVO;
 import com.an.auctionara.vo.MyBiddingAuctionListVO;
+import com.an.auctionara.vo.MyBiddingVO;
 
 @Repository
 public class AuctionDaoImpl implements AuctionDao {
@@ -91,6 +92,12 @@ public class AuctionDaoImpl implements AuctionDao {
 	@Override
 	public List<MyAuctionVO> myAuction(Map<String, Object> info) {
 		List<MyAuctionVO> list = sqlSession.selectList("auction.myAuction", info);
+		return list;
+	}
+	
+	@Override
+	public List<MyBiddingVO> myBidding(Map<String, Object> info) {
+		List<MyBiddingVO> list = sqlSession.selectList("auction.myBidding", info);
 		return list;
 	}
 	

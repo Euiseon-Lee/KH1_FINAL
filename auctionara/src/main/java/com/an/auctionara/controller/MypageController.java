@@ -22,6 +22,7 @@ import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.service.MemberService;
 import com.an.auctionara.vo.AuctionListVO;
 import com.an.auctionara.vo.MyAuctionVO;
+import com.an.auctionara.vo.MyBiddingVO;
 
 @Controller
 @RequestMapping("/mypage")
@@ -79,7 +80,7 @@ public class MypageController {
 		String end = request.getParameter("end");
 		
 		
-		String memberPreference = week+", "+begin+" ~ "+end;
+		String memberPreference = week + " " + begin + "~" + end;
 		memberDto.setMemberPreference(memberPreference);		
 		
 		boolean success = memberService.info(memberDto, attachment);
@@ -147,7 +148,21 @@ public class MypageController {
 											@RequestParam(required = false) String keyword,
 											HttpSession session) {
 		int auctioneerNo = (int) session.getAttribute("whoLogin");
-		List<MyAuctionVO> list = memberService.list(auctioneerNo, page, filter, sort, categoryNo, keyword);
+		List<MyAuctionVO> list = memberService.auctionList(auctioneerNo, page, filter, sort, categoryNo, keyword);
+		return list;
+	}
+	
+	// 내 입찰 이력 리스트 출력
+	@ResponseBody
+	@GetMapping("/pay_history/list")
+	public List<MyBiddingVO> biddingList(@RequestParam int page,
+											@RequestParam Integer filter,
+											@RequestParam Integer sort,
+											@RequestParam(required = false) Integer categoryNo,
+											@RequestParam(required = false) String keyword,
+											HttpSession session) {
+		int bidderNo = (int) session.getAttribute("whoLogin");
+		List<MyBiddingVO> list = memberService.biddingList(bidderNo, page, filter, sort, categoryNo, keyword);
 		return list;
 	}
 }
