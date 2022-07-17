@@ -89,11 +89,14 @@
 				    		</td>
 				    		<td class="fs-small fw-bold">
 				    			<span class="text-muted" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 0 && auction.succBidNo == 0">{{ auction.auctionFinish }}</span>
-				    			<span class="text-info" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 0 && auction.succBidNo != 0">낙찰</span>
-				    			<span class="text-primary" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 1 && 
-				    				(auction.succAuctioneerApprove == null || auction.succBidderApprove  == null)">거래 중</span>
-				    			<span class="text-success" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 1 
-				    				&& auction.succAuctioneerApprove != null && auction.succBidderApprove != null && auction.ratingNo == 0">평가 전</span>
+				    			<a :href="'${root}/chat/auctioneer/' + auction.auctionNo"><span class="text-info" 
+				    				v-if="auction.auctionProcess == 0 && auction.succBidStatus == 0 && auction.succBidNo != 0">낙찰</span></a>
+				    			<a :href="'${root}/chat/auctioneer/' + auction.auctionNo"><span class="text-primary" 
+				    				v-if="auction.auctionProcess == 0 && auction.succBidStatus == 1 && 
+				    				(auction.succAuctioneerApprove == null || auction.succBidderApprove  == null)">거래 중</span></a>
+				    			<a :href="'${root}/chat/auctioneer/' + auction.auctionNo"><span class="text-success" 
+				    				v-if="auction.auctionProcess == 0 && auction.succBidStatus == 1 && auction.succAuctioneerApprove != null 
+				    				&& auction.succBidderApprove != null && auction.ratingNo == 0">평가 전</span></a>
 				    			<span class="text-success" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 1 && auction.ratingNo != 0">평가 완료</span>
 				    			<span class="text-muted" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 2">미결제</span>
 				    			<span class="text-muted" v-if="auction.auctionProcess == 1">경매 취소</span>

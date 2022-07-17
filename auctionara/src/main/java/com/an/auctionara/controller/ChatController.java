@@ -61,6 +61,15 @@ public class ChatController {
 		return "/chat/chat";
 	}
 	
+	// 낙찰자와 채팅 시작
+	@GetMapping("/auctioneer/{auctionNo}")
+	public String startSuccChat(@PathVariable("auctionNo") int auctionNo, Model model, HttpSession httpSession) {
+		int memberNo = (int) httpSession.getAttribute("whoLogin");
+		model.addAttribute("chatRoomNo", chatRoomDao.search(auctionNo));
+		model.addAttribute("chatRoomList", chatRoomDao.list(memberNo));
+		return "/chat/chat";
+	}	
+	
 	// 채팅 이력 출력
 	@GetMapping("/talk/{chatRoomNo}")
 	@ResponseBody
