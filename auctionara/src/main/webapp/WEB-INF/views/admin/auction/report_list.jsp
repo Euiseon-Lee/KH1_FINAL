@@ -131,7 +131,7 @@
 			<div class="row justify-content-md-center">
 				<div class="col-2">
 					<select name="type" class="form-select">
-						<option value="auction_title" <c:if test="${type == 'auction_title'}">selected</c:if>>경매글</option>
+						<option value="auction_report_reason" <c:if test="${type == 'auction_report_reason'}">selected</c:if>>내용</option>
 						<option value="m2.member_nick" <c:if test="${type == 'm2.member_nick'}">selected</c:if>>신고자</option>
 					</select>
 				</div>
