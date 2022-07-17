@@ -10,7 +10,10 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.an.auctionara.controller.MemberController;
 import com.an.auctionara.entity.AttachmentDto;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Repository
 public class AttachmentDaoImpl implements AttachmentDao {

@@ -531,7 +531,17 @@
 	<select id="countStopbyMemberNo" parameterType="int" resultType="int">
 		select count(*) from auction 
 			where auctioneer_no = #{memberNo} and auction_process = 2
-	</select>
+	</select>	
+
+	<!-- 경매 취소 처리 -->
+	<update id="auctionCancel" parameterType="int">
+		update auction set auction_private = 1, auction_process = 1 where auction_no = #{auctionNo}
+	</update>
+	
+	<!-- 경매 중지 처리 -->
+	<update id="auctionStop" parameterType="int">
+		update auction set auction_private = 1, auction_process = 2 where auction_no = #{auctionNo}
+	</update>
 	
 	<!-- 마이페이지 - 회원번호로 현재 경매 진행중인 내역 조회 -->
 	<select id="countbyMemberNo" parameterType="int" resultType="int">
@@ -545,5 +555,5 @@
 		        when matched then
 		            update set a.auction_private = 1 where a.auctioneer_no= #{memberNo} and s.succ_bid_status=0
 	</update>
-	
+
 </mapper> 

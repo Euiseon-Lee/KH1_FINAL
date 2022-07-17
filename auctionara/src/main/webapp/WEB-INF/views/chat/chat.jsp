@@ -13,10 +13,13 @@
         	<div class="row">
         		<div id="chatroom-wrap" class="col">
 			        <c:forEach var="ChatRoomListVO" items="${chatRoomList}">
-					<div class="row border-bottom pb-2 pt-3" @click="talk(${ChatRoomListVO.chatRoomNo})" :class="{'bg-light': ${ChatRoomListVO.chatRoomNo} == chatRoomNo}">
+					<div class="row border-bottom pb-2 pt-3" @click="talk(${ChatRoomListVO.chatRoomNo})" 
+						:class="{'bg-light': ${ChatRoomListVO.chatRoomNo} == chatRoomNo}">
 						<div class="col-3 pr-0">
-							<img class="rounded-circle" src="${root}/attachment/download?attachmentNo=${ChatRoomListVO.attachmentNo}" v-if="${whoLogin} == ${ChatRoomListVO.auctioneerNo}">
-							<img class="rounded-circle" src="${root}/attachment/download?attachmentNo=${ChatRoomListVO.auctioneerAttachmentNo}" v-if="${whoLogin} != ${ChatRoomListVO.auctioneerNo}">
+							<img class="rounded-circle" src="${root}/attachment/download?attachmentNo=${ChatRoomListVO.attachmentNo}" 
+								v-if="${whoLogin} == ${ChatRoomListVO.auctioneerNo}">
+							<img class="rounded-circle" src="${root}/attachment/download?attachmentNo=${ChatRoomListVO.auctioneerAttachmentNo}" 
+								v-if="${whoLogin} != ${ChatRoomListVO.auctioneerNo}">
 						</div>
 						<div class="col py-1">
 							<h6 class="fw-bold chatroomName" v-if="${whoLogin} == ${ChatRoomListVO.auctioneerNo}">${ChatRoomListVO.memberNick}</h6>
@@ -35,44 +38,83 @@
         				<div class="col-1 mr-4"><img class="rounded" :src="'${root}/attachment/download?attachmentNo=' + photoAttachmentNo"></div>
         				<div class="col ml-3">
         					<div class="row fw-bold mt-2 text-truncate">{{ auctionTitle }}</div>
-        					<a class="row text-muted chatroomName mt-2 pointer" @click="showReport = true"><i class="fa-solid fa-land-mine-on mt-1 pl-1 pr-2"></i> 이 채팅 신고하기</a>
+        					<a class="row text-muted chatroomName mt-2 pointer" @click="showReport = true">
+        						<i class="fa-solid fa-land-mine-on mt-1 pl-1 pr-2"></i> 이 채팅 신고하기
+        					</a>
         				</div>
         				<div class="col-2 pt-3">
         					<button class="btn btn-info" v-if="auctioneerBtn == null && ${whoLogin} == auctioneerNo" @click="auctioneerFinish">거래 완료</button>
         					<button class="btn btn-info" v-if="memberBtn == null && ${whoLogin} != auctioneerNo" @click="memberFinish">거래 완료</button>
-        					<button class="btn btn-success" v-if="auctioneerBtn != null && memberBtn != null && rating && ${whoLogin} != auctioneerNo" @click="setRating">평가하기</button>
+        					<button class="btn btn-success" v-if="auctioneerBtn != null && memberBtn != null && rating && ${whoLogin} != auctioneerNo" 
+        						@click="setRating">평가하기</button>
         				</div>
         			</div>
         			<div class="row py-3">
-        				<div class="col" id="chat-wrap">
-        					<div v-for="(chatContent, index) in chatContentDto" class="row my-2 pl-3 pr-5" :key="index" :class="{'flex-row-reverse': chatContent.chatterNo == ${whoLogin}}">
-				            	<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + attachmentNo" v-if="${whoLogin} == auctioneerNo && chatContent.chatterNo != ${whoLogin}">
-								<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + auctioneerAttachmentNo" v-if="${whoLogin} != auctioneerNo && chatContent.chatterNo != ${whoLogin}">
-				            	<span class="bg-primary rounded-pill px-3 py-2 text-white">{{ chatContent.chatContent }}</span><span class="text-muted chat-time mt-3 mx-2">{{ chatContent.chatTimeFormat }}</span>     
+        				<div class="col d-flex flex-column" id="chat-wrap">
+        					<div v-for="(chatContent, index) in chatContentDto" class="row my-2 pl-3 pr-5" :key="index" 
+        						:class="{'flex-row-reverse': chatContent.chatterNo == ${whoLogin}}">
+				            	<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + attachmentNo" 
+				            		v-if="${whoLogin} == auctioneerNo && chatContent.chatterNo != ${whoLogin}">
+								<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + auctioneerAttachmentNo" 
+									v-if="${whoLogin} != auctioneerNo && chatContent.chatterNo != ${whoLogin}">
+				            	<span class="bg-primary rounded-pill px-3 py-2 text-white" v-if="chatContent.chatType == 0">{{ chatContent.chatContent }}</span>
+				            	<img class="photo" :src="'${root}/attachment/download?attachmentNo=' + chatContent.chatContent" 
+									v-if="chatContent.chatType == 1">
+				            	<img class="emoji" :src="'${root}/image/emoji_' + chatContent.chatContent + '.png'"
+									v-if="chatContent.chatType == 2">									
+				            	<span class="text-muted chat-time d-flex align-self-end mx-2">{{ chatContent.chatTimeFormat }}</span>     
 				            </div>
-				            <div v-for="(message, index) in messageList" :key="index" class="row my-2 pl-3 pr-5" :class="{'flex-row-reverse': message.chatterNo == ${whoLogin}}">
-			                	<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + attachmentNo" v-if="${whoLogin} == auctioneerNo && message.chatterNo != ${whoLogin}">
-								<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + auctioneerAttachmentNo" v-if="${whoLogin} != auctioneerNo && message.chatterNo != ${whoLogin}">
-			                	<span class="bg-primary rounded-pill px-3 py-2 text-white">{{ message.message }}</span><span class="text-muted chat-time mt-3 mx-2">{{ message.chatTime }}</span>   
+				            <div v-for="(message, index) in messageList" :key="index" class="row my-2 pl-3 pr-5" 
+				            	:class="{'flex-row-reverse': message.chatterNo == ${whoLogin}}">
+			                	<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + attachmentNo" 
+			                		v-if="${whoLogin} == auctioneerNo && message.chatterNo != ${whoLogin}">
+								<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + auctioneerAttachmentNo" 
+									v-if="${whoLogin} != auctioneerNo && message.chatterNo != ${whoLogin}">
+			                	<span class="bg-primary rounded-pill px-3 py-2 text-white" v-if="message.attachmentNo == 0 && message.emojiNo == ''">{{ message.message }}</span>
+			                	<img class="photo" :src="'${root}/attachment/download?attachmentNo=' + message.attachmentNo" v-if="message.attachmentNo != 0">
+			                	<img class="emoji" :src="'${root}/image/emoji_' + message.emojiNo + '.png'" v-if="message.emojiNo != ''">
+			                	<span class="text-muted chat-time d-flex align-self-end mx-2">{{ message.chatTime }}</span>   
 			            	</div>
+							<div class="row mt-auto p-3" v-if="emoji">
+								<img class="col pt-4 border-top pointer" src="${root}/image/emoji_1.png" @click="sendEmoji('1')">
+								<img class="col pt-4 border-top pointer" src="${root}/image/emoji_2.png" @click="sendEmoji('2')">
+								<img class="col pt-4 border-top pointer" src="${root}/image/emoji_3.png" @click="sendEmoji('3')">
+								<img class="col pt-4 border-top pointer" src="${root}/image/emoji_4.png" @click="sendEmoji('4')">
+								<img class="col pt-4 border-top pointer" src="${root}/image/emoji_5.png" @click="sendEmoji('5')">
+							</div>			            	
         				</div>
         			</div>
         		</div>
         	</div>
             <div class="input-group ml-2" v-if="chatRoomNo != 0">
-            	<input type="text" class="form-control border-top border-bottom mr-1" placeholder="메세지를 입력해주세요" aria-describedby="send" v-model="content">
-            	<button class="btn btn-primary" type="button" id="send" @click="send"><i class="fa-solid fa-paper-plane"></i></button> 
+            	<input type="text" class="form-control border-top border-bottom mr-1" placeholder="메세지를 입력해주세요" 
+            		aria-describedby="send" v-model="content">
+            	<div class="mr-1">
+            		<button class="btn btn-success" type="button" @click="showEmoji">
+            			<i class="fa-solid fa-face-kiss-wink-heart"></i>
+            		</button>
+            	</div>            		
+            	<label class="btn btn-info mr-1">
+            		<i class="fa-solid fa-image"></i>
+            		<input class="form-control d-none" type="file" accept=".png, .jpg, .gif" @change="sendImage" />
+            	</label>
+            	<div>
+            		<button class="btn btn-primary" type="button" id="send" @click="send"><i class="fa-solid fa-paper-plane"></i></button>
+            	</div>            	
             </div>
         </div>
         <div class="col" v-show="showRating">
-			<div class="row p-3 border-bottom bg-light text-muted pointer" @click="showRating = false"><i class="fa-solid fa-arrow-left-long pr-2"></i>채팅방으로 돌아가기</div>
+			<div class="row p-3 border-bottom bg-light text-muted pointer" @click="showRating = false">
+				<i class="fa-solid fa-arrow-left-long pr-2"></i>채팅방으로 돌아가기
+			</div>
         	<h4 class="row fw-bold pl-5 my-5 ml-5">{{ auctioneerNick }} 님과의 거래가 어떠셨나요?</h4>
         	<div class="row px-5 ml-5">
         		<div class="col">
         			<h3 class="row fw-bold text-success pb-3">&#129392; 좋아요</h3>
         			<div v-for="(rating, index) in ratingList" :key="index" :class="{'form-check row mb-2': rating.ratingSortNo == '1'}">
 						<label class="form-check-label mr-3 fw-bold text-muted"  for="rating.ratingItemNo" v-if="rating.ratingSortNo == '1'">
-				        	<input class="form-check-input" type="radio" name="rating" id="rating.ratingItemNo" :value="rating.ratingItemNo" checked /> {{ rating.ratingContent }}
+				        	<input class="form-check-input" type="radio" name="rating" id="rating.ratingItemNo" 
+				        		:value="rating.ratingItemNo" checked /> {{ rating.ratingContent }}
 				        </label>
 					</div>					
         		</div>
@@ -80,7 +122,8 @@
         			<h3 class="row fw-bold text-primary pb-3">&#128532; 별로에요</h3>
         			<div v-for="(rating, index) in ratingList" :key="index" :class="{'form-check row mb-2': rating.ratingSortNo == '0'}">
 						<label class="form-check-label mr-3 fw-bold text-muted" for="rating.ratingItemNo" v-if="rating.ratingSortNo == '0'">
-				        	<input class="form-check-input" type="radio" name="rating" id="rating.ratingItemNo" :value="rating.ratingItemNo" /> {{ rating.ratingContent }}
+				        	<input class="form-check-input" type="radio" name="rating" id="rating.ratingItemNo" 
+				        		:value="rating.ratingItemNo" /> {{ rating.ratingContent }}
 				        </label>
 					</div>				        			
         		</div>
@@ -88,7 +131,9 @@
         	<div class="row mt-5 ml-5 px-5"><button type="button" class="btn btn-primary px-3" @click="finishRating">평가 선택 완료</button></div>
         </div>
         <div class="col" v-show="showReport">
-			<div class="row p-3 border-bottom bg-light text-muted pointer" @click="showReport = false"><i class="fa-solid fa-arrow-left-long pr-2"></i>채팅방으로 돌아가기</div>
+			<div class="row p-3 border-bottom bg-light text-muted pointer" @click="showReport = false">
+				<i class="fa-solid fa-arrow-left-long pr-2"></i>채팅방으로 돌아가기
+			</div>
         	<h4 class="row fw-bold pl-5 my-5 ml-5">{{ auctioneerNick }} 님과의 채팅을 신고하시겠습니까?</h4>
         	<div class="row px-5 ml-5">
         		<input type="text" class="form-control" v-model="reportReason" placeholder="신고 이유를 알려주세요" autocomplete="off" maxlength="100" />
@@ -128,6 +173,7 @@
                 showRating: false,
                 showReport: false,
                 reportReason: "",
+                emoji: false,
             };
         },
         computed: {
@@ -212,10 +258,62 @@
             		chatRoomNo : this.chatRoomNo,
             		chatterNo : ${whoLogin},
             		chatContent : this.content,
+            		chatType : 0,
             	}).then(resp=>{
             		this.content = ""; // 초기화
             		this.scrollBottom();
             	});
+            },
+            sendImage() {
+            	const formData = new FormData();
+                formData.append("image", $("input[type=file]")[0].files[0]);
+                axios.post("http://localhost:8080/auctionara/attachment/chat", formData)
+                .then(resp=>{
+            		if(resp.data) {
+                        var message = {
+                                type: 3,
+                                chatterNo : ${whoLogin},
+                                chatRoomNo: this.chatRoomNo,
+                                chatTime: this.chatTime(),
+                                attachmentNo: resp.data.attachmentNo,
+                                message: "사진 " + resp.data.attachmentNo,
+                                messageType: "string",
+                            };
+                            this.socket.send(JSON.stringify(message)); // 전송
+                            axios.post("http://localhost:8080/auctionara/chat/save", {
+                        		chatRoomNo : this.chatRoomNo,
+                        		chatterNo : ${whoLogin},
+                        		chatContent : resp.data.attachmentNo,
+                        		chatType : 1,
+                        	}).then(resp=>{
+                        		this.image = []; // 초기화
+                        		this.content = ""; // 초기화
+                        		this.scrollBottom();
+                        	});            			
+            		}
+            	});            	
+            },
+            sendEmoji(emojiNo) {
+                var message = {
+                        type: 4,
+                        chatterNo : ${whoLogin},
+                        chatRoomNo: this.chatRoomNo,
+                        chatTime: this.chatTime(),
+                        emojiNo: emojiNo,
+                        message: "이모티콘 " + emojiNo,
+                        messageType: "string",
+                    };
+                    this.socket.send(JSON.stringify(message)); // 전송
+                    axios.post("http://localhost:8080/auctionara/chat/save", {
+                		chatRoomNo : this.chatRoomNo,
+                		chatterNo : ${whoLogin},
+                		chatContent : emojiNo,
+                		chatType : 2,
+                	}).then(resp=>{
+                		this.content = ""; // 초기화
+                		this.emoji = false;
+                		this.scrollBottom();
+                	});   
             },
             auctionInfo(e) {
             	if(e.chatRoomNo === this.chatRoomNo)  {
@@ -284,6 +382,14 @@
             scrollBottom() {
             	$("#chat-wrap").scrollTop($("#chat-wrap")[0].scrollHeight); // 스크롤 맨 아래로
             },
+            showEmoji() {
+            	if(this.emoji) {
+            		this.emoji = false;
+            	} else {
+            		this.emoji = true;
+            	}
+            	this.scrollBottom();
+            }
         },
         mounted() {
         	history.pushState(null, null, "${root}/chat"); // URL 변경
@@ -318,7 +424,7 @@
     	height: 765px;
     	overflow: scroll;    
     }
-    
+
     .chat-time {
     	font-size: 0.75em;
     }
@@ -351,6 +457,15 @@
 	
     .message-wrapper>.message {
         display: flex;
+    }
+    
+    .photo {
+    	border-radius: 1.5rem;
+    	width: 300px;
+    }
+    
+    .emoji {
+    	width: 120px;
     }
 
 </style>

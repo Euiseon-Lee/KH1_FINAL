@@ -159,6 +159,15 @@ public class AuctionDaoImpl implements AuctionDao {
 	}
 
 	@Override
+	public void auctionCancel(int auctionNo) {
+		sqlSession.update("auction.auctionCancel", auctionNo);
+	}
+
+	@Override
+	public void auctionStop(int auctionNo) {
+		sqlSession.update("auction.auctionStop", auctionNo);
+	}
+
 	public int mypageCount(int memberNo) {
 		return sqlSession.selectOne("auction.countAuctionbyMemberNo", memberNo);
 	}
@@ -211,5 +220,4 @@ public class AuctionDaoImpl implements AuctionDao {
 	public void intoPrivateMode(int memberNo) {
 		sqlSession.update("auction.intoPrivateMode", memberNo);
 	}
-
 }
