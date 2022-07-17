@@ -81,10 +81,10 @@
 				<tr>
 					<th class="text-left">거래 시간</th>
 					<td class="text-right">
-						<c:if test="${memberDto.memberPreference != null}">
-							${memberDto.memberPreference}
+						<c:if test="${memberVO.memberPreference != null}">
+							${memberVO.memberPreference}
 						</c:if>
-						<c:if test="${memberDto.memberPreference == null}">
+						<c:if test="${memberVO.memberPreference == null}">
 							<a href="${root}/mypage/info">거래 선호시간을 설정해주세요 <i class="fa-solid fa-chevron-right"></i>
 							</a>
 						</c:if>
