@@ -211,12 +211,14 @@ public class MemberController {
 				if(remember != null) {
 					Cookie ck = new Cookie("saveId", memberDto.getMemberEmail());
 					ck.setMaxAge(4*7*24*60*60);
+					ck.setPath("/");
 					response.addCookie(ck);				
 				}
 				
 				else {
-					Cookie ck = new Cookie("saveId", memberDto.getMemberEmail());
+					Cookie ck = new Cookie("saveId", "");
 					ck.setMaxAge(0);
+					ck.setPath("/");
 					response.addCookie(ck);
 				}
 				
@@ -232,7 +234,6 @@ public class MemberController {
 	@RequestMapping("/logout")
 	public String logout(
 			HttpSession session,
-			HttpServletRequest request,
 			HttpServletResponse response
 		) {
 	    

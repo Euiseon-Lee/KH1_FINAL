@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -140,6 +141,12 @@ public class CertServiceImpl implements CertService {
 									.certTarget(memberEmail)
 									.certNo(certString)
 									.build());
+	}
+
+	@Scheduled(cron = "0 0 10 L * ?") // 매달 마지막 요일 오전 10시마다 cert인증시간이 지난 데이터 폐기
+	@Override
+	public void clearCertforEmail() {
+		certDao.timeover();
 	}
 	
 }

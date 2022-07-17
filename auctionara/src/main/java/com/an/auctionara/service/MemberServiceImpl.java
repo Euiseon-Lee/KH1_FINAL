@@ -17,9 +17,14 @@ import com.an.auctionara.repository.AttachmentDao;
 import com.an.auctionara.repository.AuctionDao;
 import com.an.auctionara.repository.GpsAddressDao;
 import com.an.auctionara.repository.MemberDao;
+import com.an.auctionara.repository.SuccessfulBidDao;
+import com.an.auctionara.vo.MemberVO;
 import com.an.auctionara.vo.MyAuctionVO;
 import com.an.auctionara.vo.MyBiddingVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -32,9 +37,12 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private AttachmentDao attachmentDao;
 	
-	
 	@Autowired
 	private AuctionDao auctionDao;
+	
+	@Autowired
+	private SuccessfulBidDao successfulBidDao;
+	
 	
 	//첨부파일(프로필) 없이 구현함 이후 추가 구현 필요
 	@Override
@@ -104,6 +112,69 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public MemberVO mypage(int memberNo) {
+		MemberVO memberVO = memberDao.memberSearchforMypage(memberNo);
+
+		int totalCount = auctionDao.mypageCount(memberNo);
+		int normalCount = auctionDao.mypageNormalCount(memberNo);
+		int cancelCount = auctionDao.mypageCancelCount(memberNo);
+		int stopCount = auctionDao.mypageStopCount(memberNo);
+		
+		int succCount = successfulBidDao.succCount(memberNo);
+		
+		memberVO.setTotalCount(totalCount);
+		memberVO.setNormalCount(normalCount);
+		memberVO.setCancelCount(cancelCount);
+		memberVO.setStopCount(stopCount);
+		memberVO.setSuccCount(succCount);
+		
+		return memberVO;
+	}
+
+	@Override
+	public boolean exit(int memberNo, String memberEmail, String memberPw) {
+		
+		MemberDto memberDto = memberDao.login(memberEmail, memberPw);
+		if(memberDto == null) {
+			return false;
+		}
+		
+		else {
+			//자신이 진행 중인 경매내역이 있는지 다시 한 번 확인
+			int auction = auctionDao.countAuctionbyMemberNo(memberNo);
+			log.debug("지가 올린 진행중인 경매내역 = {}", Integer.toString(auction));
+			
+			//자신이 올린 경매내역 중 낙찰 후 결제완료된 경매내역이 있는지 확인
+			int succBidasAuctioneer = successfulBidDao.countPayment(memberNo);
+			log.debug("지가 올린 경매내역 중 결제완료 = {}", Integer.toString(succBidasAuctioneer));
+			
+			//낙찰받은 내역이 있고 결제완료를 한 내역이 있는지 확인
+			int succBidasBidder = successfulBidDao.countPaymentasBidder(memberNo);
+			log.debug("지가 낙찰받은 내역 중 결제완료 = {}", Integer.toString(succBidasBidder));			
+			
+			boolean cannotExit = auction > 0 || succBidasAuctioneer > 0 || succBidasBidder > 0;
+			
+			if(cannotExit) {
+				return false;
+			}
+			
+			else {
+				//경매올린 내역 중 낙찰된 경매글 중 결제예정인 경우는 비공개글 처리
+				auctionDao.intoPrivateMode(memberNo);
+				//경매올린 내역 중 낙찰된 경매글 중 결제예정인 경우는 상태변경
+				successfulBidDao.intoStatusThrid(memberNo);
+				boolean exit = memberDao.exit(memberEmail, memberPw);
+				return exit;
+			}
+		}
+		
+
+
+		
+		
+	}
+
+	@Override
 	public List<MyBiddingVO> biddingList(int bidderNo, int page, Integer filter, Integer sort, Integer categoryNo, String keyword) {
 		Map<String, Object> info = new HashMap<>();
 		info.put("bidderNo", bidderNo);
@@ -115,4 +186,5 @@ public class MemberServiceImpl implements MemberService {
 		info.put("keyword", keyword);
 		return auctionDao.myBidding(info);
 	}
+
 }

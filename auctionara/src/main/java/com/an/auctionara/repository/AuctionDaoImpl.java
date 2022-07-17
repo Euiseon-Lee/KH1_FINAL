@@ -167,4 +167,57 @@ public class AuctionDaoImpl implements AuctionDao {
 	public void auctionStop(int auctionNo) {
 		sqlSession.update("auction.auctionStop", auctionNo);
 	}
+
+	public int mypageCount(int memberNo) {
+		return sqlSession.selectOne("auction.countAuctionbyMemberNo", memberNo);
+	}
+
+	@Override
+	public int mypageNormalCount(int memberNo) {
+		return sqlSession.selectOne("auction.countNormalbyMemberNo", memberNo);
+	}
+
+	@Override
+	public int mypageCancelCount(int memberNo) {
+		return sqlSession.selectOne("auction.countCancelbyMemberNo", memberNo);
+	}
+
+	@Override
+	public int mypageStopCount(int memberNo) {
+		return sqlSession.selectOne("auction.countStopbyMemberNo", memberNo);
+	}
+	
+	@Override
+	public List<AuctionDto> mypageList(int memberNo) {
+		List<AuctionDto> list = sqlSession.selectList("auction.auctionbyMemberNo", memberNo);
+		return list;
+	}
+
+	@Override
+	public List<AuctionDto> mypageNormalList(int memberNo) {
+		List<AuctionDto> list = sqlSession.selectList("auction.normalbyMemberNo", memberNo);
+		return list;
+	}
+
+	@Override
+	public List<AuctionDto> mypageCancelList(int memberNo) {
+		List<AuctionDto> list = sqlSession.selectList("auction.cancelbyMemberNo", memberNo);
+		return list;
+	}
+
+	@Override
+	public List<AuctionDto> mypageStopList(int memberNo) {
+		List<AuctionDto> list = sqlSession.selectList("auction.stopbyMemberNo", memberNo);
+		return list;
+	}
+
+	@Override
+	public int countAuctionbyMemberNo(int memberNo) {
+		return sqlSession.selectOne("auction.countbyMemberNo", memberNo);
+	}
+
+	@Override
+	public void intoPrivateMode(int memberNo) {
+		sqlSession.update("auction.intoPrivateMode", memberNo);
+	}
 }
