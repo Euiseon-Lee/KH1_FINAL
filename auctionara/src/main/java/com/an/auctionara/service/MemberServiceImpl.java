@@ -22,6 +22,9 @@ import com.an.auctionara.vo.MemberVO;
 import com.an.auctionara.vo.MyAuctionVO;
 import com.an.auctionara.vo.MyBiddingVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -139,12 +142,15 @@ public class MemberServiceImpl implements MemberService {
 		else {
 			//자신이 진행 중인 경매내역이 있는지 다시 한 번 확인
 			int auction = auctionDao.countAuctionbyMemberNo(memberNo);
+			log.debug("지가 올린 진행중인 경매내역 = {}", Integer.toString(auction));
 			
 			//자신이 올린 경매내역 중 낙찰 후 결제완료된 경매내역이 있는지 확인
 			int succBidasAuctioneer = successfulBidDao.countPayment(memberNo);
+			log.debug("지가 올린 경매내역 중 결제완료 = {}", Integer.toString(succBidasAuctioneer));
 			
 			//낙찰받은 내역이 있고 결제완료를 한 내역이 있는지 확인
 			int succBidasBidder = successfulBidDao.countPaymentasBidder(memberNo);
+			log.debug("지가 낙찰받은 내역 중 결제완료 = {}", Integer.toString(succBidasBidder));			
 			
 			boolean cannotExit = auction > 0 || succBidasAuctioneer > 0 || succBidasBidder > 0;
 			

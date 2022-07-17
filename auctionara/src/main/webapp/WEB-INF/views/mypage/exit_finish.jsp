@@ -34,7 +34,7 @@
 	<!-- 본문 -->
 	<div class="row flex-fill d-flex flex-column">
 		<div class="alert alert-info text-center mt-5" role="alert">
-			<h1>저희 경매나라를<br>
+			<h1>그 동안 저희 경매나라를<br>
 				이용해주셔서 감사합니다<br><br>
 				다시 또 만나요 :)
 			</h1>

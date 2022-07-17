@@ -53,7 +53,7 @@ public class SuccessfulBidDaoImpl implements SuccessfulBidDao{
 	
 	@Override
 	public int countPayment(int memberNo) {
-		return sqlSession.selectOne("successful_bid.countPaymentbyMemberNo", memberNo);
+		return sqlSession.selectOne("successful_bid.countPaymentbyAuctioneerNo", memberNo);
 	}
 
 	@Override
