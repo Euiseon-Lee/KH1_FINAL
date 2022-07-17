@@ -253,15 +253,14 @@
 				select A.auction_upload_time, A.category_no, B.category_name, 
 				    A.auction_title, A.auction_no, A.auction_process, 
 				    C.succ_bid_no, C.succ_bid_status, C.succ_auctioneer_approve, C.succ_bidder_approve, C.succ_final_bid,
-				    D.chatroom_no, E.rating_no,
+				    D.rating_no,
 				    case when A.auction_closed_time <![CDATA[ > ]]> sysdate then '진행 중'
 			            else '마감'
 			            end as auction_finish
 				from auction A
 				join category B on A.category_no = B.category_no
 				left join successful_bid C on A.auction_no = C.auction_no
-				left join chatroom D on A.auction_no = D.auction_no
-				left join member_rating E on A.auction_no = E.auction_no
+				left join member_rating D on A.auction_no = D.auction_no
 				where A.auctioneer_no = ${auctioneerNo}
 				<if test="keyword != null and keyword != ''">
 					<![CDATA[
@@ -298,12 +297,12 @@
 					<![CDATA[
 					and A.auction_process = 0 and C.succ_bid_status = 1 
 					and C.succ_auctioneer_approve is not null and C.succ_bidder_approve is not null
-					and E.rating_no is null
+					and D.rating_no is null
 			    	]]>
 				</if>
 				<if test="filter == 6">
 					<![CDATA[
-					and A.auction_process = 0 and C.succ_bid_status = 1 and E.rating_no is not null
+					and A.auction_process = 0 and C.succ_bid_status = 1 and D.rating_no is not null
 			    	]]>
 				</if>
 				<if test="filter == 7">

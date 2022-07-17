@@ -20,7 +20,6 @@ public class MyAuctionVO {
 	private Date succAuctioneerApprove;
 	private Date succBidderApprove;
 	private int succFinalBid;
-	private int chatroomNo;
 	private int ratingNo;
 	private int auctionCount;
 	private int totalPoint;
