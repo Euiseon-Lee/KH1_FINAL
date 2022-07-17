@@ -95,6 +95,7 @@
 		    <mvc:exclude-mapping path="/**/*.js"/>
 		    <mvc:exclude-mapping path="/image/**/*.*"/>	
 		    <mvc:exclude-mapping path="/member/reset*"/>		
+		    <mvc:exclude-mapping path="/mypage/exit_finish"/>		
 
 			<bean class="com.an.auctionara.interceptor.IsLoginInterceptor"></bean>
 		</mvc:interceptor>
@@ -114,6 +115,7 @@
 		    <mvc:exclude-mapping path="/**/*.js"/>
 		    <mvc:exclude-mapping path="/image/**/*.*"/>
 		    <mvc:exclude-mapping path="/member/reset*"/>
+		    <mvc:exclude-mapping path="/mypage/exit_finish"/>
 
 			<bean class="com.an.auctionara.interceptor.AddressInterceptor"></bean>
 		</mvc:interceptor>

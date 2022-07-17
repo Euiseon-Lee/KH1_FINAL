@@ -10,7 +10,7 @@
 	<div class="row col-3 mt-3">
 		<ul class="nav flex-column text-center">
 		  <li class="nav-item border-bottom">
-		  	<a href="${root}/mypage/index" class="nav-link btn-outline-secondary fw-bold fs-large">마이페이지</a>
+		  	<a href="${root}/mypage/index" class="nav-link btn-outline-dark fw-bold fs-large">마이페이지</a>
 		  </li>
 		  <li class="nav-item border-bottom">
 		  	<a href="${root}/mypage/info" class="nav-link btn-outline-info">내 정보 수정</a>
@@ -25,7 +25,7 @@
 		    <a href="${root}/mypage/cash_log" class="nav-link btn-outline-info">포인트/현금화</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		    <a href="${root}/mypage/exit" class="nav-link btn-outline-info">회원 탈퇴</a>
+		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원 탈퇴</a>
 		  </li>
 		</ul>
 	</div>
@@ -33,16 +33,37 @@
 	
 	<!-- 본문 -->
 	<div class="row flex-fill d-flex flex-column">
-		<div class="alert alert-info text-center fw-bold" role="alert">
-			<h1>경매나라:<br>
-				정말 저희와<br>
+		<h4 class="row fw-bold my-4 pt-2">회원 탈퇴</h4>
+		<div class="alert alert-info text-center" role="alert">
+			<h5>정말 저희와<br>
 				헤어지실 건가요?
-			</h1>
+			</h5>
 		</div>
 		
 		<div class="text-center m-2">
+
+			<c:choose>
+				<c:when test="${memberDto.memberHoldingPoints == 0}">
+					<p>현재 보유 중인 포인트: ${memberDto.memberHoldingPoints}p</p>
+				</c:when>
+				<c:otherwise>
+					<p>
+						현재 보유 중인 포인트  
+						<strong><a href="#">
+						<i class="fa-solid fa-angles-right"></i> ${memberDto.memberHoldingPoints}p</a>
+						</strong>
+					</p>
+					<p>보유포인트는 탈퇴 시 사라지며 복구가 불가능합니다<br>
+						<strong>탈퇴하기 전에 반드시 현금화 신청을 해주세요</strong>
+					</p>
+				</c:otherwise>
+			</c:choose>	
+				
+			<p></p>
+				
 			<p>탈퇴를 원하신다면<br> 
 				현재 비밀번호를 입력해주세요</p>
+			
 		</div>
 	
 		<div class="mb-5">

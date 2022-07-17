@@ -130,7 +130,8 @@
 	<update id="deductPoint" parameterType="Map">
 		update member set member_holding_points = member_holding_points - #{cashingMoney} where member_no = #{memberNo}
 	</update>
-		
+	
+	
 	<update id="info" parameterType="MemberDto">
 		update member 
 			set
@@ -144,10 +145,17 @@
 		select attachment_no from member
 			where member_email = #{memberEmail}
 	</select>
-	
+
 	<!-- 관리자 페이지 - 일반회원 전환 후 red_count = 0으로 리셋 -->
 	<update id="resetRedCount" parameterType="int">
 		update member set member_red_count = 0 where member_no = #{memberNo}
 	</update>
 	
+	<select id="mypageOne" parameterType="int" resultType="MemberVO">
+		select * from member where member_no = #{memberNo}
+	</select>
+	
+	<select id="exitOne" parameterType="int" resultType="MemberDto">
+		select member_email, member_holding_points from member where member_no = #{memberNo}
+	</select>
 </mapper> 

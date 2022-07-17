@@ -510,7 +510,7 @@
 		select count(*) "auction_count" from auction where to_char(auction_upload_time, 'YYMM') = to_char(sysdate, 'YYMM')
 	</select>
 	
-	<!-- 마이페이지 - 회원번호로 경매 등록한 총 물품 개수 추출 -->
+		<!-- 마이페이지 - 회원번호로 경매 등록한 총 물품 개수 추출 -->
 	<select id="countAuctionbyMemberNo" parameterType="int" resultType="int">
 		select count(*) from auction where auctioneer_no = #{memberNo}
 	</select>
@@ -531,7 +531,19 @@
 	<select id="countStopbyMemberNo" parameterType="int" resultType="int">
 		select count(*) from auction 
 			where auctioneer_no = #{memberNo} and auction_process = 2
-	</select>	
-
-
+	</select>
+	
+	<!-- 마이페이지 - 회원번호로 현재 경매 진행중인 내역 조회 -->
+	<select id="countbyMemberNo" parameterType="int" resultType="int">
+		select count(*) from auction where auctioneer_no = #{memberNo} and auction_process = 0
+	</select>
+	
+	<!-- 마이페이지(탈퇴) - 경매내역 중에 낙찰 내역이 있고 결제예정인 게시글 비공개 처리 -->
+	<update id="intoPrivateMode" parameterType="int">
+		merge into auction a using successful_bid s
+		    on (a.auction_no = s.auction_no)
+		        when matched then
+		            update set a.auction_private = 1 where a.auctioneer_no= #{memberNo} and s.succ_bid_status=0
+	</update>
+	
 </mapper> 

@@ -79,8 +79,6 @@
 // 		if (ready) {
 // 			$("#submit").on("click", function(){
 				
-
-
 // 			})
 // 		}
 // 		else{
@@ -94,10 +92,7 @@
 // 			}
 			
 // 		}
-
-
 // 	});
-
 </script>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -53,4 +53,31 @@
 		where auction_no = ${auctionNo}
 	</select>
 	
+	
+	<!-- 마이페이지 낙찰성공한 총 개수 출력 -->
+	<select id="countSuccbidbyMemberNo" parameterType="int" resultType="int">
+		select count(*) from successful_bid where succ_bidder_no = #{memberNo}
+	</select>
+	
+	<!-- 경매인 탈퇴 시 낙찰성공 후 결제완료된 내역이 있는지 출력 -->	
+	<select id="countPaymentbyAuctioneerNo" parameterType="int" resultType="int">
+		select count(*) from (select a.auction_no, a.auction_process, a.auction_private, s.succ_bid_no, s.succ_bid_status
+        	from successful_bid s inner join auction a on s.auction_no = a.auction_no
+        where a.auctioneer_no = #{memberNo} and s.succ_bid_status=1 and a.auction_process=0 and a.auction_private=0)
+	</select>
+	
+	<!-- 낙찰자 탈퇴 시 낙찰성공 후 결제완료된 내역이 있는지 출력 -->
+	<select id="countPaymentbybidderNo" parameterType="int" resultType="int">
+		select count(*) from successful_bid 
+			where succ_bidder_no = #{memberNo} and succ_bid_status=1
+	</select>
+	
+	<!-- 경매인 탈퇴 시 결제예정이었던 내역을 상태3번으로 변경 -->
+	<update id="intoStatusThrid" parameterType="int">
+		merge into successful_bid s using auction a
+			on (s.auction_no = a.auction_no)
+		when matched then
+			update set s.succ_bid_status = 3 where a.auctioneer_no=#{memberNo} and s.succ_bid_status=0
+	</update>
+	
 </mapper> 
