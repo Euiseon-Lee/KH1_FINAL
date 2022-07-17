@@ -38,6 +38,25 @@ public class ChatRoomDaoImpl implements ChatRoomDao{
 	}
 	
 	@Override
+	public int search(int auctionNo) {
+		Map<String, Integer> info = new HashMap<>();
+		int memberNo = sqlSession.selectOne("successful_bid.searchBidder", auctionNo);
+		info.put("memberNo", memberNo);
+		info.put("auctionNo", auctionNo);
+		ChatRoomDto chatRoomDto = sqlSession.selectOne("chatroom.check", info);
+		if(chatRoomDto == null) {
+			int chatRoomNo = sqlSession.selectOne("chatroom.sequence");
+			chatRoomDto = ChatRoomDto.builder()
+					.chatRoomNo(chatRoomNo)
+					.auctionNo(auctionNo)
+					.memberNo(memberNo)
+					.build();
+			sqlSession.insert("chatroom.insert", chatRoomDto);
+		}
+		return chatRoomDto.getChatRoomNo();
+	}
+	
+	@Override
 	public List<ChatRoomListVO> list(int memberNo) {
 		return sqlSession.selectList("chatroom.list", memberNo);
 	}

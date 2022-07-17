@@ -20,6 +20,7 @@ import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.repository.SuccessfulBidDao;
 import com.an.auctionara.vo.MemberVO;
 import com.an.auctionara.vo.MyAuctionVO;
+import com.an.auctionara.vo.MyBiddingVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -95,7 +96,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MyAuctionVO> list(int auctioneerNo, int page, Integer filter, Integer sort, Integer categoryNo, String keyword) {
+	public List<MyAuctionVO> auctionList(int auctioneerNo, int page, Integer filter, Integer sort, Integer categoryNo, String keyword) {
 		Map<String, Object> info = new HashMap<>();
 		info.put("auctioneerNo", auctioneerNo);
 		info.put("begin", (page * 10) - (10 - 1)); // 10개씩 불러오기
@@ -166,4 +167,18 @@ public class MemberServiceImpl implements MemberService {
 		
 		
 	}
+
+	@Override
+	public List<MyBiddingVO> biddingList(int bidderNo, int page, Integer filter, Integer sort, Integer categoryNo, String keyword) {
+		Map<String, Object> info = new HashMap<>();
+		info.put("bidderNo", bidderNo);
+		info.put("begin", (page * 10) - (10 - 1)); // 10개씩 불러오기
+		info.put("end", page * 10);
+		info.put("filter", filter);
+		info.put("sort", sort);
+		info.put("categoryNo", categoryNo);
+		info.put("keyword", keyword);
+		return auctionDao.myBidding(info);
+	}
+
 }

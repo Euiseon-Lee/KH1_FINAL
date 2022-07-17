@@ -47,6 +47,13 @@
 		update successful_bid set succ_bidder_approve = sysdate where trunc(sysdate) - trunc(succ_date) >= 7
 	</update>
 	
+	<!-- 낙찰 회원 찾기 -->
+	<select id="searchBidder" parameterType="int" resultType="int">
+		select succ_bidder_no from successful_bid 
+		where auction_no = ${auctionNo}
+	</select>
+	
+	
 	<!-- 마이페이지 낙찰성공한 총 개수 출력 -->
 	<select id="countSuccbidbyMemberNo" parameterType="int" resultType="int">
 		select count(*) from successful_bid where succ_bidder_no = #{memberNo}
@@ -72,4 +79,5 @@
 		when matched then
 			update set s.succ_bid_status = 3 where a.auctioneer_no=#{memberNo} and s.succ_bid_status=0
 	</update>
+	
 </mapper> 

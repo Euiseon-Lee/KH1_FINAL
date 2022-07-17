@@ -9,27 +9,25 @@
 <div id="app" class="container d-flex" v-cloak>
 <!-- 사이드바 -->
 
-	<div class="row col-3 mt-4">
+	<div class="row col-3 mt-3">
 		<ul class="nav flex-column text-center">
 		  <li class="nav-item border-bottom">
-		  	<h4>
-		  		<a href="${root}/mypage/index" class="nav-link btn-outline-dark">마이페이지</a>
-		  	</h4>
+		  	<a href="${root}/mypage/index" class="nav-link btn-outline-secondary fw-bold fs-large">마이페이지</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		  	<a href="${root}/mypage/info" class="nav-link btn-outline-info">정보수정</a>
+		  	<a href="${root}/mypage/info" class="nav-link btn-outline-info">내 정보 수정</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		    <a href="${root}/mypage/auction_history" class="nav-link btn-outline-info">경매내역</a>
+		    <a href="${root}/mypage/auction_history" class="nav-link btn-outline-info">내 경매</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">입찰/낙찰내역</a>
+		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">내 입찰</a>
 		  </li>
 		  <li class="nav-item border-bottom">
 		    <a href="${root}/mypage/cash_log" class="nav-link btn-outline-info">포인트/현금화</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원탈퇴</a>
+		    <a href="${root}/mypage/exit" class="nav-link btn-outline-info">회원 탈퇴</a>
 		  </li>
 		</ul>
 	</div>
@@ -76,7 +74,7 @@
 					<thead>
 				    	<tr>
 				    		<th scope="col" class="col-2">등록일시</th>
-				    		<th scope="col" class="col-2">카테고리</th>
+				    		<th scope="col" class="col-2 pointer" @click="categoryNo = 0; updateList();">카테고리</th>
 				    		<th scope="col" class="col-5">경매 제목</th>
 				    		<th scope="col">경매 상태</th>
 				    		<th scope="col">받은 포인트</th>
@@ -85,7 +83,7 @@
 					<tbody>
 				    	<tr v-for="(auction, index) in list" :key="index">
 				    		<td class="text-muted fs-small">{{ dateFormat(auction.auctionUploadTime) }}</td>
-				    		<td class="text-muted fs-small pointer cate" @click="categoryNo = auction.categoryNo">{{ auction.categoryName }}</td>
+				    		<td class="text-muted fs-small pointer cate" @click="categoryNo = auction.categoryNo; updateList();">{{ auction.categoryName }}</td>
 				    		<td class="fw-bold fs-small">
 				    			<a v-if="auction.auctionProcess == 0" class="text-dark text-truncate" 
 				    				:href="'${root}/auction/detail/' + auction.auctionNo">{{ auction.auctionTitle }}</a>
@@ -93,11 +91,14 @@
 				    		</td>
 				    		<td class="fs-small fw-bold">
 				    			<span class="text-muted" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 0 && auction.succBidNo == 0">{{ auction.auctionFinish }}</span>
-				    			<span class="text-info" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 0 && auction.succBidNo != 0">낙찰</span>
-				    			<span class="text-primary" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 1 && 
-				    				(auction.succAuctioneerApprove == null || auction.succBidderApprove  == null)">거래 중</span>
-				    			<span class="text-success" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 1 
-				    				&& auction.succAuctioneerApprove != null && auction.succBidderApprove != null && auction.ratingNo == 0">평가 전</span>
+				    			<a :href="'${root}/chat/auctioneer/' + auction.auctionNo"><span class="text-info" 
+				    				v-if="auction.auctionProcess == 0 && auction.succBidStatus == 0 && auction.succBidNo != 0">낙찰</span></a>
+				    			<a :href="'${root}/chat/auctioneer/' + auction.auctionNo"><span class="text-primary" 
+				    				v-if="auction.auctionProcess == 0 && auction.succBidStatus == 1 && 
+				    				(auction.succAuctioneerApprove == null || auction.succBidderApprove  == null)">거래 중</span></a>
+				    			<a :href="'${root}/chat/auctioneer/' + auction.auctionNo"><span class="text-success" 
+				    				v-if="auction.auctionProcess == 0 && auction.succBidStatus == 1 && auction.succAuctioneerApprove != null 
+				    				&& auction.succBidderApprove != null && auction.ratingNo == 0">평가 전</span></a>
 				    			<span class="text-success" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 1 && auction.ratingNo != 0">평가 완료</span>
 				    			<span class="text-muted" v-if="auction.auctionProcess == 0 && auction.succBidStatus == 2">미결제</span>
 				    			<span class="text-muted" v-if="auction.auctionProcess == 1">경매 취소</span>
@@ -138,7 +139,6 @@
 
 <script src="https://unpkg.com/vue@next"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	const app = Vue.createApp({
         data() {
@@ -162,7 +162,7 @@
         	dateFormat(time) { // 날짜 포맷
         		let date = new Date(time);
         	  	return date.getFullYear() + "." + (date.getMonth() + 1) + "." + date.getDate() + " " 
-        	  		+ date.getHours() + ":" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+        	  		+ (date.getHours() < 10 ? "0" : "") + date.getHours() + ":" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
         	},
             loadFirst() { // 첫 리스트 불러오기
             	axios.get("http://localhost:8080/auctionara/mypage/auction_history/list", {
@@ -193,7 +193,6 @@
             			sort: this.sort,
             			keyword: this.keyword,
             			categoryNo: this.categoryNo,
-            			period: this.period,
             	      }
             	})
             	.then(resp => {
@@ -229,7 +228,7 @@
             search(e) { // 검색
             	e.preventDefault();
             	this.updateList();
-            }
+            },
         },
         mounted() {
         	this.loadFirst(); // 1페이지 불러오기
