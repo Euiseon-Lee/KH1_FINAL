@@ -34,16 +34,15 @@
 	<!-- 본문 -->
 	<div class="row flex-fill d-flex flex-column">
 		<div class="col">
-			<form action="info" method="post" enctype="multipart/form-data">
-	        	<h4 class="row fw-bold mt-4 pt-2 pb-4 border-bottom">내 정보 수정</h4>			
-				<div class="input-group row center mt-5">
-					<img src="${pageContext.request.contextPath}${profileUrl}"
-							class="img-thumbnail center-block w-25">
-					<div>
-						<label for="formFile" class="form-label">프로필 변경하기</label>
-		    			<input class="form-control" type="file" id="formFile" name="attachment">			
-					</div>
-				</div>
+		<form action="info" method="post" enctype="multipart/form-data">
+			<div class="row mt-4">프로필 사진</div>
+			<div class="input-group row center m-1 mb-3">
+				<label id="profile-label" class="position-relative">
+                    <img id="profile" class="rounded-circle" src="${pageContext.request.contextPath}${profileUrl}"/>
+                    <input class="form-control d-none" type="file" name="attachment" accept=".png, .jpg, .gif"/>
+                    <a id="profile-hover" class="d-none rounded-circle position-absolute fw-bold text-white">프로필 변경</a>
+                </label>
+			</div>
 				
 				<div class="row mt-5">
 					<div class="col-7 px-0">
@@ -133,7 +132,6 @@
 	        else{
 	        	hour = "오후 "+(hour-12)+"시";
 	        } 
-
 			//document.write("<option value=" + hour + min + ">" + hour + min + "</option>");
 			$("<option>").val(hour).text(hour).appendTo("select[name=begin]");
 			$("<option>").val(hour).text(hour).appendTo("select[name=end]");
@@ -155,7 +153,6 @@
 		
 		$(".btn-send-email").click(function(){
 			var memberEmail = $(".email-input").val();
-
 			$.ajax({
 				url:"${pageContext.request.contextPath}/async/asyncPw",
 				type: "post",
@@ -216,7 +213,37 @@
 			$(this).val("");
 		});
 		
-		
+		// 프로필 사진 선택
+		$("#profile-label").mouseover(function(){
+			$("#profile-hover").removeClass("d-none");
+		});
+		$("#profile-label").mouseleave(function(){
+			$("#profile-hover").addClass("d-none");
+		});
+		$("input[name=attachment]").change(function(){
+			const url = URL.createObjectURL($("input[name=attachment]")[0].files[0]); 
+			$("#profile").attr("src", url);
+		});
 
 	});
 </script>
+<style scoped>
+
+	#profile {
+		object-fit: cover;
+	    width: 250px;
+	    height: 250px;
+	}
+	
+	#profile-hover {
+		top: 0;
+	    left: 0;
+	    background-color: rgba(111, 117, 246, 0.6);
+	    width: 250px;
+	    height: 250px;
+	    line-height: 250px;
+	    text-align: center;
+	    cursor: pointer;
+	}
+
+</style>
