@@ -37,15 +37,7 @@
 			<h4 class="row fw-bold my-4 pt-2">포인트 충전</h4>
 			
 			<div class="row fw-bold mt-4 pt-2 justify-content-center">
-				<div class="col-7">
-					<h3 class="text-center">${memberDto.memberNick }님의 현재 보유 포인트는 </h3>
-				</div>
-				<div class="col-2">
-					<h2 class="text-info text-center">${memberDto.memberHoldingPoints} P</h2>
-				</div>
-				<div class="col-3 text-start">
-					<h3 class="text-center"> 입니다.</h3>
-				</div>
+				<h3 class="text-center">${memberDto.memberNick }님의 현재 보유 포인트는 <span class="text-info text-center">${memberDto.memberHoldingPoints} P</span> 입니다.</h3>
 			</div>
 			<div class="row justify-content-center text-muted mt-1">
 				충전은 결제 즉시 진행되며 1주일 이내에 포인트를 사용하지 않은 상태라면 결제 취소가 가능합니다.
