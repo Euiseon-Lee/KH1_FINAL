@@ -18,7 +18,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>경매나라</title>
-
+<style>
+	.chatbotArea {
+	  position: fixed; /* 이 부분을 고정 */
+	  bottom: 0; /* 하단에 여백 없이 */
+	  width: 5%; /* 가로 사이즈를 브라우저에 가득 채움 */
+	}
+</style>
     <!-- 파비콘 -->
     <link rel="icon" href="${root}/image/favicon.ico">
 
@@ -69,8 +75,10 @@
                 </div>
             </div>
         </nav>
+			
+			</div>
 			<div id="appp">
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="question()">
+				<button type="button" class="btn btn-primary chatbotArea" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="question()">
 				  궁금증
 				</button>
 			
@@ -93,7 +101,6 @@
 				    </div>
 				  </div>
 				</div>
-			</div>
 			</div>
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
