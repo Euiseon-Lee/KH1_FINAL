@@ -45,7 +45,7 @@
             <div class="d-flex">
                 <a href="${root}/auction/write"><button class="btn btn-primary rounded-pill"><i class="fa-solid fa-pen-to-square mx-1"></i> 경매 등록</button></a>
                 <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle py-0" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><img class="rounded-circle profile" src="${root}/attachment/download?attachmentNo=${profile}"></a>
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa-solid fa-user"></i></a>
                     <ul class="dropdown-menu ml-4">
                     	<c:choose>
                     		<c:when test="${isLogin}">
