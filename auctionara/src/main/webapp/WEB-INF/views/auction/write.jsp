@@ -209,9 +209,14 @@ pageEncoding="UTF-8"%>
         methods: {
             attachmentPreview() {
                 const attachment = document.getElementById("attachment");
-                this.attachment.push(attachment.files[0]);
-                this.attachmentUrl.push(URL.createObjectURL(attachment.files[0]));
-                this.attachmentCount++;
+                if (attachment.files && attachment.files[0].size >= 1048576) {
+                    alert("파일 사이즈가 1mb 를 넘습니다.");
+                    attachment.value = null;
+                } else {
+                    this.attachment.push(attachment.files[0]);
+                    this.attachmentUrl.push(URL.createObjectURL(attachment.files[0]));
+                    this.attachmentCount++;                	
+                }
             },
             attachmentRemove(index) {
                 this.attachment.splice(index, 1);

@@ -142,7 +142,7 @@
 		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="auctionClose && (topBidder == 0 || topBidder == null)">
 		                    종료되었습니다
 		                </button>
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="!${checkAddress}">
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="!${checkAddress} && !auctionClose">
 		                    동네인증 필요
 		                </button>
 		                <a href="${root }/payment/paying/${auctionDetail.auctionNo}" class="btn btn-primary btn-lg btn-block py-3" v-if="auctionClose && topBidder == 1">
@@ -198,7 +198,14 @@ ${auctionDetail.auctionContent}
             <div class="col-2"><img id="profile" class="rounded-circle" src="${root}/attachment/download?attachmentNo=${auctioneerInfo.attachmentNo}"></div>
             <div class="col ml-4">
             	<h6 class="row fw-bold mb-2">${auctioneerInfo.memberNick}</h6>
-            	<h6 class="row text-muted">선호 거래일 : ${auctioneerInfo.memberPreference}</h6>
+				<c:choose>
+					<c:when test="${auctioneerInfo.memberPreference != null}">
+					<h6 class="row text-muted">${auctioneerInfo.memberPreference}</h6>
+					</c:when>
+					<c:otherwise>
+					<h6 class="row text-muted">선호 거래일 없음</h6>
+					</c:otherwise>
+				</c:choose>
             </div>
         </div>
         <div class="row ml-3 py-3 border-bottom">
@@ -400,7 +407,7 @@ ${auctionDetail.auctionContent}
             },
             bidReplace() {
             	// 금액이 10억 이상이면 마지막 자리 지우기
-            	if(this.inputBid > 1000000000) {
+            	if(this.inputBid >= 1000000000) {
             		this.inputBid = parseInt(this.inputBid / 10);
             	}
             	
