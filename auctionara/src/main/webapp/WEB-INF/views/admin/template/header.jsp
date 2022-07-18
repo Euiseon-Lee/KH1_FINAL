@@ -49,16 +49,6 @@
 
 				<ul class="sidebar-nav">
 					<li class="sidebar-header">
-						매출 관리
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="${root}/admin/sales/chart">
-			              <span class="align-middle">매출 현황</span>
-			            </a>
-					</li>
-					
-					<li class="sidebar-header">
 						회원 관리
 					</li>
 
@@ -134,7 +124,8 @@
 		<div class="main">
 			<nav class="row navbar navbar-expand navbar-light navbar-bg">
 			
-				<div class="col-11"></div>
+				<div class="col-11">
+				</div>
 				<div class="col-1">
 					<i class="fa-regular fa-user"></i>
 					<a href="${root }/member/logout" class="text-secondary">&nbsp log out</a>

@@ -73,10 +73,37 @@
 	<div class="card">
 		<div class="card-body">
 			<div class="mt-2">
-				<h2 class="text-secondary">순수익</h2>
+				<h2 class="text-secondary">순수익(월)</h2>
 			</div>
 			<div class="mt-5">
-				<canvas id="netSalesChart"></canvas>
+				<canvas id="netSalesChart" height="200px"></canvas>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="mt-2">
+						<h2 class="text-secondary">충전 포인트(월)</h2>
+					</div>
+					<div class="mt-5">
+						<canvas id="pointsChart"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="mt-2">
+						<h2 class="text-secondary">낙찰액(월)</h2>
+					</div>
+					<div class="mt-5">
+						<canvas id="bidChart"></canvas>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -196,6 +223,94 @@
         },
 	});
 	app.mount("#app");
+</script>
+
+<script>
+	    $.ajax({
+	        url: "${pageContext.request.contextPath}/rest/admin_main/monthly_total_points",
+	        type: "get",
+	        success: function (resp) {
+	            var labels = [];
+	
+	            for (var i = 0; i < resp.length; i++) {
+	                labels.push(resp[i].month);  
+	            }
+	
+	            var cnt = [];
+	            for (var i = 0; i < resp.length; i++) {
+	                cnt.push(resp[i].totalPoints);
+	            }
+	
+	            const data = {
+	                labels: labels,
+	                datasets: [{
+	                    backgroundColor: '#3B7CDD', 
+	                    borderColor: '#3B7CDD', 
+	                    data: cnt,
+	                }]
+	            };
+	
+	            var config = {
+	                type: 'line',
+	                data: data,
+	                options: {
+	                	plugins:{
+                    		legend: {
+        	                	display: false
+                        	}
+                    	}
+	                }
+	            };
+	
+	            var myChart = new Chart(
+	                document.querySelector('#pointsChart'), 
+	                config  
+	            );
+	        }
+	    });
+	    
+	    $.ajax({
+	        url: "${pageContext.request.contextPath}/rest/admin_main/monthly_bid",
+	        type: "get",
+	        success: function (resp) {
+	            var labels = [];
+	
+	            for (var i = 0; i < resp.length; i++) {
+	                labels.push(resp[i].month);  
+	            }
+	
+	            var cnt = [];
+	            for (var i = 0; i < resp.length; i++) {
+	                cnt.push(resp[i].totalBid);
+	            }
+	
+	            const data = {
+	                labels: labels,
+	                datasets: [{
+	                    backgroundColor: '#3B7CDD', 
+	                    borderColor: '#3B7CDD', 
+	                    data: cnt,
+	                }]
+	            };
+	
+	            var config = {
+	                type: 'line',
+	                data: data,
+	                options: {
+	                	plugins:{
+                    		legend: {
+        	                	display: false
+                        	}
+                    	}
+	                }
+	            };
+	
+	            var myChart = new Chart(
+	                document.querySelector('#bidChart'), 
+	                config  
+	            );
+	        }
+	    });
 </script>
 
 <%@include file="/WEB-INF/views/admin/template/footer.jsp" %>

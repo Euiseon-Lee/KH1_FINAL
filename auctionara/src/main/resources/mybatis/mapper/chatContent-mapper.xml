@@ -30,4 +30,10 @@
  		where chatroom_no = #{chatRoomNo} order by chat_no desc
  	</select>
  	
+ 	<!-- 채팅 메세지 읽음 처리 -->
+	<update id="read" parameterType="Map">
+		update chat_content set chat_read_time = sysdate
+		where chatroom_no = #{chatRoomNo} and chatter_no != #{chatterNo}
+	</update> 	
+ 	
  </mapper>

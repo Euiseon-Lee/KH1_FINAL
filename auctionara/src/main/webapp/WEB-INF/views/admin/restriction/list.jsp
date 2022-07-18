@@ -119,13 +119,12 @@
 			<div class="row justify-content-md-center">
 				<div class="col-2">
 					<select name="type" class="form-select">
-						<option value="member_name" <c:if test="${type == 'member_name'}">selected</c:if>>제재 대상</option>
-						<option value="restriction_type" <c:if test="${type == 'restriction_type'}">selected</c:if>>제재 유형</option>
+						<option value="member_nick" <c:if test="${type == 'member_nick'}">selected</c:if>>제재 대상</option>
 						<option value="restriction_reason" <c:if test="${type == 'restriction_reason'}">selected</c:if>>제재 내용</option>
 					</select>
 				</div>
 				<div class="col-3">
-					<input type="search" name="keyword" placeholder="검색어 입력" required class="form-control" value="${keyword}">
+					<input type="search" name="keyword" placeholder="검색어 입력" required class="form-control" value="${keyword}" autocomplete="off">
 				</div>
 				<div class="col-2">
 					<input type="submit" value="검색" class="btn btn-primary">

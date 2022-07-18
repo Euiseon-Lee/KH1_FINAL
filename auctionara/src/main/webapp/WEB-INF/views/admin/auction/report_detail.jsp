@@ -72,7 +72,7 @@
 						<td>
 							<c:choose>
 								<c:when test="${detailReportList.auctionReportRestriction == 0}">
-									<a href="${pageContext.request.contextPath}/admin/restriction/restrict_member/${detailReportList.auctioneerNo}/${detailReportList.auctionReportNo}">제재하기</a>
+									<a href="${pageContext.request.contextPath}/admin/restriction/restrict_auction/${detailReportList.auctioneerNo}/${detailReportList.auctionReportNo}">제재하기</a>
 								</c:when>
 								<c:otherwise>
 									제재완료
