@@ -13,4 +13,5 @@ public class CashingListVO {
 	private Date cashingRequestTime, cashingSuccessTime;
 	private long cashingAccount;
 	
+	private int cashingMoney, cashingCount, totalMoney;
 }
