@@ -231,4 +231,10 @@ public class MypageController {
 		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
 		return "/payment/cashing";
 	}
+	@GetMapping("/cashingList")
+	public String cashingList(HttpSession session, Model model) {
+		model.addAttribute("cashingList", paymentService.cashingList((int)session.getAttribute("whoLogin")));
+		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
+		return "/payment/cashingList";
+	}
 }

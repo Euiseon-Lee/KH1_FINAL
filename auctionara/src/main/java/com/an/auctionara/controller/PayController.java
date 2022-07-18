@@ -170,12 +170,7 @@ public class PayController {
 	public String cashingFail() {
 		return "payment/cashingFail";
 	}
-	@GetMapping("/cashingList")
-	public String cashingList(HttpSession session, Model model) {
-		model.addAttribute("cashingList", paymentService.cashingList((int)session.getAttribute("whoLogin")));
-		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
-		return "payment/cashingList";
-	}
+
 	@GetMapping("/paying/{auctionNo}")
 	public String paying(HttpSession session, @PathVariable int auctionNo) {
 		log.info("======1=====");
