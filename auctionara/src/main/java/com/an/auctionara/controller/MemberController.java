@@ -113,6 +113,7 @@ public class MemberController {
 				//세션에 로그인 정보 추가
 				session.setAttribute("whoLogin", memberNo);
 				session.setAttribute("auth", memberDto.getMemberGrade());
+				session.setAttribute("profile", memberDto.getAttachmentNo()); // 프로필 사진 번호 추가
 				
 				
 				
