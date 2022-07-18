@@ -101,8 +101,9 @@ public class PaymentServiceImpl implements PaymentService{
 		PayingVO payingVO = PayingVO.builder().memberNo(memberNo).price(successfulBidDto.getSuccFinalBid()).build();
 		sqlSession.update("member.paying", payingVO);
 		sqlSession.update("successful_bid.paying", auctionNo);
-		NetSalesDto nsDto = NetSalesDto.builder().commission(successfulBidDto.getSuccFinalBid()/10).succBidNo(successfulBidDto.getSuccFinalBid()/10).build();
-		sqlSession.update("netSales.insert", nsDto);
+		int comission = successfulBidDto.getSuccFinalBid()/10;
+		NetSalesDto nsDto = NetSalesDto.builder().commission(comission).succBidNo(successfulBidDto.getSuccBidNo()).build();
+		sqlSession.insert("netSales.insert", nsDto);
 	}
 	@Override
 	public SuccessfulBidDto bidSelect(int auctionNo) {
