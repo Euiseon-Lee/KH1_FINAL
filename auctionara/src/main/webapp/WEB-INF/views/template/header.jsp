@@ -18,6 +18,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>경매나라</title>
+<<<<<<< HEAD
+=======
 <style>
 	.chatbotArea {
 	  position: fixed; /* 이 부분을 고정 */
@@ -25,6 +27,7 @@
 	  width: 5%; /* 가로 사이즈를 브라우저에 가득 채움 */
 	}
 </style>
+>>>>>>> branch 'main' of https://github.com/Euiseon-Lee/KH1_FINAL
     <!-- 파비콘 -->
     <link rel="icon" href="${root}/image/favicon.ico">
 
@@ -75,33 +78,20 @@
                 </div>
             </div>
         </nav>
+<<<<<<< HEAD
+=======
 			
 			</div>
 			<div id="appp">
 				<button type="button" class="btn btn-primary chatbotArea" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="question()">
 				  궁금증
 				</button>
+>>>>>>> branch 'main' of https://github.com/Euiseon-Lee/KH1_FINAL
 			
-				<!-- Modal -->
-				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">도움을 드려요</h5>
-				        <button type="button" class="btn-close" @click="end()" data-bs-dismiss="modal" aria-label="Close"></button>
-				      </div>
-				      <div class="modal-body">
-				      	<div v-for="(chatbotContent, index) in chatbotContentDto" class="chatbotContentDto" :key="index">
-				      		<button class="btn" @click="requestion(chatbotContent.chatbotNo)">{{chatbotContent.chatbotContent}}</button>
-				      	</div>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
 			</div>
+<<<<<<< HEAD
+
+=======
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -154,5 +144,6 @@
         });
         appp.mount("#appp");
     </script>
+>>>>>>> branch 'main' of https://github.com/Euiseon-Lee/KH1_FINAL
         <div class="container">
          <!-- vue js도 lazy loading을 사용한다 -->

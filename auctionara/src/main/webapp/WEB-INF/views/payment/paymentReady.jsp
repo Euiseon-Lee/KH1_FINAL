@@ -41,7 +41,7 @@
 			</div>
 		</div>
 	    <div class="col-5 d-flex justify-content-end"">
-			<form action="charge" method="post">
+			<form action="${root }/payment/charge" method="post">
 				<input type="text" name="chargeMoney">
 				<input type="submit" value="구매하기" class="btn">
 			</form>
