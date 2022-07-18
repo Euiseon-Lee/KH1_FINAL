@@ -207,7 +207,7 @@ public class PayController {
 		model.addAttribute("memberDto", memberDao.selectOne(memberNo));
 		return "payment/paymentReady";
 	}
-	@GetMapping("/payment/list")
+	@GetMapping("/list")
 	public String payList(HttpSession session, Model model) {
 		int memberNo = (int) session.getAttribute("whoLogin");
 		model.addAttribute("allList", paymentService.allList(memberNo));

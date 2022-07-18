@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
 <div class="container d-flex" id="app">
@@ -37,12 +40,20 @@
 		<h4 class="row fw-bold my-4 pt-2">현금화 신청</h4>
 			
 		<div class="row fw-bold mt-1 pt-2 justify-content-center">
-			<h3 class="text-center">${memberDto.memberNick }님의 현재 보유 포인트는 <span class="text-info text-center">${memberDto.memberHoldingPoints} P</span> 입니다.</h3>
+			<h3 class="text-center">${memberDto.memberNick }님의 현재 보유 포인트는 
+				<span class="text-info text-center">
+					<fmt:formatNumber value="${memberDto.memberHoldingPoints }" pattern="#,###" /> P
+				</span> 
+				입니다.
+			</h3>
 		</div>
 		<div class="row justify-content-center text-muted mt-1">
 			<c:choose>
 				<c:when test="${memberDto.memberHoldingPoints > 0}">
-					<span class="text-muted">현재 출금 가능한 포인트는 ${memberDto.memberHoldingPoints } P 입니다.</span>
+					<span class="text-muted">현재 출금 가능한 포인트는 
+						<fmt:formatNumber value="${memberDto.memberHoldingPoints }" pattern="#,###" /> 
+						P 입니다.
+					</span>
 				</c:when>
 				<c:when test="${memberDto.memberHoldingPoints <= 0}">
 					<span class="text-muted">현재 출금 가능한 포인트가 존재하지 않습니다.</span>
@@ -55,15 +66,15 @@
 				<form action="cashingRequest" method="post">
 					<div class="row">
 						현금화할 포인트
-						<input type="number" name="cashingMoney" class="form-control mt-2" v-model="cashingMoney" step="1000">
+						<input type="number" name="cashingMoney" class="form-control mt-2" v-model="cashingMoney" step="100">
 					</div>
-					<div class="row">
+					<div class="row mt-2">
 						입금 은행명
-						<input type="text" name="cashingBank" class="form-control mt-2" v-model="cashingBank">
+						<input type="text" name="cashingBank" class="form-control mt-2" v-model="cashingBank" autocomplete="off">
 					</div>
-					<div class="row">
+					<div class="row mt-2">
 						입금 계좌번호
-						<input type="number" name="cashingAccount" class="form-control mt-2" v-model="cashingAccount">
+						<input type="text" name="cashingAccount" class="form-control mt-2" v-model="cashingAccount" autocomplete="off">
 					</div>
 					<div class="row mt-4">
 						<input type="submit" class="btn btn-primary btn-block" value="신청하기" :disabled="!submitAble()">

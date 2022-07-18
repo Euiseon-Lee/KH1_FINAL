@@ -2,14 +2,47 @@
     pageEncoding="UTF-8"%>
     
 <%@include file="/WEB-INF/views/template/header.jsp" %>
-<div>
-	<h1>결제가 실패했습니다.</h1>
-</div>
-<div>
-	<p>카드 한도나 충전 금액 등을 확인해보세요.</p>
-</div>
-<div>
-	<h2><a href="${pageContext.request.contextPath }">홈으로</a></h2>
+
+<div class="container d-flex" id="app">
+	<div class="row col-3 mt-3">
+		<ul class="nav flex-column text-center">
+		  <li class="nav-item border-bottom">
+		  	<a href="${root}/mypage/index" class="nav-link btn-outline-dark fw-bold fs-large">마이페이지</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+		  	<a href="${root}/mypage/info" class="nav-link btn-outline-info">내 정보 수정</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+		    <a href="${root}/mypage/auction_history" class="nav-link btn-outline-info">내 경매</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">내 입찰</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+			<a href="${root}/payment/paymentReady" class="nav-link btn-outline-info">포인트 충전</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+			<a href="${root }/payment/list" class="nav-link btn-outline-info">포인트 충전 취소</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+			<a href="${root }/payment/cashing" class="nav-link btn-outline-info">현금화 신청</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원 탈퇴</a>
+		  </li>
+		</ul>
+	</div>
+	
+	<div class="row flex-fill d-flex flex-column">
+		<h4 class="row fw-bold my-4 pt-2">포인트 충전</h4>
+	
+		<h4 class="row fw-bold my-4 pt-2">포인트 충전에 실패하였습니다.</h4>
+			
+		<div class="row fw-bold mt-1 pt-2 justify-content-center">
+			<span class="text-center text-muted">카드 한도나 충전 금액 등을 확인해주세요.</span>
+		</div>
+	</div>
+	
 </div>
 
 <%@include file="/WEB-INF/views/template/footer.jsp" %>
