@@ -5,6 +5,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<jsp:include page="/WEB-INF/views/template/chatbot.jsp"></jsp:include>
 <div id="app" class="mt-4">
     <div class="container-fluid bg-info gps mb-5">
         <div class="row position-relative">
