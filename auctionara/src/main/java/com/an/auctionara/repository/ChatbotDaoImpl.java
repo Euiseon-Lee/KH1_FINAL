@@ -47,4 +47,8 @@ public class ChatbotDaoImpl implements ChatbotDao {
 		
 		return sqlSession.selectOne("chatbot.one", chatbotDto.getChatbotNo());
 	}
+	@Override
+	public List<ChatbotDto> listSet(int chatbotSuperNo) {
+		return sqlSession.selectList("chatbot.listSet", chatbotSuperNo);
+	}
 }

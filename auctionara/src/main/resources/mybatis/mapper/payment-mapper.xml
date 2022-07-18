@@ -30,5 +30,56 @@
 	<select id="monthlyTotalPoints" resultType="int">
 		select sum(payment_price) "total_points" from payment where to_char(payment_time, 'MM') = (select to_char(sysdate,'MM')-1 from dual)
 	</select>
-	
+	<select id="sequence" resultType="int">
+		select payment_seq.nextval from dual
+	</select>
+	<insert id="insert" parameterType="PaymentInsertVO">
+		insert into payment(payment_no, member_no, payment_tid, payment_price, payment_time, payment_status)
+		values (#{paymentNo}, #{memberNo}, #{paymentTid}, #{paymentPrice}, sysdate, 1)
+	</insert>
+	<update id="charge" parameterType="PaymentInsertVO">
+		update member set member_holding_points = member_holding_points + #{paymentPrice} where member_no = #{memberNo}
+	</update>
+	<insert id="monthlyCharge">
+		
+	</insert>
+	<select id="one" parameterType="int" resultType="PaymentInsertVO">
+		select * from payment where payment_no = #{paymentNo}
+	</select>
+	<select id="success" parameterType="int" resultType="PaymentSuccessVO">
+		select p.payment_price, m.member_holding_points from payment p, member m
+			where m.member_no = p.member_no and p.payment_no = #{paymentNo}
+	</select>
+	<select id="allList" parameterType="int" resultType="PaymentInsertVO">
+		select * from payment where member_no=#{memberNo}
+	</select>
+	<select id="refundList" parameterType="int" resultType="PaymentInsertVO">
+		select p.payment_price, p.payment_time, p.payment_no from payment p, member m 
+       		where m.member_no = #{memberNo} 
+        and 
+        	to_char(p.payment_time, 'YYYYMMDD')>sysdate-7
+        and
+        	p.payment_status = 1
+        and
+        	m.member_holding_points >= p.payment_price
+	</select>
+	<update id="refund" parameterType="int">
+		update payment set payment_status = 0 where payment_no=#{paymentNo}
+	</update>
+	<update  id="refundMember" parameterType="PaymentInsertVO">
+		update member set member_holding_points = member_holding_points - #{paymentPrice} where member_no = #{memberNo}
+	</update>
+	<select id="cashingSequence" resultType="int">
+		select cashing_points_seq.nextval from dual
+	</select>
+	<update id="cashing" parameterType="CashingPointsVO">
+		update member set member_holding_points = member_holding_points - #{cashingMoney} where member_no = #{memberNo}
+	</update>
+	<insert id="cashingInsert" parameterType="CashingPointsVO">
+		insert into cashing_points(cashing_no, member_no, cashing_money, cashing_bank, cashing_account, cashing_type, cashing_request_time)
+		values (#{cashingNo}, #{memberNo}, #{cashingMoney}, #{cashingBank}, #{cashingAccount}, #{cashingType}, sysdate)
+	</insert>
+	<select id="cashingList" parameterType="int" resultType="CashingListVO">
+        select * from cashing_points where member_no=#{memberNo}
+	</select>
 </mapper> 

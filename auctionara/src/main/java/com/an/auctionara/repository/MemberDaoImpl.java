@@ -153,6 +153,11 @@ public class MemberDaoImpl implements MemberDao {
 	public int checkNick(String memberNick) {
 		return sqlSession.selectOne("member.nickExists", memberNick);
 	}
+<<<<<<< HEAD
+	@Override
+	public MemberDto selectOne(int memberNo) {
+		return sqlSession.selectOne("member.one", memberNo);
+=======
 
 
 	@Override
@@ -217,5 +222,6 @@ public class MemberDaoImpl implements MemberDao {
 	public MemberDto memberSearchforExit(int memberNo) {
 		MemberDto memberDto = sqlSession.selectOne("member.exitOne", memberNo);
 		return memberDto;
+>>>>>>> refs/remotes/origin/main
 	}
 }

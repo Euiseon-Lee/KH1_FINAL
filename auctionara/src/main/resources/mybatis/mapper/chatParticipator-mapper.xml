@@ -24,37 +24,18 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="chatbot">
-	
-	<select id="list" resultType="ChatbotDto">
-		select * from chatbot 
-		connect by prior chatbot_no = chatbot_super_no start with chatbot_super_no = 0
-	</select>
-	
-	<select id="sequence" resultType="int">
-		select chatbot_seq.nextVal from dual 
-	</select>
-	
-	<insert id="insert" parameterType="ChatbotDto">
-		insert into chatbot (chatbot_no, chatbot_content, chatbot_super_no)
-		values (#{chatbotNo}, #{chatbotContent}, #{chatbotSuperNo}) 
+<mapper namespace="chatParticipator">
+	<insert id="insert" parameterType="ChatParticipatorDto">
+        insert into chatparticipator(chatroom_no, member_no) values(#{chatRoomNo}, #{memberNo})
 	</insert>
-	
-	<update id="update" parameterType="ChatbotDto">
-		update chatbot set
-			chatbot_content = #{chatbotContent}, chatbot_super_no = #{chatbotSuperNo}
-		where chatbot_no = #{chatbotNo}
-	</update>
-	
-	<delete id="delete" parameterType="int">
-		delete chatbot where chatbot_no = #{chatbotNo}
-	</delete>
-	
-	<select id="one" parameterType="int" resultType="ChatbotDto">
-		select * from chatbot where chatbot_no = #{chatbotNo}
+	<select id="one" parameterType="int" resultType="ChatParticipatorDto">
+		select * from chatparticipator where chatroomno = #{chatRoomNo}
 	</select>
-	<select id="listSet" parameterType="int" resultType="ChatbotDto">
-		select * from chatbot where chatbot_super_no = #{chatbotSuperNo}
+	<select id="list" parameterType="int" resultType="ChatListVO">
+		select cr.chatroom_no, cr.auction_no, cp.member_no from chatroom cr inner join chatparticipator cp
+			on cr.chatroom_no = cp.chatroom_no where cp.member_no = #{memberNo} and cp.chatroom_status=1 and cp.chatroomReport = 1
 	</select>
-	
+	<select id="partner" parameterType="ChatListVO" resultType="int">
+            select member_no from chatparticipator where chatroom_no = #{chatRoomNo} and not member_no = #{memberNo}
+	</select>
 </mapper> 
