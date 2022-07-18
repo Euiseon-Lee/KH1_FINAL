@@ -150,4 +150,8 @@ public class MemberDaoImpl implements MemberDao {
 	public int checkNick(String memberNick) {
 		return sqlSession.selectOne("member.nickExists", memberNick);
 	}
+	@Override
+	public MemberDto selectOne(int memberNo) {
+		return sqlSession.selectOne("member.one", memberNo);
+	}
 }

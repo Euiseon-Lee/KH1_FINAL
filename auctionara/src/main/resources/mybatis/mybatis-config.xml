@@ -26,6 +26,7 @@
 	-->
 	<typeAliases>
 		<package name="com.an.auctionara.entity"/>
+		<package name="com.an.auctionara.paymentvo"/>
 		<package name="com.an.auctionara.vo"/>
 	</typeAliases>
 

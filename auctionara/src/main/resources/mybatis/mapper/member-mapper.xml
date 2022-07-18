@@ -116,4 +116,9 @@
 		select count(*) from member
 			where member_nick = #{memberNick}
 	</select>
+	<update id="paying" parameterType="PayingVO">
+		update member 
+			set member_holding_points = member_holding_points - #{price}
+			where member_no = #{memberNo}
+	</update>
 </mapper> 

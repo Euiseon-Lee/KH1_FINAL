@@ -18,4 +18,6 @@ public interface ChatbotDao {
 	// 수정 메소드 
 	ChatbotDto update(ChatbotDto chatbotDto);
 	
+	List<ChatbotDto> listSet(int chatbotSuperNo);
+	
 }

@@ -23,7 +23,7 @@ public class ChatbotRestController {
 	private ChatbotDao chatbotDao;
 	
 	
-	// 목록 
+	// 목록 다시 list 지우기 잊지말기
 	@GetMapping("/")
 	public List<ChatbotDto> list() {
 		return chatbotDao.list();
@@ -45,5 +45,10 @@ public class ChatbotRestController {
 	@PutMapping("/")
 	public ChatbotDto update(@RequestBody ChatbotDto chatbotDto) {
 		return chatbotDao.update(chatbotDto);
+	}
+	
+	@GetMapping("/list/{chatbotSuperNo}")
+	public List<ChatbotDto> listView(@PathVariable int chatbotSuperNo) {
+		return chatbotDao.listSet(chatbotSuperNo);
 	}
 }

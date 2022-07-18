@@ -52,5 +52,8 @@
 	<select id="one" parameterType="int" resultType="ChatbotDto">
 		select * from chatbot where chatbot_no = #{chatbotNo}
 	</select>
+	<select id="listSet" parameterType="int" resultType="ChatbotDto">
+		select * from chatbot where chatbot_super_no = #{chatbotSuperNo}
+	</select>
 	
 </mapper> 

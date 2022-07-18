@@ -34,4 +34,5 @@ public interface MemberDao {
 
 	int checkNick(String memberNick);
 	
+	MemberDto selectOne(int memberNo);
 }

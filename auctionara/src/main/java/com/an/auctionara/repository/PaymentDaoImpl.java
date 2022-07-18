@@ -15,4 +15,9 @@ public class PaymentDaoImpl implements PaymentDao{
 		// 해당 월의 포인트 충전액 합계 
 		return sqlSession.selectOne("payment.monthlyTotalPoints");
 	}
+	@Override
+	public int paymentSequence() {
+		return sqlSession.selectOne("payment.sequence");
+	}
+	
 }
