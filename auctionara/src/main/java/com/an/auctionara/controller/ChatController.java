@@ -87,7 +87,7 @@ public class ChatController {
 		chatContentDao.save(chatContentDto);
 	}
 	
-	// 거래완료 및 평가 여부 확인
+	// 결제 완료 및 거래완료 및 평가 여부 확인
 	@GetMapping("/check/{auctionNo}")
 	@ResponseBody
 	public CheckRatingVO checkRating(@PathVariable("auctionNo") int auctionNo) {

@@ -65,8 +65,26 @@
 					</label>
 				</div>
 				<div class="row">
+					<button type="button" class="btn btn-primary btn-block mt-2" data-bs-toggle="modal" data-bs-target="#Modal">이용약관 확인</button>
+				</div>		                	
+				<div class="row">
 					<button type="submit" id="submit" class="btn btn-primary btn-block mt-2">회원가입</button>
 				</div>
+				<div class="modal fade" id="Modal" aria-hidden="true" aria-labelledby="ModalLable" tabindex="-1">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="ModalLable">이용약관 확인</h5>
+								<button type="button" class="btn-close close" data-bs-dismiss="modal">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+				        		본문
+				      		</div>
+				    	</div>
+				  	</div>
+				</div>				
 			</form>
 		</div>
 		<div class="col">
@@ -75,24 +93,9 @@
 	</div>	
 </div>
 
-<div class="modal">
-   <div class="layerpop">
-     <p class="layerpop__container">
-    	개인정보 처리 방침 동의
-     </p>
-     <p class="layerpop__container">
-    	위치기반서비스 이용 약관
-     </p>
-     <button type="button" value="close" class="btn modal-close">확인하였습니다</button>
-   </div>
-</div>
-
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
-
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script>
 	$(function(){		
 		
@@ -358,6 +361,11 @@
 	    line-height: 100px;
 	    text-align: center;
 	    cursor: pointer;
+	}
+	
+	.modal-body {
+		height: 500px;
+    	overflow: scroll;
 	}
 
 </style>
