@@ -66,12 +66,11 @@ public class MemberServiceImpl implements MemberService {
 		
 		
 	}
-
+	
 	@Scheduled(cron = "0 0 12 * * *") // 매일 오후 12시마다 인증 후 30일이 지난 주소 미인증 처리
 	@Override
 	public void changeGpsStaus() {
-		Date limit = new java.sql.Date(System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 30L));
-		gpsAddressDao.changeGpsStaus(limit);
+		gpsAddressDao.changeGpsStaus();
 	}
 
 	@Override
