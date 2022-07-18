@@ -158,7 +158,6 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectOne("member.one", memberNo);
 	}
 
-
 	@Override
 	public boolean exit(String memberEmail, String memberPw) {
 		MemberDto memberDto = this.login(memberEmail, memberPw);

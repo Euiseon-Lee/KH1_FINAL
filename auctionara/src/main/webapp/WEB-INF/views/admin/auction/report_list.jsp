@@ -19,10 +19,10 @@
 			<thead>
 				<tr>
 					<th style="width:10%;">신고 번호</th>
-					<th style="width:40%;">신고 내용</th>
-					<th style="width:20%;">신고 경매글</th>
+					<th style="width:50%;">신고 내용</th>
 					<th>신고자</th>
 					<th>신고 시각</th>
+					<th>보기</th>
 					<th>관리</th>
 				</tr>
 			</thead>
@@ -31,9 +31,11 @@
 					<tr>
 						<td>${auctionReportListVO.auctionReportNo}</td>
 						<td>${auctionReportListVO.auctionReportReason}</td>
-						<td>${auctionReportListVO.auctionTitle}</td>
 						<td>${auctionReportListVO.reporterNick}</td>
 						<td>${auctionReportListVO.auctionReportTime}</td>
+						<td>
+							<a href="${pageContext.request.contextPath}/admin/auction/detail/${auctionReportListVO.auctionNo}">보기</a>
+						</td>
 						<td>
 							<c:choose>
 								<c:when test="${auctionReportListVO.auctionReportRestriction == 0}">
@@ -129,7 +131,7 @@
 			<div class="row justify-content-md-center">
 				<div class="col-2">
 					<select name="type" class="form-select">
-						<option value="auction_title" <c:if test="${type == 'auction_title'}">selected</c:if>>경매글</option>
+						<option value="auction_report_reason" <c:if test="${type == 'auction_report_reason'}">selected</c:if>>내용</option>
 						<option value="m2.member_nick" <c:if test="${type == 'm2.member_nick'}">selected</c:if>>신고자</option>
 					</select>
 				</div>

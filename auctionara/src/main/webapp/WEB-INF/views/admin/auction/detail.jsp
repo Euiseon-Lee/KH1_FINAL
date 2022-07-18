@@ -48,7 +48,7 @@
 						<li class="list-group-item">
 						  	<h2 class="card-title">업로드 이미지</h2>
 						  	<c:forEach var="photoList" items="${photoList}">
-								<img src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${photoList.photoAttachmentNo}" class="img-fluid float-start p-1" style="width:170px; height:170px; border-radius:20%;">
+								<img src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${photoList.photoAttachmentNo}" class="img-fluid float-start p-1" style="width:150px; height:150px; border-radius:20%;">
 							</c:forEach>
 						</li>
 						<li class="list-group-item">
