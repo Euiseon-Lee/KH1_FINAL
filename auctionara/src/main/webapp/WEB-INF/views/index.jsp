@@ -5,7 +5,6 @@
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
-<%@include file="/WEB-INF/views/template/chatbot.jsp" %>
 <div id="app" class="mt-4">
     <div class="container-fluid bg-info gps mb-5">
         <div class="row position-relative">
@@ -227,4 +226,5 @@
 		min-height: 800px;
 	}
 </style>
+<%@include file="/WEB-INF/views/template/chatbot.jsp" %>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
