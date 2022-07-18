@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
-<div class="container d-flex">
+<div class="container d-flex" id="app">
 	<div class="row col-3 mt-3">
 		<ul class="nav flex-column text-center">
 		  <li class="nav-item border-bottom">
@@ -19,61 +19,82 @@
 		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">내 입찰</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root}/mypage/paymentReady" class="nav-link btn-outline-info">포인트 충전</a>
+			<a href="${root}/payment/paymentReady" class="nav-link btn-outline-info">포인트 충전</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/mypage/payment/list" class="nav-link btn-outline-info">포인트 충전 취소</a>
+			<a href="${root }/payment/list" class="nav-link btn-outline-info">포인트 충전 취소</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/mypage/cashing" class="nav-link btn-outline-info">현금화 신청</a>
+			<a href="${root }/payment/cashing" class="nav-link btn-outline-info">현금화 신청</a>
 		  </li>
 		  <li class="nav-item border-bottom">
 		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원 탈퇴</a>
 		  </li>
 		</ul>
 	</div>
-	<div class="nav flex-column text-center">
-		<div>
-	<h1>${memberDto.memberNick }님의 현재 보유 포인트는 ${memberDto.memberHoldingPoints } P 입니다.</h1>
-</div>
-<c:set var="point" value="${memberDto.memberHoldingPoints}" />
-<c:if test="${ point>0}">
-	<div>
-		현재 출금 가능한 포인트는 ${memberDto.memberHoldingPoints } P 입니다.
-		
-		<form action="cashingRequest" method="post" enctype="multipart/form-data">
-			<div>
-				<div>
-					현금화할 포인트
-				</div>
-				<div>
-					<input type="number" name="cashingMoney">			
-				</div>
+	
+	<div class="row flex-fill d-flex flex-column">
+		<h4 class="row fw-bold my-4 pt-2">현금화 신청</h4>
+			
+		<div class="row fw-bold mt-1 pt-2 justify-content-center">
+			<h3 class="text-center">${memberDto.memberNick }님의 현재 보유 포인트는 <span class="text-info text-center">${memberDto.memberHoldingPoints} P</span> 입니다.</h3>
+		</div>
+		<div class="row justify-content-center text-muted mt-1">
+			<c:choose>
+				<c:when test="${memberDto.memberHoldingPoints > 0}">
+					<span class="text-muted">현재 출금 가능한 포인트는 ${memberDto.memberHoldingPoints } P 입니다.</span>
+				</c:when>
+				<c:when test="${memberDto.memberHoldingPoints <= 0}">
+					<span class="text-muted">현재 출금 가능한 포인트가 존재하지 않습니다.</span>
+				</c:when>
+			</c:choose>
+		</div>
+			
+		<div class="row justify-content-center mt-4 pt-2">
+			<div class="col-6">
+				<form action="cashingRequest" method="post">
+					<div class="row">
+						현금화할 포인트
+						<input type="number" name="cashingMoney" class="form-control mt-2" v-model="cashingMoney" step="1000">
+					</div>
+					<div class="row">
+						입금 은행명
+						<input type="text" name="cashingBank" class="form-control mt-2" v-model="cashingBank">
+					</div>
+					<div class="row">
+						입금 계좌번호
+						<input type="number" name="cashingAccount" class="form-control mt-2" v-model="cashingAccount">
+					</div>
+					<div class="row mt-4">
+						<input type="submit" class="btn btn-primary btn-block" value="신청하기" :disabled="!submitAble()">
+					</div>
+				</form>
 			</div>
-			<div>
-				<div>
-					입금 은행명
-				</div>
-				<div>
-					<input type="text" name="cashingBank">
-				</div>
-			</div>
-			<div>
-				<div>
-					입금 계좌번호
-				</div>
-				<div>
-					<input type="number" name="cashingAccount">
-				</div>
-			</div>
-			<div>
-				<input type="submit" class="btn" value="신청하기">
-			</div>
-		</form>
+		</div>
 	</div>
+</div>
 
-</c:if>
-	</div>
-</div>
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	const app = Vue.createApp({
+        data() {
+            return {
+            	cashingMoney:0,
+            	cashingBank:"",
+            	cashingAccount:"",
+            };
+        },
+        methods: {
+        	submitAble(){
+        		return this.cashingMoney > 0 && this.cashingBank && this.cashingAccount;
+        	}
+        },
+        mounted() {
+        	
+        },
+    });
+    app.mount("#app");
+</script>
 
 <%@include file="/WEB-INF/views/template/footer.jsp" %>
