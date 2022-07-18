@@ -154,6 +154,10 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectOne("member.nickExists", memberNick);
 	}
 
+	@Override
+	public MemberDto selectOne(int memberNo) {
+		return sqlSession.selectOne("member.one", memberNo);
+	}
 
 	@Override
 	public boolean exit(String memberEmail, String memberPw) {

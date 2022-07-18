@@ -1,17 +1,15 @@
 package com.an.auctionara.entity;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data@NoArgsConstructor@AllArgsConstructor@Builder
-public class PaymentDto {
+public class PaymentDetailDto {
+	private int paymentDetailNo;
 	private int paymentNo;
-	private String paymentTid;
-	private int paymentTotal;
-	private String paymentName;
-	private Date paymentTime;
-	private String paymentStatus;
+	private String paymentDetailName;
+	private int paymentDetailPrice;
+	private String paymentDetailStatus;
 }

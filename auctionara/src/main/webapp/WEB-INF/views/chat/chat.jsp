@@ -70,9 +70,9 @@
 			                		v-if="${whoLogin} == auctioneerNo && message.chatterNo != ${whoLogin}">
 								<img class="rounded-circle profile mr-2" :src="'${root}/attachment/download?attachmentNo=' + auctioneerAttachmentNo" 
 									v-if="${whoLogin} != auctioneerNo && message.chatterNo != ${whoLogin}">
-			                	<span class="bg-primary rounded-pill px-3 py-2 text-white" v-if="message.attachmentNo == 0 && message.emojiNo == ''">{{ message.message }}</span>
-			                	<img class="photo" :src="'${root}/attachment/download?attachmentNo=' + message.attachmentNo" v-if="message.attachmentNo != 0">
-			                	<img class="emoji" :src="'${root}/image/emoji_' + message.emojiNo + '.png'" v-if="message.emojiNo != ''">
+			                	<span class="bg-primary rounded-pill px-3 py-2 text-white" v-if="message.attachmentNo == 0 && message.emojiNo == null">{{ message.message }}</span>
+			                	<img class="photo" :src="'${root}/attachment/download?attachmentNo=' + message.attachmentNo" v-if="message.attachmentNo != 0 && message.emojiNo == null">
+			                	<img class="emoji" :src="'${root}/image/emoji_' + message.emojiNo + '.png'" v-if="message.emojiNo != null && message.attachmentNo == 0">
 			                	<span class="text-muted chat-time d-flex align-self-end mx-2">{{ message.chatTime }}</span>   
 			            	</div>
 							<div class="row mt-auto p-3" v-if="emoji">
@@ -81,6 +81,7 @@
 								<img class="col pt-4 border-top pointer" src="${root}/image/emoji_3.png" @click="sendEmoji('3')">
 								<img class="col pt-4 border-top pointer" src="${root}/image/emoji_4.png" @click="sendEmoji('4')">
 								<img class="col pt-4 border-top pointer" src="${root}/image/emoji_5.png" @click="sendEmoji('5')">
+								<img class="col pt-4 border-top pointer" src="${root}/image/emoji_6.png" @click="sendEmoji('6')">
 							</div>			            	
         				</div>
         			</div>
@@ -185,6 +186,7 @@
             talk(chatRoomNo) {
             	this.showRating = false; // 평가창 닫기
             	this.showReport = false; // 신고창 닫기
+            	this.emoji = false; // 이모티콘창 닫기
             	
             	if(this.socket != null) {
             		this.socket.close(); // 이전 연결 닫기

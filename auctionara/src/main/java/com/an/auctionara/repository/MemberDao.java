@@ -51,4 +51,5 @@ public interface MemberDao {
 
 	int recall(String memberEmail);
 	
+	MemberDto selectOne(int memberNo);
 }
