@@ -147,7 +147,7 @@
 		let arr = preference.split(/[" ", ~]/);
 		$("select[name=week]").val(arr[0]);
 		$("select[name=begin]").val(arr[1] + " " + arr[2]);
-		$("select[name=end]").val(arr[3] + " " + arr[4]);
+		$("select[name=end]").val(arr[5] + " " + arr[6]);
 		</c:if>
 		
 		$("#valid-nick").hide();
