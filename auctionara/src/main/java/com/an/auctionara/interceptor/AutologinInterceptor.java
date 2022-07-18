@@ -49,36 +49,57 @@ public class AutologinInterceptor implements HandlerInterceptor {
 			String distortedMemberNo = tn.getValue();
 			String distortedAutoIp = tp.getValue();
 
-			log.debug("autoToken = {}", autoToken);
-			log.debug("distortedMemberNo = {}", distortedMemberNo);
-			log.debug("distortedAutoIp = {}", distortedAutoIp);
+//			log.debug("autoToken = {}", autoToken);
+//			log.debug("distortedMemberNo = {}", distortedMemberNo);
+//			log.debug("distortedAutoIp = {}", distortedAutoIp);
 			
 			AutologinDto autologinDto = autologinDao.returnTokenforCookie(autoToken);
-			log.debug("autologinDto = {}", autologinDto);
+//			log.debug("autologinDto = {}", autologinDto);
 			
-			
-			String memberNoforString = Integer.toString(autologinDto.getMemberNo());
-			log.debug("memberNoforString = {}", memberNoforString);
-			
-			boolean isMemberNoSame = passwordEncoder.matches(memberNoforString, distortedMemberNo);
-			boolean isAutoIpSame = passwordEncoder.matches(autologinDto.getAutoIp(), distortedAutoIp);
-			
-			if (isMemberNoSame && isAutoIpSame) {
+			if(autologinDto == null) {
+			    //자동로그인 관련 정보 제거 
+			    tn.setMaxAge(0);
+			    it.setMaxAge(0);
+			    tp.setMaxAge(0);
+			    
+			    tn.setPath("/");
+			    it.setPath("/");
+			    tp.setPath("/");
+			    
+			    response.addCookie(tn);
+			    response.addCookie(it);
+			    response.addCookie(tp);
+			    
 				
-				MemberDto memberDto = memberDao.memberSearch(autologinDto.getMemberNo());
-				
-				session.setAttribute("whoLogin", memberDto.getMemberNo());
-				session.setAttribute("auth", memberDto.getMemberGrade());	
-				
+				//쿠키에 자동로그인 체크 빼기
+				Cookie ck = new Cookie("autologin", "");
+			    ck.setMaxAge(0);
+			    ck.setPath("/");
+			    response.addCookie(ck);
+			    
+				//세션정보 제거
+				session.removeAttribute("whoLogin");
+				session.removeAttribute("auth");
+			    
+//				response.sendRedirect(request.getContextPath() + "/member/login");				
+//				return false;
 			}
 			
-			
+			else {
+				String memberNoforString = Integer.toString(autologinDto.getMemberNo());
+				boolean isMemberNoSame = passwordEncoder.matches(memberNoforString, distortedMemberNo);
+				boolean isAutoIpSame = passwordEncoder.matches(autologinDto.getAutoIp(), distortedAutoIp);
+				
+				if (isMemberNoSame && isAutoIpSame) {
+					
+					MemberDto memberDto = memberDao.memberSearch(autologinDto.getMemberNo());
+					
+					session.setAttribute("whoLogin", memberDto.getMemberNo());
+					session.setAttribute("auth", memberDto.getMemberGrade());	
+					
+				}
+			}	
 		}
-			
-		return true;
-
-
+		return true;	
 	}
-	
-
 }

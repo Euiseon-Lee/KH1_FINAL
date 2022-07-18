@@ -18,7 +18,7 @@
 	</div>
 
     <div>
-		<form action="charge" method="post">
+		<form action="${root }/payment/charge" method="post">
 			<input type="text" name="chargeMoney">
 			<input type="submit" value="구매하기">
 		</form>
