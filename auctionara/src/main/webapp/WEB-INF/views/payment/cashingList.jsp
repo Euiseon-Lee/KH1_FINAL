@@ -156,7 +156,7 @@
     				this.list = resp.data;
     				if(resp.data.length != 0) {
         				this.cashingCount = resp.data[0].cashingCount;
-        				this.totalPage = parseInt(resp.data[0].cashingCount / 10) + 1;
+        				this.totalPage = parseInt((resp.data[0].cashingCount - 1) / 10) + 1;
         				this.totalMoney = resp.data[0].totalMoney;
     				} else {
         				this.cashingCount = 0;
@@ -177,7 +177,7 @@
     				this.list = resp.data;
     				if(resp.data.length != 0) {
         				this.cashingCount = resp.data[0].cashingCount;
-        				this.totalPage = parseInt(resp.data[0].cashingCount / 10) + 1;    					
+        				this.totalPage = parseInt((resp.data[0].cashingCount - 1) / 10) + 1;    					
     				} else {
         				this.cashingCount = 0;
         				this.totalPage = 1;      					

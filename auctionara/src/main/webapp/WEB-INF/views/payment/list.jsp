@@ -143,7 +143,7 @@
     				this.list = resp.data;
     				if(resp.data.length != 0) {
         				this.paymentCount = resp.data[0].paymentCount;
-        				this.totalPage = parseInt(resp.data[0].paymentCount / 10) + 1;    					
+        				this.totalPage = parseInt((resp.data[0].paymentCount - 1) / 10) + 1;    					
     				} else {
         				this.paymentCount = 0;
         				this.totalPage = 1;      					
