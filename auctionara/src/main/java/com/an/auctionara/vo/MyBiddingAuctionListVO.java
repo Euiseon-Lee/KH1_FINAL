@@ -17,5 +17,5 @@ public class MyBiddingAuctionListVO {
 	private int myBiddingNo;
 	private Date auctionClosedTime;
 	private String auctionRemainTime;
-	private boolean deadlineClosing;
+	private boolean deadlineClosing;	
 }

@@ -99,64 +99,23 @@ public class AuctionServiceImpl implements AuctionService {
 		info.put("keyword", keyword);
 		info.put("search", search);
 		List<AuctionListVO> list = auctionDao.list(info);
-		
-		// 마감 시간을 토대로 남은 시간 계산
 		for(AuctionListVO auctionListVO : list) {
-			LocalDateTime limit = Instant.ofEpochMilli(auctionListVO.getAuctionClosedTime().getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
-			LocalDateTime now = LocalDateTime.now();
-			
-			long days = ChronoUnit.DAYS.between(now, limit);
-			if(days == 0) {
-				long hours = ChronoUnit.HOURS.between(now, limit);
-				if(hours == 0) {
-					long minutes = ChronoUnit.MINUTES.between(now, limit);
-					if(minutes < 10) {
-						auctionListVO.setDeadlineClosing(true); // 10분 이하로 남으면 마감임박 true	
-					}
-					if(minutes == 0) {
-						auctionListVO.setAuctionRemainTime("1분 이하");
-					} else {
-						auctionListVO.setAuctionRemainTime(minutes + "분");
-					}
-				} else {
-					auctionListVO.setAuctionRemainTime(hours + "시간");
-				}
-			} else {
-				auctionListVO.setAuctionRemainTime(days + "일");
-			}
+			String gap = auctionListVO.getAuctionRemainTime();
+			if(gap.contains("분") && Integer.parseInt(gap.substring(0, gap.length() - 1)) <= 10) {
+				auctionListVO.setDeadlineClosing(true);
+			};
 		}
-		
 		return list;
 	}
 	
 	@Override
 	public List<MyBiddingAuctionListVO> myBiddingAuctionList(int bidderNo) {
 		List<MyBiddingAuctionListVO> list = auctionDao.myBiddingAuctionList(bidderNo);
-		
-		// 마감 시간을 토대로 남은 시간 계산
 		for(MyBiddingAuctionListVO myBiddingAuctionListVO : list) {
-			LocalDateTime limit = Instant.ofEpochMilli(myBiddingAuctionListVO.getAuctionClosedTime().getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
-			LocalDateTime now = LocalDateTime.now();
-			
-			long days = ChronoUnit.DAYS.between(now, limit);
-			if(days == 0) {
-				long hours = ChronoUnit.HOURS.between(now, limit);
-				if(hours == 0) {
-					long minutes = ChronoUnit.MINUTES.between(now, limit);
-					if(minutes < 10) {
-						myBiddingAuctionListVO.setDeadlineClosing(true); // 10분 이하로 남으면 마감임박 true	
-					}
-					if(minutes == 0) {
-						myBiddingAuctionListVO.setAuctionRemainTime("1분 이하");
-					} else {
-						myBiddingAuctionListVO.setAuctionRemainTime(minutes + "분");
-					}
-				} else {
-					myBiddingAuctionListVO.setAuctionRemainTime(hours + "시간");
-				}
-			} else {
-				myBiddingAuctionListVO.setAuctionRemainTime(days + "일");
-			}
+			String gap = myBiddingAuctionListVO.getAuctionRemainTime();
+			if(gap.contains("분") && Integer.parseInt(gap.substring(0, gap.length() - 1)) <= 10) {
+				myBiddingAuctionListVO.setDeadlineClosing(true);
+			};
 		}		
 		return list;
 	}

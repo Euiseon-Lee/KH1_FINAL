@@ -48,7 +48,12 @@
 		select * from (
 			select rownum rn, TMP.*, count(*) over() auction_count from (
 			    select C.auction_no, C.auction_title, C.auction_opening_bid, C.auction_closed_time, 
-			    	min(D.photo_attachment_no) photo_attachment_no, max(E.bidding_price) bidding_price			    	
+			    	min(D.photo_attachment_no) photo_attachment_no, max(E.bidding_price) bidding_price
+                    ,case when floor((C.auction_closed_time - sysdate) * 24 * 60) >= (24 * 60) then to_char(floor(C.auction_closed_time - sysdate))||'일'
+                        when floor((C.auction_closed_time - sysdate) * 24 * 60) >= 60 then to_char(floor((C.auction_closed_time - sysdate) * 24))||'시간'
+                        when floor((C.auction_closed_time - sysdate) * 24 * 60) <![CDATA[ < ]]> 60 then to_char(floor((C.auction_closed_time - sysdate) * 24 * 60))||'분'
+			            when floor((C.auction_closed_time - sysdate) * 24 * 60) <![CDATA[ <= ]]> 0 then '없음'
+			            end as auction_remain_time			    				    	
 				<if test="sort == 4">
 					<![CDATA[				
                 	, G.like_count
@@ -144,7 +149,12 @@
 			select rownum rn, TMP.* from (
 			    select A.auction_no, A.auction_title, A.auction_closed_time, 
 			    	min(B.photo_attachment_no) photo_attachment_no, max(C.bidding_price) bidding_price
-                    ,D.my_bidding_price, D.my_bidding_no	    	
+                    ,D.my_bidding_price, D.my_bidding_no
+                    ,case when floor((A.auction_closed_time - sysdate) * 24 * 60) >= (24 * 60) then to_char(floor(A.auction_closed_time - sysdate))||'일'
+                        when floor((A.auction_closed_time - sysdate) * 24 * 60) >= 60 then to_char(floor((A.auction_closed_time - sysdate) * 24))||'시간'
+                        when floor((A.auction_closed_time - sysdate) * 24 * 60) <![CDATA[ < ]]> 60 then to_char(floor((A.auction_closed_time - sysdate) * 24 * 60))||'분'
+			            when floor((A.auction_closed_time - sysdate) * 24 * 60) <![CDATA[ <= ]]> 0 then '없음'
+			            end as auction_remain_time
 			    from auction A
 			    join photo B on A.auction_no = B.photo_auction_no
 			    left join bidding C on A.auction_no = C.auction_no
