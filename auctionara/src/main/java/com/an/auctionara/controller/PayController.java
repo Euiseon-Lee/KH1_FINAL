@@ -147,7 +147,7 @@ public class PayController {
 		
 		paymentService.refund(paymentNo);
 		
-		return "redirect:/payment/list";
+		return "redirect:/mypage/payment/list";
 	}
 
 	@PostMapping("/cashingRequest")
@@ -170,12 +170,7 @@ public class PayController {
 	public String cashingFail() {
 		return "payment/cashingFail";
 	}
-	@GetMapping("/cashingList")
-	public String cashingList(HttpSession session, Model model) {
-		model.addAttribute("cashingList", paymentService.cashingList((int)session.getAttribute("whoLogin")));
-		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
-		return "payment/cashingList";
-	}
+
 	@GetMapping("/paying/{auctionNo}")
 	public String paying(HttpSession session, @PathVariable int auctionNo) {
 		log.info("======1=====");
@@ -218,5 +213,12 @@ public class PayController {
 	public String cashing(HttpSession session, Model model) {
 		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
 		return "payment/cashing";
+	}
+
+	@GetMapping("/cashingList")
+	public String cashingList(HttpSession session, Model model) {
+		model.addAttribute("cashingList", paymentService.cashingList((int)session.getAttribute("whoLogin")));
+		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
+		return "/payment/cashingList";
 	}
 }	

@@ -68,8 +68,8 @@ public class ChatRoomDaoImpl implements ChatRoomDao{
 
 	@Override
 	public void report(ChatReportDto chatReportDto) {
-		int chatReportNo = sqlSession.selectOne("chat_report.sequence");
+		int chatReportNo = sqlSession.selectOne("chatReport.sequence");
 		chatReportDto.setChatReportNo(chatReportNo);
-		sqlSession.insert("chat_report.insert", chatReportDto);
+		sqlSession.insert("chatReport.insert", chatReportDto);
 	}
 }

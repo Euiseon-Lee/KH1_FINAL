@@ -36,7 +36,7 @@
 
 	<!-- 거래 완료 및 평가 여부 확인 -->
 	<select id="checkRating" parameterType="int" resultType="CheckRatingVO">
-		select A.auction_no, A.succ_auctioneer_approve, A.succ_bidder_approve, B.rating_no from successful_bid A
+		select A.auction_no, A.succ_auctioneer_approve, A.succ_bidder_approve, A.succ_bid_status, B.rating_no from successful_bid A
 		left join member_rating B on A.auction_no = B.auction_no
 		where A.auction_no = #{auctionNo}
 	</select>

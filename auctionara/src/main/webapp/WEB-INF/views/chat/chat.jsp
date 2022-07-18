@@ -14,7 +14,7 @@
         		<div id="chatroom-wrap" class="col">
 			        <c:forEach var="ChatRoomListVO" items="${chatRoomList}">
 					<div class="row border-bottom pb-2 pt-3" @click="talk(${ChatRoomListVO.chatRoomNo})" 
-						:class="{'bg-light': ${ChatRoomListVO.chatRoomNo} == chatRoomNo}">
+						:class="{'bg-chatroom': ${ChatRoomListVO.chatRoomNo} == chatRoomNo}">
 						<div class="col-3 pr-0">
 							<img class="rounded-circle" src="${root}/attachment/download?attachmentNo=${ChatRoomListVO.attachmentNo}" 
 								v-if="${whoLogin} == ${ChatRoomListVO.auctioneerNo}">
@@ -35,17 +35,17 @@
         	<div class="row">
         		<div class="col">
         			<div class="row p-3 border-bottom bg-light" v-if="chatRoomNo != 0">
-        				<div class="col-1 mr-4"><img class="rounded" :src="'${root}/attachment/download?attachmentNo=' + photoAttachmentNo"></div>
+        				<div class="col-1 mr-4"><a :href="'${root}/auction/detail/' + auctionNo"><img class="rounded" :src="'${root}/attachment/download?attachmentNo=' + photoAttachmentNo"></a></div>
         				<div class="col ml-3">
-        					<div class="row fw-bold mt-2 text-truncate">{{ auctionTitle }}</div>
+        					<div class="row mt-2"><a class="text-dark text-truncate fw-bold" :href="'${root}/auction/detail/' + auctionNo">{{ auctionTitle }}</a></div>
         					<a class="row text-muted chatroomName mt-2 pointer" @click="showReport = true">
         						<i class="fa-solid fa-land-mine-on mt-1 pl-1 pr-2"></i> 이 채팅 신고하기
         					</a>
         				</div>
         				<div class="col-2 pt-3">
-        					<button class="btn btn-info" v-if="auctioneerBtn == null && ${whoLogin} == auctioneerNo" @click="auctioneerFinish">거래 완료</button>
-        					<button class="btn btn-info" v-if="memberBtn == null && ${whoLogin} != auctioneerNo" @click="memberFinish">거래 완료</button>
-        					<button class="btn btn-success" v-if="auctioneerBtn != null && memberBtn != null && rating && ${whoLogin} != auctioneerNo" 
+        					<button class="btn btn-info" v-if="auctioneerBtn == null && ${whoLogin} == auctioneerNo && pay" @click="auctioneerFinish">거래 완료</button>
+        					<button class="btn btn-info" v-if="memberBtn == null && ${whoLogin} != auctioneerNo && pay" @click="memberFinish">거래 완료</button>
+        					<button class="btn btn-success" v-if="auctioneerBtn != null && memberBtn != null && rating && ${whoLogin} != auctioneerNo && pay" 
         						@click="setRating">평가하기</button>
         				</div>
         			</div>
@@ -170,6 +170,7 @@
                 div: "",
                 auctioneerBtn: false,
                 memberBtn: false,
+                pay: false,
                 rating: false,
                 showRating: false,
                 showReport: false,
@@ -337,9 +338,15 @@
             updateCheck() {
                	axios.get("http://localhost:8080/auctionara/chat/check/" + this.auctionNo)
                 .then(resp => {
-                    if(resp.data) {
+                    if(resp.data) {	
                     	this.auctioneerBtn = resp.data.succAuctioneerApprove;
                     	this.memberBtn = resp.data.succBidderApprove;
+                    	if(resp.data.succBidStatus == 1) {
+                    		this.pay = true;
+                    	} else {
+                    		this.pay = false;
+                    	}
+                    	
                     	if(resp.data.ratingNo == 0) {
                     		this.rating = true;
                     	}
@@ -408,6 +415,7 @@
         	if(this.chatRoomNo != 0) {
         		this.talk(this.chatRoomNo);
         	}
+        	this.scrollBottom();
         },
     });
     app.mount("#app");
@@ -468,6 +476,10 @@
     
     .emoji {
     	width: 120px;
+    }
+    
+    .bg-chatroom {
+    	background-color: rgba(245, 48, 62, 0.1);
     }
 
 </style>

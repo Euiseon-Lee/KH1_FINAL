@@ -28,6 +28,9 @@
 			<a href="${root }/payment/cashing" class="nav-link btn-outline-info">현금화 신청</a>
 		  </li>
 		  <li class="nav-item border-bottom">
+			<a href="${root }/payment/cashingList" class="nav-link btn-outline-info">현금화 신청 목록</a>
+		  </li>
+		  <li class="nav-item border-bottom">
 		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원 탈퇴</a>
 		  </li>
 		</ul>
@@ -41,6 +44,5 @@
 		</div>
 	</div>
 </div>
-
 
 <%@include file="/WEB-INF/views/template/footer.jsp" %>

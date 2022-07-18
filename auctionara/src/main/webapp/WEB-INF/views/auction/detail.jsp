@@ -142,7 +142,7 @@
 		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="auctionClose && (topBidder == 0 || topBidder == null)">
 		                    종료되었습니다
 		                </button>
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="!${checkAddress}">
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="!${checkAddress} && !auctionClose">
 		                    동네인증 필요
 		                </button>
 		                <a href="${root }/payment/paying/${auctionDetail.auctionNo}" class="btn btn-primary btn-lg btn-block py-3" v-if="auctionClose && topBidder == 1">
@@ -198,7 +198,14 @@ ${auctionDetail.auctionContent}
             <div class="col-2"><img id="profile" class="rounded-circle" src="${root}/attachment/download?attachmentNo=${auctioneerInfo.attachmentNo}"></div>
             <div class="col ml-4">
             	<h6 class="row fw-bold mb-2">${auctioneerInfo.memberNick}</h6>
-            	<h6 class="row text-muted">선호 거래일 : ${auctioneerInfo.memberPreference}</h6>
+				<c:choose>
+					<c:when test="${auctioneerInfo.memberPreference != null}">
+					<h6 class="row text-muted">${auctioneerInfo.memberPreference}</h6>
+					</c:when>
+					<c:otherwise>
+					<h6 class="row text-muted">선호 거래일 없음</h6>
+					</c:otherwise>
+				</c:choose>
             </div>
         </div>
         <div class="row ml-3 py-3 border-bottom">
@@ -250,7 +257,7 @@ ${auctionDetail.auctionContent}
                 <button type="button" class="btn btn-secondary" @click="inputBid = inputBid + ${auctionDetail.auctionBidUnit}; bidReplace()">입찰 단위만큼 올리기</button>
                 <button type="button" class="btn btn-info" data-bs-dismiss="modal" @click="closeBidding">즉시 낙찰하기</button>
                 <button type="button" class="btn btn-primary" id="insertBid" data-bs-dismiss="modal" :disabled="!bidVaild" @click="bidding">입찰하기</button>
-                <button type="button" class="btn btn-primary d-none" id="blindBid" data-bs-dismiss="modal" @click="blindBidding">입찰하기</button>
+                <button type="button" class="btn btn-primary d-none" id="blindBid" data-bs-dismiss="modal" :disabled="!bidVaild" @click="blindBidding">입찰하기</button>
             </div>
 	        <div class="alert alert-danger d-flex align-items-center" role="alert" v-if="alert == 1">
 	    		<i class="fa-solid fa-circle-exclamation pr-2"></i>누군가 이미 입찰한 가격입니다! 더 높은 가격으로 입찰해보세요
@@ -380,7 +387,7 @@ ${auctionDetail.auctionContent}
         },
         computed: {
             bidVaild() { // 입찰 금액 유효성 검사
-                if (this.maxBid == 0) {
+            	if (this.maxBid == 0) {
                 	return this.inputBid >= this.openingBid && (this.inputBid % this.bidUnit) == 0;
                 } else {
                 	return this.inputBid > this.maxBid && (this.inputBid % this.bidUnit) == 0;
@@ -400,7 +407,7 @@ ${auctionDetail.auctionContent}
             },
             bidReplace() {
             	// 금액이 10억 이상이면 마지막 자리 지우기
-            	if(this.inputBid > 1000000000) {
+            	if(this.inputBid >= 1000000000) {
             		this.inputBid = parseInt(this.inputBid / 10);
             	}
             	
