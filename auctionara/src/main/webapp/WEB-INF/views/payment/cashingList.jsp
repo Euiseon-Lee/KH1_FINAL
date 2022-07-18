@@ -22,16 +22,16 @@
 		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">내 입찰</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root}/mypage/paymentReady" class="nav-link btn-outline-info">포인트 충전</a>
+			<a href="${root}/payment/paymentReady" class="nav-link btn-outline-info">포인트 충전</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/mypage/payment/list" class="nav-link btn-outline-info">포인트 충전 취소</a>
+			<a href="${root }/payment/list" class="nav-link btn-outline-info">포인트 충전 취소</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/mypage/cashing" class="nav-link btn-outline-info">현금화 신청</a>
+			<a href="${root }/payment/cashing" class="nav-link btn-outline-info">현금화 신청</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/mypage/cashingList" class="nav-link btn-outline-info">현금화 신청 목록</a>
+			<a href="${root }/payment/cashingList" class="nav-link btn-outline-info">현금화 신청 목록</a>
 		  </li>
 		  <li class="nav-item border-bottom">
 		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원 탈퇴</a>

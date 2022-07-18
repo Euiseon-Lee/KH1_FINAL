@@ -40,9 +40,14 @@
 		<h4 class="row fw-bold my-4 pt-2">현금화 신청</h4>
 			
 		<div class="row fw-bold mt-1 pt-2 justify-content-center">
-			<h3 class="text-center">출금 신청이 완료되었습니다.</h3>
+			<h3 class="text-center">현금화 신청에 실패하였습니다.</h3>
+		</div>
+		
+		<div class="row fw-bold mt-1 pt-2 justify-content-center">
+			<span class="text-center text-muted">현금화 가능 한도를 확인해주세요.</span>
 		</div>
 	</div>
 </div>
+
 
 <%@include file="/WEB-INF/views/template/footer.jsp" %>

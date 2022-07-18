@@ -194,4 +194,31 @@ public class PayController {
 		model.addAttribute("auctionNo", auctionNo);
 		return "payment/paymentReadyAuction";
 	}
+	
+	@GetMapping("/paymentReady")
+	public String pay1Purchase(HttpSession httpSession, Model model) {
+		int memberNo = (int) httpSession.getAttribute("whoLogin");
+		
+		model.addAttribute("memberDto", memberDao.selectOne(memberNo));
+		return "payment/paymentReady";
+	}
+	@GetMapping("/list")
+	public String payList(HttpSession session, Model model) {
+		int memberNo = (int) session.getAttribute("whoLogin");
+		model.addAttribute("allList", paymentService.allList(memberNo));
+		model.addAttribute("refundList", paymentService.refundList(memberNo));
+		return "payment/list";
+	}
+	@GetMapping("/cashing")
+	public String cashing(HttpSession session, Model model) {
+		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
+		return "payment/cashing";
+	}
+
+	@GetMapping("/cashingList")
+	public String cashingList(HttpSession session, Model model) {
+		model.addAttribute("cashingList", paymentService.cashingList((int)session.getAttribute("whoLogin")));
+		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
+		return "/payment/cashingList";
+	}
 }	

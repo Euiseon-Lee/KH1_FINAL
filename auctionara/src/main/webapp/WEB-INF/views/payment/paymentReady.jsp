@@ -2,7 +2,10 @@
     pageEncoding="UTF-8"%>
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
-<div class="container d-flex">
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<div class="container d-flex" id="app">
 	<div class="row col-3 mt-3">
 		<ul class="nav flex-column text-center">
 		  <li class="nav-item border-bottom">
@@ -18,37 +21,154 @@
 		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">내 입찰</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root}/mypage/paymentReady" class="nav-link btn-outline-info">포인트 충전</a>
+			<a href="${root}/payment/paymentReady" class="nav-link btn-outline-info">포인트 충전</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/mypage/payment/list" class="nav-link btn-outline-info">포인트 충전 취소</a>
+			<a href="${root }/payment/list" class="nav-link btn-outline-info">포인트 충전 취소</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/mypage/cashing" class="nav-link btn-outline-info">현금화 신청</a>
+			<a href="${root }/payment/cashing" class="nav-link btn-outline-info">현금화 신청</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/mypage/cashingList" class="nav-link btn-outline-info">현금화 신청 목록</a>
-		  </li>		  
+			<a href="${root }/payment/cashingList" class="nav-link btn-outline-info">현금화 신청 목록</a>
+		  </li>
 		  <li class="nav-item border-bottom">
 		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원 탈퇴</a>
 		  </li>
 		</ul>
 	</div>
+	
 	<div class="row flex-fill d-flex flex-column">
-		<div class="col">
-			<div class="row fw-bold my-4 pt-2">
-				<h1>${memberDto.memberNick }님의 현재 보유 포인트는 ${memberDto.memberHoldingPoints} P 입니다.</h1>
+		<div class="col justify-content-center">
+			<h4 class="row fw-bold my-4 pt-2">포인트 충전</h4>
+			
+			<div class="row fw-bold mt-4 pt-2 justify-content-center">
+				<h3 class="text-center">${memberDto.memberNick }님의 현재 보유 포인트는 
+					<span class="text-info text-center">
+						<fmt:formatNumber value="${memberDto.memberHoldingPoints }" pattern="#,###" /> P
+					</span>
+				 	입니다.
+				 </h3>
 			</div>
-			<div>
+			<div class="row justify-content-center text-muted mt-1">
 				충전은 결제 즉시 진행되며 1주일 이내에 포인트를 사용하지 않은 상태라면 결제 취소가 가능합니다.
 			</div>
 		</div>
-	    <div class="col-5 d-flex justify-content-end"">
-			<form action="${root }/payment/charge" method="post">
-				<input type="text" name="chargeMoney">
-				<input type="submit" value="구매하기" class="btn">
-			</form>
+		
+	    <div class="row justify-content-center mt-4 pt-2">
+	    	<div class="col-9">
+	    		<hr>
+				<form action="${root }/payment/charge" method="post">
+				
+					<div class="row text-start">
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="2000" v-model="chargingMoney" >
+								2,000원
+							</label>
+						</div>
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="5000" v-model="chargingMoney">
+								5,000원
+							</label>
+						</div>
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="10000" v-model="chargingMoney">
+								10,000원
+							</label>
+						</div>
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="20000" v-model="chargingMoney">
+								20,000원
+							</label>
+						</div>
+					</div>
+					<div class="row text-start">
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="30000" v-model="chargingMoney">
+								30,000원
+							</label>
+						</div>
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="50000" v-model="chargingMoney">
+								50,0000원
+							</label>
+						</div>
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="70000" v-model="chargingMoney">
+								70,000원
+							</label>
+						</div>
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="100000" v-model="chargingMoney">
+								100,000원
+							</label>
+						</div>
+					</div>
+					<div class="row text-start">
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="200000" v-model="chargingMoney">
+								200,000원
+							</label>
+						</div>
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="300000" v-model="chargingMoney">
+								300,000원
+							</label>
+						</div>
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="500000" v-model="chargingMoney">
+								500,000원
+							</label>
+						</div>
+						<div class="col-3">
+							<label>
+								<input type="radio" name="chargeMoney" value="1000000" v-model="chargingMoney">
+								1,000,000원
+							</label>
+						</div>
+					</div>
+						
+					<hr>
+					
+					<div class="d-grid gap-2 mt-1">
+						<input type="submit" value="충전하기" class="btn btn-primary btn-block" :disabled="!moneySelected()">
+					</div>
+					
+				</form>
+			</div>
    		</div>
 	</div>
 </div>
+
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	const app = Vue.createApp({
+        data() {
+            return {
+            	chargingMoney:0,
+            };
+        },
+        methods: {
+        	moneySelected(){
+        		return this.chargingMoney > 0; 
+        	}
+        },
+        mounted() {
+        	
+        },
+    });
+    app.mount("#app");
+</script>
 <%@include file="/WEB-INF/views/template/footer.jsp" %>
