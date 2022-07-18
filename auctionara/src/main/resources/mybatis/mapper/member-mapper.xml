@@ -116,13 +116,12 @@
 		select count(*) from member
 			where member_nick = #{memberNick}
 	</select>
-<<<<<<< HEAD
+
 	<update id="paying" parameterType="PayingVO">
 		update member 
 			set member_holding_points = member_holding_points - #{price}
 			where member_no = #{memberNo}
 	</update>
-=======
 	
 	<delete id="exit" parameterType="String">
 		delete member where member_email = #{memberEmail}
@@ -165,5 +164,5 @@
 	<select id="exitOne" parameterType="int" resultType="MemberDto">
 		select member_email, member_holding_points from member where member_no = #{memberNo}
 	</select>
->>>>>>> refs/remotes/origin/main
+
 </mapper> 
