@@ -25,7 +25,6 @@
 		select sum(succ_final_bid) "succ_final_bid" from successful_bid where succ_bid_status = 1 and to_char(succ_date, 'MM') = (select to_char(sysdate,'MM')-1 from DUAL)
 	</select>
 	
-<<<<<<< HEAD
 	<select id="one" resultType="SuccessfulBidDto" parameterType="int">
 		select * from successful_bid where auction_no = #{auctionNo}
 	</select>
@@ -35,7 +34,6 @@
 		 where auction_no = #{auctionNo}
 	</update>
 
-=======
 	<!-- 거래 완료 및 평가 여부 확인 -->
 	<select id="checkRating" parameterType="int" resultType="CheckRatingVO">
 		select A.auction_no, A.succ_auctioneer_approve, A.succ_bidder_approve, B.rating_no from successful_bid A
@@ -91,5 +89,4 @@
 			update set s.succ_bid_status = 3 where a.auctioneer_no=#{memberNo} and s.succ_bid_status=0
 	</update>
 	
->>>>>>> refs/remotes/origin/main
 </mapper> 
