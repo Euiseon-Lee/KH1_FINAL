@@ -24,7 +24,7 @@
  	<select id="list" parameterType="int" resultType="ChatRoomListVO">
 		select A.chatroom_no, A.auction_no, B.auctioneer_no, B.auction_title, 
 			C.member_nick auctioneer_nick, C.attachment_no auctioneer_attachment_no, E.member_nick, E.attachment_no, 
-			min(D.photo_no) photo_attachment_no  
+			min(D.photo_attachment_no) photo_attachment_no  
 		from chatroom A
 		join auction B on A.auction_no = B.auction_no
 		join member C on B.auctioneer_no = C. member_no

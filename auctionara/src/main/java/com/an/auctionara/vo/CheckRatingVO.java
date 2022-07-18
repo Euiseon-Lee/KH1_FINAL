@@ -11,5 +11,6 @@ public class CheckRatingVO {
 	private int auctionNo;
 	private Date succAuctioneerApprove;
 	private Date succBidderApprove;
+	private int succBidStatus;
 	private int ratingNo;
 }
