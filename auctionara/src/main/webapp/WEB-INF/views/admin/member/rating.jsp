@@ -38,6 +38,8 @@
 						</div>
 						<div class="col-8">
 							<input type="search" class="form-control" required v-model="currentData.ratingContent"></input>
+							<div class="text-end mt-1" v-if="currentData.ratingContent.length <= 30">{{currentData.ratingContent.length}} / 30</div>
+							<div class="text-end mt-1 text-danger" v-if="currentData.ratingContent.length > 30">{{currentData.ratingContent.length}} / 30</div>
 						</div>
 					</div>
 					<div class="row mt-3">
@@ -120,16 +122,13 @@
 		methods:{
 			deleteItem(index){
 				var choice = window.confirm("해당 항목을 정말 삭제하시겠습니까?");
-				if(choice == false) return; // 취소를 눌렀을 경우 밑의 코드가 실행되지 않을 것이다. 
+				if(choice == false) return;
 				
-				// 비동기 통신으로 삭제 기능 구현 
-				/* axios({옵션})
-				.then(()=>{성공시코드}) */
 				const ratingItemNo = this.dataList[index].ratingItemNo;
 				
 				axios({
 					url:"${pageContext.request.contextPath}/rest/rating/"+ratingItemNo,
-					method:"delete", // deleteMapping
+					method:"delete", 
 				})
 				.then(()=>{
 					this.dataList.splice(index, 1);
@@ -137,12 +136,11 @@
 			},
 			
 			selectItem(index){
-				// 선택한 행의 데이터를 현재 데이터로 설정한다. 
 				this.currentData = this.dataList[index];	
-				this.index = index; // 현재 선택한 줄의 번호 등록 (나중에 갱신해야 되니까) 
+				this.index = index;  
 			},
 			
-			clearItem(){ // 입력창에 들어가있던 데이터를 초기화하는 메소드 
+			clearItem(){  
 				this.currentData = {
 					ratingItemNo:"",
 					ratingSortNo:"",
@@ -153,33 +151,32 @@
 			
 			addItem(){
 				let type;
-				if(this.isInsertMode){ // 등록이라면
+				if(this.isInsertMode){ 
 					type = "post";
-				} else if(this.isEditMode){ // 수정이라면 
+				} else if(this.isEditMode){  
 					type = "put";
 				}
 				
-				if(!type) return; // type이 존재하지 않으면 return 
+				if(!type) return;  
 				
 				axios({
 					url:"${pageContext.request.contextPath}/rest/rating/", 
-					method:type, // post or put (위에서 변수처리 한 것)
+					method:type, 
 					data:this.currentData
 				})
-				.then((resp)=>{ // 실제 등록 / 수정된 결과가 resp.data에 들어있다. 
-					// 등록이면 마지막에 추가, 수정이면 해당 위치를 갱신
+				.then((resp)=>{ 
 					if(this.isInsertMode){
-						// 서버에 들어가서 등록이 된 데이터가 resp.data에 추가가 되고 그 데이터를 DataList에 추가하는 구조 
 						this.dataList.push(resp.data);	
-						this.clearItem(); // 등록 후에 입력창에 있던 데이터 지우기 
+						this.clearItem();  
 						window.alert("등록이 완료되었습니다.");
 					} else if(this.isEditMode) {
-						this.dataList[this.index] = resp.data; // 특정 index의 데이터를 바꾸는 코드 
+						this.dataList[this.index] = resp.data;  
 						this.clearItem(); 
 						window.alert("수정이 완료되었습니다.");
 					}
 				});
 			},
+			
 		},
 		created(){
 			axios({
