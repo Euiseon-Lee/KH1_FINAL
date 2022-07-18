@@ -161,8 +161,8 @@ public class MemberServiceImpl implements MemberService {
 			else {
 				//경매올린 내역 중 낙찰된 경매글 중 결제예정인 경우는 비공개글 처리
 				auctionDao.intoPrivateMode(memberNo);
-				//경매올린 내역 중 낙찰된 경매글 중 결제예정인 경우는 상태변경
-				successfulBidDao.intoStatusThrid(memberNo);
+				//경매올린 내역 중 낙찰된 경매글 중 결제예정인 경우는 상태변경 => 그대로 두기
+//				successfulBidDao.intoStatusThrid(memberNo);
 				boolean exit = memberDao.exit(memberEmail, memberPw);
 				return exit;
 			}
