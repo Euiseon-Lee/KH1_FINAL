@@ -60,11 +60,12 @@
 				</div>
 				<div class="row my-4 form-check">
 					<label class="form-check-label" for="ck">
-						<input type="checkbox" class="form-check-input" id="ck"> 전체 동의
+						<input type="checkbox" class="form-check-input" id="ck">
+						<button type="button" value="open" class="btn modal-open">이용약관 확인</button>
 					</label>
 				</div>
 				<div class="row">
-					<button type="submit" onkeydown="hitEnterkey(event);" class="btn btn-primary btn-block mt-2">회원가입</button>
+					<button type="submit" id="submit" class="btn btn-primary btn-block mt-2">회원가입</button>
 				</div>
 			</form>
 		</div>
@@ -73,11 +74,25 @@
 		</div>
 	</div>	
 </div>
+
+<div class="modal">
+   <div class="layerpop">
+     <p class="layerpop__container">
+    	개인정보 처리 방침 동의
+     </p>
+     <p class="layerpop__container">
+    	위치기반서비스 이용 약관
+     </p>
+     <button type="button" value="close" class="btn modal-close">확인하였습니다</button>
+   </div>
+</div>
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 
-<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script>
 	$(function(){		
 		
@@ -89,7 +104,30 @@
 		$("#nick-exists").hide();
 		$("#valid-pw").hide();
 		$("#invalid-pw").hide();
+		$("#submit").attr("disabled", true);
 		
+
+		$(".modal-open").click(function(){
+			$(".modal").modal({
+				fadeDuration:300
+			});
+			event.preventDefault();
+	        this.blur();
+	        $(".modal").show();
+			return false;
+		});
+		
+		$(".modal-close").click(function(){
+			$(".modal").hide();
+			$("#ck").attr("checked", true);
+			$("#submit").removeAttr("disabled");
+		});
+		
+		$(".modal-close").click(function(){
+
+		});
+		
+
 		
 		$(".email-input").on("blur", function(){
 			var regex = /^[\w\.]+@([\w]+\.)+[\w]{2,4}$/;
@@ -287,6 +325,7 @@
 			
 		});
 		
+		
 		// 프로필 사진 선택
 		$("#profile-label").mouseover(function(){
 			$("#profile-hover").removeClass("d-none");
@@ -298,6 +337,7 @@
 			const url = URL.createObjectURL($("input[name=attachment]")[0].files[0]); 
 			$("#profile").attr("src", url);
 		});
+		
 	});
 	
 </script>

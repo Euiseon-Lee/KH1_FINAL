@@ -189,8 +189,8 @@ public class AuctionController {
 	// 경매 취소
 	@GetMapping("/detail/cancel/{auctionNo}")
 	public String cancel(@PathVariable int auctionNo)  {
-		auctionDao.setPrivate(auctionNo); // 경매 비공개
-		return "redirect:/"; // 임시 // 추후 마이페이로 이동
+		auctionDao.auctionCancel(auctionNo); // 경매 취소 & 비공개
+		return "redirect:/mypage/auction_history";
 	}
 	
 	// 경매 정지
@@ -198,8 +198,8 @@ public class AuctionController {
 	public String stop(@PathVariable int auctionNo, HttpSession session)  {
 		int memberNo = (int) session.getAttribute("whoLogin");
 		memberDao.plusRedCount(memberNo); // 회원 경고 횟수 +1
-		auctionDao.setPrivate(auctionNo); // 경매 비공개
-		return "redirect:/"; // 임시 // 추후 마이페이로 이동
+		auctionDao.auctionStop(auctionNo); // 경매 정지 & 비공개
+		return "redirect:/mypage/auction_history";
 	}
 	
 	// 경매 신고

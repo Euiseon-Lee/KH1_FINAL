@@ -35,7 +35,7 @@
                 <h4 class="fw-bold">내 최근 입찰 경매</h4>
             </div>
             <div class="col-2 d-flex justify-content-end">
-            	<a class="btn btn-primary btn-sm rounded-pill px-3 my-1 mr-3" href="#" role="button">더 보기</a>
+            	<a class="btn btn-primary btn-sm rounded-pill px-3 my-1 mr-3" href="${root}/mypage/pay_history" role="button">더 보기</a>
             </div>
     	</div>
     	<div class="row row-cols-4 border-bottom pb-3">

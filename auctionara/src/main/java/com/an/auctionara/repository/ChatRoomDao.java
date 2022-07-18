@@ -11,4 +11,5 @@ public interface ChatRoomDao {
 	int join(int memberNo, int auctionNo);
 	AuctionDetailVO auctionDetail(int auctionNo);
 	void report(ChatReportDto chatReportDto);
+	int search(int auctionNo);
 }

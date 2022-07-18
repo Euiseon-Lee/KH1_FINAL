@@ -13,9 +13,9 @@
  	<!-- 채팅 메세지 저장 -->
  	<insert id="insert" parameterType="ChatContentDto">
  		insert into chat_content (
- 			chat_no, chatroom_no, chatter_no, chat_content, chat_time
+ 			chat_no, chatroom_no, chatter_no, chat_content, chat_time, chat_type
  		) values (
- 			#{chatNo}, #{chatRoomNo}, #{chatterNo}, #{chatContent}, sysdate
+ 			#{chatNo}, #{chatRoomNo}, #{chatterNo}, #{chatContent}, sysdate, #{chatType}
  		)
  	</insert>
  	

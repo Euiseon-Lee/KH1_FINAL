@@ -253,15 +253,14 @@
 				select A.auction_upload_time, A.category_no, B.category_name, 
 				    A.auction_title, A.auction_no, A.auction_process, 
 				    C.succ_bid_no, C.succ_bid_status, C.succ_auctioneer_approve, C.succ_bidder_approve, C.succ_final_bid,
-				    D.chatroom_no, E.rating_no,
+				    D.rating_no,
 				    case when A.auction_closed_time <![CDATA[ > ]]> sysdate then '진행 중'
 			            else '마감'
 			            end as auction_finish
 				from auction A
 				join category B on A.category_no = B.category_no
 				left join successful_bid C on A.auction_no = C.auction_no
-				left join chatroom D on A.auction_no = D.auction_no
-				left join member_rating E on A.auction_no = E.auction_no
+				left join member_rating D on A.auction_no = D.auction_no
 				where A.auctioneer_no = ${auctioneerNo}
 				<if test="keyword != null and keyword != ''">
 					<![CDATA[
@@ -298,12 +297,12 @@
 					<![CDATA[
 					and A.auction_process = 0 and C.succ_bid_status = 1 
 					and C.succ_auctioneer_approve is not null and C.succ_bidder_approve is not null
-					and E.rating_no is null
+					and D.rating_no is null
 			    	]]>
 				</if>
 				<if test="filter == 6">
 					<![CDATA[
-					and A.auction_process = 0 and C.succ_bid_status = 1 and E.rating_no is not null
+					and A.auction_process = 0 and C.succ_bid_status = 1 and D.rating_no is not null
 			    	]]>
 				</if>
 				<if test="filter == 7">
@@ -339,6 +338,109 @@
 				</if>
 	 		) TMP
 	 	) where rn between #{begin} and #{end}				
+	</select>	
+	
+	<!-- 마이페이지 - 내 입찰 이력 -->
+	<select id="myBidding" resultType="myBiddingVO" parameterType="Map">
+		select * from (
+	 		select rownum rn, TMP.*, count(*) over() auction_count from (	
+				select A.auction_closed_time, A.auction_title, A.auction_no, A.auction_process,
+                    B.max_bidding_price, F.category_no, F.category_name,
+                    case when B.max_bidding_price = C.my_bidding_price and B.min_bidding_no = C.my_bidding_no then '1'
+                        else '0'
+                        end as top_bidder,
+				    D.succ_bid_no, D.succ_bid_status, D.succ_auctioneer_approve, D.succ_bidder_approve, E.rating_no
+				from auction A
+                join (select auction_no, count(*) bidding_count, max(bidding_price) max_bidding_price, 
+                    min(bidding_no) keep(dense_rank first order by bidding_price desc) min_bidding_no from bidding 
+                    group by auction_no) B on A.auction_no = B.auction_no
+                join (select auction_no, max(bidding_price) my_bidding_price, 
+                    min(bidding_no) keep(dense_rank first order by bidding_price desc) my_bidding_no, 
+                    max(bidding_time) keep(dense_rank first order by bidding_price desc) my_bidding_time from bidding 
+                    where bidder_no = ${bidderNo} group by auction_no) C
+                    on A.auction_no = C.auction_no    
+				left join successful_bid D on A.auction_no = D.auction_no
+				left join member_rating E on A.auction_no = E.auction_no
+				join category F on A.category_no = F.category_no
+				where A.auction_no is not null
+				<if test="keyword != null and keyword != ''">
+					<![CDATA[
+			    	and instr(A.auction_title, '${keyword}') > 0
+			    	]]>
+				</if>			
+				<if test="categoryNo != 0 and categoryNo != null">	
+					<![CDATA[			    	
+			    	and A.category_no = ${categoryNo}
+			    	]]>
+				</if>
+				<if test="filter == 1">
+					<![CDATA[
+			    	and A.auction_process = 0 and D.succ_bid_status is null
+			    	]]>
+				</if>
+				<if test="filter == 2">
+					<![CDATA[
+					and A.auction_process = 0 and D.succ_bid_status = 0 
+					and (B.max_bidding_price != C.my_bidding_price or B.min_bidding_no != C.my_bidding_no)
+			    	]]>
+				</if>
+				<if test="filter == 3">
+					<![CDATA[
+					and A.auction_process = 0 and D.succ_bid_status = 0 
+					and B.max_bidding_price = C.my_bidding_price and B.min_bidding_no = C.my_bidding_no
+			    	]]>
+				</if>
+				<if test="filter == 4">
+					<![CDATA[
+					and A.auction_process = 0 and D.succ_bid_status = 1 
+					and (D.succ_auctioneer_approve is null or D.succ_bidder_approve is null)
+			    	]]>
+				</if>
+				<if test="filter == 5">
+					<![CDATA[
+					and A.auction_process = 0 and D.succ_bid_status = 1 
+					and D.succ_auctioneer_approve is not null and D.succ_bidder_approve is not null
+					and E.rating_no is null
+			    	]]>
+				</if>
+				<if test="filter == 6">
+					<![CDATA[
+					and A.auction_process = 0 and D.succ_bid_status = 1 and E.rating_no is not null
+			    	]]>
+				</if>
+				<if test="filter == 7">
+					<![CDATA[
+					and A.auction_process = 0 and D.succ_bid_status = 2
+			    	]]>
+				</if>
+				<if test="filter == 8">
+					<![CDATA[
+					and A.auction_process = 2
+			    	]]>
+				</if>
+				order by 
+				<if test="sort == 0">
+					<![CDATA[				
+						C.my_bidding_time desc
+			    	]]>
+				</if>
+				<if test="sort == 1">
+					<![CDATA[				
+						C.my_bidding_time asc
+			    	]]>
+				</if>
+				<if test="sort == 2">
+					<![CDATA[				
+						B.max_bidding_price desc
+			    	]]>
+				</if>
+				<if test="sort == 3">
+					<![CDATA[				
+						B.max_bidding_price asc
+			    	]]>
+				</if>				
+	 		) TMP
+	 	) where rn between #{begin} and #{end}		
 	</select>	
 	
 	<!-- 관리자 페이지 - 경매 리스트 -->
@@ -408,7 +510,7 @@
 		select count(*) "auction_count" from auction where to_char(auction_upload_time, 'YYMM') = to_char(sysdate, 'YYMM')
 	</select>
 	
-	<!-- 마이페이지 - 회원번호로 경매 등록한 총 물품 개수 추출 -->
+		<!-- 마이페이지 - 회원번호로 경매 등록한 총 물품 개수 추출 -->
 	<select id="countAuctionbyMemberNo" parameterType="int" resultType="int">
 		select count(*) from auction where auctioneer_no = #{memberNo}
 	</select>
@@ -431,5 +533,27 @@
 			where auctioneer_no = #{memberNo} and auction_process = 2
 	</select>	
 
+	<!-- 경매 취소 처리 -->
+	<update id="auctionCancel" parameterType="int">
+		update auction set auction_private = 1, auction_process = 1 where auction_no = #{auctionNo}
+	</update>
+	
+	<!-- 경매 중지 처리 -->
+	<update id="auctionStop" parameterType="int">
+		update auction set auction_private = 1, auction_process = 2 where auction_no = #{auctionNo}
+	</update>
+	
+	<!-- 마이페이지 - 회원번호로 현재 경매 진행중인 내역 조회 -->
+	<select id="countbyMemberNo" parameterType="int" resultType="int">
+		select count(*) from auction where auctioneer_no = #{memberNo} and auction_process = 0
+	</select>
+	
+	<!-- 마이페이지(탈퇴) - 경매내역 중에 낙찰 내역이 있고 결제예정인 게시글 비공개 처리 -->
+	<update id="intoPrivateMode" parameterType="int">
+		merge into auction a using successful_bid s
+		    on (a.auction_no = s.auction_no)
+		        when matched then
+		            update set a.auction_private = 1 where a.auctioneer_no= #{memberNo} and s.succ_bid_status=0
+	</update>
 
 </mapper> 

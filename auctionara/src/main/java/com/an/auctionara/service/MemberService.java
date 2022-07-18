@@ -7,6 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.vo.MyAuctionVO;
+import com.an.auctionara.vo.MemberVO;
+import com.an.auctionara.vo.MyBiddingVO;
 
 public interface MemberService {
 	
@@ -14,5 +16,8 @@ public interface MemberService {
 	void join(MemberDto memberDto, MultipartFile attachment) throws IllegalStateException, IOException;
 	void changeGpsStaus();
 	boolean info(MemberDto memberDto, MultipartFile attachment) throws IllegalStateException, IOException;
-	List<MyAuctionVO> list(int auctioneerNo, int page, Integer filter, Integer sort, Integer categoryNo, String keyword);
+	List<MyAuctionVO> auctionList(int auctioneerNo, int page, Integer filter, Integer sort, Integer categoryNo, String keyword);
+	List<MyBiddingVO> biddingList(int bidderNo, int page, Integer filter, Integer sort, Integer categoryNo, String keyword);
+	MemberVO mypage(int memberNo);
+	boolean exit(int memberNo, String memberEmail, String memberPw);
 }

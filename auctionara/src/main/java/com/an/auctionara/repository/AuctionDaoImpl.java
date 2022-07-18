@@ -21,6 +21,7 @@ import com.an.auctionara.vo.AuctionListVO;
 import com.an.auctionara.vo.AuctioneerInfoVO;
 import com.an.auctionara.vo.MyAuctionVO;
 import com.an.auctionara.vo.MyBiddingAuctionListVO;
+import com.an.auctionara.vo.MyBiddingVO;
 
 @Repository
 public class AuctionDaoImpl implements AuctionDao {
@@ -95,6 +96,12 @@ public class AuctionDaoImpl implements AuctionDao {
 	}
 	
 	@Override
+	public List<MyBiddingVO> myBidding(Map<String, Object> info) {
+		List<MyBiddingVO> list = sqlSession.selectList("auction.myBidding", info);
+		return list;
+	}
+	
+	@Override
 	public List<AdminAuctionListVO> adminList(String type, String keyword, int p, int s) {
 		// 관리자 페이지 - 경매 list 메소드 
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -149,5 +156,68 @@ public class AuctionDaoImpl implements AuctionDao {
 	public int countAuction() {
 		// 관리자 페이지 - 경매 게시글 수 
 		return sqlSession.selectOne("auction.countAuction");
+	}
+
+	@Override
+	public void auctionCancel(int auctionNo) {
+		sqlSession.update("auction.auctionCancel", auctionNo);
+	}
+
+	@Override
+	public void auctionStop(int auctionNo) {
+		sqlSession.update("auction.auctionStop", auctionNo);
+	}
+
+	public int mypageCount(int memberNo) {
+		return sqlSession.selectOne("auction.countAuctionbyMemberNo", memberNo);
+	}
+
+	@Override
+	public int mypageNormalCount(int memberNo) {
+		return sqlSession.selectOne("auction.countNormalbyMemberNo", memberNo);
+	}
+
+	@Override
+	public int mypageCancelCount(int memberNo) {
+		return sqlSession.selectOne("auction.countCancelbyMemberNo", memberNo);
+	}
+
+	@Override
+	public int mypageStopCount(int memberNo) {
+		return sqlSession.selectOne("auction.countStopbyMemberNo", memberNo);
+	}
+	
+	@Override
+	public List<AuctionDto> mypageList(int memberNo) {
+		List<AuctionDto> list = sqlSession.selectList("auction.auctionbyMemberNo", memberNo);
+		return list;
+	}
+
+	@Override
+	public List<AuctionDto> mypageNormalList(int memberNo) {
+		List<AuctionDto> list = sqlSession.selectList("auction.normalbyMemberNo", memberNo);
+		return list;
+	}
+
+	@Override
+	public List<AuctionDto> mypageCancelList(int memberNo) {
+		List<AuctionDto> list = sqlSession.selectList("auction.cancelbyMemberNo", memberNo);
+		return list;
+	}
+
+	@Override
+	public List<AuctionDto> mypageStopList(int memberNo) {
+		List<AuctionDto> list = sqlSession.selectList("auction.stopbyMemberNo", memberNo);
+		return list;
+	}
+
+	@Override
+	public int countAuctionbyMemberNo(int memberNo) {
+		return sqlSession.selectOne("auction.countbyMemberNo", memberNo);
+	}
+
+	@Override
+	public void intoPrivateMode(int memberNo) {
+		sqlSession.update("auction.intoPrivateMode", memberNo);
 	}
 }

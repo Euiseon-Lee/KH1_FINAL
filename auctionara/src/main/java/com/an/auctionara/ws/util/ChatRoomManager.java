@@ -5,12 +5,10 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.ibatis.javassist.bytecode.ByteArray;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.an.auctionara.vo.ReceiveChatVO;
-import com.an.auctionara.vo.ReceiveFileVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ChatRoomManager {
@@ -35,6 +33,7 @@ public class ChatRoomManager {
 		getRoom(chatRoomNo).enter(member);
 
 	}
+	
 	public void leave(WebSocketSession session) {
 		Member member = new Member(session);
 		if(waitingRoom.contains(member)) {
@@ -47,16 +46,20 @@ public class ChatRoomManager {
 			}
 		}
 	}
+	
 	public ChatRoom getRoom(int chatRoomNo) {
 		return rooms.get(chatRoomNo);
 	}
+	
 	public void createRoom(int chatRoomNo) {
 		ChatRoom chatroom = new ChatRoom();
 		rooms.put(chatRoomNo, chatroom);
 	}
+	
 	public boolean notExist(int chatRoomNo) {
 		return rooms.containsKey(chatRoomNo) == false;
 	}
+	
 	public void textBroadcastRoom(WebSocketSession session, int chatRoomNo, int chatterNo, String chatTime, String message, String type) throws IOException {
 		Member member = new Member(session);
 		if(!member.isMember()) return;
@@ -72,18 +75,38 @@ public class ChatRoomManager {
 		TextMessage textMessage = new TextMessage(json);
 		getRoom(chatRoomNo).broadcast(textMessage);
 	}
-	public void fileBroadcastRoom(WebSocketSession session, int chatRoomNo, ByteArray message, String type) throws IOException {
+	
+	public void textBroadcastRoom(WebSocketSession session, int chatRoomNo, int chatterNo, String chatTime, int attachmentNo, String message, String type) throws IOException {
 		Member member = new Member(session);
 		if(!member.isMember()) return;
-			ReceiveFileVO vo = ReceiveFileVO.builder()
+		ReceiveChatVO vo = ReceiveChatVO.builder()
 					.chatRoomNo(chatRoomNo)
-					.message(message)
+					.chatterNo(chatterNo)
+					.chatTime(String.valueOf(chatTime))
+					.attachmentNo(attachmentNo)
+					.message(String.valueOf(message))
 					.messageType(type)
 					.build();			
-
+		
 		String json = mapper.writeValueAsString(vo);
 		TextMessage textMessage = new TextMessage(json);
 		getRoom(chatRoomNo).broadcast(textMessage);
 	}
 	
+	public void textBroadcastRoom(WebSocketSession session, int chatRoomNo, int chatterNo, String chatTime, String emojiNo, String message, String type) throws IOException {
+		Member member = new Member(session);
+		if(!member.isMember()) return;
+		ReceiveChatVO vo = ReceiveChatVO.builder()
+					.chatRoomNo(chatRoomNo)
+					.chatterNo(chatterNo)
+					.chatTime(String.valueOf(chatTime))
+					.emojiNo(String.valueOf(emojiNo))
+					.message(String.valueOf(message))
+					.messageType(type)
+					.build();			
+		
+		String json = mapper.writeValueAsString(vo);
+		TextMessage textMessage = new TextMessage(json);
+		getRoom(chatRoomNo).broadcast(textMessage);
+	}	
 }
