@@ -11,6 +11,5 @@
 <div>
 	<h2>현재 보유 포인트는 ${success.memberHoldingPoints } P 입니다.</h2>
 </div>
-
 <a href="${root}/mypage/payment/list">충전 내역 보기</a>
 <%@include file="/WEB-INF/views/template/footer.jsp" %>
