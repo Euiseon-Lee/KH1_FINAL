@@ -41,7 +41,7 @@
 	<div>
 		현재 출금 가능한 포인트는 ${memberDto.memberHoldingPoints } P 입니다.
 		
-		<form action="cashingRequest" method="post" enctype="multipart/form-data">
+		<form action="${root }/payment/cashingRequest" method="post" enctype="multipart/form-data">
 			<div>
 				<div>
 					현금화할 포인트
