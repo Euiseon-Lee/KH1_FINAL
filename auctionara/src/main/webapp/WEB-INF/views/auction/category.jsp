@@ -5,7 +5,6 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<jsp:include page="/WEB-INF/views/template/chatbot.jsp"></jsp:include>
 <div id="app" class="mt-5">
     <div class="container-fluid" v-cloak>
     	<div class="row pb-5 mb-3 border-bottom" :class="{'pl-4': categoryPage == 1}">
@@ -168,4 +167,6 @@
 		min-height: 300px;
 	}
 </style>
+
+<%@include file="/WEB-INF/views/template/chatbot.jsp" %>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
