@@ -66,7 +66,7 @@ public class ChatRoomManager {
 	public boolean notExist(int chatRoomNo) {
 		return rooms.containsKey(chatRoomNo)==false;
 	}
-	public void textBroadcastRoom(WebSocketSession session, int chatRoomNo, String message, String type) throws IOException {
+	public void broadCastRoom(WebSocketSession session, int chatRoomNo, String message) throws IOException {
 		Member member = new Member(session);
 		if(!member.isMember()) return;
 		//memberNo로 닉네임 뽑기
@@ -78,47 +78,15 @@ public class ChatRoomManager {
 //				.chatTime(new Date())
 //				.build();
 			ReceiveChatVO vo = ReceiveChatVO.builder()
-					.chatRoomNo(chatRoomNo)
-					.message(String.valueOf(message))
-					.messageType(type)
-					.build();			
-		log.info("chatContentDto={}", vo);
-//		chatContentDao.insert(chatContentDto);
-		System.out.println(chatRoomNo);
-
-		System.out.println("broadcastRoom3");
-		String json = mapper.writeValueAsString(vo);
-		log.info("json={}",json);
-		System.out.println("broadcastRoom4");
-		TextMessage textMessage = new TextMessage(json);
-		log.info("textMessage={}",textMessage.getPayload());
-		getRoom(chatRoomNo).broadcast(textMessage);
-	}
-	public void fileBroadcastRoom(WebSocketSession session, int chatRoomNo, ByteArray message, String type) throws IOException {
-		Member member = new Member(session);
-		if(!member.isMember()) return;
-		//memberNo로 닉네임 뽑기
-
-//		ChatContentDto chatContentDto = ChatContentDto.builder()
-//				.chatterNo(member.getMemberNo())
-//				.chatRoomNo(chatRoomNo)
-//				.chatContent(message)
-//				.chatTime(new Date())
-//				.build();
-			ReceiveFileVO vo = ReceiveFileVO.builder()
+					.chatterNo(member.getMemberNo())
 					.chatRoomNo(chatRoomNo)
 					.message(message)
-					.messageType(type)
 					.build();			
-		log.info("chatContentDto={}", vo);
 //		chatContentDao.insert(chatContentDto);
 
-		System.out.println("broadcastRoom3");
 		String json = mapper.writeValueAsString(vo);
-
-		System.out.println("broadcastRoom4");
+		log.info("json={}",json);
 		TextMessage textMessage = new TextMessage(json);
 		getRoom(chatRoomNo).broadcast(textMessage);
 	}
-	
 }

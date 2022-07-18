@@ -7,6 +7,5 @@ import lombok.NoArgsConstructor;
 
 @Data@AllArgsConstructor@NoArgsConstructor@Builder
 public class ChatParticipatorDto {
-	private int chatRoomNo, memberNo;
-	
+	private int chatRoomNo, memberNo, chatRoomReport, chatRoomStatus;
 }

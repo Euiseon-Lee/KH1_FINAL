@@ -33,34 +33,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class ChatController {
-	private final String path = "C:/test";
 	private final ChatRoomDao chatRoomDao;
 	private final ChatDao chatDao;
 	//view 컨트롤러에도 뽑아갈 거 있다 잊지말자
 	
-	@GetMapping("/chat/download")
-	public ResponseEntity<ByteArrayResource> download(@RequestParam String fileName) throws IOException{
-		File target = new File(path, fileName);
-		byte[] data = FileUtils.readFileToByteArray(target);
-		ByteArrayResource  byteArrayResource = new ByteArrayResource(data);
-		return ResponseEntity.ok()
-				.contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.contentLength(target.length())
-				.header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
-				.header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
-						.filename(fileName, StandardCharsets.UTF_8)
-						.build().toString())
-				.body(byteArrayResource);
-	
-	}
-	
 	@GetMapping("/chat")
 	public String chatIndex(HttpSession httpSession, Model model) {
-		//int memberNo = (int)httpSession.getAttribute("whoLogin");
-//		model.addAttribute("chatRoomListVO", chatRoomDao.list(memberNo));
-
 		return "chat/chat";
 	}
+	
 	//post로 바꾸기
 	@GetMapping("/chat/{auctionNo}/{auctioneerNo}")
 	public String chatTry(HttpSession httpSession, Model model, 
@@ -86,8 +67,6 @@ public class ChatController {
 		model.addAttribute("chatRoomNo", chatRoomNo);
 		return chatDao.list(chatRoomNo);
 	}
-	
-	
 //	@GetMapping("/chat/{auctionNo}")
 //	public String channel(Model model, HttpSession session, @PathVariable int auctionNo) {
 //		int memberNo = (int) session.getAttribute("whoLogin");
