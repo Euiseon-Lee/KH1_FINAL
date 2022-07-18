@@ -145,9 +145,9 @@
 		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="!${checkAddress}">
 		                    동네인증 필요
 		                </button>
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" v-if="auctionClose && topBidder == 1">
+		                <a href="${root }/payment/paying/${auctionDetail.auctionNo}" class="btn btn-primary btn-lg btn-block py-3" v-if="auctionClose && topBidder == 1">
 		                    <i class="fa-solid fa-coins pr-2"></i> 결제하기
-		                </button>             	                
+		                </a>             	                
                     </c:otherwise>
                 </c:choose>
             </div>

@@ -49,13 +49,7 @@ public class PayController {
 	@Autowired
 	private MemberDao memberDao;
 	
-	@GetMapping("/paymentReady")
-	public String pay1Purchase(HttpSession httpSession, Model model) {
-		int memberNo = (int) httpSession.getAttribute("whoLogin");
-		
-		model.addAttribute("memberDto", memberDao.selectOne(memberNo));
-		return "payment/paymentReady";
-	}
+
 	
 	@PostMapping("/charge")
 	public String pay1Purchase(
@@ -137,13 +131,7 @@ public class PayController {
 		session.removeAttribute("paymentNo");
 		return "payment/fail";
 	}
-	@GetMapping("/list")
-	public String payList(HttpSession session, Model model) {
-		int memberNo = (int) session.getAttribute("whoLogin");
-		model.addAttribute("allList", paymentService.allList(memberNo));
-		model.addAttribute("refundList", paymentService.refundList(memberNo));
-		return "payment/list";
-	}
+
 	@GetMapping("/refund/{paymentNo}")
 	public String refund(HttpSession session, @PathVariable int paymentNo) throws URISyntaxException {
 		int memberNo = (int)session.getAttribute("whoLogin");
@@ -161,11 +149,7 @@ public class PayController {
 		
 		return "redirect:/payment/list";
 	}
-	@GetMapping("/cashing")
-	public String cashing(HttpSession session, Model model) {
-		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
-		return "payment/cashing";
-	}
+
 	@PostMapping("/cashingRequest")
 	public String cashingRequest(HttpSession session,
 			@ModelAttribute CashingPointsVO cashingPointsVO) {
@@ -194,13 +178,17 @@ public class PayController {
 	}
 	@GetMapping("/paying/{auctionNo}")
 	public String paying(HttpSession session, @PathVariable int auctionNo) {
+		log.info("======1=====");
 		int memberNo = (int)session.getAttribute("whoLogin");
 		boolean enoughPoint = paymentService.enoughPoint(memberNo, auctionNo);
+		log.info("======2=====");
 		if(enoughPoint) {
-			paymentService.enoughPoint(memberNo, auctionNo);
-			return "/";
+			paymentService.pointPaying(memberNo, auctionNo);
+			log.info("======3=====");
+			return "payment/auctionFinish";
 		}else {
-			return"payment/paymentReady/"+auctionNo;
+			log.info("======4=====");
+			return"redirect:/payment/paymentReady/"+auctionNo;
 		}
 	}
 	@GetMapping("/paymentReady/{auctionNo}")
