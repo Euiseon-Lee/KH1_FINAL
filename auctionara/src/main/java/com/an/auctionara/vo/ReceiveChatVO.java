@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Data@Builder@NoArgsConstructor@AllArgsConstructor
 public class ReceiveChatVO {
-	private int type, chatRoomNo;
-	private String message, messageType;
+	private int type, chatRoomNo, chatterNo;
+	private String message;
 }
