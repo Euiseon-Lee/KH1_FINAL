@@ -22,7 +22,7 @@
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2"><a href="${root}/" class="nav-link p-0 text-muted">홈</a></li>
                         <li class="nav-item mb-2"><a href="${root}/auction/write" class="nav-link p-0 text-muted">경매 등록</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">마이 페이지</a></li>
+                        <li class="nav-item mb-2"><a href="${root}/mypage/index" class="nav-link p-0 text-muted">마이 페이지</a></li>
                     </ul>
                 </div>
                 <div class="col-2">
