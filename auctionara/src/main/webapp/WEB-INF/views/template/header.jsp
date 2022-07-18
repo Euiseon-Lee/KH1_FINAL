@@ -45,9 +45,8 @@
             <div class="d-flex">
                 <a href="${root}/auction/write"><button class="btn btn-primary rounded-pill"><i class="fa-solid fa-pen-to-square mx-1"></i> 경매 등록</button></a>
                 <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">임시 메뉴</a>
+                    <a class="nav-link dropdown-toggle py-0" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><img class="rounded-circle profile" src="${root}/attachment/download?attachmentNo=${profile}"></a>
                     <ul class="dropdown-menu ml-4">
-                    
                     	<c:choose>
                     		<c:when test="${isLogin}">
                     			<li><a class="dropdown-item" href="${root}/chat">채팅</a></li>
@@ -59,16 +58,13 @@
 								<li><a class="dropdown-item" href="${root}/member/join">회원가입</a></li>
                     		</c:otherwise>
                     	</c:choose>
-                    	
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="${root}/admin/">관리자 페이지</a></li>
+                    	<c:if test="${isAdmin}">
+	                        <li>
+	                            <hr class="dropdown-divider">
+	                        </li>
+	                        <li><a class="dropdown-item" href="${root}/admin/">관리자 페이지</a></li>
+                    	</c:if>
                     </ul>
                 </div>
             </div>
         </nav>
-			</div>
-        <div class="container">
-         <!-- vue js도 lazy loading을 사용한다 -->
