@@ -9,4 +9,5 @@ public interface ChatContentDao {
 	List<ChatContentDto> list(int chatRoomNo);
 	void save(ChatContentDto chatContentDto);
 	List<ChatContentVO> content(int chatroomNo);
+	void read(int chatterNo, int chatRoomNo);
 }

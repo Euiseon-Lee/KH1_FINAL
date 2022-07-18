@@ -1,14 +1,15 @@
 package com.an.auctionara.repository;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.an.auctionara.entity.ChatContentDto;
-import com.an.auctionara.vo.AuctionListVO;
 import com.an.auctionara.vo.ChatContentVO;
 
 @Repository
@@ -37,5 +38,13 @@ public class ChatContentDaoImpl implements ChatContentDao {
 	@Override
 	public List<ChatContentVO> content(int chatroomNo) {
 		return sqlSession.selectList("chatContent.content", chatroomNo);
+	}
+
+	@Override
+	public void read(int chatterNo, int chatRoomNo) {
+		Map<String, Object> info = new HashMap<>();
+		info.put("chatterNo", chatterNo);
+		info.put("chatRoomNo", chatRoomNo);
+		sqlSession.update("chatContent.read", info);
 	}
 }

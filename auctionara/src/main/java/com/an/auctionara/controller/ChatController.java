@@ -73,7 +73,9 @@ public class ChatController {
 	// 채팅 이력 출력
 	@GetMapping("/talk/{chatRoomNo}")
 	@ResponseBody
-	public List<ChatContentDto> talk(Model model, @PathVariable int chatRoomNo){
+	public List<ChatContentDto> talk(Model model, @PathVariable int chatRoomNo, HttpSession httpSession){
+		int chatterNo = (int) httpSession.getAttribute("whoLogin");
+		chatContentDao.read(chatterNo, chatRoomNo); // 상대방 채팅 읽음 처리
 		model.addAttribute("chatRoomNo", chatRoomNo);
 		return chatContentDao.list(chatRoomNo);
 	}
