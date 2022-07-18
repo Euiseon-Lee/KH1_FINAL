@@ -18,16 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>경매나라</title>
-<<<<<<< HEAD
-=======
-<style>
-	.chatbotArea {
-	  position: fixed; /* 이 부분을 고정 */
-	  bottom: 0; /* 하단에 여백 없이 */
-	  width: 5%; /* 가로 사이즈를 브라우저에 가득 채움 */
-	}
-</style>
->>>>>>> branch 'main' of https://github.com/Euiseon-Lee/KH1_FINAL
+
     <!-- 파비콘 -->
     <link rel="icon" href="${root}/image/favicon.ico">
 
@@ -78,72 +69,6 @@
                 </div>
             </div>
         </nav>
-<<<<<<< HEAD
-=======
-			
 			</div>
-			<div id="appp">
-				<button type="button" class="btn btn-primary chatbotArea" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="question()">
-				  궁금증
-				</button>
->>>>>>> branch 'main' of https://github.com/Euiseon-Lee/KH1_FINAL
-			
-			</div>
-<<<<<<< HEAD
-
-=======
-    <script src="https://unpkg.com/vue@next"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script>
-        //div[id=app]을 제어할 수 있는 Vue instance를 생성
-        const appp = Vue.createApp({
-            //data : 화면을 구현하는데 필요한 데이터를 작성한다.
-            data(){
-                return {
-                    chatbotContentDto:[],
-                    chatbotNo:0,
-                };
-            },
-            //computed : data를 기반으로 하여 실시간 계산이 필요한 경우 작성한다.
-            // - 3줄보다 많다면 사용하지 않는 것을 권장한다(복잡한 계산 시 성능 저하가 발생)
-            computed:{
-                
-            },
-            //methods : 애플리케이션 내에서 언제든 호출 가능한 코드 집합이 필요한 경우 작성한다.
-            methods:{
-            	question(){
-            		this.chatbotNo=0;
-	            	axios({
-	                    url: "${pageContext.request.contextPath}/rest/chatbot/list/"+this.chatbotNo,
-	                    method: "get"
-	                 }).then(resp=>{
-	                   this.chatbotContentDto = resp.data;
-	                   console.log(resp.data);
-	                 });
-	          	},
-	          	requestion(chatbotNo){
-	          		this.chatbotNo = chatbotNo;
-	          		console.log(this.chatbotNo);
-	          		axios({
-	                    url: "${pageContext.request.contextPath}/rest/chatbot/list/"+this.chatbotNo,
-	                    method: "get",
-	                 }).then(resp=>{
-	                   this.chatbotContentDto = resp.data;
-	                   console.log(resp.data);
-	                 });
-	          	},
-	          	end(){
-	          		this.chatbotNo = 0;
-	          	},
-            },
-            //watch : 특정 data를 감시하여 연계 코드를 실행하기 위해 작성한다
-            watch:{
-                
-            },
-        });
-        appp.mount("#appp");
-    </script>
->>>>>>> branch 'main' of https://github.com/Euiseon-Lee/KH1_FINAL
         <div class="container">
          <!-- vue js도 lazy loading을 사용한다 -->
