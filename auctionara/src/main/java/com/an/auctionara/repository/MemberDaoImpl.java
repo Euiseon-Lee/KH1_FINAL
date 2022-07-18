@@ -104,7 +104,7 @@ public class MemberDaoImpl implements MemberDao {
 		
 		param.put("type", type);
 		param.put("keyword", keyword);
-		
+		 
 		return sqlSession.selectOne("member.count", param);	
 	}
 	
