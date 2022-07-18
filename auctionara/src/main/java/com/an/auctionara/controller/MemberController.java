@@ -63,19 +63,13 @@ public class MemberController {
 	}
 	
 	
-	//프로필 없이 구현 후 @RequestParam MultipartFile attachmentNo <- 추가할것
+	//@RequestParam MultipartFile attachmentNo 추가완료
 	@PostMapping("/join")
 	public String join(
 			@ModelAttribute MemberDto memberDto,
 			MultipartFile attachment,
 			HttpServletRequest request
 			) throws IllegalStateException, IOException {
-		String year = request.getParameter("yy");
-		String month = request.getParameter("mm");
-		String day = request.getParameter("dd");
-		String birth = year+month+day;
-		
-		memberDto.setMemberBirth(birth);
 		
 		memberService.join(memberDto, attachment);
 		
@@ -217,12 +211,14 @@ public class MemberController {
 				if(remember != null) {
 					Cookie ck = new Cookie("saveId", memberDto.getMemberEmail());
 					ck.setMaxAge(4*7*24*60*60);
+					ck.setPath("/");
 					response.addCookie(ck);				
 				}
 				
 				else {
-					Cookie ck = new Cookie("saveId", memberDto.getMemberEmail());
+					Cookie ck = new Cookie("saveId", "");
 					ck.setMaxAge(0);
+					ck.setPath("/");
 					response.addCookie(ck);
 				}
 				
@@ -238,7 +234,6 @@ public class MemberController {
 	@RequestMapping("/logout")
 	public String logout(
 			HttpSession session,
-			HttpServletRequest request,
 			HttpServletResponse response
 		) {
 	    
@@ -298,7 +293,7 @@ public class MemberController {
 					@RequestParam String memberEmail,
 					Model model
 			) {
-		int result = memberDao.checkEmailNum(memberEmail);
+		int result = memberDao.checkEmail(memberEmail);
 		model.addAttribute("checkedEmail", memberEmail);
 		
 		if(result != 1) {

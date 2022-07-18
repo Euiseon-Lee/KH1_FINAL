@@ -35,7 +35,7 @@ public class ChatbotRestController {
 		return chatbotDao.insert(chatbotDto);
 	}
 
-	// 삭제 (오류남) 
+	// 삭제 
 	@DeleteMapping("/{chatbotNo}")
 	public void delete(@PathVariable int chatbotNo) {
 		chatbotDao.delete(chatbotNo);

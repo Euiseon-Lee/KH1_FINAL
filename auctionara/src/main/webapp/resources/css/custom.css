@@ -9,6 +9,20 @@
 
 /* 커스텀 스타일 */
 
+#login-bg {
+	object-fit: cover;
+    width: 100%;
+    height: 850px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.fs-large {
+	font-size: 1.5em;
+}
+
 pre {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 1rem;
@@ -93,6 +107,14 @@ footer li {
 .category-btn:first-child {
 	text-align: right;
 	max-width: 6%;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+.fs-small {
+	font-size: 0.9em;
 }
 
 /* 부트스트랩 스타일 변경 */

@@ -50,7 +50,8 @@
                     
                     	<c:choose>
                     		<c:when test="${isLogin}">
-								<li><a class="dropdown-item" href="${root}/mypage/index">마이 페이지</a></li>
+                    			<li><a class="dropdown-item" href="${root}/chat">채팅</a></li>
+								<li><a class="dropdown-item" href="${root}/mypage/index">마이페이지</a></li>
 								<li><a class="dropdown-item" href="${root}/member/logout">로그아웃</a></li>
                     		</c:when>
                     		<c:otherwise>

@@ -3,6 +3,7 @@ package com.an.auctionara.repository;
 import java.util.List;
 
 import com.an.auctionara.entity.MemberDto;
+import com.an.auctionara.vo.MemberVO;
 
 public interface MemberDao {
 	
@@ -11,6 +12,9 @@ public interface MemberDao {
 	MemberDto login(String memberEmail, String memberPw);
 	
 	MemberDto memberSearch(int memberNo);
+	MemberDto memberSearchforExit(int memberNo);
+	
+	MemberVO memberSearchforMypage(int memberNo);
 
 	int checkEmailNum(String memberEmail);
 	
@@ -33,6 +37,19 @@ public interface MemberDao {
 	boolean resetPw(MemberDto memberDto);
 
 	int checkNick(String memberNick);
+
+	boolean exit(String memberEmail, String memberPw);
+	
+	// 관리자 - 회원 수 count 
+	int countMember();
+
+	// 관리자 - 현금화 승인 후 보유 포인트 차감 메소드 
+	MemberDto deductPoints(int memberNo, int cashingMoney);
+	
+	//마이페이지 정보 수정
+	boolean info(MemberDto memberDto);
+
+	int recall(String memberEmail);
 	
 	MemberDto selectOne(int memberNo);
 }

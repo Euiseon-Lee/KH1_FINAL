@@ -37,9 +37,9 @@
 	 		select rownum rn, TMP.* from (
 	 			select * from member 
 			 	<if test="type != null and keyword != null">
-				 	<![CDATA[
-				 		where instr(${type}, #{keyword}) > 0
-				 	]]>
+			 		<![CDATA[
+					 	where instr(${type}, #{keyword}) > 0
+			 		]]>
 			 	</if>
 			 	order by member_no desc
 	 		) TMP
@@ -54,10 +54,10 @@
 
 	<insert id="join" parameterType="MemberDto">
 		insert into member(
-			member_no, member_email, member_pw, member_nick, member_name, member_sex, member_birth, attachment_no
+			member_no, member_email, member_pw, member_nick, attachment_no
 		)
 		values(
-			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}, #{memberName}, #{memberSex}, to_date(#{memberBirth},'YY/MM/DD'), #{attachmentNo}
+			#{memberNo}, #{memberEmail}, #{memberPw}, #{memberNick}, #{attachmentNo}
 		)
 	</insert>
 	
@@ -89,11 +89,11 @@
 	<!-- 관리자 페이지 - 회원 목록 페이징을 위한 count -->
 	<select id="count" parameterType="Map" resultType="int">
 		select count(*) from member
-		 	<if test="type != null and keyword != null">
-		 		<![CDATA[
-				 	where instr(${type}, #{keyword}) > 0
-		 		]]>
-		 	</if>
+			 <if test="type != null and keyword != null">
+			 	<![CDATA[
+					 where instr(${type}, #{keyword}) > 0
+			 	]]>
+			 </if>
 	</select>
 	
 	<!-- 관리자 페이지 - 일반회원 / 블랙회원 update -->
@@ -116,9 +116,54 @@
 		select count(*) from member
 			where member_nick = #{memberNick}
 	</select>
+<<<<<<< HEAD
 	<update id="paying" parameterType="PayingVO">
 		update member 
 			set member_holding_points = member_holding_points - #{price}
 			where member_no = #{memberNo}
 	</update>
+=======
+	
+	<delete id="exit" parameterType="String">
+		delete member where member_email = #{memberEmail}
+	</delete>
+	
+	<!-- 관리자 페이지 - 회원 수 count -->
+	<select id="countMember" resultType="int">
+		select count(*) "member_count" from member where to_char(member_joindate, 'YYMM') = to_char(sysdate, 'YYMM')
+	</select>
+	
+	<!-- 관리자 페이지 - 현금화 승인 후 보유 포인트 차감 -->
+	<update id="deductPoint" parameterType="Map">
+		update member set member_holding_points = member_holding_points - #{cashingMoney} where member_no = #{memberNo}
+	</update>
+	
+	
+	<update id="info" parameterType="MemberDto">
+		update member 
+			set
+				member_nick = #{memberNick}, attachment_no = #{attachmentNo},
+				member_preference = #{memberPreference}
+			where
+				member_email = #{memberEmail}
+	</update>
+	
+	<select id="recall" parameterType="String" resultType="int">
+		select attachment_no from member
+			where member_email = #{memberEmail}
+	</select>
+
+	<!-- 관리자 페이지 - 일반회원 전환 후 red_count = 0으로 리셋 -->
+	<update id="resetRedCount" parameterType="int">
+		update member set member_red_count = 0 where member_no = #{memberNo}
+	</update>
+	
+	<select id="mypageOne" parameterType="int" resultType="MemberVO">
+		select * from member where member_no = #{memberNo}
+	</select>
+	
+	<select id="exitOne" parameterType="int" resultType="MemberDto">
+		select member_email, member_holding_points from member where member_no = #{memberNo}
+	</select>
+>>>>>>> refs/remotes/origin/main
 </mapper> 

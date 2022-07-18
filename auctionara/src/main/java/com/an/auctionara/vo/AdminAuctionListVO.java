@@ -11,7 +11,6 @@ public class AdminAuctionListVO {
 	private String auctionTitle;
 	private String auctionUploadTime;
 	private int auctionPrivate; 
-	private String memberName;
 	private String memberNick;
 	private String categoryName; 
 	private int reportCount;

@@ -74,17 +74,17 @@
 	        <nav>
 			  <ul class="pagination">
 			    <li class="page-item" :class="{'disabled': pageList == 0}">
-			      <a class="page-link" href="#" @click="prev">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
+			    	<a class="page-link" href="#" @click="prev">
+			        	<span aria-hidden="true">&laquo;</span>
+			    	</a>
 			    </li>			    
 			    <li class="page-item" v-for="pageItem in totalPage" :key="pageItem" :class="{'active': pageItem == page}" v-show="parseInt((pageItem - 1) / 10) == pageList">
 			    	<a class="page-link" href="#" @click="pagination(pageItem)">{{ pageItem }}</a>
 			    </li>
 			    <li class="page-item" :class="{'disabled': parseInt((totalPage - 1) / 10) == pageList}">
-			      <a class="page-link" href="#" @click="next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
+			    	<a class="page-link" href="#" @click="next">
+			        	<span aria-hidden="true">&raquo;</span>
+			    	</a>
 			    </li>			    
 			  </ul>
 			</nav>

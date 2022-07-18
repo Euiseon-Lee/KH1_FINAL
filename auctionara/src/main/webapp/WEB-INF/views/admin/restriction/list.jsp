@@ -30,7 +30,7 @@
 				<c:forEach var="managerRestrictionListVO" items="${list}">
 					<tr>
 						<td>${managerRestrictionListVO.restrictionNo }</td>
-						<td>${managerRestrictionListVO.memberName }</td>
+						<td>${managerRestrictionListVO.memberNick }</td>
 						<td>${managerRestrictionListVO.restrictionType }</td>
 						<td>${managerRestrictionListVO.restrictionReason }</td>
 						<td>${managerRestrictionListVO.restrictionTime }</td>
@@ -40,7 +40,7 @@
 		</table>
 	</div>
 	
-	<div class="row p-2 mt-2 text-center">
+	<div class="p-2 mt-2 text-center pagination">
 		<c:if test="${p > 1}">
 			<c:choose>
 				<c:when test="${search}">

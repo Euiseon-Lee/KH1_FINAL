@@ -14,12 +14,26 @@
 		</div>
 	</div>
 	
+	<%-- <div class="row p-2 mt-2">
+		<div class="col-10">
+			<span></span>
+		</div>
+		<div class="col-2" id="app">
+			<form action="list" method="get">
+				<select class="form-select" name="type" onchange="this.form.submit()">
+					<option value="">회원등급</option>
+					<option value="member_grade" <c:if test="${member_grade == '일반회원'}">selected</c:if>>일반회원</option>
+					<option value="member_grade" <c:if test="${member_grade == '블랙회원'}">selected</c:if>>블랙회원</option>
+				</select>
+			</form>
+		</div>
+	</div> --%>
+	
 	<div class="row p-2 mt-2">
 		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>회원 번호</th>
-					<th>회원명</th>
 					<th>닉네임</th>
 					<th>이메일</th>
 					<th>회원 등급</th>
@@ -30,7 +44,6 @@
 				<c:forEach var="memberDto" items="${list}">
 					<tr>
 						<td>${memberDto.memberNo}</td>
-						<td>${memberDto.memberName}</td>
 						<td>${memberDto.memberNick}</td>
 						<td>${memberDto.memberEmail}</td>
 						
@@ -52,7 +65,7 @@
 			</tbody>
 		</table>
 		
-		<div class="row p-2 mt-2 text-center">
+		<div class="p-2 mt-2 text-center pagination">
 			<c:if test="${p > 1}">
 				<c:choose>
 					<c:when test="${search}">
@@ -132,14 +145,12 @@
 				<div class="row justify-content-md-center">
 					<div class="col-2">
 						<select name="type" class="form-select">
-							<option value="member_name" <c:if test="${type == 'member_name'}">selected</c:if>>회원명</option>
 							<option value="member_nick" <c:if test="${type == 'member_nick'}">selected</c:if>>닉네임</option>
-							<option value="member_grade" <c:if test="${type == 'member_grade'}">selected</c:if>>회원 등급</option>
 							<option value="member_email" <c:if test="${type == 'member_email'}">selected</c:if>>이메일</option>
 						</select>
 					</div>
 					<div class="col-3">
-						<input type="search" name="keyword" placeholder="검색어 입력" required class="form-control" value="${keyword}">
+						<input type="search" name="keyword" placeholder="검색어 입력" required class="form-control" value="${keyword}" autocomplete="off">
 					</div>
 					<div class="col-2">
 						<input type="submit" value="검색" class="btn btn-primary">

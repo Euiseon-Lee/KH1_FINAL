@@ -143,12 +143,12 @@ CREATE TABLE gps_address (
     gps_status number default 1 not null
 );
 
-CREATE TABLE chat_report (
-	chat_report_no	number		NOT NULL,
-	chat_no	number		NOT NULL,
-	chat_reporter_no	number		NOT NULL,
-	chat_report_reason	varchar2(300)		NOT NULL,
-	chat_report_time	Date	DEFAULT sysdate	NOT NULL
+create table chat_report (
+    chat_report_no number primary key,
+    chatroom_no number references chatroom(chatroom_no),
+    member_no number references member(member_no),
+    chat_report_reason varchar2(300) not null,
+    chat_report_time Date default sysdate not null
 );
 
 CREATE TABLE manager_restriction (
@@ -261,10 +261,6 @@ ALTER TABLE chat_content ADD CONSTRAINT PK_CHAT_CONTENT PRIMARY KEY (
 
 ALTER TABLE gps_address ADD CONSTRAINT PK_GPS_ADDRESS PRIMARY KEY (
 	gps_no
-);
-
-ALTER TABLE chat_report ADD CONSTRAINT PK_CHAT_REPORT PRIMARY KEY (
-	chat_report_no
 );
 
 ALTER TABLE manager_restriction ADD CONSTRAINT PK_MANAGER_RESTRICTION PRIMARY KEY (
@@ -394,18 +390,8 @@ REFERENCES member (
 	member_no
 );
 
-ALTER TABLE chat_report ADD CONSTRAINT FK FOREIGN KEY (
-	chat_no
-)
 REFERENCES chat_content (
 	chat_no
-);
-
-ALTER TABLE chat_report ADD CONSTRAINT FK_member_TO_chat_report_1 FOREIGN KEY (
-	chat_reporter_no
-)
-REFERENCES member (
-	member_no
 );
 
 ALTER TABLE manager_restriction ADD CONSTRAINT FK_manager_restriction FOREIGN KEY (
@@ -471,3 +457,74 @@ auto_token char(60) not null,
 auto_issuetime date default sysdate not null,
 auto_ip varchar2(60)
 );
+
+
+
+ALTER TABLE chat_report DROP CONSTRAINT SYS_C0048973;
+ALTER TABLE auction DROP CONSTRAINT FK_MEMBER_TO_AUCTION_1;
+ALTER TABLE chatroom DROP CONSTRAINT SYS_C0048942;
+ALTER TABLE bidding DROP CONSTRAINT FK_MEMBER_TO_BIDDING_1;
+ALTER TABLE cashing_points DROP CONSTRAINT SYS_C0048170;
+ALTER TABLE chat_content DROP CONSTRAINT FK_MEMBER_TO_CHAT_CONTENT_1;
+ALTER TABLE gps_address DROP CONSTRAINT FK_MEMBER_TO_GPS_ADDRESS_1;
+ALTER TABLE manager_restriction DROP CONSTRAINT FK_MANAGER_RESTRICTION;
+ALTER TABLE payment DROP CONSTRAINT FK_MEMBER_TO_PAYMENT_1;
+ALTER TABLE auction_report DROP CONSTRAINT FK_MEMBER_TO_AUCTION_REPORT_1;
+ALTER TABLE autologin DROP CONSTRAINT SYS_C0048831;
+
+
+ALTER TABLE chat_report
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+                             
+ALTER TABLE auction
+       ADD FOREIGN KEY (auctioneer_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+                             
+ALTER TABLE chatroom
+       ADD FOREIGN KEY (participator_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE bidding
+       ADD FOREIGN KEY (bidder_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE cashing_points
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE chat_content
+       ADD FOREIGN KEY (chatter_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE gps_address
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE manager_restriction
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE payment
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE auction_report
+       ADD FOREIGN KEY (auction_reporter_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+
+ALTER TABLE autologin
+       ADD FOREIGN KEY (member_no)
+                             REFERENCES member(member_no)
+                             ON DELETE SET NULL;
+

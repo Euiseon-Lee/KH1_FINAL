@@ -24,6 +24,7 @@
 
 	<link rel="stylesheet" type="text/css" href="${root}/css/reset.css">
 	<link href="${root}/css/app.css" rel="stylesheet" type="text/css">
+	<link href="${root}/css/admin.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 	
@@ -43,7 +44,7 @@
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="${root}/admin/">
-		          <span class="align-middle">경매나라 Admin</span>
+		          <span class="align-middle">경매나라</span>
 		        </a>
 
 				<ul class="sidebar-nav">
@@ -52,7 +53,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="${root}/admin/sales/chart">
 			              <span class="align-middle">매출 현황</span>
 			            </a>
 					</li>
@@ -68,7 +69,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="${root}/admin/member/rating">
 			              <span class="align-middle">평가 항목 관리</span>
 			            </a>
 					</li>
@@ -76,6 +77,22 @@
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="${root}/admin/restriction/list">
 			              <span class="align-middle">회원 제재 내역</span>
+			            </a>
+					</li>
+					
+					<li class="sidebar-header">
+						경매 관리
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="${root}/admin/auction/list">
+			              <span class="align-middle">경매 게시글 목록</span>
+			            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="${root}/admin/auction/report_list">
+			              <span class="align-middle">경매 신고 내역</span>
 			            </a>
 					</li>
 					
@@ -96,39 +113,17 @@
 					</li>
 					
 					<li class="sidebar-header">
-						경매 관리
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="${root}/admin/auction/list">
-			              <span class="align-middle">경매 게시글 목록</span>
-			            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
-			              <span class="align-middle">카테고리 관리</span>
-			            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="${root}/admin/auction/report_list">
-			              <span class="align-middle">경매 신고 내역</span>
-			            </a>
-					</li>
-					
-					<li class="sidebar-header">
 						채팅 / 챗봇 관리 
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="${root}/admin/chat/bot">
 			              <span class="align-middle">챗봇 관리</span>
 			            </a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="${root}/admin/chat/report_list">
 			              <span class="align-middle">채팅 신고 내역</span>
 			            </a>
 					</li>
@@ -138,10 +133,11 @@
 
 		<div class="main">
 			<nav class="row navbar navbar-expand navbar-light navbar-bg">
+			
 				<div class="col-11"></div>
 				<div class="col-1">
 					<i class="fa-regular fa-user"></i>
-					<a href="" class="text-secondary">&nbsp log out</a>
+					<a href="${root }/member/logout" class="text-secondary">&nbsp log out</a>
 				</div>
 			</nav>
 

@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 public class ChatRoomDto {
 	private int chatRoomNo;
 	private int auctionNo; 
+	private int memberNo; 
+	private int chatroomReport; 
 }

@@ -50,7 +50,7 @@
 	</select>
 	
 	<select id="list" resultType="RatingDto">
-		select * from rating 
+		select * from rating order by rating_sort_no desc, rating_item_no desc 
 	</select>
 
 </mapper> 

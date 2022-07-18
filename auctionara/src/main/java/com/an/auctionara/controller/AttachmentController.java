@@ -2,7 +2,9 @@ package com.an.auctionara.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.an.auctionara.entity.AttachmentDto;
 import com.an.auctionara.repository.AttachmentDao;
+import com.an.auctionara.repository.AttachmentDaoImpl;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/attachment")
@@ -30,11 +35,19 @@ public class AttachmentController {
 	private AttachmentDao attachmentDao;
 	
 	@PostMapping("/save")
-	public void save(@RequestParam(value = "attachment", required = false) List<MultipartFile> attachment, HttpSession session) throws IllegalStateException, IOException {
+	public void save(@RequestParam(value = "attachment", required = false) List<MultipartFile> attachment) throws IllegalStateException, IOException {
 		for(int i = 0; i < attachment.size(); i++) {
 			attachmentDao.save(attachment.get(i));
 		}
 	}
+	
+	// 채팅용 사진 저장 & attachementNo 반환
+	@PostMapping("/chat")
+	public Map<String, Object> chat(@RequestParam(value = "image", required = false) MultipartFile image) throws IllegalStateException, IOException {
+		Map<String, Object> attachment = new HashMap<>();
+		attachment.put("attachmentNo", attachmentDao.save(image)); 
+		return attachment;
+	}	
 	
 	@GetMapping("/download")
 	public ResponseEntity<ByteArrayResource> download(

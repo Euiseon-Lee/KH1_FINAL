@@ -74,7 +74,9 @@
 			<mvc:exclude-mapping path="/member/change_pw"/>
 			<mvc:exclude-mapping path="/**/*.css"/>
 		    <mvc:exclude-mapping path="/**/*.js"/>
-		    <mvc:exclude-mapping path="/image/**/*.*"/>			
+		    <mvc:exclude-mapping path="/image/**/*.*"/>
+		    <mvc:exclude-mapping path="/member/reset*"/>			
+			
 
 			<bean class="com.an.auctionara.interceptor.AutologinInterceptor"></bean>
 		</mvc:interceptor>
@@ -91,7 +93,9 @@
 			<mvc:exclude-mapping path="/attachment/**"/>
 			<mvc:exclude-mapping path="/**/*.css"/>
 		    <mvc:exclude-mapping path="/**/*.js"/>
-		    <mvc:exclude-mapping path="/image/**/*.*"/>			
+		    <mvc:exclude-mapping path="/image/**/*.*"/>	
+		    <mvc:exclude-mapping path="/member/reset*"/>		
+		    <mvc:exclude-mapping path="/mypage/exit_finish"/>		
 
 			<bean class="com.an.auctionara.interceptor.IsLoginInterceptor"></bean>
 		</mvc:interceptor>
@@ -110,6 +114,8 @@
 			<mvc:exclude-mapping path="/**/*.css"/>
 		    <mvc:exclude-mapping path="/**/*.js"/>
 		    <mvc:exclude-mapping path="/image/**/*.*"/>
+		    <mvc:exclude-mapping path="/member/reset*"/>
+		    <mvc:exclude-mapping path="/mypage/exit_finish"/>
 
 			<bean class="com.an.auctionara.interceptor.AddressInterceptor"></bean>
 		</mvc:interceptor>
@@ -120,8 +126,9 @@
  			<mvc:exclude-mapping path="/auction/detail/refresh*"/>
 			<mvc:exclude-mapping path="/auction/detail/bidding*"/>
 			<mvc:exclude-mapping path="/auction/detail/bidding/close*"/>
-			<mvc:exclude-mapping path="/auction/detail/cancle/**"/>
+			<mvc:exclude-mapping path="/auction/detail/cancel/**"/>
 			<mvc:exclude-mapping path="/auction/detail/stop/**"/>
+			<mvc:exclude-mapping path="/auction/detail/report/**"/>
 
 			<bean class="com.an.auctionara.interceptor.AuctionPrivateInterceptor"></bean>
 		</mvc:interceptor>
@@ -130,10 +137,16 @@
  			<mvc:mapping path="/auction/detail/refresh*"/>
 			<mvc:mapping path="/auction/detail/bidding*"/>
 			<mvc:mapping path="/auction/detail/bidding/close*"/>
-			<mvc:mapping path="/auction/detail/cancle/**"/>
+			<mvc:mapping path="/auction/detail/cancel/**"/>
 			<mvc:mapping path="/auction/detail/stop/**"/>
 
 			<bean class="com.an.auctionara.interceptor.AuctionPrivate2Interceptor"></bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+
+			<bean class="com.an.auctionara.interceptor.IsAdminInterceptor"></bean>
 		</mvc:interceptor>
 		
 	</mvc:interceptors>
