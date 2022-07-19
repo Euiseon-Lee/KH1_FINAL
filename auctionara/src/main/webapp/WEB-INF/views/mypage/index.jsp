@@ -73,7 +73,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th class="text-left">총 입찰 횟수</th>
+					<th class="text-left">총 낙찰 횟수</th>
 					<td class="text-right">
 						<a href="${root}/mypage/pay_history">
 							${memberVO.succCount}회 <i class="fa-solid fa-chevron-right"></i>
