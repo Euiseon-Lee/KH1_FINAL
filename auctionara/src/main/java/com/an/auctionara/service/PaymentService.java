@@ -15,11 +15,11 @@ public interface PaymentService {
 	void insert(int paymentNo, KakaoPayApproveResponseVO responseVO, PurchaseVO purchaseVO);
 	PaymentInsertVO selectOne(int paymentNo);
 	PaymentSuccessVO successOne(int paymentNo);
-	List<PaymentInsertVO> allList(int memberNo);
+	List<PaymentInsertVO> allList(int memberNo, int page, int filter, int sort);
 	List<PaymentInsertVO> refundList(int memberNo);
 	void refund(int paymentNo);
 	boolean cashingRequest(CashingPointsVO vo);
-	List<CashingListVO> cashingList(int memberNo);
+	List<CashingListVO> cashingList(int memberNo, int page, int filter, int sort);
 	boolean enoughPoint(int memberNo, int auctionNo);
 	void pointPaying(int memberNo, int auctionNo);
 	SuccessfulBidDto bidSelect(int auctionNo);

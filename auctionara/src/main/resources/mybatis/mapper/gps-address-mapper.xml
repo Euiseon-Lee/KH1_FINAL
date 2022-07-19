@@ -53,10 +53,10 @@
 	</select>
 	
 	<!-- 주소 미인증 처리 -->
-	<update id="updateStaus" parameterType="Date">
+	<update id="updateStaus">
 		update gps_address 
 		set gps_status = 0
-		where gps_regist_time <![CDATA[ <= ]]> #{limit}
+		where (gps_regist_time + 30) <![CDATA[ <= ]]>  sysdate
 	</update>
 	
 	<!-- 입찰 가능한 경매인지를 동네인증 여부를 통해 확인 -->

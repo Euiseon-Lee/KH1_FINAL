@@ -12,4 +12,7 @@ public class PaymentInsertVO {
 	private int paymentNo, memberNo, paymentPrice;
 	private Date paymentTime;
 	private String paymentTid, paymentStatus;
+	
+	private String refund;
+	private int paymentCount;
 }

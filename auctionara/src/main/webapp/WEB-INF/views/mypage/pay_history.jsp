@@ -25,13 +25,13 @@
 			<a href="${root}/payment/paymentReady" class="nav-link btn-outline-info">포인트 충전</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/payment/list" class="nav-link btn-outline-info">포인트 충전 취소</a>
+			<a href="${root}/payment/list" class="nav-link btn-outline-info">포인트 충전 내역</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/payment/cashing" class="nav-link btn-outline-info">현금화 신청</a>
+			<a href="${root}/payment/cashing" class="nav-link btn-outline-info">현금화 신청</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-			<a href="${root }/payment/cashingList" class="nav-link btn-outline-info">현금화 신청 목록</a>
+			<a href="${root}/payment/cashingList" class="nav-link btn-outline-info">현금화 신청 내역</a>
 		  </li>		  
 		  <li class="nav-item border-bottom">
 		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원 탈퇴</a>
@@ -182,7 +182,7 @@
     				this.list = resp.data;
     				if(resp.data.length != 0) {
         				this.auctionCount = resp.data[0].auctionCount;
-        				this.totalPage = parseInt(resp.data[0].auctionCount / 10) + 1;
+        				this.totalPage = parseInt((resp.data[0].auctionCount - 1) / 10) + 1;
         				this.totalAuction = resp.data[0].auctionCount;
     				} else {
         				this.auctionCount = 0;
@@ -205,7 +205,7 @@
     				this.list = resp.data;
     				if(resp.data.length != 0) {
         				this.auctionCount = resp.data[0].auctionCount;
-        				this.totalPage = parseInt(resp.data[0].auctionCount / 10) + 1;    					
+        				this.totalPage = parseInt((resp.data[0].auctionCount - 1) / 10) + 1;    					
     				} else {
         				this.auctionCount = 0;
         				this.totalPage = 1;      					
