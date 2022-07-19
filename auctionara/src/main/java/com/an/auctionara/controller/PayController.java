@@ -149,7 +149,7 @@ public class PayController {
 		
 		paymentService.refund(paymentNo);
 		
-		return "redirect:/payment/list";
+		return "redirect:/mypage/list";;
 	}
 
 	@PostMapping("/cashingRequest")
