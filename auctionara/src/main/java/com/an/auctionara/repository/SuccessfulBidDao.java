@@ -10,6 +10,9 @@ public interface SuccessfulBidDao {
 	void auctioneerApprove(int auctionNo);
 	void bidderApprove(int auctionNo);
 	void autoApprove();
+	void approveFinish(int auctionNo);
+	void approveAutoFinish();
+	int checkStatus(int auctionNo);
 	
 	//마이페이지 낙찰 성공한 총 개수 출력
 	int succCount(int memberNo);

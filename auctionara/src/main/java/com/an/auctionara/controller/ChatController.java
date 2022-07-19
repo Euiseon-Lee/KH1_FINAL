@@ -99,6 +99,7 @@ public class ChatController {
 	@ResponseBody
 	public void auctioneerApprove(@PathVariable("auctionNo") int auctionNo) {
 		successfulBidDao.auctioneerApprove(auctionNo);
+		successfulBidDao.approveFinish(auctionNo);
 	}
 	
 	// 구매자 거래 완료
@@ -106,6 +107,7 @@ public class ChatController {
 	@ResponseBody
 	public void bidderApprove(@PathVariable("auctionNo") int auctionNo) {
 		successfulBidDao.bidderApprove(auctionNo);
+		successfulBidDao.approveFinish(auctionNo);
 	}
 	
 	// 평가 항목 출력

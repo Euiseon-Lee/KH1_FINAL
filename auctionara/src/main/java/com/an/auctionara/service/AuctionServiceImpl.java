@@ -169,5 +169,6 @@ public class AuctionServiceImpl implements AuctionService {
 	@Override
 	public void autoApprove() {
 		successfulBidDao.autoApprove();
+		successfulBidDao.approveAutoFinish();
 	}
 }

@@ -51,9 +51,10 @@
 		update successful_bid set succ_bidder_approve = sysdate where auction_no = #{auctionNo}
 	</update>
 	
-	<!-- 낙찰 7일 후 자동 판매자 거래완료 처리 -->
+	<!-- 낙찰 7일 후 자동 거래완료 처리 -->
 	<update id="autoApprove">
-		update successful_bid set succ_bidder_approve = sysdate where trunc(sysdate) - trunc(succ_date) >= 7
+		update successful_bid set succ_auctioneer_approve = sysdate, succ_bidder_approve = sysdate 
+		where trunc(sysdate) - trunc(succ_date) >= 7
 	</update>
 	
 	<!-- 낙찰 회원 찾기 -->
@@ -88,5 +89,33 @@
 		when matched then
 			update set s.succ_bid_status = 3 where a.auctioneer_no=#{memberNo} and s.succ_bid_status=0
 	</update>
+
+	<!-- 거래 완료 시 판매자에게 포인트 전달 -->
+	<update id="approveFinish" parameterType="int">
+		merge into member A 
+        using (select B.auction_no, B.auctioneer_no, C.succ_final_bid, C.succ_auctioneer_approve, C.succ_bidder_approve 
+            from auction B join successful_bid C on B.auction_no = C.auction_no) D
+			on (A.member_no = D.auctioneer_no)         
+		when matched then
+			update set A.member_holding_points = (A.member_holding_points + D.succ_final_bid)
+            where D.auction_no = #{auctionNo} and D.succ_auctioneer_approve is not null and D.succ_bidder_approve is not null
+	</update>
+	
+	<!-- 자동 거래 완료 시 경매 판매자에게 포인트 전달 -->
+	<update id="approveAutoFinish">
+		merge into member A 
+        using (select B.auction_no, B.auctioneer_no, C.succ_final_bid, C.succ_auctioneer_approve, C.succ_bidder_approve, C.succ_date 
+            from auction B join successful_bid C on B.auction_no = C.auction_no) D
+			on (A.member_no = D.auctioneer_no)         
+		when matched then
+			update set A.member_holding_points = (A.member_holding_points + D.succ_final_bid)
+            where trunc(sysdate) - trunc(D.succ_date) >= 7  and (D.succ_auctioneer_approve is null or D.succ_bidder_approve is null)
+	</update>
+	
+	<!-- 결제 완료 야부 확인 -->
+	<select id="checkStatus" parameterType="int" resultType="int">
+		select succ_bid_status from successful_bid 
+			where auction_no = #{auctionNo}
+	</select>	
 	
 </mapper> 
