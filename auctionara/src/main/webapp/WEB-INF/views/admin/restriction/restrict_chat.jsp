@@ -12,6 +12,9 @@
 			if(val <= 0) {
 				alert("제재 내용을 작성해주세요.");
 				e.preventDefault(e);
+			} else if (val > 100) {
+				alert("제재 내용을 100자 이내로 작성해주세요.");
+				e.preventDefault(e);
 			} else {
 				var result = confirm("해당 회원 제재 내역을 등록하시겠습니까?");
 				
