@@ -1,6 +1,5 @@
 package com.an.auctionara.repository;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +13,6 @@ public interface GpsAddressDao {
 	List<GpsAddressDto> list(int memberNo);
 	List<GpsAddressDto> validList(int memberNo);
 	GpsAddressDto one1(int memberNo);
-	void changeGpsStaus(Date limit);
+	void changeGpsStaus();
 	Boolean checkBiddingAddress(Map<String, Integer> info);
 }

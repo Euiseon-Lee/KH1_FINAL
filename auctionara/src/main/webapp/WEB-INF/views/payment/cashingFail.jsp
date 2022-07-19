@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
 <div class="container d-flex" id="app">
@@ -37,17 +37,17 @@
 	</div>
 	
 	<div class="row flex-fill d-flex flex-column">
-		<h4 class="row fw-bold my-4 pt-2">포인트 충전</h4>
+		<h4 class="row fw-bold my-4 pt-2">현금화 신청</h4>
+			
+		<div class="row fw-bold mt-1 pt-2 justify-content-center">
+			<h3 class="text-center">현금화 신청에 실패하였습니다.</h3>
+		</div>
 		
 		<div class="row fw-bold mt-1 pt-2 justify-content-center">
-			<h3 class="text-center">포인트 충전이 완료되었습니다.</h3>
-		</div>
-	
-		<div class="row fw-bold mt-1 pt-2 justify-content-center">
-			<span class="text-center text-muted">현재 보유 포인트는 ${success.memberHoldingPoints } P 입니다.</span>
+			<span class="text-center text-muted">현금화 가능 한도를 확인해주세요.</span>
 		</div>
 	</div>
-	
 </div>
+
 
 <%@include file="/WEB-INF/views/template/footer.jsp" %>

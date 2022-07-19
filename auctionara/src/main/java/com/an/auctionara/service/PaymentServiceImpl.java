@@ -1,6 +1,8 @@
 package com.an.auctionara.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import com.an.auctionara.paymentvo.PayingVO;
 import com.an.auctionara.paymentvo.PaymentInsertVO;
 import com.an.auctionara.paymentvo.PaymentSuccessVO;
 import com.an.auctionara.paymentvo.PurchaseVO;
+import com.an.auctionara.vo.AuctionListVO;
 
 @Service
 public class PaymentServiceImpl implements PaymentService{
@@ -47,8 +50,14 @@ public class PaymentServiceImpl implements PaymentService{
 		return sqlSession.selectOne("payment.success", paymentNo);
 	}
 	@Override
-	public List<PaymentInsertVO> allList(int memberNo) {
-		return sqlSession.selectList("payment.allList", memberNo);
+	public List<PaymentInsertVO> allList(int memberNo, int page, int filter, int sort) {
+		Map<String, Object> info = new HashMap<>();
+		info.put("memberNo", memberNo);
+		info.put("begin", (page * 10) - (10 - 1)); // 10개씩 불러오기
+		info.put("end", page * 10);
+		info.put("filter", filter);
+		info.put("sort", sort);
+		return sqlSession.selectList("payment.allList", info);
 	}
 	@Override
 	public List<PaymentInsertVO> refundList(int memberNo) {
@@ -80,9 +89,16 @@ public class PaymentServiceImpl implements PaymentService{
 		}
 	}
 	@Override
-	public List<CashingListVO> cashingList(int memberNo) {
-		return sqlSession.selectList("payment.cashingList", memberNo);
+	public List<CashingListVO> cashingList(int memberNo, int page, int filter, int sort) {
+		Map<String, Object> info = new HashMap<>();
+		info.put("memberNo", memberNo);
+		info.put("begin", (page * 10) - (10 - 1)); // 10개씩 불러오기
+		info.put("end", page * 10);
+		info.put("filter", filter);
+		info.put("sort", sort);		
+		return sqlSession.selectList("payment.cashingList", info);
 	}
+	
 	@Override
 	@Transactional
 	public boolean enoughPoint(int memberNo, int auctionNo) {

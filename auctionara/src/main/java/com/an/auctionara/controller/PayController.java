@@ -1,6 +1,7 @@
 package com.an.auctionara.controller;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.an.auctionara.entity.SuccessfulBidDto;
+import com.an.auctionara.paymentvo.CashingListVO;
 import com.an.auctionara.paymentvo.CashingPointsVO;
 import com.an.auctionara.paymentvo.KakaoPayApproveRequestVO;
 import com.an.auctionara.paymentvo.KakaoPayApproveResponseVO;
@@ -193,5 +195,52 @@ public class PayController {
 		model.addAttribute("bidDto", paymentService.bidSelect(auctionNo));
 		model.addAttribute("auctionNo", auctionNo);
 		return "payment/paymentReadyAuction";
+	}
+	
+	@GetMapping("/paymentReady")
+	public String pay1Purchase(HttpSession httpSession, Model model) {
+		int memberNo = (int) httpSession.getAttribute("whoLogin");
+		
+		model.addAttribute("memberDto", memberDao.selectOne(memberNo));
+		return "payment/paymentReady";
+	}
+	
+	@GetMapping("/list")
+	public String payList() {
+		return "payment/list";
+	}
+	
+	@ResponseBody
+	@GetMapping("/loadList")
+	public List<PaymentInsertVO> payList(@RequestParam int page,
+											@RequestParam Integer filter,
+											@RequestParam Integer sort,
+											HttpSession session) {
+		int memberNo = (int) session.getAttribute("whoLogin");
+		List<PaymentInsertVO> list = paymentService.allList(memberNo, page, filter, sort);
+		return list;
+	}
+	
+	
+	@GetMapping("/cashing")
+	public String cashing(HttpSession session, Model model) {
+		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
+		return "payment/cashing";
+	}
+
+	@GetMapping("/cashingList")
+	public String cashingList() {
+		return "/payment/cashingList";
+	}
+	
+	@ResponseBody
+	@GetMapping("/loadCashingList")
+	public List<CashingListVO> cashingList(@RequestParam int page,
+												@RequestParam Integer filter,
+												@RequestParam Integer sort,
+												HttpSession session) {
+		int memberNo = (int) session.getAttribute("whoLogin");
+		List<CashingListVO> list = paymentService.cashingList(memberNo, page, filter, sort);
+		return list;
 	}
 }	
