@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.vo.MemberVO;
@@ -17,6 +18,8 @@ public class MemberDaoImpl implements MemberDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public void join(MemberDto memberDto) {
@@ -24,7 +27,10 @@ public class MemberDaoImpl implements MemberDao {
 		
 		int sequence = sqlSession.selectOne("member.sequence");
 		memberDto.setMemberNo(sequence);
-
+		
+		String rawPassword = memberDto.getMemberPw();
+		String encryptPassword = passwordEncoder.encode(rawPassword);
+		memberDto.setMemberPw(encryptPassword);
 		sqlSession.insert("member.join", memberDto);
 		
 	}
@@ -39,7 +45,7 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		
 		
-		boolean isPwIdentical = memberDto.getMemberPw().equals(memberPw);
+		boolean isPwIdentical = passwordEncoder.matches(memberPw, memberDto.getMemberPw());
 		if(isPwIdentical) {
 			sqlSession.update("member.updateLogintime", memberDto.getMemberNo());
 			return memberDto;
@@ -133,17 +139,16 @@ public class MemberDaoImpl implements MemberDao {
 
 
 	
-	//암호화 전 코드 => 암호화 이후 수정 필요
+	//암호화 전 코드 => 암호화 완료
 	@Override
 	public boolean resetPw(MemberDto memberDto) {
 		
 		if(memberDto == null) return false;
 		
-		int count = sqlSession.update("member.changePw", memberDto);
-//						MemberDto.builder()
-//							.memberEmail(memberDto.getMemberEmail())
-//							.memberPw(memberDto.getMemberPw())
-//							.build());
+		String encodePassword = passwordEncoder.encode(memberDto.getMemberPw());
+		
+		int count = sqlSession.update("member.changePw", 
+				MemberDto.builder().memberEmail(memberDto.getMemberEmail()).memberPw(encodePassword).build());
 		
 		return count > 0;
 	}

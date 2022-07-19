@@ -73,9 +73,9 @@
 					</td>
 				</tr>
 				<tr>
-					<th class="text-left">총 낙찰 횟수</th>
+					<th class="text-left">총 입찰 횟수</th>
 					<td class="text-right">
-						<a href="${root}/mypage/auction_history">
+						<a href="${root}/mypage/pay_history">
 							${memberVO.succCount}회 <i class="fa-solid fa-chevron-right"></i>
 						</a>
 
@@ -91,11 +91,10 @@
 					<th class="text-left">거래 시간</th>
 					<td class="text-right">
 						<c:if test="${memberVO.memberPreference != null}">
-							${memberVO.memberPreference}
+							<a href="${root}/mypage/info">${memberVO.memberPreference}</a>
 						</c:if>
 						<c:if test="${memberVO.memberPreference == null}">
-							<a href="${root}/mypage/info">거래 선호시간을 설정해주세요 <i class="fa-solid fa-chevron-right"></i>
-							</a>
+							<a href="${root}/mypage/info">거래 선호시간을 설정해주세요 <i class="fa-solid fa-chevron-right"></i></a>
 						</c:if>
 					</td>
 				</tr>
