@@ -80,6 +80,6 @@
 		values (#{cashingNo}, #{memberNo}, #{cashingMoney}, #{cashingBank}, #{cashingAccount}, #{cashingType}, sysdate)
 	</insert>
 	<select id="cashingList" parameterType="int" resultType="CashingListVO">
-        select * from cashing_points where member_no=#{memberNo}
+        select * from cashing_points where member_no=#{memberNo} order by cashing_no desc
 	</select>
 </mapper> 

@@ -38,32 +38,46 @@
 		  </li>
 		</ul>
 	</div>
-	<div class="nav flex-column text-center">
 	
-		<div>
-			<h1> ${memberDto.memberNick }님의 출금 신청 목록</h1>
-		</div>
-		<div>
-			<table  width="100%">
-				<tr align = "center" bgcolor="white">
-					<th>출금 신청 일시</th>
-					<th>출금 신청 은행</th>
-					<th>출금 신청 계좌</th>
-					<th>출금 진행 상태</th>
-					<th>출금 완료 일시</th>
-				</tr>
-				<c:forEach var = "list" items="${cashingList}">
-					<tr align = "center" bgcolor="white">
-						<td><fmt:formatDate value="${list.cashingRequestTime }" pattern="y년 M월 d일 E a h시 m분 s초"></fmt:formatDate></td>
-						<td>${list.cashingBank }</td>
-						<td>${list.cashingAccount }</td>
-						<td>${list.cashingStatus }</td>
-						<td><fmt:formatDate value="${list.cashingSuccessTime }" pattern="y년 M월 d일 E a h시 m분 s초"></fmt:formatDate></td>
-					</tr>
-				</c:forEach>
-			</table>
-		</div>
-	</div>
+		<div class="row flex-fill d-flex flex-column">
+	        <h4 class="row fw-bold my-4 pt-2">현금화 신청 목록</h4>
+	        
+	        <div class="row">
+		        <table  class="table table-hover border-bottom">
+					<thead>
+						<tr>
+							<th scope="col" width="20%">신청 일시</th>
+							<th scope="col">신청 은행</th>
+							<th scope="col" width="30%">신청 계좌</th>
+							<th scope="col">진행 상태</th>
+							<th scope="col">완료 일시</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var = "list" items="${cashingList}">
+							<tr>
+								<td class="text-muted fs-small"><fmt:formatDate value="${list.cashingRequestTime }" pattern="yyyy.MM.dd HH:mm"></fmt:formatDate></td>
+								<td class="fs-small">${list.cashingBank }</td>
+								<td class="fs-small">${list.cashingAccount }</td>
+								<c:choose>
+									<c:when test="${list.cashingStatus == '출금신청' }">
+										<td class="fs-small">${list.cashingStatus }</td>									
+									</c:when>
+									<c:when test="${list.cashingStatus == '출금보류' }">
+										<td class="fs-small text-primary">${list.cashingStatus }</td>
+									</c:when>
+									<c:when test="${list.cashingStatus == '출금완료' }">
+										<td class="fs-small text-info">${list.cashingStatus }</td>
+									</c:when>
+								</c:choose>
+								<td class="text-muted fs-small"><fmt:formatDate value="${list.cashingSuccessTime }" pattern="yyyy.MM.dd HH:mm"></fmt:formatDate></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+	        </div>
+        </div>
+        
 </div>
 
 
