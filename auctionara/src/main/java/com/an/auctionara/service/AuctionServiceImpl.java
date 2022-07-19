@@ -165,10 +165,12 @@ public class AuctionServiceImpl implements AuctionService {
 		}
 	}
 	
-	@Scheduled(cron = "0 0 12 * * *") // 매일 오후 12시마다 낙찰 후 7일이 지났고 거래완료 안한 낙찰자 자동 거래완료 처리
+	// 매일 오후 12시마다 낙찰 후 7일이 지났고 거래완료 안한 낙찰자 자동 거래완료 처리 & 미결제자 제재 및 미결제 처리
+	@Scheduled(cron = "0 0 12 * * *") 
 	@Override
 	public void autoApprove() {
-		successfulBidDao.autoApprove();
-		successfulBidDao.approveAutoFinish();
+		successfulBidDao.approveAutoFinish(); // 포인트 전달 처리
+		successfulBidDao.autoApprove(); // 거래 완료 처리
+		successfulBidDao.checkCashing(); // 미결제 & 제재 처리
 	}
 }

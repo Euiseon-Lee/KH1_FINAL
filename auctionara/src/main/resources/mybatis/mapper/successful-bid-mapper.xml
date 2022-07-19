@@ -112,10 +112,25 @@
             where trunc(sysdate) - trunc(D.succ_date) >= 7  and (D.succ_auctioneer_approve is null or D.succ_bidder_approve is null)
 	</update>
 	
-	<!-- 결제 완료 야부 확인 -->
+	<!-- 결제 완료 여부 확인 -->
 	<select id="checkStatus" parameterType="int" resultType="int">
 		select succ_bid_status from successful_bid 
 			where auction_no = #{auctionNo}
-	</select>	
+	</select>
 	
+	<!-- 낙찰 7일 후 미결제자 자동 미결제 처리 -->
+	<update id="checkCashing">
+		update successful_bid set succ_bid_status = 2
+		where succ_bid_status = 0 and trunc(sysdate) - trunc(succ_date) >= 7 
+	</update>
+	
+	<!-- 낙찰 7일 후 미결제자 제재 처리 -->		
+	<update id="autoRedCount">
+		merge into member A 
+        using successful_bid B on (A.member_no = B.succ_bidder_no)
+		when matched then
+			update set A.member_red_count = A.member_red_count + 1
+            where B.succ_bid_status = 0 and trunc(sysdate) - trunc(B.succ_date) >= 7
+	</update>
+		
 </mapper> 
