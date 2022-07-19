@@ -61,7 +61,7 @@
 				</li>
 				<li class="list-group-item">
 					<h2 class="card-title">거래 가능 시간</h2>
-					<p class="card-text">${memberDto.memberPreference}</p>
+					<p class="card-text">${memberDto.memberPreference}</p> 
 				</li>
 				<li class="list-group-item">
 					<h2 class="card-title">누적 경고 횟수</h2>
