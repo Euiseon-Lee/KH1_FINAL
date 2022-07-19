@@ -67,4 +67,19 @@ public class SuccessfulBidDaoImpl implements SuccessfulBidDao{
 		
 	}
 
+	@Override
+	public void approveFinish(int auctionNo) {
+		sqlSession.update("successful_bid.approveFinish", auctionNo);
+	}
+
+	@Override
+	public void approveAutoFinish() {
+		sqlSession.update("successful_bid.approveAutoFinish");
+	}
+
+	@Override
+	public int checkStatus(int auctionNo) {
+		return sqlSession.selectOne("successful_bid.checkStatus", auctionNo);
+	}
+
 }

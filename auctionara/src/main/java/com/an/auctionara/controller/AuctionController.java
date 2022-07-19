@@ -151,6 +151,10 @@ public class AuctionController {
 		AuctioneerInfoVO auctioneerInfo = auctionDao.auctioneerInfo(auctionDetail.getAuctioneerNo());
 		model.addAttribute("auctioneerInfo", auctioneerInfo);
 		
+		// 결제 완료 여부 조회
+		int succBidStatus = successfulBidDao.checkStatus(auctionNo);
+		model.addAttribute("succBidStatus", succBidStatus);
+		
 		// 입찰 가능 여부 확인 (인증 주소)
 		Map<String, Integer> info = new HashMap<>();
 		info.put("memberNo", memberNo);
