@@ -82,7 +82,7 @@ public class PaymentServiceImpl implements PaymentService{
 				vo.setCashingType("1");
 			}
 			sqlSession.insert("payment.cashingInsert", vo);
-			boolean success = sqlSession.update("payment.cashing", vo)>0;			
+			boolean success = memberDto.getMemberHoldingPoints() >= vo.getCashingMoney();
 			return success;
 		}else {
 			return false;
