@@ -184,7 +184,7 @@
     				this.list = resp.data;
     				if(resp.data.length != 0) {
         				this.auctionCount = resp.data[0].auctionCount;
-        				this.totalPage = parseInt(resp.data[0].auctionCount / 10) + 1;
+        				this.totalPage = parseInt((resp.data[0].auctionCount - 1) / 10) + 1;
         				this.totalPoint = resp.data[0].totalPoint;
     				} else {
         				this.auctionCount = 0;
@@ -207,7 +207,7 @@
     				this.list = resp.data;
     				if(resp.data.length != 0) {
         				this.auctionCount = resp.data[0].auctionCount;
-        				this.totalPage = parseInt(resp.data[0].auctionCount / 10) + 1;    					
+        				this.totalPage = parseInt((resp.data[0].auctionCount - 1) / 10) + 1;    					
     				} else {
         				this.auctionCount = 0;
         				this.totalPage = 1;      					

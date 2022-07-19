@@ -15,9 +15,9 @@ public class AuctionListVO {
 	private int auctionOpeningBid;
 	private int biddingPrice;
 	private Date auctionClosedTime;
+	private int auctionCount;
 	private String auctionRemainTime;
 	private boolean deadlineClosing;
-	private int auctionCount;
 	
 	// 컬럼 추가
 	private int auctionPrivate; 

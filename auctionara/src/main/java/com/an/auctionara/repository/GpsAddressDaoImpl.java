@@ -74,8 +74,8 @@ public class GpsAddressDaoImpl implements GpsAddressDao {
 	}
 
 	@Override
-	public void changeGpsStaus(Date limit) {
-		sqlSession.update("gps_address.updateStaus", limit);
+	public void changeGpsStaus() {
+		sqlSession.update("gps_address.updateStaus");
 	}
 
 	@Override
