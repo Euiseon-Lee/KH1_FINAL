@@ -23,7 +23,6 @@
 					<th>신청 금액</th>
 					<th>신청 은행</th>
 					<th>신청 계좌번호</th>
-					<th>현금화 유형</th>
 					<th>현금화 상태</th>
 					<th>현금화 신청일</th>
 					<th>현금화 완료일</th>
@@ -37,16 +36,6 @@
 						<td>${cashingPointsListVO.cashingMoney}</td>
 						<td>${cashingPointsListVO.cashingBank}</td>
 						<td>${cashingPointsListVO.cashingAccount}</td>
-						<td>
-							<c:choose>
-								<c:when test="${cashingPointsListVO.cashingType == 1}">
-									전체출금
-								</c:when>
-								<c:otherwise>
-									일부출금
-								</c:otherwise>
-							</c:choose>
-						</td>
 						<c:choose>
 							<c:when test="${cashingPointsListVO.cashingStatus == '출금신청'}">
 								<td class="text-secondary">${cashingPointsListVO.cashingStatus}</td>	
