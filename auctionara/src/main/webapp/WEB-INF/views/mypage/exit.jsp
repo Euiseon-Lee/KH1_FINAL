@@ -88,6 +88,13 @@
 					<input type="password" name="memberPw" required placeholder="현재 비밀번호를 입력해주세요" id="pw"
 						class="form-control mb-4">
 				</div>
+				<c:if test="${param.error != null}">
+				<div class="row alert alert-primary" role="alert">
+					<i class="fa-solid fa-circle-exclamation mr-2 mt-1"></i>
+					현재 진행 중인 경매내역 또는 결제완료된 낙찰내역이 존재합니다<br>
+					해당 거래가 완료될 때까지 탈퇴가 불가능합니다
+				</div>	
+				</c:if>
 				<div class="mb-5">
 					<button type="submit" class="btn btn-secondary btn-block py-2">탈퇴하겠습니다</button>
 				</div>

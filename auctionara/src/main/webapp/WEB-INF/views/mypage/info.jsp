@@ -43,6 +43,7 @@
 	<!-- 본문 -->
 	<div class="row flex-fill d-flex flex-column">
 		<div class="col">
+		<h4 class="row fw-bold my-4 pt-2">내 정보 수정</h4>
 		<form action="info" method="post" enctype="multipart/form-data">
 			<div class="row mt-4">프로필 사진</div>
 			<div class="input-group row center m-1 mb-3">
