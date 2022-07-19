@@ -145,23 +145,15 @@
 		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="!${checkAddress} && !auctionClose">
 		                    동네인증 필요
 		                </button>
-		                <c:choose>
-                    		<c:when test="${succBidStatus == 0}">
-		                <a href="${root }/payment/paying/${auctionDetail.auctionNo}" class="btn btn-primary btn-lg btn-block py-3" v-if="auctionClose && topBidder == 1">
+		                <a href="${root }/payment/paying/${auctionDetail.auctionNo}" class="btn btn-primary btn-lg btn-block py-3" v-if="auctionClose && topBidder == 1 && succBidStatus != 1 && succBidStatus != 2">
 		                    <i class="fa-solid fa-coins pr-2"></i> 결제하기
-		                </a>                    		
-                    		</c:when>
-                    		<c:when test="${succBidStatus == 1}">
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled  v-if="auctionClose && topBidder == 1">
+		                </a>
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="auctionClose && topBidder == 1 && succBidStatus == 1">
 		                    <i class="fa-solid fa-coins pr-2"></i> 결제 완료
-		                </button>                  		
-                    		</c:when>                    		
-             	            <c:otherwise>
-		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled  v-if="auctionClose && topBidder == 1">
-		                    <i class="fa-solid fa-coins pr-2"></i> 미결제
 		                </button>
-             	            </c:otherwise>
-             	        </c:choose>
+		                <button type="button" class="btn btn-primary btn-lg btn-block py-3" disabled v-if="auctionClose && topBidder == 1 && succBidStatus == 2">
+		                    <i class="fa-solid fa-coins pr-2"></i> 미결제
+		                </button>			                
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -397,6 +389,7 @@ ${auctionDetail.auctionContent}
                 interval: "",
                 auctionClose: false,
                 reportReason: "",
+                succBidStatus: ${succBidStatus},
             };
         },
         computed: {

@@ -13,6 +13,7 @@ public interface SuccessfulBidDao {
 	void approveFinish(int auctionNo);
 	void approveAutoFinish();
 	int checkStatus(int auctionNo);
+	void checkCashing();
 	
 	//마이페이지 낙찰 성공한 총 개수 출력
 	int succCount(int memberNo);
