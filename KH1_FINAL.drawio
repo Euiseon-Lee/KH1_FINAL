@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-07-20T11:05:03.641Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" etag="ZA12RychZrO7c-s0PMvA" version="18.1.3" type="github" pages="3">
+<mxfile host="app.diagrams.net" modified="2022-07-20T15:15:24.234Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" etag="Wr2vp1UNhMUiBDj1IMou" version="18.1.3" type="github" pages="3">
   <diagram id="h28S9tUxpFHeoZLsGMbE" name="경매 플로우">
-    <mxGraphModel dx="2934" dy="2113" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3078" dy="2165" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1197,7 +1197,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="Qj2mBUZ48-bVHCZe4_wr" name="Page-1">
-    <mxGraphModel dx="4854" dy="4828" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="4502" dy="4330" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1321,8 +1321,8 @@
         <mxCell id="wdQoFm_fkOEl0PBrR_Xd-12" value="&lt;span style=&quot;font-size: 30px;&quot;&gt;내 정보 수정&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#B3B3B3;" vertex="1" parent="1">
           <mxGeometry x="-280" y="-865" width="160" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="wdQoFm_fkOEl0PBrR_Xd-13" value="&lt;span style=&quot;font-size: 30px;&quot;&gt;내 경매목록&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#B3B3B3;" vertex="1" parent="1">
-          <mxGeometry x="-280" y="-740" width="160" height="60" as="geometry" />
+        <mxCell id="wdQoFm_fkOEl0PBrR_Xd-13" value="&lt;span style=&quot;font-size: 30px;&quot;&gt;경매/입찰목록&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#B3B3B3;" vertex="1" parent="1">
+          <mxGeometry x="-286.73" y="-740" width="180" height="60" as="geometry" />
         </mxCell>
         <mxCell id="wdQoFm_fkOEl0PBrR_Xd-14" value="&lt;span style=&quot;font-size: 30px;&quot;&gt;포인트 충전&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#B3B3B3;" vertex="1" parent="1">
           <mxGeometry x="-80" y="-740" width="160" height="60" as="geometry" />
@@ -1437,6 +1437,15 @@
         </mxCell>
         <mxCell id="wdQoFm_fkOEl0PBrR_Xd-35" value="&lt;span style=&quot;font-size: 30px;&quot;&gt;경매인 평가&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#B3B3B3;" vertex="1" parent="1">
           <mxGeometry x="113.36000000000001" y="310" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="UEy82x6ZfvAHvNv9RTAQ-1" value="로그인" style="ellipse;whiteSpace=wrap;html=1;fontSize=30;" vertex="1" parent="1">
+          <mxGeometry x="-107.5" y="-1680" width="205" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="UEy82x6ZfvAHvNv9RTAQ-3" value="" style="endArrow=classic;html=1;rounded=0;fontSize=70;fontColor=#000000;strokeColor=#333333;strokeWidth=5;fillColor=#FFB5C6;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Qw0CkTAiq_1mrWID1eZY-2" target="UEy82x6ZfvAHvNv9RTAQ-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-810" y="-1633.3333333333335" as="sourcePoint" />
+            <mxPoint x="-97.5" y="-1760" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
