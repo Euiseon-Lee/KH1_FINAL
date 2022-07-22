@@ -116,7 +116,7 @@
         	  	return String(money).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         	},
             loadMore() { // 검색 결과 불러오기
-            	axios.get("http://localhost:8080/auctionara/list", {
+            	axios.get("${root}/list", {
             		params: {
             			page: this.page,
             			filter: this.filter,

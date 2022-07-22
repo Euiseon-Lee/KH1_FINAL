@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
@@ -200,7 +199,7 @@
                 this.chatRoomNo = chatRoomNo; // 채팅방 번호 변경
                 
              	// 해당 채팅방 채팅 이력 가져오기
-                axios.get("http://localhost:8080/auctionara/chat/talk/" + chatRoomNo)
+                axios.get("${root}/chat/talk/" + chatRoomNo)
                 .then(resp => {
                     this.chatContentDto = resp.data;
                 }); 
@@ -219,7 +218,7 @@
                 this.updateCheck();
 
                 // 채팅 서버 접속
-                this.socket = new SockJS("http://localhost:8080/auctionara/ws/chat");
+                this.socket = new SockJS("${root}/ws/chat");
                 this.socket.onopen = this.whenConnected;
                 this.socket.onclose = this.whenDisconnected;
                 this.socket.onerror = this.whenError;
@@ -257,7 +256,7 @@
                     messageType: "string",
                 };
                 this.socket.send(JSON.stringify(message)); // 전송
-                axios.post("http://localhost:8080/auctionara/chat/save", {
+                axios.post("${root}/chat/save", {
             		chatRoomNo : this.chatRoomNo,
             		chatterNo : ${whoLogin},
             		chatContent : this.content,
@@ -270,7 +269,7 @@
             sendImage() {
             	const formData = new FormData();
                 formData.append("image", $("input[type=file]")[0].files[0]);
-                axios.post("http://localhost:8080/auctionara/attachment/chat", formData)
+                axios.post("${root}/attachment/chat", formData)
                 .then(resp=>{
             		if(resp.data) {
                         var message = {
@@ -283,7 +282,7 @@
                                 messageType: "string",
                             };
                             this.socket.send(JSON.stringify(message)); // 전송
-                            axios.post("http://localhost:8080/auctionara/chat/save", {
+                            axios.post("${root}/chat/save", {
                         		chatRoomNo : this.chatRoomNo,
                         		chatterNo : ${whoLogin},
                         		chatContent : resp.data.attachmentNo,
@@ -307,7 +306,7 @@
                         messageType: "string",
                     };
                     this.socket.send(JSON.stringify(message)); // 전송
-                    axios.post("http://localhost:8080/auctionara/chat/save", {
+                    axios.post("${root}/chat/save", {
                 		chatRoomNo : this.chatRoomNo,
                 		chatterNo : ${whoLogin},
                 		chatContent : emojiNo,
@@ -324,19 +323,19 @@
         		}
             },
             auctioneerFinish() {
-            	axios.get("http://localhost:8080/auctionara/chat/auctioneer/approve/" + this.auctionNo)
+            	axios.get("${root}/chat/auctioneer/approve/" + this.auctionNo)
                 .then(resp => {
                 	this.updateCheck();
                 });
             },
             memberFinish() {
-            	axios.get("http://localhost:8080/auctionara/chat/bidder/approve/" + this.auctionNo)
+            	axios.get("${root}/chat/bidder/approve/" + this.auctionNo)
                 .then(resp => {
 					this.updateCheck();
                 });
             },
             updateCheck() {
-               	axios.get("http://localhost:8080/auctionara/chat/check/" + this.auctionNo)
+               	axios.get("${root}/chat/check/" + this.auctionNo)
                 .then(resp => {
                     if(resp.data) {	
                     	this.auctioneerBtn = resp.data.succAuctioneerApprove;
@@ -358,14 +357,14 @@
                 });
             },
             setRating() {
-            	axios.get("http://localhost:8080/auctionara/chat/rating/list")
+            	axios.get("${root}/chat/rating/list")
             	.then(resp => {
             		this.showRating = true;
             		this.ratingList = resp.data;
             	});
             },
             finishRating() {
-            	axios.post("http://localhost:8080/auctionara/chat/rating/save", {
+            	axios.post("${root}/chat/rating/save", {
             		ratingItemNo: $('input:radio[name=rating]:checked').val(),
             		auctionNo: this.auctionNo,
             	})
@@ -375,7 +374,7 @@
             	});
             },
             finishReport() {
-            	axios.post("http://localhost:8080/auctionara/chat/report", {
+            	axios.post("${root}/chat/report", {
             		chatRoomNo: this.chatRoomNo,
             		memberNo: ${whoLogin},
             		chatReportReason: this.reportReason,

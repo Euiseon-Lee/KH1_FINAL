@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.an.auctionara.paymentvo.KakaoPayApproveRequestVO;
 import com.an.auctionara.paymentvo.KakaoPayApproveResponseVO;
@@ -20,7 +21,6 @@ import com.an.auctionara.paymentvo.KakaoPayOrderRequestVO;
 import com.an.auctionara.paymentvo.KakaoPayOrderResponseVO;
 import com.an.auctionara.paymentvo.KakaoPayReadyRequestVO;
 import com.an.auctionara.paymentvo.KakaoPayReadyResponseVO;
-import com.an.auctionara.paymentvo.PaymentInsertVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,11 +57,11 @@ public class KakaoPayServiceImpl implements KakaoPayService{
 		body.add("tax_free_amount", "0");//무조건 0원
 		
 
-//		String prefix = ServletUriComponentsBuilder
-//													.fromCurrentContextPath()
-//													.path("/pay")
-//													.toUriString();
-		String prefix = "http://localhost:8080/auctionara/payment";
+		String prefix = ServletUriComponentsBuilder
+													.fromCurrentContextPath()
+													.path("/payment")
+													.toUriString();
+//		String prefix = "${root}/payment";
 		body.add("approval_url", prefix+"/approve");
 		body.add("cancel_url", prefix+"/cancel");
 		body.add("fail_url", prefix+"/fail");
