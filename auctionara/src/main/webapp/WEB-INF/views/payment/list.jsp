@@ -5,7 +5,39 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
-<h1>총 충전 목록</h1>
+
+<div class="container d-flex">
+
+	<div class="row col-3 mt-3">
+		<ul class="nav flex-column text-center">
+		  <li class="nav-item border-bottom">
+		  	<a href="${root}/mypage/index" class="nav-link btn-outline-dark fw-bold fs-large">마이페이지</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+		  	<a href="${root}/mypage/info" class="nav-link btn-outline-info">내 정보 수정</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+		    <a href="${root}/mypage/auction_history" class="nav-link btn-outline-info">내 경매</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">내 입찰</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+			<a href="${root}/mypage/paymentReady" class="nav-link btn-outline-info">포인트 충전</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+			<a href="${root }/mypage/payment/list" class="nav-link btn-outline-info">포인트 충전 취소</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+			<a href="${root }/mypage/cashing" class="nav-link btn-outline-info">현금화 신청</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원 탈퇴</a>
+		  </li>
+		</ul>
+	</div>
+	<div class="nav flex-column text-center">
+		<h1>총 충전 목록</h1>
 <c:forEach var = "paymentInsertVO" items="${allList}">
 	<div>
 		<div>
@@ -28,6 +60,7 @@
 			<a href="${root}/payment/refund/${paymentInsertVOO.paymentNo}">취소하기</a>
 		</div>
 	</c:forEach>
+	</div>
 </div>
 
 <%@include file="/WEB-INF/views/template/footer.jsp" %>

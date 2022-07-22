@@ -23,9 +23,9 @@ import com.an.auctionara.entity.MemberDto;
 import com.an.auctionara.repository.AutologinDao;
 import com.an.auctionara.repository.MemberDao;
 import com.an.auctionara.service.MemberService;
-import com.an.auctionara.vo.AuctionListVO;
-import com.an.auctionara.vo.MyAuctionVO;
+import com.an.auctionara.service.PaymentService;
 import com.an.auctionara.vo.MemberVO;
+import com.an.auctionara.vo.MyAuctionVO;
 import com.an.auctionara.vo.MyBiddingVO;
 
 @Controller
@@ -41,6 +41,8 @@ public class MypageController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private PaymentService paymentService;
 	
 	@GetMapping("/index")
 	public String mypageIndex(HttpSession session, Model model) {
@@ -86,7 +88,7 @@ public class MypageController {
 		String end = request.getParameter("end");
 		
 		
-		String memberPreference = week+", "+begin+" ~ "+end;
+		String memberPreference = week + " "+ begin + " ~ " + end;
 		memberDto.setMemberPreference(memberPreference);
 		
 		boolean success = memberService.info(memberDto, attachment);
@@ -208,5 +210,25 @@ public class MypageController {
 		int bidderNo = (int) session.getAttribute("whoLogin");
 		List<MyBiddingVO> list = memberService.biddingList(bidderNo, page, filter, sort, categoryNo, keyword);
 		return list;
+	}
+	
+	@GetMapping("/paymentReady")
+	public String pay1Purchase(HttpSession httpSession, Model model) {
+		int memberNo = (int) httpSession.getAttribute("whoLogin");
+		
+		model.addAttribute("memberDto", memberDao.selectOne(memberNo));
+		return "payment/paymentReady";
+	}
+	@GetMapping("/payment/list")
+	public String payList(HttpSession session, Model model) {
+		int memberNo = (int) session.getAttribute("whoLogin");
+		model.addAttribute("allList", paymentService.allList(memberNo));
+		model.addAttribute("refundList", paymentService.refundList(memberNo));
+		return "payment/list";
+	}
+	@GetMapping("/cashing")
+	public String cashing(HttpSession session, Model model) {
+		model.addAttribute("memberDto", memberDao.selectOne((int)session.getAttribute("whoLogin")));
+		return "payment/cashing";
 	}
 }

@@ -22,7 +22,13 @@
 		    <a href="${root}/mypage/pay_history" class="nav-link btn-outline-info">내 입찰</a>
 		  </li>
 		  <li class="nav-item border-bottom">
-		    <a href="${root}/mypage/cash_log" class="nav-link btn-outline-info">포인트/현금화</a>
+			<a href="${root}/mypage/paymentReady" class="nav-link btn-outline-info">포인트 충전</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+			<a href="${root }/mypage/payment/list" class="nav-link btn-outline-info">포인트 충전 취소</a>
+		  </li>
+		  <li class="nav-item border-bottom">
+			<a href="${root }/mypage/cashing" class="nav-link btn-outline-info">현금화 신청</a>
 		  </li>
 		  <li class="nav-item border-bottom">
 		    <a href="${root}/mypage/exit" class="nav-link btn-outline-secondary">회원 탈퇴</a>
@@ -141,7 +147,7 @@
 		let arr = preference.split(/[" ", ~]/);
 		$("select[name=week]").val(arr[0]);
 		$("select[name=begin]").val(arr[1] + " " + arr[2]);
-		$("select[name=end]").val(arr[3] + " " + arr[4]);
+		$("select[name=end]").val(arr[5] + " " + arr[6]);
 		</c:if>
 		
 		$("#valid-nick").hide();
