@@ -248,12 +248,12 @@ pageEncoding="UTF-8"%>
                     formData.append("auctionLongitude2", this.auctionLongitude2);
                     formData.append("auctionCircle2", this.auctionCircle2);  	
                 }
-                request.open("POST", "http://localhost:8080/auctionara/auction/write");
+                request.open("POST", "${root}/auction/write");
                 request.send(formData);
                 
                 request.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                    	location.href = "http://localhost:8080/auctionara/auction/detail/" + this.responseText;
+                    	location.href = "${root}/auction/detail/" + this.responseText;
                     }
                 };
             }

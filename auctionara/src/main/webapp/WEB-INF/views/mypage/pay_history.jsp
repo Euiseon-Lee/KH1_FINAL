@@ -171,7 +171,7 @@
         	  		+ (date.getHours() < 10 ? "0" : "") + date.getHours() + ":" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
         	},
             loadFirst() { // 첫 리스트 불러오기
-            	axios.get("http://localhost:8080/auctionara/mypage/pay_history/list", {
+            	axios.get("${root}/mypage/pay_history/list", {
             		params: {
             			page: this.page,
             			filter: this.filter,
@@ -192,7 +192,7 @@
             	})
             },           	
             loadMore() { // 리스트 불러오기
-            	axios.get("http://localhost:8080/auctionara/mypage/pay_history/list", {
+            	axios.get("${root}/mypage/pay_history/list", {
             		params: {
             			page: this.page,
             			filter: this.filter,

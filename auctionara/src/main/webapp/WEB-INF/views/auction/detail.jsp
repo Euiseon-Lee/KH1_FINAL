@@ -452,7 +452,7 @@ ${auctionDetail.auctionContent}
             },
             refresh() {
             	this.alert = 0; // 입찰 경고창 닫기
-            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            	axios.get("${root}/auction/detail/refresh", {
             		params: {
                 		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
@@ -501,7 +501,7 @@ ${auctionDetail.auctionContent}
             	document.getElementById("rotate").classList.add("rotate");
             }, 500), 
             bidding() {
-            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            	axios.get("${root}/auction/detail/refresh", {
             		params: {
                 		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
@@ -522,7 +522,7 @@ ${auctionDetail.auctionContent}
                         	this.alert = 1;
                         } else { // 입찰 성공
                         	if(this.inputBid >= this.closingBid) { // 즉시 낙찰
-                            	axios.post("http://localhost:8080/auctionara/auction/detail/bidding/close", {
+                            	axios.post("${root}/auction/detail/bidding/close", {
                                     bidderNo : ${whoLogin},
                                     auctionNo : this.auctionNo,
                                     biddingPrice : this.inputBid,
@@ -531,7 +531,7 @@ ${auctionDetail.auctionContent}
                                 	this.myBidding = true;
                                 })
                         	} else { // 일반 입찰
-                            	axios.post("http://localhost:8080/auctionara/auction/detail/bidding", {
+                            	axios.post("${root}/auction/detail/bidding", {
                                     bidderNo : ${whoLogin},
                                     auctionNo : this.auctionNo,
                                     biddingPrice : this.inputBid,
@@ -550,7 +550,7 @@ ${auctionDetail.auctionContent}
             	});
             },
             blindBidding() {
-            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            	axios.get("${root}/auction/detail/refresh", {
             		params: {
                 		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
@@ -565,7 +565,7 @@ ${auctionDetail.auctionContent}
             			this.refresh();
             		} else {
                     	if(this.inputBid >= this.closingBid) { // 즉시 낙찰
-                        	axios.post("http://localhost:8080/auctionara/auction/detail/bidding/close", {
+                        	axios.post("${root}/auction/detail/bidding/close", {
                                 bidderNo : ${whoLogin},
                                 auctionNo : this.auctionNo,
                                 biddingPrice : this.inputBid,
@@ -574,7 +574,7 @@ ${auctionDetail.auctionContent}
                             	this.myBidding = true;
                             })
                     	} else { // 일반 입찰
-                        	axios.post("http://localhost:8080/auctionara/auction/detail/bidding", {
+                        	axios.post("${root}/auction/detail/bidding", {
                                 bidderNo : ${whoLogin},
                                 auctionNo : this.auctionNo,
                                 biddingPrice : this.inputBid,
@@ -592,7 +592,7 @@ ${auctionDetail.auctionContent}
             	});
             },
             closeBidding() {
-            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            	axios.get("${root}/auction/detail/refresh", {
             		params: {
                 		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
@@ -606,7 +606,7 @@ ${auctionDetail.auctionContent}
 	        			this.closeAuction(); // 경매 종료
 	        			this.refresh();					
             		} else {  // 내가 즉시 낙찰
-                    	axios.post("http://localhost:8080/auctionara/auction/detail/bidding/close", {
+                    	axios.post("${root}/auction/detail/bidding/close", {
                         	bidderNo : ${whoLogin},
                             auctionNo : this.auctionNo,
                             biddingPrice : this.closingBid,
@@ -649,7 +649,7 @@ ${auctionDetail.auctionContent}
             	}
             },
             checkAuction1() {
-            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            	axios.get("${root}/auction/detail/refresh", {
             		params: {
                 		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
@@ -675,7 +675,7 @@ ${auctionDetail.auctionContent}
             	});           	
             },
             checkAuction2() {
-            	axios.get("http://localhost:8080/auctionara/auction/detail/refresh", {
+            	axios.get("${root}/auction/detail/refresh", {
             		params: {
                 		bidderNo : ${whoLogin},
                 		auctionNo : this.auctionNo,
@@ -697,7 +697,7 @@ ${auctionDetail.auctionContent}
             	});
             },
             report() {
-            	axios.post("http://localhost:8080/auctionara/auction/detail/report", {
+            	axios.post("${root}/auction/detail/report", {
             		auctionNo: this.auctionNo,
             		auctionReporterNo: ${whoLogin},
             		auctionReportReason: this.reportReason,

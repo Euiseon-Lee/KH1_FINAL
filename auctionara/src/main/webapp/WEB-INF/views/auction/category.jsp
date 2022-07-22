@@ -91,7 +91,7 @@
                 if(bottom) this.loadMore();
             },
             loadMore() { // 카테고리별 경매 불러오기
-            	axios.get("http://localhost:8080/auctionara/list", {
+            	axios.get("${root}/list", {
             		params: {
             			page: this.page,
             			filter: this.filter,
