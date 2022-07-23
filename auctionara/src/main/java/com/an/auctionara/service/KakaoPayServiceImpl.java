@@ -34,7 +34,7 @@ public class KakaoPayServiceImpl implements KakaoPayService{
 	
 	private RestTemplate template = new RestTemplate();
 	
-	private String authorization = "KakaoAK 840b99ad5f961691f587bb457ff627d3";
+	private String authorization = "KakaoAK 1575260d71826690576ca2d961dd86cf";
 	private String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 	
 	private String cid = "TC0ONETIME";
