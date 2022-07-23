@@ -30,7 +30,7 @@ public class AuctionPrivateInterceptor implements HandlerInterceptor {
 		} else {
 			response.setContentType("text/html; charset=UTF-8");
 	        PrintWriter out = response.getWriter(); 
-	        out.println("<script>alert('비공개 처리 된 경매입니다'); location.href = 'http://localhost:8080/auctionara';</script>"); // 비공개 경매일 시 경고창 표시 후 이전 페이지로 돌아가기
+	        out.println("<script>alert('비공개 처리 된 경매입니다'); location.href = '${root}';</script>"); // 비공개 경매일 시 경고창 표시 후 이전 페이지로 돌아가기
 	        out.flush();
 
 			return false;

@@ -178,7 +178,7 @@ pageEncoding="UTF-8"%>
     // 반경과 좌표 정보를 DB에 저장하는 함수
     function postAddress() {
         $.ajax({
-            url: "http://localhost:8080/auctionara/address",
+            url: "${root}/address",
             type: "post",
             data: JSON.stringify({
                 memberNo: ${whoLogin},
@@ -407,7 +407,7 @@ pageEncoding="UTF-8"%>
     // 주소1 수정 함수
     function changeAddress1() {
         $.ajax({
-            url: "http://localhost:8080/auctionara/address/change1",
+            url: "${root}/address/change1",
             type: "put",
             data: JSON.stringify({
                 memberNo: ${whoLogin},
@@ -423,7 +423,7 @@ pageEncoding="UTF-8"%>
     // 주소2 수정 함수
     function changeAddress2() {
         $.ajax({
-            url: "http://localhost:8080/auctionara/address/change2",
+            url: "${root}/address/change2",
             type: "put",
             data: JSON.stringify({
                 memberNo: ${whoLogin},
@@ -439,7 +439,7 @@ pageEncoding="UTF-8"%>
  	// 주소2 삭제 함수
     function deleteAddress2() {
         $.ajax({
-            url: "http://localhost:8080/auctionara/address/delete2",
+            url: "${root}/address/delete2",
             type: "delete",
             data: JSON.stringify({
                 memberNo: ${whoLogin},

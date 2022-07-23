@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
 <%@include file="/WEB-INF/views/template/header.jsp" %>
 
@@ -141,7 +140,7 @@
                 if(bottom) {this.loadMore();}
             },
             loadMore() { // 우리 동네 경매 불러오기
-            	axios.get("http://localhost:8080/auctionara/list", {
+            	axios.get("${root}/list", {
             		params: {
             			page: this.page,
             			filter: this.filter,

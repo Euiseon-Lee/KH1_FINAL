@@ -132,7 +132,7 @@
         	  		+ (date.getHours() < 10 ? "0" : "") + date.getHours() + ":" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
         	},          	
             loadMore() { // 리스트 불러오기
-            	axios.get("http://localhost:8080/auctionara/payment/loadList", {
+            	axios.get("${root}/payment/loadList", {
             		params: {
             			page: this.page,
             			filter: this.filter,
