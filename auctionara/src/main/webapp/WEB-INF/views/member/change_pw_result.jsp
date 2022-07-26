@@ -31,7 +31,7 @@
 		</div>
 		
 		<div class="row">
-			<input type="email" name="memberEmail" placeholder="email"> 
+			<input type="email" name="memberEmail" placeholder="email" value="${param.checkedEmail}"> 
 		</div>
 		
 		<div class="row">

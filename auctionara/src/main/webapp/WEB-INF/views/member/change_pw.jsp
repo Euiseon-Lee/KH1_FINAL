@@ -12,7 +12,8 @@
 				<p class="row text-muted mb-0">비밀번호를 새로 설정할 수 있는 링크를</p>
 				<p class="row text-muted">이메일로 발송해드립니다</p>
 				<div class="row border-bottom mt-4 mb-2">
-					<input type="email" name="memberEmail" class="form-control border-0" autocomplete="off" placeholder="name@example.com">				
+					<input type="email" name="memberEmail" class="form-control border-0" id="email-input"
+						autocomplete="off" placeholder="name@example.com" value="${param.checkedEmail}">				
 				</div>
 				<c:if test="${param.fail != null}">
 				<div class="row">
@@ -26,7 +27,8 @@
 				</div>
 				</c:if>				
 				<div class="row">
-					<button type="submit" class="btn btn-primary btn-block mt-2">링크 발송</button>	
+					<button type="submit" id="btn-send-email" 
+						class="btn btn-primary btn-block mt-2">링크 발송</button>	
 				</div>
 				<div class="row justify-content-center">
 					<span class="fw-bold mt-4">로그인하러 가시겠습니까? <a class="ml-3" href="${root}/member/login">바로 로그인</a></span>
@@ -42,3 +44,22 @@
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+	$(function(){
+		
+		$("#btn-send-email").attr("disabled", true);
+		
+		$("#email-input").on("click", function(){
+			$("#btn-send-email").attr("disabled", true);			
+			$("#email-input").val("");
+		});
+		
+		$("#email-input").on("blur", function(){
+			$("#btn-send-email").attr("disabled", false);			
+		});
+		
+	});
+	
+</script>

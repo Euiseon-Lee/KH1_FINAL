@@ -11,7 +11,8 @@
 				<p class="row text-muted mt-3 mb-0">소유하고 계신 계정을 입력해보세요</p>
 				<p class="row text-muted">가입여부를 확인해드립니다</p>
 				<div class="row border-bottom mt-4 mb-2">
-					<input type="email" name="memberEmail" class="form-control border-0" autocomplete="off" placeholder="name@example.com" value="${param.checkedEmail}">				
+					<input type="email" name="memberEmail" class="form-control border-0" 
+						id="email-input" autocomplete="off" placeholder="name@example.com" value="${param.checkedEmail}">				
 				</div>
 				<c:if test="${param.success != null}">
 				<div class="row">
@@ -24,7 +25,8 @@
 				</div>
 				</c:if>				
 				<div class="row">
-					<button type="submit" class="btn btn-primary btn-block mt-2">확인</button>	
+					<button type="submit" class="btn btn-primary btn-block mt-2"
+						id="btn-send-email" >확인</button>	
 				</div>		
 			</form>
 			<c:if test="${param.success != null}">
@@ -46,3 +48,21 @@
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+$(function(){
+	
+	$("#btn-send-email").attr("disabled", true);
+	
+	$("#email-input").on("click", function(){
+		$("#btn-send-email").attr("disabled", true);			
+		$("#email-input").val("");
+	});
+	
+	$("#email-input").on("blur", function(){
+		$("#btn-send-email").attr("disabled", false);			
+	});
+	
+});
+</script>
