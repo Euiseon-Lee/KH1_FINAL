@@ -96,7 +96,7 @@
 						<div class="col-3">
 							<label>
 								<input type="radio" name="chargeMoney" value="50000" v-model="chargingMoney">
-								50,0000원
+								50,000원
 							</label>
 						</div>
 						<div class="col-3">
