@@ -55,6 +55,12 @@ $(function(){
 	
 	$("#btn-send-email").attr("disabled", true);
 	
+	var input = $("#email-input").val();
+	
+	if(input==""){
+		$("#btn-send-email").attr("disabled", true);
+	}
+	
 	$("#email-input").on("click", function(){
 		$("#btn-send-email").attr("disabled", true);			
 		$("#email-input").val("");
