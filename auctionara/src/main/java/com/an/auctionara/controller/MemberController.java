@@ -312,16 +312,18 @@ public class MemberController {
 	
 	@PostMapping("/change_pw")
 	public String changePw(
-			@ModelAttribute MemberDto targetDto
+			@RequestParam String memberEmail,
+			Model model
 			) throws MessagingException {
-		int isMember = memberDao.checkEmail(targetDto.getMemberEmail());	
+		int isMember = memberDao.checkEmail(memberEmail);
+		model.addAttribute("checkedEmail", memberEmail);
 		
 		if(isMember == 0) {
 			return "redirect:change_pw?fail";
 		}
 		
 		else {
-			certService.sendPwResetMail(targetDto);
+			certService.sendPwResetMail(memberEmail);
 			return "redirect:change_pw?success";
 		}
 	}
