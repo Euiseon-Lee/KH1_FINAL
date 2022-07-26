@@ -58,7 +58,7 @@
 				<c:otherwise>
 					<p>
 						현재 보유 중인 포인트  
-						<strong><a href="#">
+						<strong><a href="${root}/payment/cashing">
 						<i class="fa-solid fa-angles-right"></i> ${memberDto.memberHoldingPoints}p</a>
 						</strong>
 					</p>
