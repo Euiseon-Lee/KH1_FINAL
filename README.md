@@ -3,8 +3,7 @@
   http://sysout.co.kr/auctionara  <br>
   https://sysout.co.kr/auctionara
 <br>  
-  <구현한 기능>
-  <\t>로그인, 계정찾기, 회원가입, 마이페이지 수정 및 탈퇴, 자동로그인 기능
+  구현 기능: 로그인, 계정찾기, 회원가입, 마이페이지 수정 및 탈퇴, 자동로그인 기능
   
 <br>
 
