@@ -5,7 +5,9 @@
 <br>  
   <구현한 기능>
   로그인, 계정찾기, 회원가입, 마이페이지 수정 및 탈퇴, 자동로그인 기능
+  
 <br>
+
 <접속 계정>
 - 판매자(경매인): [계정] seller1@auction.com / [비밀번호] testSeller1
 - 구매자(입찰자): [계정] buyer1@auction.com / [비밀번호] testBuyer1
